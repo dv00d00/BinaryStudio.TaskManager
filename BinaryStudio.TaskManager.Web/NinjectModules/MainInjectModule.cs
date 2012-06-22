@@ -1,5 +1,8 @@
 namespace BinaryStudio.TaskManager.Web.NinjectModules
 {
+    using BinaryStudio.TaskManager.Logic.Core;
+    using BinaryStudio.TaskManager.Logic.Storage;
+
     using Ninject.Modules;
 
     /// <summary>
@@ -12,7 +15,8 @@ namespace BinaryStudio.TaskManager.Web.NinjectModules
         /// </summary>
         public override void Load()
         {
-            throw new System.NotImplementedException();
+            this.Bind<TaskContext>().ToMethod(it => new TaskContext());
+            this.Bind<IHumanTaskRepository>().To<HumanTaskRepository>();
         }
     }
 }
