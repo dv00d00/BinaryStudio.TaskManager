@@ -1,0 +1,83 @@
+@model IEnumerable<BinaryStudio.TaskManager.Logic.Storage.HumanTask>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th></th>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Priority
+        </th>
+        <th>
+            Created
+        </th>
+        <th>
+            Assigned
+        </th>
+        <th>
+            Finished
+        </th>
+        <th>
+            Closed
+        </th>
+        <th>
+            CreatorId
+        </th>
+        <th>
+            AssigneeId
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+        <td>
+			@item.Name
+        </td>
+        <td>
+			@item.Description
+        </td>
+        <td>
+			@item.Priority
+        </td>
+        <td>
+			@String.Format("{0:g}", item.Created)
+        </td>
+        <td>
+			@String.Format("{0:g}", item.Assigned)
+        </td>
+        <td>
+			@String.Format("{0:g}", item.Finished)
+        </td>
+        <td>
+			@String.Format("{0:g}", item.Closed)
+        </td>
+        <td>
+			@item.CreatorId
+        </td>
+        <td>
+			@item.AssigneeId
+        </td>
+    </tr>
+}
+
+</table>
+
+
