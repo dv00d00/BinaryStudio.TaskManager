@@ -1,9 +1,9 @@
+using BinaryStudio.TaskManager.Logic.Domain;
+
 namespace BinaryStudio.TaskManager.Web.Models
 {
     using System.Collections.Generic;
     using System.Drawing;
-
-    using BinaryStudio.TaskManager.Logic.Storage;
 
     /// <summary>
     /// View model for the manager tasks view

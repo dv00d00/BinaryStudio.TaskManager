@@ -1,8 +1,8 @@
+using BinaryStudio.TaskManager.Logic.Domain;
+
 namespace BinaryStudio.TaskManager.Web.NinjectModules
 {
     using BinaryStudio.TaskManager.Logic.Core;
-    using BinaryStudio.TaskManager.Logic.Storage;
-
     using Ninject.Modules;
 
     /// <summary>

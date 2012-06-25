@@ -1,10 +1,10 @@
+using BinaryStudio.TaskManager.Logic.Domain;
+
 namespace BinaryStudio.TaskManager.Logic.Core
 {
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-
-    using BinaryStudio.TaskManager.Logic.Storage;
 
     public class HumanTaskRepository : IHumanTaskRepository
     {

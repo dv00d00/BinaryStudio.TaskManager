@@ -1,7 +1,7 @@
-﻿namespace BinaryStudio.TaskManager.Logic.Storage
-{
-    using System.Data.Entity;
+﻿using System.Data.Entity;
 
+namespace BinaryStudio.TaskManager.Logic.Domain
+{
     public class TaskContext : DbContext
     {
         public DbSet<HumanTask> HumanTasks { get; set; }

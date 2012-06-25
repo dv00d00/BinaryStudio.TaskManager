@@ -1,10 +1,11 @@
-﻿namespace BinaryStudio.TaskManager.Web.Controllers
+﻿using BinaryStudio.TaskManager.Logic.Domain;
+
+namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
 
     using BinaryStudio.TaskManager.Logic.Core;
-    using BinaryStudio.TaskManager.Logic.Storage;
     using BinaryStudio.TaskManager.Web.Models;
 
     /// <summary>

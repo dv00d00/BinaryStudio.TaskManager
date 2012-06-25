@@ -48,9 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\HumanTaskRepository.cs" />
-    <Compile Include="Storage\TaskContext.cs" />
-    <Compile Include="Storage\Employee.cs" />
-    <Compile Include="Storage\HumanTask.cs" />
+    <Compile Include="Domain\Class1.cs" />
+    <Compile Include="Domain\TaskContext.cs" />
+    <Compile Include="Domain\Employee.cs" />
+    <Compile Include="Domain\HumanTask.cs" />
     <Compile Include="Core\INotifier.cs" />
     <Compile Include="Core\IHumanTaskRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

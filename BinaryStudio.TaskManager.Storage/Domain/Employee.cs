@@ -1,4 +1,4 @@
-﻿namespace BinaryStudio.TaskManager.Logic.Storage
+﻿namespace BinaryStudio.TaskManager.Logic.Domain
 {
     public class Employee
     {

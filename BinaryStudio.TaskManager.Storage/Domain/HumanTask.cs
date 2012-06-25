@@ -1,7 +1,7 @@
-namespace BinaryStudio.TaskManager.Logic.Storage
-{
-    using System;
+using System;
 
+namespace BinaryStudio.TaskManager.Logic.Domain
+{
     public class HumanTask
     {
         public int Id { get; set; }
@@ -28,4 +28,6 @@ namespace BinaryStudio.TaskManager.Logic.Storage
 
         // public Employee Assignee { get; set; }
     }
+
+    
 }
