@@ -5,6 +5,7 @@
 
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Storage;
+    using BinaryStudio.TaskManager.Web.Models;
 
     /// <summary>
     /// Provides access to human task entities
@@ -113,6 +114,54 @@
         {
             this.humanTaskRepository.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult GetManagerTasks()
+        {
+            var model = new List<ManagerTasksViewModel>
+                {
+                    new ManagerTasksViewModel()
+                        {
+                            Manager = new Employee() { Name = "Hello" },
+                            Tasks =
+                                new List<HumanTask>
+                                    {
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                    }
+                        },
+                    new ManagerTasksViewModel()
+                        {
+                            Manager = new Employee() { Name = "Hello" },
+                            Tasks =
+                                new List<HumanTask>
+                                    {
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                    }
+                        },
+                    new ManagerTasksViewModel()
+                        {
+                            Manager = new Employee() { Name = "Hello" },
+                            Tasks =
+                                new List<HumanTask>
+                                    {
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                    }
+                        },
+                };
+
+            return View(model);
         }
     }
 }

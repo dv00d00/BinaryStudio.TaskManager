@@ -1,4 +1,43 @@
+@using BinaryStudio.TaskManager.Logic.Storage
 @model IEnumerable<BinaryStudio.TaskManager.Logic.Storage.HumanTask>
+
+@helper GetValue(HumanTask item)
+{
+    <tr>
+        <td>
+            @this.Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @this.Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @this.Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+        <td>
+            @item.Name
+        </td>
+        <td>
+            @item.Description
+        </td>
+        <td>
+            @item.Priority
+        </td>
+        <td>
+            @String.Format("{0:g}", item.Created)
+        </td>
+        <td>
+            @String.Format("{0:g}", item.Assigned)
+        </td>
+        <td>
+            @String.Format("{0:g}", item.Finished)
+        </td>
+        <td>
+            @String.Format("{0:g}", item.Closed)
+        </td>
+        <td>
+            @item.CreatorId
+        </td>
+        <td>
+            @item.AssigneeId
+        </td>
+    </tr>
+}
 
 @{
     ViewBag.Title = "Index";
@@ -42,40 +81,7 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-        <td>
-			@item.Name
-        </td>
-        <td>
-			@item.Description
-        </td>
-        <td>
-			@item.Priority
-        </td>
-        <td>
-			@String.Format("{0:g}", item.Created)
-        </td>
-        <td>
-			@String.Format("{0:g}", item.Assigned)
-        </td>
-        <td>
-			@String.Format("{0:g}", item.Finished)
-        </td>
-        <td>
-			@String.Format("{0:g}", item.Closed)
-        </td>
-        <td>
-			@item.CreatorId
-        </td>
-        <td>
-			@item.AssigneeId
-        </td>
-    </tr>
+    @this.GetValue(item)
 }
 
 </table>
