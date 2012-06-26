@@ -5,7 +5,7 @@
     $(document).ready(function () {
         $(".sortableTasks").sortable({
             connectWith: $(".sortableTasks"),
-            placeholder: "task"
+            placeholder: "placeholderTask"
         });     
     });
 </script>
@@ -37,29 +37,29 @@
             
     <!-- Create a column with tasks-->
     <td align = "center" valign="top" width="250">
+        <div>Add new task</div>
         @foreach (var unAssignedTask in Model.UnAssignedTasks)
         {
-                    
-            @Html.Partial("ManagerTasksTablePartialView", unAssignedTask);
+            <div class="sortableTasks">        
+                @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
+            </div>
         }
+        <div class = "sortableTasks" style = "height: 300px"></div>
     </td>
         
     
     @foreach (var manager in Model.ManagerTasks)
     {
-
-        <td  id="sortable" align = "center" valign="top" width="250">
-            <div id="managerTasks">
+        
+        <td align = "center" valign="top" width="250">
+                <div>Add new task</div>
                 @foreach (var task in manager.Tasks)
                 {
-
                     <div class="sortableTasks">
                         @Html.Partial("ManagerTasksTablePartialView", task)                    
                     </div>
-
-
                 }
-            </div>
+            <div class = "sortableTasks" style = "height: 300px"></div>
         </td>
     }    
 </table>
