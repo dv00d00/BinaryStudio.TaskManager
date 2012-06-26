@@ -5,8 +5,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using BinaryAcademia.AllManagerView.Models;
-using BinaryStudio.TaskManager.Web.Content;
+using BinaryStudio.TaskManager.Web.Models;
+
 
 
 namespace BinaryAcademia.AllManagerView.Controllers
@@ -15,8 +15,7 @@ namespace BinaryAcademia.AllManagerView.Controllers
     {
         public ActionResult Index()
         {
-            AllManagersDataTest allManagersDataTest = new AllManagersDataTest();
-            ViewBag.Managers = allManagersDataTest.GetManagers();
+         
             return View();
         }
 
@@ -24,20 +23,7 @@ namespace BinaryAcademia.AllManagerView.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public ActionResult AllManagersWithTasks()
-        {
-
-            //Create some customize managers and tasks for testing AllManagerWithTasks View
-            AllManagersDataTest testManagersData = new AllManagersDataTest();
-            return View(testManagersData.GetManagers());
-        }
-        [HttpGet]
-        public ActionResult ManagersTask(int id)
-        {
-            AllManagersDataTest allManagersDataTest = new AllManagersDataTest();
-            ICollection<ManagerModel> managers = allManagersDataTest.GetManagers();
-            return View(managers.Single(x => x.ManagerId == id).Tasks);
-        }
+      
+       
     }
 }

@@ -1,0 +1,13 @@
+﻿@model BinaryStudio.TaskManager.Web.Models.ManagerTasksViewModel
+
+
+<ul>
+    @foreach (var task in Model.Tasks)
+    {
+        <li>
+            @task.Name
+            <br/>
+            @task.Description
+        </li>
+    }
+</ul>
