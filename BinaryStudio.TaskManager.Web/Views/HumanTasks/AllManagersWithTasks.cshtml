@@ -1,73 +1,65 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.ManagersViewModel
-    
 
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".sortableTasks").sortable({
+            connectWith: $(".sortableTasks"),
+            placeholder: "task"
+        });     
+    });
+</script>
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <title>AllManagersWithTasks</title>
-    
-    <style type="text/css">
-        div.task{
-                border:1px solid black;
-                width:200px;
-                height:auto;
-                margin: 5px;
-        }
-        
-        div.manager{
-                border:1px solid black;
-                width:200px;
-                height:30px;
-        }
-    </style>
-</head>
- <body>
-        <!-- Caption of the table "Managers-Tasks"-->
-        <p align="center">Managers and their current tasks.</p>
-        <table align="center">
-            
+<!-- Caption of the table "Managers-Tasks"-->
+<p align="center">Managers and their current tasks.</p>
+<table align="center">            
    
-            @if (Model.ManagerTasks.Count == 0)
-            {
-                <p>No managers found!</p>
-            }
-            else
-            {
-                <!-- Header of the table (Managers names)-->
-                <tr>
-                    <td align="center" width="250">
-                            <div class="manager">Unassigned Tasks </div>
-                        </td>
-                    @foreach (var manager in Model.ManagerTasks)
-                    {
-                        <td align="center" width="250">
-                            <div class="manager">@manager.Manager.Name </div>
-                        </td>
-                    }
-                </tr>
-            }
-            
-            <!-- Create a column with tasks-->
-            <td  align = "center" valign="top" width="250">
-                @foreach (var unAssignedTask in Model.UnAssignedTasks)
-                {
-                    
-                    @Html.Partial("ManagerTasksTablePartialView", unAssignedTask);
-                }
+    @if (Model.ManagerTasks.Count == 0)
+    {
+        <p>No managers found!</p>
+    }
+    else
+    {
+        <!-- Header of the table (Managers names)-->
+        <tr>
+            <td align="center" width="250">
+                    <div class="manager">Unassigned Tasks </div>
                 </td>
-                @foreach (var manager in Model.ManagerTasks)
-                {
-                    <td  align = "center" valign="top" width="250">
-                    @foreach (var task in manager.Tasks)
-                    {
-                        @Html.Partial("ManagerTasksTablePartialView", task);
-                    }
-                    </td>
-                }
+            @foreach (var manager in Model.ManagerTasks)
+            {
+                <td align="center" width="250">
+                    <div class="manager">@manager.Manager.Name </div>
+                </td>
+            }
+        </tr>
+    }
             
-        </table>
-    </body>
-</html>
+    <!-- Create a column with tasks-->
+    <td align = "center" valign="top" width="250">
+        @foreach (var unAssignedTask in Model.UnAssignedTasks)
+        {
+                    
+            @Html.Partial("ManagerTasksTablePartialView", unAssignedTask);
+        }
+    </td>
+        
+    
+    @foreach (var manager in Model.ManagerTasks)
+    {
+
+        <td  id="sortable" align = "center" valign="top" width="250">
+            <div id="managerTasks">
+                @foreach (var task in manager.Tasks)
+                {
+
+                    <div class="sortableTasks">
+                        @Html.Partial("ManagerTasksTablePartialView", task)                    
+                    </div>
+
+
+                }
+            </div>
+        </td>
+    }    
+</table>
