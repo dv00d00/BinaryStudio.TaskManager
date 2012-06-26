@@ -64,12 +64,6 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         // mmmmmore facts
     }
 
-    [TestFixture]
-    public class TaskProcessorTest
-    {
-        // mmmmmore facts
-    }
-
     public abstract class TimeManager
     {
         public event EventHandler<TimeArguments> OnTick;
