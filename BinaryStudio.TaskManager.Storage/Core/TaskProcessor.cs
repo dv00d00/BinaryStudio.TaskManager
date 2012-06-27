@@ -9,21 +9,32 @@ namespace BinaryStudio.TaskManager.Logic.Tests
     public class TaskProcessor:ITaskProcessor
     {
         private readonly IHumanTaskRepository humanTaskRepository;
+        private readonly IReminderRepository reminderRepository;
 
-        public TaskProcessor(IHumanTaskRepository humanTaskRepository)
+        public TaskProcessor(IHumanTaskRepository humanTaskRepository, IReminderRepository reminderRepository)
         {
             this.humanTaskRepository = humanTaskRepository;
+            this.reminderRepository = reminderRepository;
         }
 
         public void CreateTask(HumanTask task)
         {
-            //throw new NotImplementedException();
             humanTaskRepository.Add(task);
         }
 
-        public void CreateTask(HumanTask task,Reminder reminder)
+        public void CreateTask(HumanTask task, Reminder reminder)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
+
+            humanTaskRepository.Add(task);
+
+            // task.Id got its value from database insert
+            var newTaskId = task.Id;
+
+            reminder.TaskId = newTaskId;
+
+            reminderRepository.Add(reminder);
+
         }
 
         public void UpdateTask(HumanTask task)

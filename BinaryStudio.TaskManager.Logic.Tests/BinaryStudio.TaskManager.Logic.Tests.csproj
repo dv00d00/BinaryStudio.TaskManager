@@ -48,8 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MockTimeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReminderTests.cs" />
+    <Compile Include="ReminderRepositoryTest.cs" />
+    <Compile Include="ReminderSenderTests.cs" />
     <Compile Include="TaskProcessorTests.cs" />
   </ItemGroup>
   <ItemGroup>
