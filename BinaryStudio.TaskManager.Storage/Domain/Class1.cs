@@ -19,6 +19,6 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
         public string Content { get; set; }
 
-        public bool WasDeliviered { get; set; }
+        public bool WasDelivered { get; set; }
     }
 }

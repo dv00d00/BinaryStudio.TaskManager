@@ -28,7 +28,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             new ReminderSender(timeManager, notifier.Object, reminderRepository.Object);
 
             timeManager.SendTime(reminderDate);
-
+            
             notifier.Verify(it => it.Send(It.IsAny<Guid>(), content));
         }
 

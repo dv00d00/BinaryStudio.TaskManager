@@ -1,16 +1,17 @@
 namespace BinaryStudio.TaskManager.Logic.Tests
 {
-    using System;
     using System.Collections.Generic;
 
+    using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
+
+    using Moq;
 
     using NUnit.Framework;
 
     [TestFixture]
     public class TaskProcessorTest
     {
-        // mmmmmore facts
         [Test]
         public void Should_AddTask()
         {
@@ -44,32 +45,19 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         [Test]
         public void Should_DeleteTask()
         {
-
+            var humanTaskRepository = new Mock<IHumanTaskRepository>();
+            var processor = new TaskProcessor() { htr = humanTaskRepository.Object };
         }
         [Test]
-        public void Should_ReturnListOfTasksOfManagerByHisId()
+        public void Should_ReturnListOfTasksOfEmployeeByHisId()
         {
-            var processor = new TaskProcessor();
 
         }
         [Test]
         public void Should_ReturnListOfNotassignedTasks()
         {
-
-        }
-    }
-
-    public class TaskProcessor
-    {
-        public IEnumerable<Task> GetTasksList(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Task> GetTasksList()
-        {
-            //returns NotAssignedTasks
-            throw new NotImplementedException();
+            var processor = new TaskProcessor();
+            
         }
     }
 }
