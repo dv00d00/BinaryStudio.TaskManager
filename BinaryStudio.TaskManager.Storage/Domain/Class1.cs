@@ -15,10 +15,13 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
     public class Reminder
     {
+        public int EmployeeID { get; set; }
         public DateTime ReminderDate { get; set; }
 
         public string Content { get; set; }
 
-        public bool WasDelivered { get; set; }
+        public bool WasDeliviered { get; set; }
+
+        public Employee Employee { get; set; }
     }
 }

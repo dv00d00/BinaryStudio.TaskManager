@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using BinaryStudio.TaskManager.Logic.Core;
 using BinaryStudio.TaskManager.Logic.Domain;
 using Moq;
@@ -28,20 +29,57 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             new ReminderSender(timeManager, notifier.Object, reminderRepository.Object);
 
             timeManager.SendTime(reminderDate);
-            
-            notifier.Verify(it => it.Send(It.IsAny<Guid>(), content));
+
+            notifier.Verify(it => it.Send(It.IsAny<ClientConnection>(), content));
         }
 
         [Test]
-        public void Reminder_ShouldHave_AssignedEmployee()
+        public void ShouldNot_SendNotification_When_EmployeeIsNotAssigned()
         {
-            throw new NotImplementedException();
+            var reminderDate = new DateTime(2010, 11, 10, 10, 0, 0);
+
+            var timeManager = new MockTimeManager();
+            var notifier = new Mock<INotifier>();
+            var reminderRepository = new Mock<IReminderRepository>();
+
+            const string content = "asdkjasdnajkn";
+            reminderRepository.Setup(it => it.GetReminderList(reminderDate)).Returns(new List<Reminder> {new Reminder()
+                {
+                    Content = content,
+                    Employee = null
+                }});
+
+            new ReminderSender(timeManager, notifier.Object, reminderRepository.Object);
+
+            timeManager.SendTime(reminderDate);
+
+            notifier.Verify(it => it.Send(It.IsAny<ClientConnection>(), content));
         }
         
         [Test]
         public void Reminder_ShouldBeSend_ToSingleEmployee()
         {
-            throw new NotImplementedException();
+            var reminderDate = new DateTime(2012, 11, 10, 10, 0, 0);
+
+            var timeManager = new MockTimeManager();
+            var notifier = new Mock<INotifier>();
+            var reminderRepository = new Mock<IReminderRepository>();
+
+            const string content = "lsdkjfklsjd";
+            const int employeeID = 123123;
+            reminderRepository.Setup(it => it.GetReminderList(reminderDate)).Returns(new List<Reminder>
+            {
+                new Reminder()
+                    {
+                        Content = content,
+                        EmployeeID = employeeID
+                    }
+            });
+            new ReminderSender(timeManager, notifier.Object, reminderRepository.Object);
+
+            timeManager.SendTime(reminderDate);
+
+            notifier.Verify(it => it.Send(It.IsAny<ClientConnection>(), content));
         }
     }
 
@@ -52,15 +90,21 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         [Test]
         public void ShouldNot_ReturnRemindersFromFuture()
         {
-            
+            throw new NotImplementedException();
         }
 
         [Test]
         public void Should_ReturnNotDeliveredRemindersFromThePast()
         {
-            
+            throw new NotImplementedException();
         }
 
+        // mmmmmore facts
+    }
+
+    [TestFixture]
+    public class TaskProcessorTest
+    {
         // mmmmmore facts
     }
 
@@ -123,7 +167,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
                 foreach (var reminder in reminders)
                 {
-                    this.notifier.Send(new Guid(), reminder.Content);
+                    this.notifier.Send(new ClientConnection(), reminder.Content);
                 }
             };
         }
