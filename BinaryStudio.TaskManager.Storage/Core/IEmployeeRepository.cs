@@ -10,7 +10,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void Delete(Employee employee);
         void Update(Employee employee);
 
-        Reminder GetById(int employeeId);
+        Employee GetById(int employeeId);
         IEnumerable<Employee> Get(Func<Employee> selector);
     }
 }
