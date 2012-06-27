@@ -35,9 +35,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.taskContext.HumanTasks.Single(it => it.Id == humanTaskId);
         }
 
-        public void Delete(int id)
+        public void Delete(int humanTaskId)
         {
-            HumanTask humantask = this.taskContext.HumanTasks.Single(x => x.Id == id);
+            HumanTask humantask = this.taskContext.HumanTasks.Single(x => x.Id == humanTaskId);
             this.taskContext.HumanTasks.Remove(humantask);
             this.taskContext.SaveChanges();
         }

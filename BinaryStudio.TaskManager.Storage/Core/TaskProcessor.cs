@@ -6,25 +6,32 @@ namespace BinaryStudio.TaskManager.Logic.Tests
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
 
-    public class TaskProcessor
+    public class TaskProcessor:ITaskProcessor
     {
-        public IHumanTaskRepository htr { get; set; }
-        public void CreateTask(Task task)
+        private readonly IHumanTaskRepository humanTaskRepository;
+
+        public TaskProcessor(IHumanTaskRepository humanTaskRepository)
+        {
+            this.humanTaskRepository = humanTaskRepository;
+        }
+
+        public void CreateTask(HumanTask task)
+        {
+            //throw new NotImplementedException();
+            humanTaskRepository.Add(task);
+        }
+
+        public void CreateTask(HumanTask task,Reminder reminder)
         {
             throw new NotImplementedException();
         }
 
-        public void CreateTask(Task task,Reminder reminder)
+        public void UpdateTask(HumanTask task)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateTask(int taskId,Task task)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateTask(int taskId, Task task, Reminder reminder)
+        public void UpdateTask(HumanTask task, Reminder reminder)
         {
             throw new NotImplementedException();
         }
@@ -50,13 +57,23 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         }
 
 
-        public IEnumerable<Task> GetTasksList()
+        public IEnumerable<HumanTask> GetTasksList()
         {
             //returns NotAssignedTasks
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Task> GetTasksList(int employeeId)
+        public IEnumerable<HumanTask> GetTasksList(int employeeId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HumanTask GetTaskById(int taskId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AssignTask(int taskId, int employeeId)
         {
             throw new NotImplementedException();
         }

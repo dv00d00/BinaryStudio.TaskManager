@@ -16,7 +16,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         HumanTask Add(HumanTask humanTask);
 
-        void Delete(int id);
+        void Delete(int humanTaskId);
 
         void Update(HumanTask humanTask);
     }
