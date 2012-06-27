@@ -69,7 +69,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         [Test]
         public void Should_AddTask()
         {
-            var testTask = new HumanTask{Id = 4, Name = "Fourth Task"};
+            var testTask = new HumanTask { Id = 4, Name = "Fourth Task" };
 
             processorUnderTest.CreateTask(testTask);
             mockHumanTaskRepository.Verify(it => it.Add(testTask), Times.Once());
@@ -88,7 +88,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             });
 
             // act
-            processorUnderTest.CreateTask(new HumanTask(){Description = "bla bla"}, new Reminder(){ReminderDate = new DateTime(1234,1,1)});
+            processorUnderTest.CreateTask(new HumanTask() { Description = "bla bla" }, new Reminder() { ReminderDate = new DateTime(1234, 1, 1) });
 
             // assert
 
@@ -100,17 +100,33 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         [Test]
         [ExpectedException]
-        public void Should_AssignTask_WhenSuchEmployeExists()
+        public void Should_AssignTask_WhenSuchEmployeeExists()
         {
-     /*       TaskProcessor processor = new TaskProcessor(mockHumanTaskRepository.Object);
-            
-            processor.AssignTask(1,5);
-            mockHumanTaskRepository.Verify(it => it.(), Times.Once());*/
+            //arrange
+            mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
+            employeeRepository.Setup(it => it.GetById(3)).Returns(new Employee { Id = 3 });
+
+            //act
+            processorUnderTest.AssignTask(1, 4);
+
+            //assert
+            mockHumanTaskRepository.Verify(it => it.Update(
+                It.Is<HumanTask>(x => x.AssigneeId == 3)), Times.Once());
         }
 
         [Test]
         public void ShouldNot_AssignTask_WhenSuchEmployeeDoesNotExist()
         {
+            //arrange
+            mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
+            employeeRepository.Setup(it => it.GetById(4)).Throws<IndexOutOfRangeException>();
+
+            //act
+            processorUnderTest.AssignTask(1, 4);
+
+            //assert
+            mockHumanTaskRepository.Verify(it => it.Update(
+                It.Is<HumanTask>(x => x.AssigneeId == 4)), Times.Never());
 
         }
 
@@ -118,8 +134,8 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         public void Should_UpdateTask_WhenManagerIsTrying()
         {
             TaskProcessor processor = new TaskProcessor(mockHumanTaskRepository.Object, mockReminderRepository.Object);
-            
-            var testTask = new HumanTask{Id = 4, Name = "Fourth Task"};
+
+            var testTask = new HumanTask { Id = 4, Name = "Fourth Task" };
 
             processor.UpdateTask(testTask);
             mockHumanTaskRepository.Verify(it => it.Update(testTask), Times.Once());
@@ -127,16 +143,10 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         }
 
         [Test]
-        public void ShouldNot_UpdateTask_WhenItIsAlreadyDone()
-        {
-
-        }
-
-        [Test]
         public void Should_DeleteTask()
         {
             TaskProcessor processor = new TaskProcessor(mockHumanTaskRepository.Object, mockReminderRepository.Object);
-            
+
             processor.DeleteTask(1);
             mockHumanTaskRepository.Verify(it => it.Delete(1), Times.Once());
         }
