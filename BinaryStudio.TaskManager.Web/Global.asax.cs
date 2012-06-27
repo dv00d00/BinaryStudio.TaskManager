@@ -1,4 +1,7 @@
-﻿namespace BinaryStudio.TaskManager.Web
+﻿using System.Data.Entity;
+using BinaryStudio.TaskManager.Logic.Domain;
+
+namespace BinaryStudio.TaskManager.Web
 {
     using System.Reflection;
     using System.Web.Mvc;
@@ -43,6 +46,8 @@
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            Database.SetInitializer(new DatabaseInitializer());
         }
     }
 }

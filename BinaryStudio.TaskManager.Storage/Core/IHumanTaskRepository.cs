@@ -20,6 +20,4 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         void Update(HumanTask humanTask);
     }
-
-
 }

@@ -56,8 +56,10 @@
     <Compile Include="Core\TaskProcessor.cs" />
     <Compile Include="Core\TimeArguments.cs" />
     <Compile Include="Core\TimeManager.cs" />
+    <Compile Include="Domain\DatabaseInitializer.cs" />
+    <Compile Include="Domain\IEntity.cs" />
     <Compile Include="Domain\Reminder.cs" />
-    <Compile Include="Domain\TaskContext.cs" />
+    <Compile Include="Domain\DataBaseContext.cs" />
     <Compile Include="Domain\Employee.cs" />
     <Compile Include="Domain\HumanTask.cs" />
     <Compile Include="Core\INotifier.cs" />

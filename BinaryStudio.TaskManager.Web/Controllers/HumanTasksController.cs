@@ -124,9 +124,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return View(model);
         }
 
-
-       
-
         private  ManagersViewModel CreateManagersViewModel()
         {
             var model =new ManagersViewModel(){
