@@ -15,13 +15,17 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     {
         private readonly IHumanTaskRepository humanTaskRepository;
 
+        private readonly ITaskProcessor taskProcessor;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanTasksController"/> class.
         /// </summary>
         /// <param name="humanTaskRepository">The human task repository.</param>
-        public HumanTasksController(IHumanTaskRepository humanTaskRepository)
+        /// <param name="taskProcessor">The task processor.</param>
+        public HumanTasksController(IHumanTaskRepository humanTaskRepository, ITaskProcessor taskProcessor)
         {
             this.humanTaskRepository = humanTaskRepository;
+            this.taskProcessor = taskProcessor;
         }
 
         //
@@ -124,7 +128,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return View(model);
         }
 
-        private  ManagersViewModel CreateManagersViewModel()
+        [HttpPost]
+        public void MoveTask(int oldEmployeeId, int newEmployeeId, int taskId)
+        {
+            this.taskProcessor.MoveTask(oldEmployeeId, taskId);
+        }
+
+        private ManagersViewModel CreateManagersViewModel()
         {
             var model =new ManagersViewModel(){
                 ManagerTasks = new List<ManagerTasksViewModel>

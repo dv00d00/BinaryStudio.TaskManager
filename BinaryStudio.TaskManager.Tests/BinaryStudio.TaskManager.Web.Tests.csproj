@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HumanTaskControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +64,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BinaryStudio.TaskManager.Storage\BinaryStudio.TaskManager.Logic.csproj">
+      <Project>{33F650F1-DED6-4459-A3EC-8494CFEBC187}</Project>
+      <Name>BinaryStudio.TaskManager.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BinaryStudio.TaskManager.Web\BinaryStudio.TaskManager.Web.csproj">
+      <Project>{4DC217EF-BF33-459C-A5FA-47381CE159D5}</Project>
+      <Name>BinaryStudio.TaskManager.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

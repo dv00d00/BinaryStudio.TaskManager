@@ -7,7 +7,6 @@ namespace BinaryAcademia.AllManagerView.Controllers
     {
         public ActionResult Index()
         {
-         
             return View();
         }
 
@@ -15,7 +14,5 @@ namespace BinaryAcademia.AllManagerView.Controllers
         {
             return View();
         }
-      
-       
     }
 }

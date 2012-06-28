@@ -83,6 +83,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HumanTasksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MoveTaskParams.cs" />
     <Compile Include="Models\ManagersViewModel.cs" />
     <Compile Include="Models\ManagerTasksViewModel.cs" />
     <Compile Include="Global.asax.cs">
