@@ -8,10 +8,10 @@ namespace BinaryStudio.TaskManager.Logic.Domain
     {
         protected override void Seed(DataBaseContext context)
         {
-            context.Employees.Add(new Employee { Name = "Test1" });
-            context.Employees.Add(new Employee { Name = "Test2" });
-            context.Employees.Add(new Employee { Name = "Test3" });
-            context.Employees.Add(new Employee { Name = "Test4" });
+            context.Employees.Add(new Employee { Name = "Test1", Id = 1});
+            context.Employees.Add(new Employee { Name = "Test2", Id = 2});
+            context.Employees.Add(new Employee { Name = "Test3", Id = 3});
+            context.Employees.Add(new Employee { Name = "Test4", Id = 4});
             
             foreach (var employee in context.Employees)
             {
