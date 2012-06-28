@@ -36,5 +36,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Reminder> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

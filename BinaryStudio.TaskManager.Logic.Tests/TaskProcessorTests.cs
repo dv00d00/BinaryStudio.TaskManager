@@ -222,7 +222,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         public void Should_UpdateTaskAndDeleteRelatedReminders_WhenMoveTaskIsCalled()
         {
             //arrange
-            var testTask = new HumanTask{Id = 1};
+            var testTask = new HumanTask {Id = 1};
 
             mockReminderRepository.Setup(it => it.GetAll()).Returns(new List<Reminder>{
                 new Reminder(){TaskId = 3}, 

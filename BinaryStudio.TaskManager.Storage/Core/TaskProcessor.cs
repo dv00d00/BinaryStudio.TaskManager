@@ -7,7 +7,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
 
-    public class TaskProcessor:ITaskProcessor
+    public class TaskProcessor: ITaskProcessor
     {
         private readonly IHumanTaskRepository humanTaskRepository;
         private readonly IReminderRepository reminderRepository;
