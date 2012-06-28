@@ -10,24 +10,45 @@
     [TestFixture]
     public class HumanTaskControllerTests
     {
-        [Test]
-        public void ShouldMoveTask()
+        private Mock<IHumanTaskRepository> mock;
+        private Mock<ITaskProcessor> taskProcesorMock;
+        private Mock<IEmployeeRepository> employeeRepository;
+
+        private HumanTasksController controller;
+
+        [SetUp]
+        public void Init()
         {
-            // Arrange
+            this.mock = new Mock<IHumanTaskRepository>();
+            this.taskProcesorMock = new Mock<ITaskProcessor>();
+            this.employeeRepository = new Mock<IEmployeeRepository>();
+            
+            this.controller = new HumanTasksController(mock.Object, taskProcesorMock.Object, this.employeeRepository.Object);
+        }
 
-            var mock = new Mock<IHumanTaskRepository>();
-            var taskProcesorMock = new Mock<ITaskProcessor>();
-            var emplProcessorMOck = new Mock<IEmployeeRepository>();
-
-            var controller = new HumanTasksController(mock.Object, taskProcesorMock.Object,emplProcessorMOck.Object);
-
+        [Test]
+        public void Should_MoveTask()
+        {
             // Act
 
-            controller.MoveTask(123, 123, 123);
+            this.controller.MoveTask(123, 123, 123);
 
             // Assert           
 
-            taskProcesorMock.Verify(it => it.MoveTask(123, 123));
+            this.taskProcesorMock.Verify(it => it.MoveTask(123, 123));
+        }
+
+        [Test]
+        public void Should_TakeDataFromTaskProcessorAndEmployeeRepository_WhenLoadingManagerDetails()
+        {
+            // Act
+
+            this.controller.ManagerDetails(12);
+
+            // Assert           
+
+            this.taskProcesorMock.Verify(it => it.GetTasksList(12));
+            this.employeeRepository.Verify(it => it.GetById(12));
         } 
     }
 }

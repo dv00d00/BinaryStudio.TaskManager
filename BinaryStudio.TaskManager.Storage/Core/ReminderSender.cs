@@ -13,14 +13,14 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.reminderRepository = reminderRepository;
 
             this.timeManager.OnTick += (s, e) =>
-                                           {
-                                               var reminders = this.reminderRepository.GetReminderList(e.DateTime);
+            {
+                var reminders = this.reminderRepository.GetReminderList(e.DateTime);
 
-                                               foreach (var reminder in reminders)
-                                               {
-                                                   this.notifier.Send(new ClientConnection(), reminder.Content);
-                                               }
-                                           };
+                foreach (var reminder in reminders)
+                {
+                    this.notifier.Send(new ClientConnection(), reminder.Content);
+                }
+            };
         }
     }
 }

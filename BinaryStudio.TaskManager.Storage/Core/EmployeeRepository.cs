@@ -9,17 +9,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly DataBaseContext dataBaseContext;
+
         public EmployeeRepository(DataBaseContext dataBaseContext)
         {
             this.dataBaseContext = dataBaseContext;
         }
+
         public void Add(Employee employee)
         {
             this.dataBaseContext.Entry(employee).State = EntityState.Added;
             this.dataBaseContext.SaveChanges();
-            
-
-            //throw new NotImplementedException();
         }
 
         public void Delete(Employee employee)

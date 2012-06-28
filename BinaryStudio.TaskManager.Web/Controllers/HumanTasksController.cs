@@ -3,6 +3,7 @@
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
 
     using BinaryStudio.TaskManager.Logic.Core;
@@ -124,17 +125,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return RedirectToAction("Index");
         }
 
-
-
         public ActionResult ManagerDetails(int id)
         {
             var model = new ManagerTasksViewModel();
             model.Manager = employeeRepository.GetById(id);
-            model.Tasks = new List<HumanTask>(taskProcessor.GetTasksList(id));
+            model.Tasks = taskProcessor.GetTasksList(id).ToList();
             return View(model);
-
         }
-
 
         public ActionResult AllManagersWithTasks()
         {
@@ -151,7 +148,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         private ManagersViewModel CreateManagersViewModel()
         {
-            
             var model =new ManagersViewModel(){
                 ManagerTasks = new List<ManagerTasksViewModel>
                             {
@@ -161,11 +157,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                         Tasks =
                                             new List<HumanTask>
                                                 {
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
                                                 }
                                     },
                                 new ManagerTasksViewModel()
@@ -174,11 +170,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                         Tasks =
                                             new List<HumanTask>
                                                 {
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
                                                 }
                                     },
                                 new ManagerTasksViewModel()
@@ -187,11 +183,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                         Tasks =
                                             new List<HumanTask>
                                                 {
-                                                   new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
+                                                    new HumanTask {Name = "Do Something",Description = "bla bla bla"},
                                                 }
                                     },
                             },
@@ -201,11 +197,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                 new HumanTask() {Name = "Pick Some One",Description = "do do do do"},
                                 new HumanTask() {Name = "Pick Some One",Description = "do do do do"},
                             }
-
-
-                            
-                                    
-                            };
+                        };
             
             return model;
         }
