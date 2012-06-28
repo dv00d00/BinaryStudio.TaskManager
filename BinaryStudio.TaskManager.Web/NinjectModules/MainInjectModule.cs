@@ -18,7 +18,10 @@ namespace BinaryStudio.TaskManager.Web.NinjectModules
         public override void Load()
         {
             this.Bind<DataBaseContext>().ToMethod(it => new DataBaseContext());
-            this.Bind<IHumanTaskRepository>().To<HumanTaskRepository>();
+            this.Bind<ITaskProcessor>().To<TaskProcessor>();
+            this.Bind<IEmployeeRepository>().To<EmployeeRepository>();
+
+           // this.Bind<IHumanTaskRepository>().To<HumanTaskRepository>();
             this.Bind<IHumanTaskRepository>().To<HumanTaskRepository>();
             this.Bind<IReminderRepository>().To<ReminderRepository>();
 

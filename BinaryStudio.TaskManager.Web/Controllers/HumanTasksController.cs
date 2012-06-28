@@ -17,15 +17,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         private readonly ITaskProcessor taskProcessor;
 
+        private readonly IEmployeeRepository employeeRepository;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanTasksController"/> class.
         /// </summary>
         /// <param name="humanTaskRepository">The human task repository.</param>
         /// <param name="taskProcessor">The task processor.</param>
-        public HumanTasksController(IHumanTaskRepository humanTaskRepository, ITaskProcessor taskProcessor)
+        public HumanTasksController(IHumanTaskRepository humanTaskRepository, ITaskProcessor taskProcessor, IEmployeeRepository employeeRepository)
         {
             this.humanTaskRepository = humanTaskRepository;
             this.taskProcessor = taskProcessor;
+            this.employeeRepository = employeeRepository;
         }
 
         //
@@ -121,6 +124,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return RedirectToAction("Index");
         }
 
+
+
+        public ActionResult ManagerDetails(int id)
+        {
+            var model = new ManagerTasksViewModel();
+            model.Manager = employeeRepository.GetById(id);
+            model.Tasks = new List<HumanTask>(taskProcessor.GetTasksList(id));
+            return View(model);
+
+        }
+
+
         public ActionResult AllManagersWithTasks()
         {
             var model = CreateManagersViewModel();
@@ -136,6 +151,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         private ManagersViewModel CreateManagersViewModel()
         {
+            
             var model =new ManagersViewModel(){
                 ManagerTasks = new List<ManagerTasksViewModel>
                             {
@@ -190,6 +206,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                             
                                     
                             };
+            
             return model;
         }
     }

@@ -29,7 +29,11 @@
             @foreach (var manager in Model.ManagerTasks)
             {
                 <td align="center" width="250">
-                    <div class="manager">@manager.Manager.Name </div>
+                   
+                    <div class="manager">
+                         @Html.ActionLink(manager.Manager.Name, "ManagerDetails",new {id = manager.Manager.Id},new {@style = "display:block;"})
+                         
+                    </div>
                 </td>
             }
         </tr>

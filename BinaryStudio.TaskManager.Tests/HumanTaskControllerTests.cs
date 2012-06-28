@@ -17,7 +17,9 @@
 
             var mock = new Mock<IHumanTaskRepository>();
             var taskProcesorMock = new Mock<ITaskProcessor>();
-            var controller = new HumanTasksController(mock.Object, taskProcesorMock.Object);
+            var emplProcessorMOck = new Mock<IEmployeeRepository>();
+
+            var controller = new HumanTasksController(mock.Object, taskProcesorMock.Object,emplProcessorMOck.Object);
 
             // Act
 

@@ -1,0 +1,31 @@
+﻿@model BinaryStudio.TaskManager.Web.Models.ManagerTasksViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title> @Model.Manager.Name Details</title>
+</head>
+<body>
+    <div>
+        <p>Tasks list:</p>
+        <br/>
+        <ul>
+            <li>
+                @foreach(var task in Model.Tasks)
+                {
+                    <p>Task Name: @task.Name</p> <br/>
+                    <p>Task Description: @task.Description</p> <br/>
+                    <p>Task Priority: @task.Priority</p> <br/>
+                    <p>Task Created: @task.Created</p> <br/>
+                }
+            </li>
+        </ul>
+        
+    </div>
+</body>
+</html>
