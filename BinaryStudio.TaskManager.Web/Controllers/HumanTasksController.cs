@@ -146,7 +146,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 manager.Manager = new Employee();
                 manager.Manager = employee;
                 manager.Tasks = new List<HumanTask>(); 
-                manager.Manager.Tasks = humanTaskRepository.GetAllTasksForEmployee(employee.Id).ToList();
+                manager.Tasks = humanTaskRepository.GetAllTasksForEmployee(employee.Id).ToList();
                 model.ManagerTasks.Add(manager);
             }
             return View(model);
