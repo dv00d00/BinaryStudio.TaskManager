@@ -1,6 +1,7 @@
 namespace BinaryStudio.TaskManager.Logic.Tests
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
 
     using BinaryStudio.TaskManager.Logic.Core;
@@ -39,22 +40,39 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         public void UpdateTask(HumanTask task)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+           
+            humanTaskRepository.Update(task);
         }
 
         public void UpdateTask(HumanTask task, Reminder reminder)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+           
+            humanTaskRepository.Update(task);
+            
+            reminderRepository.Update(reminder);
         }
 
         public void DeleteTask(int taskId)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            
+            foreach (var reminder in reminderRepository.GetAll())
+            {
+                if (reminder.TaskId == taskId)
+                {
+                    reminderRepository.Delete(reminder);
+                }
+            }
+
+            humanTaskRepository.Delete(taskId);
         }
 
         public void MoveTask(int taskId, int employeeId)
         {
             throw new NotImplementedException();
+
         }
 
         public void MoveTaskToUnassigned(int taskId)
@@ -70,18 +88,36 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         public IEnumerable<HumanTask> GetTasksList()
         {
-            //returns NotAssignedTasks
-            throw new NotImplementedException();
+            //returns AllTasks
+            //throw new NotImplementedException();
+
+            return humanTaskRepository.GetAll();
         }
 
         public IEnumerable<HumanTask> GetTasksList(int employeeId)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+
+            return humanTaskRepository.GetAllForEmployee(employeeId);
+        }
+
+        public IEnumerable<HumanTask> GetUnassignedTasks()
+        {
+            //returns UnassignedTasks
+            //throw new NotImplementedException();
+
+            foreach (var task in humanTaskRepository.GetAll())
+            {
+                if (task.AssigneeId.HasValue == false)
+                {
+                    yield return task;
+                }
+            }
         }
 
         public HumanTask GetTaskById(int taskId)
         {
-            throw new NotImplementedException();
+            return humanTaskRepository.GetById(taskId);
         }
 
         public void AssignTask(int taskId, int employeeId)

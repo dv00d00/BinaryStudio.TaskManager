@@ -88,13 +88,16 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             });
 
             // act
-            processorUnderTest.CreateTask(new HumanTask() { Description = "bla bla" }, new Reminder() { ReminderDate = new DateTime(1234, 1, 1) });
+            processorUnderTest.CreateTask(new HumanTask() { Description = "bla bla" }, 
+                new Reminder() { ReminderDate = new DateTime(1234, 1, 1) });
 
             // assert
 
-            mockHumanTaskRepository.Verify(it => it.Add(It.Is<HumanTask>(x => x.Description == "bla bla")));
+            mockHumanTaskRepository.Verify(it => it.Add(
+                It.Is<HumanTask>(x => x.Description == "bla bla")));
 
-            mockReminderRepository.Verify(it => it.Add(It.Is<Reminder>(x => x.TaskId == expectedTaskIdAfterSave)));
+            mockReminderRepository.Verify(it => it.Add(
+                It.Is<Reminder>(x => x.TaskId == expectedTaskIdAfterSave)));
 
         }
 
@@ -107,7 +110,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             employeeRepository.Setup(it => it.GetById(3)).Returns(new Employee { Id = 3 });
 
             //act
-            processorUnderTest.AssignTask(1, 4);
+            processorUnderTest.AssignTask(1, 3);
 
             //assert
             mockHumanTaskRepository.Verify(it => it.Update(
@@ -131,50 +134,110 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         }
 
         [Test]
-        public void Should_UpdateTask_WhenManagerIsTrying()
+        public void Should_UpdateTask_WhenTaskIsTheOnlyArgumentOfUpdate()
         {
-            TaskProcessor processor = new TaskProcessor(mockHumanTaskRepository.Object, mockReminderRepository.Object);
-
             var testTask = new HumanTask { Id = 4, Name = "Fourth Task" };
 
-            processor.UpdateTask(testTask);
+            processorUnderTest.UpdateTask(testTask);
+
             mockHumanTaskRepository.Verify(it => it.Update(testTask), Times.Once());
+
+        }
+
+        [Test]
+        public void Should_UpdateTaskAndReminder_WhenUpdateArgumentsAreTaskAndReminder()
+        {
+            var testTask = new HumanTask { Id = 4, Name = "Fourth Task" };
+            var testReminder = new Reminder { Id = 2, TaskId = 4 };
+
+            processorUnderTest.UpdateTask(testTask,testReminder);
+
+            mockHumanTaskRepository.Verify(it => it.Update(testTask), Times.Once());
+            mockReminderRepository.Verify(it => it.Update(testReminder), Times.Once());
 
         }
 
         [Test]
         public void Should_DeleteTask()
         {
-            TaskProcessor processor = new TaskProcessor(mockHumanTaskRepository.Object, mockReminderRepository.Object);
+            processorUnderTest.DeleteTask(1);
 
-            processor.DeleteTask(1);
             mockHumanTaskRepository.Verify(it => it.Delete(1), Times.Once());
+        }
+
+        [Test]
+        public void Should_DeleteAllReminders_WhenTheyAreRelatedToDeletingTask()
+        {
+            //arrange
+            const int deletingTask = 4;
+
+            mockReminderRepository.Setup(it => it.GetAll()).Returns(new List<Reminder>{
+                new Reminder(){TaskId = 3}, 
+                new Reminder(){TaskId = deletingTask},
+                new Reminder(){TaskId = 2}
+            });
+
+            //act
+            processorUnderTest.DeleteTask(deletingTask);
+
+            //assert
+            mockReminderRepository.Verify(it => it.Delete(It.IsAny<Reminder>()), Times.AtLeastOnce());
+        }
+
+        [Test]
+        public void ShouldNot_DeleteAnyReminders_WhenTheyAreNotRelatedToDeletingTask()
+        {
+            //arrange
+            const int deletingTask = 4;
+
+            mockReminderRepository.Setup(it => it.GetAll()).Returns(new List<Reminder>{
+                new Reminder(){TaskId = 3}, 
+                new Reminder(){TaskId = 5},
+                new Reminder(){TaskId = 2},
+            });
+
+            //act
+            processorUnderTest.DeleteTask(deletingTask);
+
+            //assert
+            mockReminderRepository.Verify(it => it.Delete(It.IsAny<Reminder>()), Times.Never());
         }
 
         [Test]
         public void Should_ReturnListOfTasksOfEmployeeByHisId()
         {
-            TaskProcessor processor = new TaskProcessor(mockHumanTaskRepository.Object, mockReminderRepository.Object);
+            processorUnderTest.GetTaskById(1);
 
-            processor.GetTaskById(1);
             mockHumanTaskRepository.Verify(it => it.GetById(1), Times.Once());
         }
 
-        public void Should_ReturnListOfTasksOfAllTasks()
+        public void Should_ReturnListOfAllTasks_WhenGetTasksListIsCalledWithNoArgumentsIsCalled()
         {
-            TaskProcessor processor = new TaskProcessor(mockHumanTaskRepository.Object, mockReminderRepository.Object);
+            processorUnderTest.GetTasksList();
 
-            processor.GetTaskById(1);
             mockHumanTaskRepository.Verify(it => it.GetAll(), Times.Once());
         }
 
         [Test]
-        public void Should_ReturnListOfNotassignedTasks()
+        public void Should_UpdateTaskAndDeleteRelatedReminders_WhenMoveTaskIsCalled()
         {
-            TaskProcessor processor = new TaskProcessor(mockHumanTaskRepository.Object, mockReminderRepository.Object);
+            //arrange
+            var testTask = new HumanTask{Id = 1};
 
-            processor.GetTasksList();
-            mockHumanTaskRepository.Verify(it => it.GetAll(), Times.Once());
+            mockReminderRepository.Setup(it => it.GetAll()).Returns(new List<Reminder>{
+                new Reminder(){TaskId = 3}, 
+                new Reminder(){TaskId = 5},
+                new Reminder(){TaskId = 2},
+            });
+
+            //act
+            processorUnderTest.MoveTask(1,4);
+
+            //assert
+            mockHumanTaskRepository.Verify(it => it.Update(It.Is<HumanTask>(x => x.AssigneeId == 4)),Times.Once());
+            mockReminderRepository.Verify(it => it.Delete(It.Is<Reminder>(x => x.TaskId == 1)), Times.AtLeastOnce());
         }
+
+
     }
 }
