@@ -8,7 +8,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
     {
         IEnumerable<HumanTask> GetForCreator(int creatorId);
 
-        IEnumerable<HumanTask> GetAllForEmployee(int employeeId);
+        IList<HumanTask> GetAllTasksForEmployee(int employeeId);
 
         IEnumerable<HumanTask> GetAll();
 

@@ -1,4 +1,5 @@
-﻿using BinaryStudio.TaskManager.Logic.Domain;
+﻿using System.Collections.ObjectModel;
+using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
@@ -135,8 +136,19 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult AllManagersWithTasks()
         {
-            var model = CreateManagersViewModel();
-
+            ManagersViewModel model = new ManagersViewModel();
+            model.ManagerTasks = new List<ManagerTasksViewModel>();
+            model.UnAssignedTasks = new List<HumanTask>();
+            IList<Employee> employees = employeeRepository.GetAll();
+            foreach (Employee employee in employees)
+            {
+                ManagerTasksViewModel manager = new ManagerTasksViewModel();
+                manager.Manager = new Employee();
+                manager.Manager = employee;
+                manager.Tasks = new List<HumanTask>(); 
+                manager.Manager.Tasks = humanTaskRepository.GetAllTasksForEmployee(employee.Id).ToList();
+                model.ManagerTasks.Add(manager);
+            }
             return View(model);
         }
 

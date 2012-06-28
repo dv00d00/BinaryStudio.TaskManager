@@ -42,9 +42,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
             throw new NotImplementedException();
         }
 
-        public  IEnumerable<Employee> GetAll()
+        public  IList<Employee> GetAll()
         {
-            return this.dataBaseContext.Employees;
+            return this.dataBaseContext.Employees.ToList();
         }
     }
 }
