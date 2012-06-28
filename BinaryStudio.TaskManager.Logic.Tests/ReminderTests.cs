@@ -171,5 +171,6 @@ namespace BinaryStudio.TaskManager.Logic.Tests
                 }
             };
         }
+
     }
 }

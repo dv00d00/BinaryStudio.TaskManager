@@ -117,73 +117,52 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult AllManagersWithTasks()
+        public ActionResult GetManagerTasks()
         {
-            var model = CreateManagersViewModel();
+            var model = new List<ManagerTasksViewModel>
+                {
+                    new ManagerTasksViewModel()
+                        {
+                            Manager = new Employee() { Name = "Hello" },
+                            Tasks =
+                                new List<HumanTask>
+                                    {
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                    }
+                        },
+                    new ManagerTasksViewModel()
+                        {
+                            Manager = new Employee() { Name = "Hello" },
+                            Tasks =
+                                new List<HumanTask>
+                                    {
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                    }
+                        },
+                    new ManagerTasksViewModel()
+                        {
+                            Manager = new Employee() { Name = "Hello" },
+                            Tasks =
+                                new List<HumanTask>
+                                    {
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                        new HumanTask() { Name = "asdasdsd" },
+                                    }
+                        },
+                };
 
             return View(model);
-        }
-
-
-       
-
-        private  ManagersViewModel CreateManagersViewModel()
-        {
-            var model =new ManagersViewModel(){
-                ManagerTasks = new List<ManagerTasksViewModel>
-                            {
-                                new ManagerTasksViewModel()
-                                    {
-                                        Manager = new Employee() {Name = "Vasya"},
-                                        Tasks =
-                                            new List<HumanTask>
-                                                {
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                }
-                                    },
-                                new ManagerTasksViewModel()
-                                    {
-                                        Manager = new Employee() {Name = "Petya"},
-                                        Tasks =
-                                            new List<HumanTask>
-                                                {
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                }
-                                    },
-                                new ManagerTasksViewModel()
-                                    {
-                                        Manager = new Employee() {Name = "Vanya"},
-                                        Tasks =
-                                            new List<HumanTask>
-                                                {
-                                                   new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                    new HumanTask() {Name = "Do Something",Description = "bla bla bla"},
-                                                }
-                                    },
-                            },
-                            UnAssignedTasks = new List<HumanTask>()
-                            { 
-                                new HumanTask() {Name = "Pick Some One",Description = "do do do do"},
-                                new HumanTask() {Name = "Pick Some One",Description = "do do do do"},
-                                new HumanTask() {Name = "Pick Some One",Description = "do do do do"},
-                            }
-
-
-                            
-                                    
-                            };
-            return model;
         }
     }
 }

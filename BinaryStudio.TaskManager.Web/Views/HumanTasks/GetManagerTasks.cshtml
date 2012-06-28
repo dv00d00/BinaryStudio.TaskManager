@@ -1,0 +1,15 @@
+﻿@model IEnumerable<BinaryStudio.TaskManager.Web.Models.ManagerTasksViewModel>
+
+@{
+    ViewBag.Title = "title";    
+}
+
+<h2>title</h2>
+
+@foreach(var item in Model)
+{
+    @item.Manager.Name;
+                      
+    
+}
+

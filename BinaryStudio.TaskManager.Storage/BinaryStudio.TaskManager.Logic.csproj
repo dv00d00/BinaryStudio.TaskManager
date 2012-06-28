@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\HumanTaskRepository.cs" />
-    <Compile Include="Core\TaskProcessor.cs" />
     <Compile Include="Domain\Class1.cs" />
     <Compile Include="Domain\TaskContext.cs" />
     <Compile Include="Domain\Employee.cs" />

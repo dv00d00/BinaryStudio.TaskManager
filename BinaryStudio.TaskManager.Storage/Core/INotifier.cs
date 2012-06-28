@@ -6,6 +6,13 @@ namespace BinaryStudio.TaskManager.Logic.Core
     {
         void Broadcast(string message);
 
-        void Send(Guid connectionId, string message);
+        void Send(ClientConnection connectionId, string message);
+    }
+
+    public class ClientConnection
+    {
+        public int? EmployeeID { get; set; }
+        public Guid ConnectionID { get; set; }
+
     }
 }

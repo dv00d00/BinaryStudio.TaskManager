@@ -24,7 +24,7 @@
                 new
                 {
                     controller = "HumanTasks",
-                    action = "AllManagersWithTasks",
+                    action = "Index",
                     id = UrlParameter.Optional
                 });
         }
