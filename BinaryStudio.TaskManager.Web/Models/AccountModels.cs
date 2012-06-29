@@ -61,7 +61,7 @@ namespace BinaryStudio.TaskManager.Web.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Повторный ввод пароля")]
-        [Compare("Пароль", ErrorMessage = "Значения не совпадают.")]
+        [Compare("Password", ErrorMessage = "Значения не совпадают.")]
         public string ConfirmPassword { get; set; }
     }
 }
