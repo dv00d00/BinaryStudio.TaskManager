@@ -3,10 +3,25 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var senderId, taskId, receiverId;
+
         $(".sortableTasks").sortable({
+            start: function (event, ui) {
+                senderId = $(this).closest(".managerTasks").attr("id");
+                taskId = this.id;                
+            },
+            receive: function (event, ui) {
+                receiverId = $(this).closest(".managerTasks").attr("id");
+                alert("From: "+senderId+" to: " + receiverId+" task: " + taskId);
+            },
+            stop: function (event, ui) {
+            },
             connectWith: $(".sortableTasks"),
-            placeholder: "placeholderTask"
-        });     
+            placeholder: "placeholderTask",
+            cursor: 'move'
+        });
+
+        $(".sortableTasks").disableSelection();
     });
 </script>
 
@@ -41,7 +56,7 @@
             
     <!-- Create a column with tasks-->
     <td align = "center" valign="top" width="250">
-       
+        <div>Add new task</div>       
         @foreach (var unAssignedTask in Model.UnAssignedTasks)
         {
             <div class="sortableTasks">        
@@ -53,13 +68,12 @@
         
     
     @foreach (var manager in Model.ManagerTasks)
-    {
-        
-        <td align = "center" valign="top" width="250">
+    {        
+        <td id=@manager.Manager.Id.ToString() align = "center" valign="top" width="250" class="managerTasks">
                  <div>@Html.ActionLink("Add new task", "Create",new {managerId = manager.Manager.Id})</div>
                 @foreach (var task in manager.Tasks)
                 {
-                    <div class="sortableTasks">
+                    <div id=@task.Id.ToString() class="sortableTasks">
                         @Html.Partial("ManagerTasksTablePartialView", task)                    
                     </div>
                 }
