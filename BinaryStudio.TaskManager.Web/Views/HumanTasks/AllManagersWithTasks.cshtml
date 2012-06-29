@@ -8,19 +8,18 @@
         $(".sortableTasks").sortable({
             start: function (event, ui) {
                 senderId = $(this).closest(".managerTasks").attr("id");
-                taskId = this.id;                
             },
             receive: function (event, ui) {
                 receiverId = $(this).closest(".managerTasks").attr("id");
-                alert("From: "+senderId+" to: " + receiverId+" task: " + taskId);
-            },
-            stop: function (event, ui) {
+
+                alert("Task:" + $(ui.item).attr("id") + " Sender:"  +senderId + "Reciver: " +receiverId);
+
+
             },
             connectWith: $(".sortableTasks"),
             placeholder: "placeholderTask",
             cursor: 'move'
         });
-
         $(".sortableTasks").disableSelection();
     });
 </script>
@@ -75,7 +74,7 @@
                 {
                     <div id=@task.Id.ToString() class="sortableTasks">
                         @Html.Partial("ManagerTasksTablePartialView", task)                    
-                    </div>
+                   </div>
                 }
             <div class = "sortableTasks" style = "height: 300px"></div>
         </td>
