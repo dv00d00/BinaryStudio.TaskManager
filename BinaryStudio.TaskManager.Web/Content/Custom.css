@@ -14,11 +14,7 @@ div.task{
     height:100px;
     margin: 5px;
 }     
-div.empty{    
-    width:200px;
-    height:20px;
-    margin: 5px;
-}   
+ 
 .placeholderTask 
 {
     opacity: 33;
