@@ -1,8 +1,12 @@
-﻿using BinaryStudio.TaskManager.Logic.Domain;
+﻿using System;
+using System.Collections;
+using System.Collections.ObjectModel;
+using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
 
     using BinaryStudio.TaskManager.Logic.Core;
@@ -15,13 +19,20 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     {
         private readonly IHumanTaskRepository humanTaskRepository;
 
+        private readonly ITaskProcessor taskProcessor;
+
+        private readonly IEmployeeRepository employeeRepository;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanTasksController"/> class.
         /// </summary>
         /// <param name="humanTaskRepository">The human task repository.</param>
-        public HumanTasksController(IHumanTaskRepository humanTaskRepository)
+        /// <param name="taskProcessor">The task processor.</param>
+        public HumanTasksController(IHumanTaskRepository humanTaskRepository, ITaskProcessor taskProcessor, IEmployeeRepository employeeRepository)
         {
             this.humanTaskRepository = humanTaskRepository;
+            this.taskProcessor = taskProcessor;
+            this.employeeRepository = employeeRepository;
         }
 
         //
@@ -46,11 +57,16 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         //
         // GET: /HumanTasks/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int managerId)
         {
-            ViewBag.PossibleCreators = new List<Employee>();
-            ViewBag.PossibleAssignees = new List<Employee>();
-            return View();
+            HumanTask humanTask = new HumanTask();
+            humanTask.AssigneeId = (managerId != -1) ? managerId : (int?) null;
+            humanTask.CreatorId = humanTask.AssigneeId;
+            //TODO: creator pull from logon screen                
+
+            humanTask.Created = DateTime.Now;
+
+            return View(humanTask);
         }
 
         //
@@ -59,14 +75,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [HttpPost]
         public ActionResult Create(HumanTask humanTask)
         {
+
+            humanTask.Assigned = humanTask.AssigneeId == (int?) null ? humanTask.Created : (DateTime?) null;
             if (ModelState.IsValid)
             {
-                this.humanTaskRepository.Add(humanTask);
-                return RedirectToAction("Index");
+                this.taskProcessor.CreateTask(humanTask);
+                return RedirectToAction("AllManagersWithTasks");
             }
 
+            //TODO: refactor this "PossibleCreators" and "PossibleAssignees"
             ViewBag.PossibleCreators = new List<Employee>();
             ViewBag.PossibleAssignees = new List<Employee>();
+            
             return View(humanTask);
         }
 
@@ -117,52 +137,48 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult GetManagerTasks()
+        public ActionResult ManagerDetails(int managerId)
         {
-            var model = new List<ManagerTasksViewModel>
-                {
-                    new ManagerTasksViewModel()
-                        {
-                            Manager = new Employee() { Name = "Hello" },
-                            Tasks =
-                                new List<HumanTask>
-                                    {
-                                        new HumanTask() { Name = "asdasdsd" },
-                                        new HumanTask() { Name = "asdasdsd" },
-                                        new HumanTask() { Name = "asdasdsd" },
-                                        new HumanTask() { Name = "asdasdsd" },
-                                        new HumanTask() { Name = "asdasdsd" },
-                                    }
-                        },
-                    new ManagerTasksViewModel()
-                        {
-                            Manager = new Employee() { Name = "Hello" },
-                            Tasks =
-                                new List<HumanTask>
-                                    {
-                                        new HumanTask() { Name = "asdasdsd" },
-                                        new HumanTask() { Name = "asdasdsd" },
-                                        new HumanTask() { Name = "asdasdsd" },
-                                        new HumanTask() { Name = "asdasdsd" },
-                                        new HumanTask() { Name = "asdasdsd" },
-                                    }
-                        },
-                    new ManagerTasksViewModel()
-                        {
-                            Manager = new Employee() { Name = "Hello" },
-                            Tasks =
-                                new List<HumanTask>
-                                    {
-                                        new HumanTask() { Name = "asdasdsd" },
-                                        new HumanTask() { Name = "asdasdsd" },
-                                        new HumanTask() { Name = "asdasdsd" },
-                                        new HumanTask() { Name = "asdasdsd" },
-                                        new HumanTask() { Name = "asdasdsd" },
-                                    }
-                        },
-                };
-
+            ViewBag.ManagerName = employeeRepository.GetById(managerId).Name;
+            TaskViewModel taskViewModel = new TaskViewModel();
+            IList<TaskViewModel> model = new List<TaskViewModel>();
+            IList<HumanTask> humanTasks = new List<HumanTask>();
+            humanTasks = humanTaskRepository.GetAllTasksForEmployee(managerId).ToList();
+            foreach (var task in humanTasks)
+            {
+                model.Add(
+                            new TaskViewModel()
+                                {
+                                    Task = task,
+                                    CreatorName = task.CreatorId.HasValue?employeeRepository.GetById(task.CreatorId.Value).Name:""
+                                }
+                    );
+            }
             return View(model);
+        }
+
+        public ActionResult AllManagersWithTasks()
+        {
+            ManagersViewModel model = new ManagersViewModel();
+            model.ManagerTasks = new List<ManagerTasksViewModel>();
+            model.UnAssignedTasks = humanTaskRepository.GetUnassingnedTask().ToList();
+            IList<Employee> employees = employeeRepository.GetAll();
+            foreach (Employee employee in employees)
+            {
+                ManagerTasksViewModel manager = new ManagerTasksViewModel();
+                manager.Manager = new Employee();
+                manager.Manager = employee;
+                manager.Tasks = new List<HumanTask>(); 
+                manager.Tasks = humanTaskRepository.GetAllTasksForEmployee(employee.Id).ToList();
+                model.ManagerTasks.Add(manager);
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public void MoveTask(int oldEmployeeId, int newEmployeeId, int taskId)
+        {
+            this.taskProcessor.MoveTask(oldEmployeeId, taskId);
         }
     }
 }

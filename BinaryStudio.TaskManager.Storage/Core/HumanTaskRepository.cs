@@ -8,50 +8,55 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
     public class HumanTaskRepository : IHumanTaskRepository
     {
-        private readonly TaskContext taskContext;
+        private readonly DataBaseContext dataBaseContext;
 
-        public HumanTaskRepository(TaskContext taskContext)
+        public HumanTaskRepository(DataBaseContext dataBaseContext)
         {
-            this.taskContext = taskContext;
+            this.dataBaseContext = dataBaseContext;
         }
 
         public IEnumerable<HumanTask> GetForCreator(int creatorId)
         {
-            return this.taskContext.HumanTasks.Where(it => it.CreatorId == creatorId).ToList();
+            return this.dataBaseContext.HumanTasks.Where(it => it.CreatorId == creatorId).ToList();
         }
 
-        public IEnumerable<HumanTask> GetAllForEmployee(int employeeId)
+        public IList<HumanTask> GetAllTasksForEmployee(int employeeId)
         {
-            return this.taskContext.HumanTasks.Where(it => it.AssigneeId == employeeId).ToList();
+            return this.dataBaseContext.HumanTasks.Where(it => it.AssigneeId == employeeId).ToList();
+        }
+
+        public IList<HumanTask> GetUnassingnedTask()
+        {
+            return this.dataBaseContext.HumanTasks.Where(it => it.AssigneeId.Equals(null)).ToList();
         }
 
         public IEnumerable<HumanTask> GetAll()
         {
-            return this.taskContext.HumanTasks.ToList();
+            return this.dataBaseContext.HumanTasks.ToList();
         }
 
         public HumanTask GetById(int humanTaskId)
         {
-            return this.taskContext.HumanTasks.Single(it => it.Id == humanTaskId);
+            return this.dataBaseContext.HumanTasks.Single(it => it.Id == humanTaskId);
         }
 
-        public void Delete(int id)
+        public void Delete(int humanTaskId)
         {
-            HumanTask humantask = this.taskContext.HumanTasks.Single(x => x.Id == id);
-            this.taskContext.HumanTasks.Remove(humantask);
-            this.taskContext.SaveChanges();
+            HumanTask humantask = this.dataBaseContext.HumanTasks.Single(x => x.Id == humanTaskId);
+            this.dataBaseContext.HumanTasks.Remove(humantask);
+            this.dataBaseContext.SaveChanges();
         }
 
         public void Update(HumanTask humanTask)
         {
-            this.taskContext.Entry(humanTask).State = EntityState.Modified;
-            this.taskContext.SaveChanges();
+            this.dataBaseContext.Entry(humanTask).State = EntityState.Modified;
+            this.dataBaseContext.SaveChanges();
         }
 
         public HumanTask Add(HumanTask humanTask)
         {
-            this.taskContext.Entry(humanTask).State = EntityState.Added;
-            this.taskContext.SaveChanges();
+            this.dataBaseContext.Entry(humanTask).State = EntityState.Added;
+            this.dataBaseContext.SaveChanges();
             return humanTask;
         }
     }

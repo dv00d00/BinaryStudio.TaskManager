@@ -3,6 +3,8 @@ using BinaryStudio.TaskManager.Logic.Domain;
 namespace BinaryStudio.TaskManager.Web.NinjectModules
 {
     using BinaryStudio.TaskManager.Logic.Core;
+    using BinaryStudio.TaskManager.Logic.Tests;
+
     using Ninject.Modules;
 
     /// <summary>
@@ -15,8 +17,14 @@ namespace BinaryStudio.TaskManager.Web.NinjectModules
         /// </summary>
         public override void Load()
         {
-            this.Bind<TaskContext>().ToMethod(it => new TaskContext());
+            this.Bind<DataBaseContext>().ToMethod(it => new DataBaseContext());
+            this.Bind<ITaskProcessor>().To<TaskProcessor>();
+            this.Bind<IEmployeeRepository>().To<EmployeeRepository>();
+
+           // this.Bind<IHumanTaskRepository>().To<HumanTaskRepository>();
             this.Bind<IHumanTaskRepository>().To<HumanTaskRepository>();
+            this.Bind<IReminderRepository>().To<ReminderRepository>();
+
         }
     }
 }

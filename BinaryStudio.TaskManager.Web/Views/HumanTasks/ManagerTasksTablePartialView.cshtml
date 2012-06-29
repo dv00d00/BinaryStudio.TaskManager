@@ -1,6 +1,6 @@
 ﻿@model BinaryStudio.TaskManager.Logic.Domain.HumanTask
 @* This partial view draw a task block in table *@        
-<div class="task">
+<div class="task" id = @Model.Id.ToString() style="height: 100px">
     <b>@Model.Name</b>
     <br/> <br/>
     @Model.Description                                    

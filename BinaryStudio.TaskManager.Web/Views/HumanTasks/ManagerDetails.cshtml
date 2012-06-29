@@ -1,0 +1,74 @@
+﻿@using BinaryStudio.TaskManager.Logic.Domain
+@model IList<BinaryStudio.TaskManager.Web.Models.TaskViewModel>
+
+@helper GetValue(HumanTask item, string creatorName)
+{
+    <tr>
+        <td>
+            @item.Name
+        </td>
+        <td>
+            @item.Description
+        </td>
+        <td>
+            @item.Priority
+        </td>
+        <td>
+            @String.Format("{0:g}", item.Created)
+        </td>
+        <td>
+            @String.Format("{0:g}", item.Finished)
+        </td>
+        <td>
+            @String.Format("{0:g}", item.Closed)
+        </td>
+        <td>
+            @creatorName
+        </td>
+        <td>
+            @this.Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @this.Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @this.Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+}
+
+
+
+<h2> @ViewBag.ManagerName's tasks</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Priority
+        </th>
+        <th>
+            Created
+        </th>
+        <th>
+            Finished
+        </th>
+        <th>
+            Closed
+        </th>
+        <th>
+            Creator
+        </th>
+    </tr>
+
+@foreach (var item in Model)
+    {
+        this.GetValue(item.Task,item.CreatorName);
+            @this.GetValue(item.Task,item.CreatorName)
+    }
+
+</table>

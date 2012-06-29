@@ -8,15 +8,17 @@ namespace BinaryStudio.TaskManager.Logic.Core
     {
         IEnumerable<HumanTask> GetForCreator(int creatorId);
 
-        IEnumerable<HumanTask> GetAllForEmployee(int employeeId);
+        IList<HumanTask> GetAllTasksForEmployee(int employeeId);
 
+        IList<HumanTask> GetUnassingnedTask(); 
+        
         IEnumerable<HumanTask> GetAll();
 
         HumanTask GetById(int humanTaskId);
 
         HumanTask Add(HumanTask humanTask);
 
-        void Delete(int id);
+        void Delete(int humanTaskId);
 
         void Update(HumanTask humanTask);
     }
