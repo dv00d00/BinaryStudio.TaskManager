@@ -58,14 +58,14 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult Create(int managerId)
         {
-            
-            return View(new HumanTask()
-                            {
-                                AssigneeId = managerId,
-                                CreatorId = managerId,
-                                Created =  DateTime.Now,
-                       
-                            });
+            HumanTask humanTask = new HumanTask();
+            humanTask.AssigneeId = (managerId != -1) ? managerId : (int?) null;
+            humanTask.CreatorId = humanTask.AssigneeId;
+            //TODO: creator pull from logon screen                
+
+            humanTask.Created = DateTime.Now;
+
+            return View(humanTask);
         }
 
         //
@@ -74,15 +74,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [HttpPost]
         public ActionResult Create(HumanTask humanTask)
         {
-            humanTask.Assigned = DateTime.Now;
+
+            humanTask.Assigned = humanTask.AssigneeId == (int?) null ? humanTask.Created : (DateTime?) null;
             if (ModelState.IsValid)
             {
                 this.taskProcessor.CreateTask(humanTask);
                 return RedirectToAction("AllManagersWithTasks");
             }
 
+            //TODO: refactor this "PossibleCreators" and "PossibleAssignees"
             ViewBag.PossibleCreators = new List<Employee>();
             ViewBag.PossibleAssignees = new List<Employee>();
+            
             return View(humanTask);
         }
 
@@ -145,7 +148,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             ManagersViewModel model = new ManagersViewModel();
             model.ManagerTasks = new List<ManagerTasksViewModel>();
-            model.UnAssignedTasks = new List<HumanTask>();
+            model.UnAssignedTasks = humanTaskRepository.GetUnassingnedTask().ToList();
             IList<Employee> employees = employeeRepository.GetAll();
             foreach (Employee employee in employees)
             {
@@ -163,62 +166,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public void MoveTask(int oldEmployeeId, int newEmployeeId, int taskId)
         {
             this.taskProcessor.MoveTask(oldEmployeeId, taskId);
-        }
-
-        private ManagersViewModel CreateManagersViewModel()
-        {
-            var model =new ManagersViewModel(){
-                ManagerTasks = new List<ManagerTasksViewModel>
-                            {
-                                new ManagerTasksViewModel()
-                                    {
-                                        Manager = new Employee() {Id = 100, Name = "Vasya"},
-                                        Tasks =
-                                            new List<HumanTask>
-                                                {
-                                                    new HumanTask {Id = 1, Name = "Do Something task 1",Description = "bla bla bla"},
-                                                    new HumanTask {Id = 2, Name = "Do Something task 2",Description = "bla bla bla"},
-                                                    new HumanTask {Id = 3, Name = "Do Something task 3",Description = "bla bla bla"},
-                                                    new HumanTask {Id = 4, Name = "Do Something task 4",Description = "bla bla bla"},
-                                                    new HumanTask {Id = 5, Name = "Do Something task 5",Description = "bla bla bla"},
-                                                }
-                                    },
-                                new ManagerTasksViewModel()
-                                    {
-                                        Manager = new Employee() {Id = 101, Name = "Petya"},
-                                        Tasks =
-                                            new List<HumanTask>
-                                                {
-                                                    new HumanTask {Id = 6, Name = "Do Something task 6",Description = "bla bla bla"},
-                                                    new HumanTask {Id = 7, Name = "Do Something task 7",Description = "bla bla bla"},
-                                                    new HumanTask {Id = 8, Name = "Do Something task 8",Description = "bla bla bla"},
-                                                    new HumanTask {Id = 9, Name = "Do Something task 9",Description = "bla bla bla"},
-                                                    new HumanTask {Id = 10, Name = "Do Something task 10",Description = "bla bla bla"},
-                                                }
-                                    },
-                                new ManagerTasksViewModel()
-                                    {
-                                        Manager = new Employee() {Id = 102, Name = "Vanya"},
-                                        Tasks =
-                                            new List<HumanTask>
-                                                {
-                                                    new HumanTask {Id = 11, Name = "Do Something task 11",Description = "bla bla bla"},
-                                                    new HumanTask {Id = 12, Name = "Do Something task 12",Description = "bla bla bla"},
-                                                    new HumanTask {Id = 13, Name = "Do Something task 13",Description = "bla bla bla"},
-                                                    new HumanTask {Id = 14, Name = "Do Something task 14",Description = "bla bla bla"},
-                                                    new HumanTask {Id = 15, Name = "Do Something task 15",Description = "bla bla bla"},
-                                                }
-                                    },
-                            },
-                            UnAssignedTasks = new List<HumanTask>()
-                            { 
-                                new HumanTask() {Name = "Pick Some One task 16",Description = "do do do do"},
-                                new HumanTask() {Name = "Pick Some One task 17",Description = "do do do do"},
-                                new HumanTask() {Name = "Pick Some One task 18",Description = "do do do do"},
-                            }
-                        }; 
-            
-            return model;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using BinaryStudio.TaskManager.Logic.Domain;
+﻿using System.Linq;
+using System.Web.Mvc;
+using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Web.Tests
 {
@@ -32,7 +34,6 @@ namespace BinaryStudio.TaskManager.Web.Tests
         public void Should_MoveTask()
         {
             // Act
-
             this.controller.MoveTask(123, 123, 123);
 
             // Assert           
@@ -52,18 +53,24 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.taskProcesorMock.Verify(it => it.GetTasksList(12));
             this.employeeRepository.Verify(it => it.GetById(12));
         } 
-
+        
         [Test]
-        public void Should_CreateTask_WhenCallCreate()
+        public void Should_CreateAssignedTask_WhenMethodCreateCalledWithAssignedId()
         {
-            //arrange
-            HumanTask task = new HumanTask();
-                
-            //act
-            this.controller.Create(task);
+            //arrange            
 
-            //assert
-            this.taskProcesorMock.Verify(it => it.CreateTask(task),Times.Once());
+            //act
+            this.controller.Create(new HumanTask(){AssigneeId = 5, CreatorId = 5});
+
+            //assert            
+            this.taskProcesorMock.Verify(x => x.CreateTask(It.Is<HumanTask>(it => it.AssigneeId == 5)), Times.Once());
+            this.taskProcesorMock.Verify(x => x.CreateTask(It.Is<HumanTask>(it => it.CreatorId == 5)), Times.Once());            
         }
+        
+        [Test]
+        public void Should_CreateUnasignedTask_WhenMethodCreateCalledWithMinus1()
+        {       
+        }
+        
     }
 }
