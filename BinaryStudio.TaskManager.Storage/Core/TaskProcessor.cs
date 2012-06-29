@@ -98,7 +98,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         {
             //throw new NotImplementedException();
 
-            return humanTaskRepository.GetAllForEmployee(employeeId);
+            return humanTaskRepository.GetAllTasksForEmployee(employeeId);
         }
 
         public IEnumerable<HumanTask> GetUnassignedTasks()

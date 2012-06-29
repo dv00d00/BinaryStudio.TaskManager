@@ -12,5 +12,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         Employee GetById(int employeeId);
         IEnumerable<Employee> Get(Func<Employee> selector);
+        IList<Employee> GetAll();
     }
 }

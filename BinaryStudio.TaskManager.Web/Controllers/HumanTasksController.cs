@@ -1,4 +1,6 @@
-﻿using BinaryStudio.TaskManager.Logic.Domain;
+﻿using System;
+using System.Collections.ObjectModel;
+using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
@@ -54,11 +56,16 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         //
         // GET: /HumanTasks/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int managerId)
         {
-            ViewBag.PossibleCreators = new List<Employee>();
-            ViewBag.PossibleAssignees = new List<Employee>();
-            return View();
+            
+            return View(new HumanTask()
+                            {
+                                AssigneeId = managerId,
+                                CreatorId = managerId,
+                                Created =  DateTime.Now,
+                       
+                            });
         }
 
         //
@@ -67,10 +74,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [HttpPost]
         public ActionResult Create(HumanTask humanTask)
         {
+            humanTask.Assigned = DateTime.Now;
             if (ModelState.IsValid)
             {
                 this.humanTaskRepository.Add(humanTask);
-                return RedirectToAction("Index");
+                return RedirectToAction("AllManagersWithTasks");
             }
 
             ViewBag.PossibleCreators = new List<Employee>();
@@ -135,8 +143,19 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult AllManagersWithTasks()
         {
-            var model = CreateManagersViewModel();
-
+            ManagersViewModel model = new ManagersViewModel();
+            model.ManagerTasks = new List<ManagerTasksViewModel>();
+            model.UnAssignedTasks = new List<HumanTask>();
+            IList<Employee> employees = employeeRepository.GetAll();
+            foreach (Employee employee in employees)
+            {
+                ManagerTasksViewModel manager = new ManagerTasksViewModel();
+                manager.Manager = new Employee();
+                manager.Manager = employee;
+                manager.Tasks = new List<HumanTask>(); 
+                manager.Tasks = humanTaskRepository.GetAllTasksForEmployee(employee.Id).ToList();
+                model.ManagerTasks.Add(manager);
+            }
             return View(model);
         }
 

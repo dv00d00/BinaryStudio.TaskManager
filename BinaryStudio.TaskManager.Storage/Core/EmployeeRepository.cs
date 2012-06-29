@@ -10,6 +10,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
     {
         private readonly DataBaseContext dataBaseContext;
 
+
         public EmployeeRepository(DataBaseContext dataBaseContext)
         {
             this.dataBaseContext = dataBaseContext;
@@ -39,6 +40,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public IEnumerable<Employee> Get(Func<Employee> selector)
         {
             throw new NotImplementedException();
+        }
+
+        public  IList<Employee> GetAll()
+        {
+            return this.dataBaseContext.Employees.ToList();
         }
     }
 }

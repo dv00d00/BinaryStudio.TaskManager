@@ -45,7 +45,7 @@
             {
                 <td align="center" width="250">
                    
-                    <div class="manager">
+                    <div class="manager" >
                          @Html.ActionLink(manager.Manager.Name, "ManagerDetails",new {id = manager.Manager.Id},new {@style = "display:block;"})
                          
                     </div>
@@ -56,7 +56,7 @@
             
     <!-- Create a column with tasks-->
     <td align = "center" valign="top" width="250">
-        <div>Add new task</div>
+        <div>Add new task</div>       
         @foreach (var unAssignedTask in Model.UnAssignedTasks)
         {
             <div class="sortableTasks">        
@@ -68,10 +68,9 @@
         
     
     @foreach (var manager in Model.ManagerTasks)
-    {
-        
+    {        
         <td id=@manager.Manager.Id.ToString() align = "center" valign="top" width="250" class="managerTasks">
-                <div>Add new task</div>
+                 <div>@Html.ActionLink("Add new task", "Create",new {managerId = manager.Manager.Id})</div>
                 @foreach (var task in manager.Tasks)
                 {
                     <div id=@task.Id.ToString() class="sortableTasks">

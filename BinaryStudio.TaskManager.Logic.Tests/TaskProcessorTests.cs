@@ -34,10 +34,10 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
             //mockHumanTaskRepository.Setup(mr => mr.GetAll()).Returns(tasks);
 
-            //mockHumanTaskRepository.Setup(mr => mr.GetAllForEmployee(It.IsAny<int>())).Returns((int id) =>
+            //mockHumanTaskRepository.Setup(mr => mr.GetAllTasksForEmployee(It.IsAny<int>())).Returns((int id) =>
             //    tasks.Where(x => x.AssigneeId == id));
 
-            //mockHumanTaskRepository.Setup(mr => mr.GetAllForEmployee(It.IsAny<int>())).Returns((int id) =>
+            //mockHumanTaskRepository.Setup(mr => mr.GetAllTasksForEmployee(It.IsAny<int>())).Returns((int id) =>
             //    tasks.Where(x => x.CreatorId == id));
 
             //mockHumanTaskRepository.Setup(mr => mr.GetById(It.IsAny<int>())).Returns((int id) =>
