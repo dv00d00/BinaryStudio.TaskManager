@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using BinaryStudio.TaskManager.Logic.Domain;
 
@@ -133,11 +134,23 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult ManagerDetails(int id)
+        public ActionResult ManagerDetails(int managerId)
         {
-            var model = new ManagerTasksViewModel();
-            model.Manager = employeeRepository.GetById(id);
-            model.Tasks = taskProcessor.GetTasksList(id).ToList();
+            ViewBag.ManagerName = employeeRepository.GetById(managerId).Name;
+            TaskViewModel taskViewModel = new TaskViewModel();
+            IList<TaskViewModel> model = new List<TaskViewModel>();
+            IList<HumanTask> humanTasks = new List<HumanTask>();
+            humanTasks = humanTaskRepository.GetAllTasksForEmployee(managerId).ToList();
+            foreach (var task in humanTasks)
+            {
+                model.Add(
+                            new TaskViewModel()
+                                {
+                                    Task = task,
+                                    CreatorName = task.CreatorId.HasValue?employeeRepository.GetById(task.CreatorId.Value).Name:""
+                                }
+                    );
+            }
             return View(model);
         }
 
