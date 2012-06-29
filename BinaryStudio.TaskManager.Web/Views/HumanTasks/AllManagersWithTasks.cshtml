@@ -43,7 +43,7 @@
                 <td align="center" width="250">
                    
                     <div class="manager" >
-                         @Html.ActionLink(manager.Manager.Name, "ManagerDetails",new {id = manager.Manager.Id},new {@style = "display:block;"})
+                         @Html.ActionLink(manager.Manager.Name, "ManagerDetails",new {managerId = manager.Manager.Id})
                          
                     </div>
                 </td>

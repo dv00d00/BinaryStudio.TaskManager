@@ -1,31 +1,74 @@
-﻿@model BinaryStudio.TaskManager.Web.Models.ManagerTasksViewModel
+﻿@using BinaryStudio.TaskManager.Logic.Domain
+@model IList<BinaryStudio.TaskManager.Web.Models.TaskViewModel>
 
-@{
-    Layout = null;
+@helper GetValue(HumanTask item, string creatorName)
+{
+    <tr>
+        <td>
+            @item.Name
+        </td>
+        <td>
+            @item.Description
+        </td>
+        <td>
+            @item.Priority
+        </td>
+        <td>
+            @String.Format("{0:g}", item.Created)
+        </td>
+        <td>
+            @String.Format("{0:g}", item.Finished)
+        </td>
+        <td>
+            @String.Format("{0:g}", item.Closed)
+        </td>
+        <td>
+            @creatorName
+        </td>
+        <td>
+            @this.Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @this.Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @this.Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <title> @Model.Manager.Name Details</title>
-</head>
-<body>
-    <div>
-        <p>Tasks list:</p>
-        <br/>
-        <ul>
-            <li>
-                @foreach(var task in Model.Tasks)
-                {
-                    <p>Task Name: @task.Name</p> <br/>
-                    <p>Task Description: @task.Description</p> <br/>
-                    <p>Task Priority: @task.Priority</p> <br/>
-                    <p>Task Created: @task.Created</p> <br/>
-                }
-            </li>
-        </ul>
-        
-    </div>
-</body>
-</html>
+
+<h2> @ViewBag.ManagerName's tasks</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Priority
+        </th>
+        <th>
+            Created
+        </th>
+        <th>
+            Finished
+        </th>
+        <th>
+            Closed
+        </th>
+        <th>
+            Creator
+        </th>
+    </tr>
+
+@foreach (var item in Model)
+    {
+        this.GetValue(item.Task,item.CreatorName);
+            @this.GetValue(item.Task,item.CreatorName)
+    }
+
+</table>
