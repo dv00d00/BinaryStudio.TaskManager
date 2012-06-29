@@ -77,7 +77,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             humanTask.Assigned = DateTime.Now;
             if (ModelState.IsValid)
             {
-                this.humanTaskRepository.Add(humanTask);
+                this.taskProcessor.CreateTask(humanTask);
                 return RedirectToAction("AllManagersWithTasks");
             }
 

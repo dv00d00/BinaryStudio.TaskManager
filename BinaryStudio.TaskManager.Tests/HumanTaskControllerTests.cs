@@ -1,4 +1,6 @@
-﻿namespace BinaryStudio.TaskManager.Web.Tests
+﻿using BinaryStudio.TaskManager.Logic.Domain;
+
+namespace BinaryStudio.TaskManager.Web.Tests
 {
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Web.Controllers;
@@ -50,5 +52,18 @@
             this.taskProcesorMock.Verify(it => it.GetTasksList(12));
             this.employeeRepository.Verify(it => it.GetById(12));
         } 
+
+        [Test]
+        public void Should_CreateTask_WhenCallCreate()
+        {
+            //arrange
+            HumanTask task = new HumanTask();
+                
+            //act
+            this.controller.Create(task);
+
+            //assert
+            this.taskProcesorMock.Verify(it => it.CreateTask(task),Times.Once());
+        }
     }
 }
