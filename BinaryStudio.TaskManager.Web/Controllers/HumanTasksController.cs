@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
@@ -55,11 +56,16 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         //
         // GET: /HumanTasks/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int managerId)
         {
-            ViewBag.PossibleCreators = new List<Employee>();
-            ViewBag.PossibleAssignees = new List<Employee>();
-            return View();
+            
+            return View(new HumanTask()
+                            {
+                                AssigneeId = managerId,
+                                CreatorId = managerId,
+                                Created =  DateTime.Now,
+                       
+                            });
         }
 
         //
@@ -68,10 +74,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [HttpPost]
         public ActionResult Create(HumanTask humanTask)
         {
+            humanTask.Assigned = DateTime.Now;
             if (ModelState.IsValid)
             {
                 this.humanTaskRepository.Add(humanTask);
-                return RedirectToAction("Index");
+                return RedirectToAction("AllManagersWithTasks");
             }
 
             ViewBag.PossibleCreators = new List<Employee>();
