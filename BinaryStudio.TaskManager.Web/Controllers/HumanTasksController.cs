@@ -175,10 +175,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public void MoveTask(int oldEmployeeId, int newEmployeeId, int taskId)
+
+        public void MoveTask(List<int> values)
         {
-            this.taskProcessor.MoveTask(oldEmployeeId, taskId);
+            taskProcessor.MoveTask(values[0], values[2]);
         }
     }
 }

@@ -71,7 +71,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         public void MoveTask(int taskId, int employeeId)
         {
-            throw new NotImplementedException();
+            var task = humanTaskRepository.GetById(taskId);
+            task.AssigneeId = employeeId;
+            humanTaskRepository.Update(task);
 
         }
 

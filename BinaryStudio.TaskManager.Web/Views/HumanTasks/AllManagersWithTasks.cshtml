@@ -13,6 +13,19 @@
                 receiverId = $(this).closest(".managerTasks").attr("id");
                 taskId = $(ui.item).attr("id");
                 alert("Task: " + taskId + "\nSender: " + senderId + "\nReciver: " + receiverId);
+                var stringArray = new Array();
+                stringArray[0] = taskId;
+                stringArray[1] = senderId;
+                stringArray[2] = receiverId;
+                var postData = { values: stringArray };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/HumanTasks/MoveTask",
+                    data: postData,
+                    dataType: "json",
+                    traditional: true
+                });
             },
             connectWith: $(".sortableTasks"),
             placeholder: "placeholderTask",
@@ -68,7 +81,7 @@
     {        
         <td id=@manager.Manager.Id.ToString() align = "center" valign="top" width="250" class="managerTasks">
                  <div>@Html.ActionLink("Add new task", "Create", new {managerId = manager.Manager.Id})</div>
-                @foreach (var task in manager.Tasks)
+                @foreach (var task in manager.Tasks.OrderByDescending(x => x.Priority))
                 {
                     <div class="sortableTasks">
                         @Html.Partial("ManagerTasksTablePartialView", task)                    

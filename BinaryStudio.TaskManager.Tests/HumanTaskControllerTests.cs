@@ -30,16 +30,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.controller = new HumanTasksController(mock.Object, taskProcesorMock.Object, this.employeeRepository.Object);
         }
 
-        [Test]
-        public void Should_MoveTask()
-        {
-            // Act
-            this.controller.MoveTask(123, 123, 123);
-
-            // Assert           
-
-            this.taskProcesorMock.Verify(it => it.MoveTask(123, 123));
-        }
+     
 
         [Test]
         public void Should_TakeDataFromTaskProcessorAndEmployeeRepository_WhenLoadingManagerDetails()
