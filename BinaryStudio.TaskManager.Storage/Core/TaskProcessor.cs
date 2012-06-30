@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace BinaryStudio.TaskManager.Logic.Tests
 {
     using System;
@@ -47,7 +49,6 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         public void UpdateTask(HumanTask task, Reminder reminder)
         {
-            //throw new NotImplementedException();
            
             humanTaskRepository.Update(task);
             
@@ -56,7 +57,6 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         public void DeleteTask(int taskId)
         {
-            //throw new NotImplementedException();
             
             foreach (var reminder in reminderRepository.GetAll())
             {
@@ -101,23 +101,14 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         public IEnumerable<HumanTask> GetTasksList(int employeeId)
         {
-            //throw new NotImplementedException();
-
             return humanTaskRepository.GetAllTasksForEmployee(employeeId);
         }
 
         public IEnumerable<HumanTask> GetUnassignedTasks()
         {
             //returns UnassignedTasks
-            //throw new NotImplementedException();
 
-            foreach (var task in humanTaskRepository.GetAll())
-            {
-                if (task.AssigneeId.HasValue == false)
-                {
-                    yield return task;
-                }
-            }
+            return humanTaskRepository.GetAll().Where(task => task.AssigneeId.HasValue == false);
         }
 
         public HumanTask GetTaskById(int taskId)
@@ -128,6 +119,11 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         public void AssignTask(int taskId, int employeeId)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<HumanTask> GetAllTasks()
+        {
+            return humanTaskRepository.GetAll();
         }
     }
 }

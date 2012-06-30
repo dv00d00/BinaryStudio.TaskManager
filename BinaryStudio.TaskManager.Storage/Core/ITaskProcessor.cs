@@ -20,6 +20,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void MoveTask(int taskId, int employeeId);
         void MoveTaskToUnassigned(int taskId);
         
+        
         void AssignTask(int taskId, int emploeeyId);
 
         void CloseTask(int taskId);
@@ -27,6 +28,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
         HumanTask GetTaskById(int taskId);
         IEnumerable<HumanTask> GetUnassignedTasks();
         IEnumerable<HumanTask> GetTasksList(int employeeId);
-        
+        IEnumerable<HumanTask>  GetAllTasks(); 
     }
 }

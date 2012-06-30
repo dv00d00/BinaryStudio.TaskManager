@@ -14,20 +14,17 @@ namespace BinaryStudio.TaskManager.Web.Tests
     [TestFixture]
     public class HumanTaskControllerTests
     {
-        private Mock<IHumanTaskRepository> mock;
+
         private Mock<ITaskProcessor> taskProcesorMock;
         private Mock<IEmployeeRepository> employeeRepository;
-
         private HumanTasksController controller;
 
         [SetUp]
         public void Init()
         {
-            this.mock = new Mock<IHumanTaskRepository>();
             this.taskProcesorMock = new Mock<ITaskProcessor>();
-            this.employeeRepository = new Mock<IEmployeeRepository>();
-            
-            this.controller = new HumanTasksController(mock.Object, taskProcesorMock.Object, this.employeeRepository.Object);
+            this.employeeRepository = new Mock<IEmployeeRepository>();   
+            this.controller = new HumanTasksController(taskProcesorMock.Object, this.employeeRepository.Object);
         }
 
      

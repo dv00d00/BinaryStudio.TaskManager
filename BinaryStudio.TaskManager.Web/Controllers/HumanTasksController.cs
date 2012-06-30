@@ -17,8 +17,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     /// </summary>
     public class HumanTasksController : Controller
     {
-        private readonly IHumanTaskRepository humanTaskRepository;
-
         private readonly ITaskProcessor taskProcessor;
 
         private readonly IEmployeeRepository employeeRepository;
@@ -26,11 +24,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanTasksController"/> class.
         /// </summary>
-        /// <param name="humanTaskRepository">The human task repository.</param>
         /// <param name="taskProcessor">The task processor.</param>
-        public HumanTasksController(IHumanTaskRepository humanTaskRepository, ITaskProcessor taskProcessor, IEmployeeRepository employeeRepository)
+        public HumanTasksController(ITaskProcessor taskProcessor, IEmployeeRepository employeeRepository)
         {
-            this.humanTaskRepository = humanTaskRepository;
             this.taskProcessor = taskProcessor;
             this.employeeRepository = employeeRepository;
         }
@@ -40,7 +36,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ViewResult Index()
         {
-            var humanTasks = this.humanTaskRepository.GetAll();
+            var humanTasks = this.taskProcessor.GetAllTasks();
 
             return View(humanTasks);
         }
@@ -50,13 +46,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ViewResult Details(int id)
         {
-            HumanTask humantask = this.humanTaskRepository.GetById(id);
+            HumanTask humantask = this.taskProcessor.GetTaskById(id);
             return View(humantask);
         }
 
         //
         // GET: /HumanTasks/Create
-
+       
         public ActionResult Create(int managerId)
         {
             HumanTask humanTask = new HumanTask();
@@ -95,7 +91,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult Edit(int id)
         {
-            HumanTask humantask = this.humanTaskRepository.GetById(id);
+            HumanTask humantask = this.taskProcessor.GetTaskById(id);
             ViewBag.PossibleCreators = new List<Employee>();
             ViewBag.PossibleAssignees = new List<Employee>();
             return View(humantask);
@@ -109,7 +105,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                this.humanTaskRepository.Update(humanTask);
+                this.taskProcessor.UpdateTask(humanTask);
                 return RedirectToAction("Index");
             }
 
@@ -123,7 +119,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult Delete(int id)
         {
-            HumanTask humantask = this.humanTaskRepository.GetById(id);
+            HumanTask humantask = this.taskProcessor.GetTaskById(id);
             return View(humantask);
         }
 
@@ -133,7 +129,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            this.humanTaskRepository.Delete(id);
+            this.taskProcessor.DeleteTask(id);
             return RedirectToAction("Index");
         }
 
@@ -143,7 +139,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             TaskViewModel taskViewModel = new TaskViewModel();
             IList<TaskViewModel> model = new List<TaskViewModel>();
             IList<HumanTask> humanTasks = new List<HumanTask>();
-            humanTasks = humanTaskRepository.GetAllTasksForEmployee(managerId).ToList();
+            humanTasks = taskProcessor.GetTasksList(managerId).ToList();
             foreach (var task in humanTasks)
             {
                 model.Add(
@@ -161,7 +157,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             ManagersViewModel model = new ManagersViewModel();
             model.ManagerTasks = new List<ManagerTasksViewModel>();
-            model.UnAssignedTasks = humanTaskRepository.GetUnassingnedTask().ToList();
+            model.UnAssignedTasks = taskProcessor.GetUnassignedTasks().ToList();
             IList<Employee> employees = employeeRepository.GetAll();
             foreach (Employee employee in employees)
             {
@@ -169,7 +165,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 manager.Manager = new Employee();
                 manager.Manager = employee;
                 manager.Tasks = new List<HumanTask>(); 
-                manager.Tasks = humanTaskRepository.GetAllTasksForEmployee(employee.Id).ToList();
+                manager.Tasks = taskProcessor.GetTasksList(employee.Id).ToList();
                 model.ManagerTasks.Add(manager);
             }
             return View(model);
