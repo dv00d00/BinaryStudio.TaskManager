@@ -38,7 +38,7 @@
 <h2> @ViewBag.ManagerName's tasks</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create",new{managerId =(int) ViewBag.ManagerId})
 </p>
 <table>
     <tr>

@@ -136,6 +136,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult ManagerDetails(int managerId)
         {
             ViewBag.ManagerName = employeeRepository.GetById(managerId).Name;
+            ViewBag.ManagerId = managerId;
             TaskViewModel taskViewModel = new TaskViewModel();
             IList<TaskViewModel> model = new List<TaskViewModel>();
             IList<HumanTask> humanTasks = new List<HumanTask>();
@@ -162,9 +163,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             foreach (Employee employee in employees)
             {
                 ManagerTasksViewModel manager = new ManagerTasksViewModel();
-                manager.Manager = new Employee();
                 manager.Manager = employee;
-                manager.Tasks = new List<HumanTask>(); 
                 manager.Tasks = taskProcessor.GetTasksList(employee.Id).ToList();
                 model.ManagerTasks.Add(manager);
             }
@@ -176,10 +175,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         //value 2 - move to
         public void MoveTask(List<int> values)
         {
-            if(values[0]==values[2])
-            {
-                return;
-            }
+        
             // move to real manager
             if(values[2] != -1)
             {

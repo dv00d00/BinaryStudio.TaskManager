@@ -1,3 +1,6 @@
+using System.Data;
+using System.Linq;
+
 namespace BinaryStudio.TaskManager.Logic.Core
 {
     using System;
@@ -7,24 +10,36 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
     public class ReminderRepository : IReminderRepository
     {
+
+         private readonly DataBaseContext dataBaseContext;
+
+         public ReminderRepository(DataBaseContext dataBaseContext)
+        {
+            this.dataBaseContext = dataBaseContext;
+        }
+
+
         public void Add(Reminder reminder)
         {
-            throw new NotImplementedException();
+            this.dataBaseContext.Entry(reminder).State = EntityState.Added;
+            this.dataBaseContext.SaveChanges();
         }
 
         public void Delete(Reminder reminder)
         {
-            throw new NotImplementedException();
+            this.dataBaseContext.Reminders.Remove(reminder);
+            this.dataBaseContext.SaveChanges();
         }
 
         public void Update(Reminder reminder)
         {
-            throw new NotImplementedException();
+            this.dataBaseContext.Entry(reminder).State = EntityState.Modified;
+            this.dataBaseContext.SaveChanges();
         }
 
         public Reminder GetById(int reminderId)
         {
-            throw new NotImplementedException();
+            return this.dataBaseContext.Reminders.Single(reminder => reminder.Id == reminderId);
         }
 
         public IEnumerable<Reminder> Get(Func<Reminder> selector)
@@ -34,12 +49,12 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public IEnumerable<Reminder> GetReminderList(DateTime dateTime)
         {
-            throw new NotImplementedException();
+            return this.dataBaseContext.Reminders.Where(reminder => reminder.ReminderDate == dateTime).ToList();
         }
 
         public IEnumerable<Reminder> GetAll()
         {
-            throw new NotImplementedException();
+            return this.dataBaseContext.Reminders.ToList();
         }
     }
 }
