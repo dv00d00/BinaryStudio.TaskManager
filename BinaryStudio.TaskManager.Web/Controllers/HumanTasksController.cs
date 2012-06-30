@@ -175,10 +175,28 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return View(model);
         }
 
-
+        //value 0 - tasks's
+        //value 1 - current task owner
+        //value 2 - move to
         public void MoveTask(List<int> values)
         {
-            taskProcessor.MoveTask(values[0], values[2]);
+            if(values[0]==values[2])
+            {
+                return;
+            }
+            // move to real manager
+            if(values[2] != -1)
+            {
+                taskProcessor.MoveTask(values[0], values[2]);
+                return;
+            }
+            //make task unassigned
+            if(values[2]==-1)
+            {
+                taskProcessor.MoveTaskToUnassigned(values[0]);
+            }
+
+            
         }
     }
 }

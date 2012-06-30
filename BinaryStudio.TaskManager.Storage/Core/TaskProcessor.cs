@@ -79,7 +79,10 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         public void MoveTaskToUnassigned(int taskId)
         {
-            throw new NotImplementedException();
+            HumanTask task= humanTaskRepository.GetById(taskId);
+            task.AssigneeId = null;
+            humanTaskRepository.Update(task);
+
         }
 
         public void CloseTask(int taskId)
