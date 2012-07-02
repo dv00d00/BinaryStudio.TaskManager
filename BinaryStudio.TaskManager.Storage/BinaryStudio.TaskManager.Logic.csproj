@@ -60,6 +60,8 @@
     <Compile Include="Core\TimeManager.cs" />
     <Compile Include="Domain\DatabaseInitializer.cs" />
     <Compile Include="Domain\IEntity.cs" />
+    <Compile Include="Domain\Login.cs" />
+    <Compile Include="Domain\UserRoles.cs" />
     <Compile Include="Domain\Reminder.cs" />
     <Compile Include="Domain\DataBaseContext.cs" />
     <Compile Include="Domain\Employee.cs" />
