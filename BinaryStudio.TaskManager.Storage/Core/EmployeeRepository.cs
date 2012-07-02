@@ -22,14 +22,17 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.dataBaseContext.SaveChanges();
         }
 
-        public void Delete(Employee employee)
+        public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Employee employee = this.dataBaseContext.Employees.Single(x => x.Id == id);
+            this.dataBaseContext.Employees.Remove(employee);
+            this.dataBaseContext.SaveChanges();
         }
 
         public void Update(Employee employee)
         {
-            throw new NotImplementedException();
+            this.dataBaseContext.Entry(employee).State = EntityState.Modified;
+            this.dataBaseContext.SaveChanges();
         }
 
         public Employee GetById(int employeeId)

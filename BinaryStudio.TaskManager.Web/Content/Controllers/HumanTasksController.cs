@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.ObjectModel;
 using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
@@ -19,13 +17,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     {
         private readonly ITaskProcessor taskProcessor;
 
-        private readonly IEmployeeRepository employeeRepository;
+        private readonly Logic.Core.IEmployeeRepository employeeRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanTasksController"/> class.
         /// </summary>
         /// <param name="taskProcessor">The task processor.</param>
-        public HumanTasksController(ITaskProcessor taskProcessor, IEmployeeRepository employeeRepository)
+        public HumanTasksController(ITaskProcessor taskProcessor, Logic.Core.IEmployeeRepository employeeRepository)
         {
             this.taskProcessor = taskProcessor;
             this.employeeRepository = employeeRepository;
