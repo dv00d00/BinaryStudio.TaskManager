@@ -25,7 +25,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         private Mock<IHumanTaskRepository> mockHumanTaskRepository;
         private Mock<IReminderRepository> mockReminderRepository;
         private TaskProcessor processorUnderTest;
-        private Mock<IEmployeeRepository> employeeRepository;
+        private Mock<IEmployeeRepository> mockEmployeeRepository;
 
         [SetUp]
         public void TaskProcessorTestsSetup()
@@ -61,9 +61,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
             mockReminderRepository = new Mock<IReminderRepository>();
 
-            employeeRepository = new Mock<IEmployeeRepository>();
+            mockEmployeeRepository = new Mock<IEmployeeRepository>();
 
-            processorUnderTest = new TaskProcessor(mockHumanTaskRepository.Object, mockReminderRepository.Object);
+            processorUnderTest = new TaskProcessor(mockHumanTaskRepository.Object, mockReminderRepository.Object, mockEmployeeRepository.Object);
         }
 
         [Test]
@@ -102,12 +102,11 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         }
 
         [Test]
-        [ExpectedException]
         public void Should_AssignTask_WhenSuchEmployeeExists()
         {
             //arrange
             mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
-            employeeRepository.Setup(it => it.GetById(3)).Returns(new Employee { Id = 3 });
+            mockEmployeeRepository.Setup(it => it.GetById(3)).Returns(new Employee { Id = 3 });
 
             //act
             processorUnderTest.AssignTask(1, 3);
@@ -122,7 +121,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         {
             //arrange
             mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
-            employeeRepository.Setup(it => it.GetById(4)).Throws<IndexOutOfRangeException>();
+            mockEmployeeRepository.Setup(it => it.GetById(4)).Throws<InvalidOperationException>();
 
             //act
             processorUnderTest.AssignTask(1, 4);
@@ -211,6 +210,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             mockHumanTaskRepository.Verify(it => it.GetById(1), Times.Once());
         }
 
+        [Test]
         public void Should_ReturnListOfAllTasks_WhenGetTasksListIsCalledWithNoArgumentsIsCalled()
         {
             processorUnderTest.GetTasksList();
@@ -219,23 +219,36 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         }
 
         [Test]
+        public void Should_UpdateTaskClosedFieldWithCurrentDate_WhenCloseIsCalled()
+        {
+            //arrange
+            mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
+          
+            //act
+            processorUnderTest.CloseTask(1);
+
+            //assert
+            mockHumanTaskRepository.Verify(it => it.Update(It.Is<HumanTask>(x => x.Closed!=null)), Times.Once());
+        }
+
+        [Test]
         public void Should_UpdateTaskAndDeleteRelatedReminders_WhenMoveTaskIsCalled()
         {
             //arrange
-            var testTask = new HumanTask {Id = 1};
-
+            var taskBeingMoved = 1;
             mockReminderRepository.Setup(it => it.GetAll()).Returns(new List<Reminder>{
                 new Reminder(){TaskId = 3}, 
-                new Reminder(){TaskId = 5},
+                new Reminder(){TaskId = taskBeingMoved},
                 new Reminder(){TaskId = 2},
             });
+            mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
 
             //act
-            processorUnderTest.MoveTask(1,4);
+            processorUnderTest.MoveTask(taskBeingMoved,4);
 
             //assert
             mockHumanTaskRepository.Verify(it => it.Update(It.Is<HumanTask>(x => x.AssigneeId == 4)),Times.Once());
-            mockReminderRepository.Verify(it => it.Delete(It.Is<Reminder>(x => x.TaskId == 1)), Times.AtLeastOnce());
+            mockReminderRepository.Verify(it => it.Delete(It.Is<Reminder>(x => x.TaskId == taskBeingMoved)), Times.AtLeastOnce());
         }
 
 

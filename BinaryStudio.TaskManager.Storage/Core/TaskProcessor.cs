@@ -13,11 +13,13 @@ namespace BinaryStudio.TaskManager.Logic.Tests
     {
         private readonly IHumanTaskRepository humanTaskRepository;
         private readonly IReminderRepository reminderRepository;
+        private readonly IEmployeeRepository employeeRepository;
 
-        public TaskProcessor(IHumanTaskRepository humanTaskRepository, IReminderRepository reminderRepository)
+        public TaskProcessor(IHumanTaskRepository humanTaskRepository, IReminderRepository reminderRepository, IEmployeeRepository employeeRepository)
         {
             this.humanTaskRepository = humanTaskRepository;
             this.reminderRepository = reminderRepository;
+            this.employeeRepository = employeeRepository;
         }
 
         public void CreateTask(HumanTask task)
@@ -27,7 +29,6 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         public void CreateTask(HumanTask task, Reminder reminder)
         {
-            // throw new NotImplementedException();
 
             humanTaskRepository.Add(task);
 
@@ -42,7 +43,6 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         public void UpdateTask(HumanTask task)
         {
-            //throw new NotImplementedException();
            
             humanTaskRepository.Update(task);
         }
@@ -75,11 +75,19 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             task.AssigneeId = employeeId;
             humanTaskRepository.Update(task);
 
+            foreach (var reminder in reminderRepository.GetAll())
+            {
+                if (reminder.TaskId == taskId)
+                {
+                    reminderRepository.Delete(reminder);
+                }
+            }
+
         }
 
         public void MoveTaskToUnassigned(int taskId)
         {
-            HumanTask task= humanTaskRepository.GetById(taskId);
+            var task= humanTaskRepository.GetById(taskId);
             task.AssigneeId = null;
             humanTaskRepository.Update(task);
 
@@ -87,15 +95,15 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         public void CloseTask(int taskId)
         {
-            throw new NotImplementedException();
+            var taskToBeClosed = humanTaskRepository.GetById(taskId);
+            var now = DateTime.Now;
+            taskToBeClosed.Closed = now;
+            humanTaskRepository.Update(taskToBeClosed);
         }
 
 
         public IEnumerable<HumanTask> GetTasksList()
         {
-            //returns AllTasks
-            //throw new NotImplementedException();
-
             return humanTaskRepository.GetAll();
         }
 
@@ -108,7 +116,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         {
             //returns UnassignedTasks
 
-            return humanTaskRepository.GetAll().Where(task => task.AssigneeId.HasValue == false);
+            return humanTaskRepository.GetUnassingnedTasks();
         }
 
         public HumanTask GetTaskById(int taskId)
@@ -118,7 +126,17 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         public void AssignTask(int taskId, int employeeId)
         {
-            throw new NotImplementedException();
+            var taskToBeAssigned = humanTaskRepository.GetById(taskId);
+            try
+            {
+                taskToBeAssigned.AssigneeId = employeeId;
+                employeeRepository.GetById(employeeId);
+                humanTaskRepository.Update(taskToBeAssigned);
+            }
+            catch
+            {
+                return;
+            }
         }
 
         public IEnumerable<HumanTask> GetAllTasks()

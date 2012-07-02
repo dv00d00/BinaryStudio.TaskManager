@@ -10,7 +10,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         IList<HumanTask> GetAllTasksForEmployee(int employeeId);
 
-        IList<HumanTask> GetUnassingnedTask(); 
+        IList<HumanTask> GetUnassingnedTasks(); 
         
         IEnumerable<HumanTask> GetAll();
 

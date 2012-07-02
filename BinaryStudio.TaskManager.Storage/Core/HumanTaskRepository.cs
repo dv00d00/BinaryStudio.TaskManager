@@ -25,7 +25,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.dataBaseContext.HumanTasks.Where(it => it.AssigneeId == employeeId).ToList();
         }
 
-        public IList<HumanTask> GetUnassingnedTask()
+        public IList<HumanTask> GetUnassingnedTasks()
         {
             return this.dataBaseContext.HumanTasks.Where(it => it.AssigneeId.Equals(null)).ToList();
         }
