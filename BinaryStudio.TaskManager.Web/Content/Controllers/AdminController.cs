@@ -113,7 +113,9 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
 
         public ActionResult ConnectUserWithEmployee()
         {
-            var model = new UserViewModel();            
+            var model = new UserViewModel();
+            model.Users = userRepository.GetAll().ToList();
+            model.Employees = employeeRepository.GetAll().ToList();
             return View(model);
         }
     }

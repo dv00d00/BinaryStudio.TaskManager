@@ -1,7 +1,4 @@
-﻿@using System.Linq
-@using BinaryStudio.TaskManager.Logic.Domain
-@using BinaryStudio.TaskManager.Web.Models
-@model BinaryStudio.TaskManager.Web.Models.UserViewModel
+﻿@model BinaryStudio.TaskManager.Web.Models.UserViewModel
 
 <fieldset>
     <legend>Fields</legend>
@@ -9,20 +6,27 @@
         Select user
     </div>
     <div class="editor-field">
-        @Html.DropDownListFor(it => it.User, new SelectList(Model.User, ))
+           <select>                
+                @foreach(var user in Model.Users)
+                {
+                    <option>
+                        @user.UserName
+                    </option>
+                }                
+            </select>        
     </div>
     <div class="editor-label">
         Select Employee
     </div>
         <div class="editor-field">
-            @*<select>                
-                @foreach(var emplyee in Model.Employee)
+            <select>                
+                @foreach(var emplyee in Model.Employees)
                 {
                     <option>
                         @emplyee.Name
                     </option>
                 }                
-            </select>        *@
+            </select>        
         </div>
     
     <p>
