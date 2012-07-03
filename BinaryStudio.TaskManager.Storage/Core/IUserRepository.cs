@@ -8,6 +8,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
 {
     public interface IUserRepository
     {
+
+
         void DeleteUser(int userId);
 
         void CreateUser(User user);
@@ -15,5 +17,15 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void UpdateUser(User user);
 
         User GetById(int userId);
+
+        bool LogOn(string userName, string password);
     }
+
+  
+
+    public interface ILoginModel
+    {
+    }
+
+
 }

@@ -59,6 +59,7 @@
     <Compile Include="Core\TaskProcessor.cs" />
     <Compile Include="Core\TimeArguments.cs" />
     <Compile Include="Core\TimeManager.cs" />
+    <Compile Include="Core\UserRepository.cs" />
     <Compile Include="Domain\DatabaseInitializer.cs" />
     <Compile Include="Domain\IEntity.cs" />
     <Compile Include="Domain\User.cs" />
