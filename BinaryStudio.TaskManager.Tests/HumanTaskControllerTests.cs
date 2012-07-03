@@ -1,11 +1,9 @@
-﻿using System.Linq;
-using System.Web.Mvc;
-using BinaryStudio.TaskManager.Logic.Domain;
+﻿using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Web.Tests
 {
-    using BinaryStudio.TaskManager.Logic.Core;
-    using BinaryStudio.TaskManager.Web.Controllers;
+    using Logic.Core;
+    using Controllers;
 
     using Moq;
 
@@ -14,7 +12,6 @@ namespace BinaryStudio.TaskManager.Web.Tests
     [TestFixture]
     public class HumanTaskControllerTests
     {
-
         private Mock<ITaskProcessor> taskProcesorMock;
         private Mock<IEmployeeRepository> employeeRepository;
         private HumanTasksController controller;
@@ -53,12 +50,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
             //assert            
             this.taskProcesorMock.Verify(x => x.CreateTask(It.Is<HumanTask>(it => it.AssigneeId == 5)), Times.Once());
             this.taskProcesorMock.Verify(x => x.CreateTask(It.Is<HumanTask>(it => it.CreatorId == 5)), Times.Once());            
-        }
-        
-        [Test]
-        public void Should_CreateUnasignedTask_WhenMethodCreateCalledWithMinus1()
-        {       
-        }
+        }       
         
     }
 }

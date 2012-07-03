@@ -17,7 +17,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     {
         private readonly ITaskProcessor taskProcessor;
 
-        private readonly Logic.Core.IEmployeeRepository employeeRepository;
+        private readonly IEmployeeRepository employeeRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanTasksController"/> class.
@@ -145,7 +145,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                             new TaskViewModel()
                                 {
                                     Task = task,
-                                    CreatorName = task.CreatorId.HasValue?employeeRepository.GetById(task.CreatorId.Value).Name:""
+                                    CreatorName = task.CreatorId.HasValue ? employeeRepository.GetById(task.CreatorId.Value).Name:""
                                 }
                     );
             }
