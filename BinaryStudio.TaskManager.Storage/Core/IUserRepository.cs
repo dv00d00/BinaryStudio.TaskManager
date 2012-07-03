@@ -19,6 +19,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
         IEnumerable<User> GetAll();
 
         bool LogOn(string userName, string password);
+
+        User GetByName(string userName);
     }
 
 }

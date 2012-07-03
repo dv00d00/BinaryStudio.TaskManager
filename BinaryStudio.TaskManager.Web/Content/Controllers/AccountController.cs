@@ -1,6 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
 using System.Web.Security;
 using BinaryStudio.TaskManager.Logic.Core;
+using BinaryStudio.TaskManager.Logic.Domain;
 using BinaryStudio.TaskManager.Web.Models;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
@@ -8,10 +11,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     public class AccountController : Controller
     {
         private readonly Logic.Core.IUserRepository userRepository;
-
-           public AccountController(IUserRepository userRepository)
+        private readonly IEmployeeRepository employeeRepository;
+           public AccountController(IUserRepository userRepository, IEmployeeRepository employeeRepository)
            {
                this.userRepository = userRepository;
+               this.employeeRepository = employeeRepository;
            }
 
         //
@@ -32,7 +36,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             {
                if (userRepository.LogOn(model.UserName,model.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName,false);
+                    FormsAuthentication.SetAuthCookie(GetCurrentEmployee(model.UserName).Name, false);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
@@ -61,6 +65,21 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             FormsAuthentication.SignOut();
 
             return RedirectToAction("Index", "Home");
+        }
+        //TODO: refactor!!!!!!!!!!!!!!!!!!!!!!!!!!
+        Employee GetCurrentEmployee(string userName)
+        {
+            User user = userRepository.GetByName(userName);
+            Employee employee = new Employee();
+            try
+            {
+                employee = employeeRepository.GetAll().ToList().Single(it => it.UserId == user.Id);
+            }
+            catch (Exception)
+            {
+                return new Employee(){Name = userName + " (Not an Employee)"};
+            }
+            return employee;
         }
     }
 }

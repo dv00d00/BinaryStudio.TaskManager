@@ -9,5 +9,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         public string Name { get; set; }
 
         public virtual ICollection<HumanTask> Tasks { get; set; }
+
+        public int? UserId { get; set; }
     }
 }
