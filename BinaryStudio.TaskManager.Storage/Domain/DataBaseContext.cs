@@ -10,7 +10,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
         public DbSet<Employee> Employees { get; set; }
 
-        public DbSet<Login> Logins { get; set; }
+        public DbSet<User> Logins { get; set; }
 
         public DbSet<UserRoles> Roles{ get; set; }
     }

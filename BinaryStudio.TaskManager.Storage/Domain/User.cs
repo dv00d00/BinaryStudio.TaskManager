@@ -6,9 +6,9 @@ using System.Text;
 namespace BinaryStudio.TaskManager.Logic.Domain
 {
     /// <summary>
-    ///Login
+    ///User
     /// </summary>
-    public class Login
+    public class User
     {
         public int Id { get; set; }
 

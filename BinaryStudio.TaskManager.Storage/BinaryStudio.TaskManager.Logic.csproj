@@ -53,6 +53,7 @@
     <Compile Include="Core\IReminderRepository.cs" />
     <Compile Include="Core\ITaskProcessor.cs" />
     <Compile Include="Core\HumanTaskRepository.cs" />
+    <Compile Include="Core\IUserRepository.cs" />
     <Compile Include="Core\ReminderRepository.cs" />
     <Compile Include="Core\ReminderSender.cs" />
     <Compile Include="Core\TaskProcessor.cs" />
@@ -60,7 +61,7 @@
     <Compile Include="Core\TimeManager.cs" />
     <Compile Include="Domain\DatabaseInitializer.cs" />
     <Compile Include="Domain\IEntity.cs" />
-    <Compile Include="Domain\Login.cs" />
+    <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\UserRoles.cs" />
     <Compile Include="Domain\Reminder.cs" />
     <Compile Include="Domain\DataBaseContext.cs" />
