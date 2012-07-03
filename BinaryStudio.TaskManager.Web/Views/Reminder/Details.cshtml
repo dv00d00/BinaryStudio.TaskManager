@@ -1,0 +1,29 @@
+@model BinaryStudio.TaskManager.Logic.Domain.Reminder
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Reminder</legend>
+
+    <div class="display-label">Employee</div>
+    <div class="display-field">@(Model.Employee == null ? "None" : Model.Employee.Name)</div>
+
+    <div class="display-label">Task</div>
+    <div class="display-field">@(Model.Task == null ? "None" : Model.Task.Name)</div>
+
+    <div class="display-label">ReminderDate</div>
+    <div class="display-field">@String.Format("{0:g}", Model.ReminderDate)</div>
+
+    <div class="display-label">Content</div>
+    <div class="display-field">@Model.Content</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
