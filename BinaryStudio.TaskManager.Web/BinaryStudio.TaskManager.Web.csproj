@@ -85,6 +85,7 @@
     <Compile Include="Content\Controllers\HumanTasksController.cs" />
     <Compile Include="Content\Controllers\HomeController.cs" />
     <Compile Include="Content\Controllers\MoveTaskParams.cs" />
+    <Compile Include="Content\Controllers\ReminderController.cs" />
     <Compile Include="Models\ManagersViewModel.cs" />
     <Compile Include="Models\ManagerTasksViewModel.cs" />
     <Compile Include="Global.asax.cs">
@@ -250,6 +251,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Employee\_CreateOrEdit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reminder\Create.cshtml" />
+    <Content Include="Views\Reminder\Delete.cshtml" />
+    <Content Include="Views\Reminder\Details.cshtml" />
+    <Content Include="Views\Reminder\Edit.cshtml" />
+    <Content Include="Views\Reminder\Index.cshtml" />
+    <Content Include="Views\Reminder\_CreateOrEdit.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
