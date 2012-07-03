@@ -51,6 +51,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return false;
         }
 
-        
+        public User GetByName(string userName)
+        {
+            return this.dataBaseContext.Users.ToList().Single(it => it.UserName == userName);
+        }
     }
 }
