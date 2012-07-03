@@ -134,8 +134,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult ManagerDetails(int managerId)
         {
             ViewBag.ManagerName = employeeRepository.GetById(managerId).Name;
-            ViewBag.ManagerId = managerId;
-            TaskViewModel taskViewModel = new TaskViewModel();
+            ViewBag.ManagerId = managerId;            
             IList<TaskViewModel> model = new List<TaskViewModel>();
             IList<HumanTask> humanTasks = new List<HumanTask>();
             humanTasks = taskProcessor.GetTasksList(managerId).ToList();
