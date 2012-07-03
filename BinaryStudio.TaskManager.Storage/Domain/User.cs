@@ -25,5 +25,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         //TODO: refactor this for HASH
         public string Password { get; set; }
 
+        public int RoleId { get; set; }
+
     }
 }

@@ -19,13 +19,5 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         /// The name of the role. This name must descript roles.
         /// </value>
         public string RoleName { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance can add new user.
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if this instance can add new user; otherwise, <c>false</c>.
-        /// </value>
-        public bool CanAddNewUser { get; set; }
     }
 }
