@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Text;
 using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Logic.Core
@@ -11,31 +9,38 @@ namespace BinaryStudio.TaskManager.Logic.Core
     {
         private readonly DataBaseContext dataBaseContext;
 
-
         public UserRepository(DataBaseContext dataBaseContext)
         {
             this.dataBaseContext = dataBaseContext;
         }
 
-
         public void DeleteUser(int userId)
         {
-            throw new NotImplementedException();
+            User user = this.dataBaseContext.Users.Single(x => x.Id == userId);
+            this.dataBaseContext.Users.Remove(user);
+            this.dataBaseContext.SaveChanges();
         }
 
         public void CreateUser(User user)
         {
-            throw new NotImplementedException();
+            this.dataBaseContext.Entry(user).State = EntityState.Added;
+            this.dataBaseContext.SaveChanges();
         }
 
         public void UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            this.dataBaseContext.Entry(user).State = EntityState.Modified;
+            this.dataBaseContext.SaveChanges();
         }
 
         public User GetById(int userId)
         {
-            throw new NotImplementedException();
+            return this.dataBaseContext.Users.Single(x => x.Id == userId);
+        }
+
+        public IEnumerable<User> GetAll()
+        {
+            return this.dataBaseContext.Users.ToList();
         }
 
         public bool LogOn(string userName, string password)

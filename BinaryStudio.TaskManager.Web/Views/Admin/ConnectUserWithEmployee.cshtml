@@ -1,0 +1,31 @@
+﻿@using System.Linq
+@using BinaryStudio.TaskManager.Logic.Domain
+@using BinaryStudio.TaskManager.Web.Models
+@model BinaryStudio.TaskManager.Web.Models.UserViewModel
+
+<fieldset>
+    <legend>Fields</legend>
+    <div class="editor-label">
+        Select user
+    </div>
+    <div class="editor-field">
+        @Html.DropDownListFor(it => it.User, new SelectList(Model.User, ))
+    </div>
+    <div class="editor-label">
+        Select Employee
+    </div>
+        <div class="editor-field">
+            @*<select>                
+                @foreach(var emplyee in Model.Employee)
+                {
+                    <option>
+                        @emplyee.Name
+                    </option>
+                }                
+            </select>        *@
+        </div>
+    
+    <p>
+        <input type="submit" value="Save" />
+    </p>
+</fieldset>

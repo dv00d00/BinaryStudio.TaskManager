@@ -85,8 +85,7 @@
     <Compile Include="Content\Controllers\HumanTasksController.cs" />
     <Compile Include="Content\Controllers\HomeController.cs" />
     <Compile Include="Content\Controllers\MoveTaskParams.cs" />
-    <Compile Include="Content\Controllers\UserController.cs" />
-    <Compile Include="Content\Controllers\UserRepository.cs" />
+    <Compile Include="Content\Controllers\AdminController.cs" />
     <Compile Include="Content\Controllers\ReminderController.cs" />
     <Compile Include="Models\ManagersViewModel.cs" />
     <Compile Include="Models\ManagerTasksViewModel.cs" />
@@ -96,6 +95,7 @@
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="App_Data\UserMembershipProvider.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="NinjectModules\MainInjectModule.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -192,7 +192,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\Admin\ChangePassword.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -255,10 +257,10 @@
     <Content Include="Views\Employee\_CreateOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\Admin\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\ConnectUserWithEmployee.cshtml" />
+    <Content Include="Views\Admin\ConnectUserWithEmployee.cshtml" />
     <Content Include="Views\Reminder\Create.cshtml" />
     <Content Include="Views\Reminder\Delete.cshtml" />
     <Content Include="Views\Reminder\Details.cshtml" />

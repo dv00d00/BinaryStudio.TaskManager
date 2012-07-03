@@ -53,6 +53,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.dataBaseContext.SaveChanges();
         }
 
+        //TODO: refactor - why method return the same task, witch is in parameters??
         public HumanTask Add(HumanTask humanTask)
         {
             this.dataBaseContext.Entry(humanTask).State = EntityState.Added;

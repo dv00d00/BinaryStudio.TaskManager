@@ -1,13 +1,10 @@
-using System.Linq;
-
 namespace BinaryStudio.TaskManager.Logic.Tests
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
 
-    using BinaryStudio.TaskManager.Logic.Core;
-    using BinaryStudio.TaskManager.Logic.Domain;
+    using Core;
+    using Domain;
 
     public class TaskProcessor: ITaskProcessor
     {
