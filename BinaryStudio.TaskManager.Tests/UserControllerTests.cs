@@ -55,9 +55,5 @@ namespace BinaryStudio.TaskManager.Web.Tests
 
         }
 
-        [Test]
-        public void Should_DeleteUser()
-        {
-        }
     }
 }

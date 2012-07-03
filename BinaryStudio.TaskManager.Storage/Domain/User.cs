@@ -25,16 +25,5 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         //TODO: refactor this for HASH
         public string Password { get; set; }
 
-        public DateTime Created { get; set; }
-
-        public int? EmployeeId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the role.
-        /// </summary>
-        /// <value>
-        /// Id of role
-        /// </value>
-        public int Role { get; set; }
     }
 }

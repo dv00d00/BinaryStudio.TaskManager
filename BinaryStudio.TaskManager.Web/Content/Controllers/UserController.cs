@@ -28,17 +28,17 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
         {
             if (ModelState.IsValid)
             {
-                MembershipCreateStatus createStatus = this.userRepository.RegisterNewUser(model);
-                if (createStatus == MembershipCreateStatus.Success)
-                {
-                    //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                    //TODO: redirect to view with relation employee with account
-                    return RedirectToAction("ConnectUserWithEmployee", "User");
-                }
-                else
-                {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
-                }
+                //createStatus = this.userRepository.RegisterNewUser(model);
+                //if (createStatus == MembershipCreateStatus.Success)
+                //{
+                //    //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+                //    //TODO: redirect to view with relation employee with account
+                //    return RedirectToAction("ConnectUserWithEmployee", "User");
+                //}
+                //else
+                //{
+                //    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                //}
             }
 
             // If we got this far, something failed, redisplay form

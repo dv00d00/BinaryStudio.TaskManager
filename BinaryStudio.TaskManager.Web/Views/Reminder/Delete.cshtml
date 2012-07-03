@@ -1,0 +1,32 @@
+@model BinaryStudio.TaskManager.Logic.Domain.Reminder
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Reminder</legend>
+
+    <div class="display-label">Employee</div>
+    <div class="display-field">@(Model.Employee == null ? "None" : Model.Employee.Name)</div>
+
+    <div class="display-label">Task</div>
+    <div class="display-field">@(Model.Task == null ? "None" : Model.Task.Name)</div>
+
+    <div class="display-label">ReminderDate</div>
+    <div class="display-field">@String.Format("{0:g}", Model.ReminderDate)</div>
+
+    <div class="display-label">Content</div>
+    <div class="display-field">@Model.Content</div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+
+

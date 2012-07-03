@@ -59,6 +59,7 @@
     <Compile Include="Core\TaskProcessor.cs" />
     <Compile Include="Core\TimeArguments.cs" />
     <Compile Include="Core\TimeManager.cs" />
+    <Compile Include="Core\UserRepository.cs" />
     <Compile Include="Domain\DatabaseInitializer.cs" />
     <Compile Include="Domain\IEntity.cs" />
     <Compile Include="Domain\User.cs" />
@@ -74,6 +75,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="InstallationDummyFile.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

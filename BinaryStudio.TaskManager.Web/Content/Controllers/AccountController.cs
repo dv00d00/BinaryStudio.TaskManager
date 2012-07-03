@@ -1,11 +1,19 @@
 ﻿using System.Web.Mvc;
 using System.Web.Security;
+using BinaryStudio.TaskManager.Logic.Core;
 using BinaryStudio.TaskManager.Web.Models;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly Logic.Core.IUserRepository userRepository;
+
+           public AccountController(IUserRepository userRepository)
+           {
+               this.userRepository = userRepository;
+           }
+
         //
         // GET: /Account/LogOn
 
@@ -22,9 +30,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.UserName, model.Password))
+               if (userRepository.LogOn(model.UserName,model.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    FormsAuthentication.SetAuthCookie(model.UserName,false);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
