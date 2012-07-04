@@ -85,7 +85,7 @@
                  <div>@Html.ActionLink("Add new task", "Create", new {managerId = manager.Manager.Id})</div>
                 @foreach (var task in manager.Tasks.OrderByDescending(x => x.Priority))
                 {
-                    <div class="sortableTasks">
+                    <div class="sortableTasks" >
                         @Html.Partial("ManagerTasksTablePartialView", task)                    
                    </div>
                 }

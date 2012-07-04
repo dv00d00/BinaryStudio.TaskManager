@@ -1,5 +1,22 @@
 
 
+
+div.sortableTasks a  
+{
+    display: block; 
+    width: 100%; 
+    height: 100%; 
+    text-indent: -50000px; 
+    text-decoration: none;
+     
+    }
+    
+div a:link { text-decoration: none; color: gray} 
+div a:visited { text-decoration: none; color: gray} 
+div a:active { text-decoration: none; color: gray}
+div a:hover {text-decoration: none; color: gray}
+
+
 div.manager{    
     border:1px solid black;
     width:200px;
@@ -22,3 +39,5 @@ div.task{
     background:cornflowerblue;
     height:100px;
 }
+
+
