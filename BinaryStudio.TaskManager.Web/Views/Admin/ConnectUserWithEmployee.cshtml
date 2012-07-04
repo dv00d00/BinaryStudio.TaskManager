@@ -1,35 +1,90 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.UserViewModel
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#DropDownUsers :nth-child(0)").attr('selected', 'selected');
+        $("#DropDownUsers").change(function () {
+            var currentUserId = $("#DropDownUsers option:selected").attr("id");
+            $("#userId").html();
+            alert("user " + currentUserId);
+        });
+        $("#DropDownEmployees :nth-child(0)").attr('selected', 'selected');
+        $("#DropDownEmployees").change(function () {
+            var currentEmployeeId = $("#DropDownEmployees option:selected").attr("id");
+            alert("employee " + currentEmployeeId);
+        });
+    });
+</script>
+
 <fieldset>
-    <legend>Fields</legend>
-    <div class="editor-label">
-        Select user
-    </div>
-    <div class="editor-field">
-           <select>                
-                @foreach(var user in Model.Users)
-                {
-                    <option>
-                        @user.UserName
-                    </option>
-                }                
-            </select>        
-    </div>
-    <div class="editor-label">
-        Select Employee
-    </div>
-        <div class="editor-field">
-            <select>                
-                @foreach(var emplyee in Model.Employees)
-                {
-                    <option>
-                        @emplyee.Name
-                    </option>
-                }                
-            </select>        
-        </div>
-    
-    <p>
-        <input type="submit" value="Save" />
-    </p>
+    <legend align="center">Тут вы можете связать аккаунт с текущим сотрудником</legend>
+
+    <table style="width: 100%;" align="center">
+        <tr>
+        
+            <td align="center">
+                <div class="editor-label">
+                    Select user
+                </div>
+                <div class="editor-field">
+                    <select id="DropDownUsers">                
+                        @foreach(var user in Model.Users)
+                        {
+                            <option id=@user.Id>
+                                @user.UserName
+                            </option>
+                        }                
+                    </select>        
+                </div>
+            </td>
+            <td align="center">
+                <div class="editor-label" >
+                    Select Employee
+                </div>
+                <div class="editor-field">
+                    <select id="DropDownEmployees">                
+                        @foreach(var emplyee in Model.Employees)
+                        {
+                            <option id=@emplyee.Id>
+                                @emplyee.Name
+                            </option>
+                        }                
+                    </select>        
+                </div>
+            </td>
+            <td rowspan="2">           
+                <p align="center">
+                    <input type="submit" value="Save" />
+                </p>
+            </td>        
+        </tr>
+        <tr>
+            <td>                
+                Информация о текущем аккаунте:<br/>
+                Id: <div id="userId">
+                    
+                </div>
+                <br/>User Name: 
+                <div id="userName">
+                    
+                </div>
+                <br/>Email:
+                <div id="userEmail">
+                    
+                </div>
+                <br/>Password: 
+                <div id="userPassword">
+                    
+                </div>
+                <br/>                                
+            </td>
+            <td>
+                Информация о текущем пользователе:<br/>
+                ID:  <br/>
+                Name:  <br/>
+                Is already bind?               
+            </td>
+
+        </tr>
+    </table>
 </fieldset>
