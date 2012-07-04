@@ -5,10 +5,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
 
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Web.Models;
+
+    using NLog;
 
     /// <summary>
     /// Provides access to human task entities
@@ -19,6 +22,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         private readonly IEmployeeRepository employeeRepository;
 
+        private Logger Log = LogManager.GetCurrentClassLogger();
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanTasksController"/> class.
         /// </summary>
@@ -35,7 +39,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ViewResult Index()
         {
             var humanTasks = this.taskProcessor.GetAllTasks();
-
             return View(humanTasks);
         }
 
@@ -59,7 +62,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             //TODO: creator pull from logon screen                
 
             humanTask.Created = DateTime.Now;
-
             return View(humanTask);
         }
 
@@ -191,6 +193,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             }
 
             
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            if (filterContext == null) return;
+
+            var ex = filterContext.Exception ?? new Exception("No further information");
+            this.Log.DebugException("EXCEPTION", ex);
+
+            filterContext.ExceptionHandled = true;
+            filterContext.Result = View("Error");
+
         }
     }
 }
