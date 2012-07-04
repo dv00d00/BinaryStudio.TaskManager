@@ -15,5 +15,9 @@ namespace BinaryStudio.TaskManager.Web.Models
         [Display(Name = "Employee")]
         [DisplayFormat(NullDisplayText = "---Please Select---")]
         public List<Employee> Employees { get; set; }
+
+        public User CurrentUser { get; set; }
+
+        public Employee CurrentEmployee { get; set; }
     }
 }

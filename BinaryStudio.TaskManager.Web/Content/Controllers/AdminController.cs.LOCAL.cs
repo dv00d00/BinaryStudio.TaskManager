@@ -12,7 +12,8 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
     {
         private readonly UserRepository userRepository;
         private readonly IEmployeeRepository employeeRepository;
-                
+        //
+        // GET: /User/Register
         public AdminController(UserRepository userRepository, IEmployeeRepository employeeRepository)
         {
             this.userRepository = userRepository;
@@ -38,6 +39,9 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
             return View();
         }
 
+        //
+        // POST: /Account/Register
+
         [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult RegisterNewUser(RegisterNewUserModel model)
@@ -46,15 +50,14 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
             {
                 User user = new User()
                                 {
-
-                                    Id = model.userId,
-                                    UserName = model.UserName,
-                                    Email = model.Email,
+                                    Id = model.userId, 
+                                    UserName = model.UserName, 
+                                    Email = model.Email, 
                                     Password = model.Password,
-                                    RoleId = 2
+                                    RoleId = 1
                                 };
                 userRepository.CreateUser(user);
-
+                
                 //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
                 //TODO: redirect to view with relation employee with account
                 return RedirectToAction("ConnectUserWithEmployee", "Admin");
@@ -63,6 +66,7 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
 
         //
         // GET: /Account/ChangePassword
@@ -73,8 +77,7 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
         }
 
         //
-
-
+        // POST: /Account/ChangePassword   
         [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel model)
@@ -123,8 +126,6 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
             var model = new UserViewModel();
             model.Users = userRepository.GetAll().ToList();
             model.Employees = employeeRepository.GetAll().ToList();
-            model.CurrentUser = model.Users.First();
-            model.CurrentEmployee = model.Employees.First();
             return View(model);
         }
         [Authorize(Roles = "admin")]

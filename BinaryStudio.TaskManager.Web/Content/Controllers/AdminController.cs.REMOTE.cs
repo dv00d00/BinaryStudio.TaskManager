@@ -25,28 +25,19 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
             this.employeeRepository = new EmployeeRepository(new DataBaseContext());
         }
 
-        [Authorize(Roles = "admin")]
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-
-        [Authorize(Roles = "admin")]
+        [HttpGet]
         public ActionResult Register()
         {
             return View();
         }
 
-        [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult RegisterNewUser(RegisterNewUserModel model)
+        public ActionResult Register(RegisterNewUserModel model)
         {
             if (ModelState.IsValid)
             {
                 User user = new User()
                                 {
-
                                     Id = model.userId,
                                     UserName = model.UserName,
                                     Email = model.Email,
@@ -66,16 +57,14 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
 
         //
         // GET: /Account/ChangePassword
-        [Authorize(Roles = "admin")]
+
         public ActionResult ChangePassword()
         {
             return View();
         }
 
         //
-
-
-        [Authorize(Roles = "admin")]
+        // POST: /Account/ChangePassword        
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
@@ -111,13 +100,13 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
 
         //
         // GET: /Account/ChangePasswordSuccess
-        [Authorize(Roles = "admin")]
+
         public ActionResult ChangePasswordSuccess()
         {
             return View();
         }
 
-        [Authorize(Roles = "admin")]
+
         public ActionResult ConnectUserWithEmployee()
         {
             var model = new UserViewModel();
@@ -126,11 +115,6 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
             model.CurrentUser = model.Users.First();
             model.CurrentEmployee = model.Employees.First();
             return View(model);
-        }
-        [Authorize(Roles = "admin")]
-        public ActionResult RegisterNewEmployee()
-        {
-            throw new NotImplementedException();
         }
     }
 }

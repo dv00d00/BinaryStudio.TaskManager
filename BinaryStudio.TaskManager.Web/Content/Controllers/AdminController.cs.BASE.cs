@@ -12,7 +12,8 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
     {
         private readonly UserRepository userRepository;
         private readonly IEmployeeRepository employeeRepository;
-                
+        //
+        // GET: /User/Register
         public AdminController(UserRepository userRepository, IEmployeeRepository employeeRepository)
         {
             this.userRepository = userRepository;
@@ -25,36 +26,29 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
             this.employeeRepository = new EmployeeRepository(new DataBaseContext());
         }
 
-        [Authorize(Roles = "admin")]
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-
-        [Authorize(Roles = "admin")]
         public ActionResult Register()
         {
             return View();
         }
 
-        [Authorize(Roles = "admin")]
+        //
+        // POST: /Account/Register
+
         [HttpPost]
-        public ActionResult RegisterNewUser(RegisterNewUserModel model)
+        public ActionResult Register(RegisterNewUserModel model)
         {
             if (ModelState.IsValid)
             {
                 User user = new User()
                                 {
-
-                                    Id = model.userId,
-                                    UserName = model.UserName,
-                                    Email = model.Email,
+                                    Id = model.userId, 
+                                    UserName = model.UserName, 
+                                    Email = model.Email, 
                                     Password = model.Password,
-                                    RoleId = 2
+                                    RoleId = 1
                                 };
                 userRepository.CreateUser(user);
-
+                
                 //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
                 //TODO: redirect to view with relation employee with account
                 return RedirectToAction("ConnectUserWithEmployee", "Admin");
@@ -64,18 +58,17 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
             return View(model);
         }
 
+
         //
         // GET: /Account/ChangePassword
-        [Authorize(Roles = "admin")]
+        
         public ActionResult ChangePassword()
         {
             return View();
         }
 
         //
-
-
-        [Authorize(Roles = "admin")]
+        // POST: /Account/ChangePassword        
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
@@ -111,26 +104,19 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
 
         //
         // GET: /Account/ChangePasswordSuccess
-        [Authorize(Roles = "admin")]
+
         public ActionResult ChangePasswordSuccess()
         {
             return View();
         }
 
-        [Authorize(Roles = "admin")]
+
         public ActionResult ConnectUserWithEmployee()
         {
             var model = new UserViewModel();
             model.Users = userRepository.GetAll().ToList();
             model.Employees = employeeRepository.GetAll().ToList();
-            model.CurrentUser = model.Users.First();
-            model.CurrentEmployee = model.Employees.First();
             return View(model);
-        }
-        [Authorize(Roles = "admin")]
-        public ActionResult RegisterNewEmployee()
-        {
-            throw new NotImplementedException();
         }
     }
 }
