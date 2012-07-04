@@ -10,16 +10,16 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly UserRepository userRepository;
+        private readonly IUserRepository userRepository;
         private readonly IEmployeeRepository employeeRepository;
                 
-        public AdminController(UserRepository userRepository, IEmployeeRepository employeeRepository)
+        public AdminController(IUserRepository userRepository, IEmployeeRepository employeeRepository)
         {
             this.userRepository = userRepository;
             this.employeeRepository = employeeRepository;
         }
 
-        public AdminController(UserRepository userRepository)
+        public AdminController(IUserRepository userRepository)
         {
             this.userRepository = userRepository;
             this.employeeRepository = new EmployeeRepository(new DataBaseContext());
@@ -33,7 +33,7 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
 
 
         [Authorize(Roles = "admin")]
-        public ActionResult Register()
+        public ActionResult RegisterNewUser()
         {
             return View();
         }
@@ -127,10 +127,131 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
             model.CurrentEmployee = model.Employees.First();
             return View(model);
         }
+
+        [HttpGet]
         [Authorize(Roles = "admin")]
         public ActionResult RegisterNewEmployee()
         {
-            throw new NotImplementedException();
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public ActionResult RegisterNewEmployee(Employee employee)
+        {
+            if (ModelState.IsValid)
+            {
+                employeeRepository.Add(employee);
+                return RedirectToAction("Index");
+            }
+
+            return View(employee);
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult EmployeesList()
+        {
+            return View(employeeRepository.GetAll());
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult DeleteEmployee(int id)
+        {
+            Employee employee = employeeRepository.GetById(id);
+            return View(employee);
+        }
+
+        /// <summary>
+        /// Deleting manager and moving all task to unassigned.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [ActionName("DeleteEmployee")]
+        [Authorize(Roles = "admin")]
+        public ActionResult DeleteEmployeeConfirmed(int id)
+        {
+            employeeRepository.Delete(id);
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult EditEmployee(int id)
+        {
+            Employee employee = employeeRepository.GetById(id);
+            return View(employee);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public ActionResult EditEmployee(Employee employee)
+        {
+            if (ModelState.IsValid)
+            {
+                employeeRepository.Update(employee);
+                return RedirectToAction("Index");
+            }
+            return View(employee);
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult DetailsEmployee(int id)
+        {
+            Employee employee = employeeRepository.GetById(id);
+            return View(employee);
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult UsersList()
+        {
+            return View(userRepository.GetAll());
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult EditUser(int id)
+        {
+            User user = userRepository.GetById(id);
+            return View(user);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public ActionResult EditUser(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                userRepository.Update(user);
+                return RedirectToAction("Index");
+            }
+            return View(user);
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult DetailsUser(int id)
+        {
+            User user= userRepository.GetById(id);
+            return View(user);
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult DeleteUser(int id)
+        {
+            User user = userRepository.GetById(id);
+            return View(user);
+        }        
+
+        /// <summary>
+        /// Deleting account and moving all task to unassigned.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [ActionName("DeleteUser")]
+        [Authorize(Roles = "admin")]
+        public ActionResult DeleteUserConfirmed(int id)
+        {
+            userRepository.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }

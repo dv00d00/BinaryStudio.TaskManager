@@ -1,0 +1,38 @@
+﻿@model IEnumerable<BinaryStudio.TaskManager.Logic.Domain.User>
+@{
+    ViewBag.Title = "Список всех пользователей";
+}
+<h2>
+    Список всех пользователей
+</h2>
+<table>
+    <tr>
+        <th>
+            Имя пользователя
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+        </th>
+    </tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>
+                @user.UserName
+            </td>
+            <td>
+                @user.Email
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "EditUser", new { id = user.Id }) |
+                @Html.ActionLink("Детали", "DetailsUser", new { id = user.Id }) |
+                @Html.ActionLink("Удалить", "DeleteUser", new { id = user.Id })
+            </td>
+        </tr>
+    }
+</table>
+<p>
+    @Html.ActionLink("Вернуться в панель администратора", "Index")
+</p>

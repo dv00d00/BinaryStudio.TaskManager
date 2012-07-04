@@ -2646,7 +2646,7 @@ jQuery.extend({
 		colspan: "colSpan",
 		usemap: "useMap",
 		frameborder: "frameBorder",
-		contenteditable: "contentEditable"
+		contenteditable: "contentEditEmployeeable"
 	},
 
 	prop: function( elem, name, value ) {

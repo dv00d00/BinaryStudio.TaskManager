@@ -2,10 +2,10 @@
 @model HumanTask
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Детали";
 }
 
-<h2>Details</h2>
+<h2>Детали</h2>
 
 <fieldset>
     <legend>HumanTask</legend>
@@ -38,8 +38,8 @@
     <div class="display-field">@Model.AssigneeId</div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Редактировать", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Вернуться к списку всех задач", "Index")
 </p>
 
 

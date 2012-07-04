@@ -1,0 +1,28 @@
+﻿@model BinaryStudio.TaskManager.Logic.Domain.User
+@{
+    ViewBag.Title = "Детали пользователя";
+}
+<fieldset>
+    <legend>
+        Детали пользователя
+    </legend>
+    <div class="display-label">
+        Имя пользователя
+    </div>
+    <div class="display-field">
+        @Model.UserName
+    </div>
+    <div class="display-label">
+        Email
+    </div>
+    <div class="display-field">
+        @Model.Email
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Редактировать", "EditUser", new { id = Model.Id }) |
+    @Html.ActionLink("Вернутся в список всех пользователей", "UsersList")
+</p>
+<p>
+    @Html.ActionLink("Вернуться в панель администратора", "Index")
+</p>

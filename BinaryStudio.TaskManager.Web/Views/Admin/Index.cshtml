@@ -1,6 +1,19 @@
-﻿<h2>Admin panel</h2>
+﻿<h2>
+    Admin panel</h2>
 <ul>
-    <li>@Html.ActionLink("Добавить нового юзера","RegisterNewUser")</li>
-    <li>@Html.ActionLink("Добавить нового сотрудника","RegisterNewEmployee")</li>
-    <li>@Html.ActionLink("Соеденить узера и сотрудника","ConnectUserWithEmployee")</li>
+    <p>
+        <li>@Html.ActionLink("Добавить нового пользователя", "RegisterNewUser")</li>
+    </p>
+    <p>
+        <li>@Html.ActionLink("Добавить нового сотрудника", "RegisterNewEmployee")</li>
+    </p>
+    <p>
+        <li>@Html.ActionLink("Соеденить пользователя и сотрудника", "ConnectUserWithEmployee")</li>
+    </p>
+    <p>
+        <li>@Html.ActionLink("Список всех пользователей", "UsersList")</li>
+    </p>
+    <p>
+        <li>@Html.ActionLink("Список всех сотрудников", "EmployeesList")</li>
+    </p>
 </ul>

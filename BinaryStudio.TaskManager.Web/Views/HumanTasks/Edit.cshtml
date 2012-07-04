@@ -2,10 +2,10 @@
 @model HumanTask
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Редактировать";
 }
 
-<h2>Edit</h2>
+<h2>Редактировать</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
@@ -22,5 +22,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Вернуться в список всех задач", "Index")
 </div>

@@ -23,6 +23,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
         User GetByName(string userName);
 
         string GetRoleByName(string userName);
+
+        void Update(User user);
+
+        void Delete(int id);
     }
 
 }

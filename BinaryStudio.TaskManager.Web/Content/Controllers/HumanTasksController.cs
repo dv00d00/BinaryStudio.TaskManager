@@ -40,7 +40,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         //
-        // GET: /HumanTasks/Details/5
+        // GET: /HumanTasks/DetailsEmployee/5
         [Authorize]
         public ViewResult Details(int id)
         {
@@ -87,7 +87,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         //
-        // GET: /HumanTasks/Edit/5
+        // GET: /HumanTasks/EditEmployee/5
         [Authorize]
         public ActionResult Edit(int id)
         {
@@ -98,7 +98,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         //
-        // POST: /HumanTasks/Edit/5
+        // POST: /HumanTasks/EditEmployee/5
 
         [HttpPost]
         [Authorize]
@@ -116,7 +116,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         //
-        // GET: /HumanTasks/Delete/5
+        // GET: /HumanTasks/DeleteEmployee/5
         [Authorize]
         public   ActionResult Delete(int id)
         {
@@ -125,9 +125,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         //
-        // POST: /HumanTasks/Delete/5
+        // POST: /HumanTasks/DeleteEmployee/5
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteEmployee")]
         [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {

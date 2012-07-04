@@ -1,0 +1,24 @@
+﻿@model BinaryStudio.TaskManager.Logic.Domain.User
+@{
+    ViewBag.Title = "Редактировать пользователя";
+}
+<h2>
+    Редактировать пользователя
+</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>
+            Пользователь
+        </legend>
+        @Html.HiddenFor(model => model.Id)
+        @Html.Partial("_CreateOrEditUser", Model)
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+<p>
+    @Html.ActionLink("Вернуться в панель администратора", "Index")
+</p>

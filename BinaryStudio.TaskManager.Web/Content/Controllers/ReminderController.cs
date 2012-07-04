@@ -31,7 +31,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         //
-        // GET: /Reminder/Details/5
+        // GET: /Reminder/DetailsEmployee/5
 
         public ViewResult Details(int id)
         {
@@ -67,7 +67,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             }
         
         //
-        // GET: /Reminder/Edit/5
+        // GET: /Reminder/EditEmployee/5
  
         public ActionResult Edit(int id)
         {
@@ -78,7 +78,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         //
-        // POST: /Reminder/Edit/5
+        // POST: /Reminder/EditEmployee/5
 
         [HttpPost]
         public ActionResult Edit(Reminder reminder)
@@ -94,7 +94,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         //
-        // GET: /Reminder/Delete/5
+        // GET: /Reminder/DeleteEmployee/5
  
         public ActionResult Delete(int id)
         {
@@ -103,9 +103,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         //
-        // POST: /Reminder/Delete/5
+        // POST: /Reminder/DeleteEmployee/5
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteEmployee")]
         public ActionResult DeleteConfirmed(int id)
         {
             Reminder reminder = reminderRepository.GetById(id); 

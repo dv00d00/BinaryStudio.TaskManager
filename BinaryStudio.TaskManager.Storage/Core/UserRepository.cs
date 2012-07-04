@@ -68,5 +68,18 @@ namespace BinaryStudio.TaskManager.Logic.Core
                 Select(x => x.RoleName).
                 First();
         }
+
+        public void Update(User user)
+        {
+            this.dataBaseContext.Entry(user).State = EntityState.Modified;
+            this.dataBaseContext.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            User user = this.dataBaseContext.Users.Single(x => x.Id == id);
+            this.dataBaseContext.Users.Remove(user);
+            this.dataBaseContext.SaveChanges();
+        }
     }
 }

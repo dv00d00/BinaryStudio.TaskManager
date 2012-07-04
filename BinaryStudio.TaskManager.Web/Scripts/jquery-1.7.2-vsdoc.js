@@ -2565,7 +2565,7 @@
         "colspan": 'colSpan',
         "usemap": 'useMap',
         "frameborder": 'frameBorder',
-        "contenteditable": 'contentEditable'
+        "contenteditable": 'contentEditEmployeeable'
     };
     jQuery.propHooks = {
         "tabIndex": {},

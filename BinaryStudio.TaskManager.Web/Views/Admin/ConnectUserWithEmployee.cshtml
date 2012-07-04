@@ -17,14 +17,14 @@
 </script>
 
 <fieldset>
-    <legend align="center">Тут вы можете связать аккаунт с текущим сотрудником</legend>
+    <legend align="center">Тут вы можете связать аккаунт с сотрудником</legend>
 
     <table style="width: 100%;" align="center">
         <tr>
         
             <td align="center">
                 <div class="editor-label">
-                    Select user
+                    Выберите пользователя
                 </div>
                 <div class="editor-field">
                     <select id="DropDownUsers">                
@@ -39,7 +39,7 @@
             </td>
             <td align="center">
                 <div class="editor-label" >
-                    Select Employee
+                    Выберите сотрудника
                 </div>
                 <div class="editor-field">
                     <select id="DropDownEmployees">                
@@ -88,3 +88,7 @@
         </tr>
     </table>
 </fieldset>
+
+<p>
+    @Html.ActionLink("Вернуться в панель администратора", "Index")
+</p>
