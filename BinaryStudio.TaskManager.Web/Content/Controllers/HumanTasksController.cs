@@ -31,7 +31,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         //
         // GET: /HumanTasks/
-
+        [Authorize]
         public ViewResult Index()
         {
             var humanTasks = this.taskProcessor.GetAllTasks();
@@ -41,7 +41,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         //
         // GET: /HumanTasks/Details/5
-
+        [Authorize]
         public ViewResult Details(int id)
         {
             HumanTask humantask = this.taskProcessor.GetTaskById(id);
@@ -50,7 +50,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         //
         // GET: /HumanTasks/Create
-       
+        [Authorize]
         public ActionResult Create(int managerId)
         {
             HumanTask humanTask = new HumanTask();
@@ -65,8 +65,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         //
         // POST: /HumanTasks/Create
+        
 
         [HttpPost]
+        [Authorize]
         public ActionResult Create(HumanTask humanTask)
         {
 
@@ -86,7 +88,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         //
         // GET: /HumanTasks/Edit/5
-
+        [Authorize]
         public ActionResult Edit(int id)
         {
             HumanTask humantask = this.taskProcessor.GetTaskById(id);
@@ -99,6 +101,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         // POST: /HumanTasks/Edit/5
 
         [HttpPost]
+        [Authorize]
         public ActionResult Edit(HumanTask humanTask)
         {
             if (ModelState.IsValid)
@@ -114,8 +117,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         //
         // GET: /HumanTasks/Delete/5
-
-        public ActionResult Delete(int id)
+        [Authorize]
+        public   ActionResult Delete(int id)
         {
             HumanTask humantask = this.taskProcessor.GetTaskById(id);
             return View(humantask);
@@ -125,12 +128,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         // POST: /HumanTasks/Delete/5
 
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             this.taskProcessor.DeleteTask(id);
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         public ActionResult ManagerDetails(int managerId)
         {
             ViewBag.ManagerName = employeeRepository.GetById(managerId).Name;
@@ -150,7 +154,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             }
             return View(model);
         }
-
+        [Authorize]
         public ActionResult AllManagersWithTasks()
         {
             ManagersViewModel model = new ManagersViewModel();
@@ -170,6 +174,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         //value 0 - tasks's
         //value 1 - current task owner
         //value 2 - move to
+        [Authorize]
         public void MoveTask(List<int> values)
         {
         

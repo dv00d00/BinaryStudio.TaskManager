@@ -12,11 +12,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     {
         private readonly Logic.Core.IUserRepository userRepository;
         private readonly IEmployeeRepository employeeRepository;
-           public AccountController(IUserRepository userRepository, IEmployeeRepository employeeRepository)
-           {
-               this.userRepository = userRepository;
-               this.employeeRepository = employeeRepository;
-           }
+        public AccountController(IUserRepository userRepository, IEmployeeRepository employeeRepository)
+        {
+            this.userRepository = userRepository;
+            this.employeeRepository = employeeRepository;
+        }
 
         //
         // GET: /Account/LogOn
@@ -34,9 +34,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-               if (userRepository.LogOn(model.UserName,model.Password))
+                if (userRepository.LogOn(model.UserName, model.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(GetCurrentEmployee(model.UserName).Name, false);
+
+                    SetUserRoleFromBase(model.UserName);
+                    FormsAuthentication.SetAuthCookie(model.UserName, false);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
@@ -77,9 +79,22 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             }
             catch (Exception)
             {
-                return new Employee(){Name = userName + " (Not an Employee)"};
+                return new Employee() { Name = "(Not an Employee)" };
             }
             return employee;
+        }
+
+        public void SetUserRoleFromBase(string userName)
+        {
+            if (!Roles.RoleExists(userRepository.GetRoleByName(userName)))
+            {
+                Roles.CreateRole(userRepository.GetRoleByName(userName));
+            }
+
+            if (!Roles.IsUserInRole(userName, userRepository.GetRoleByName(userName)))
+            {
+                Roles.AddUserToRole(userName, userRepository.GetRoleByName(userName));
+            }
         }
     }
 }

@@ -60,5 +60,13 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             return this.dataBaseContext.Users.ToList().Single(it => it.UserName == userName);
         }
+
+        public string GetRoleByName(string userName)
+        {
+            return this.dataBaseContext.Roles.ToList().
+                Where(it => it.Id == this.GetByName(userName).RoleId).
+                Select(x => x.RoleName).
+                First();
+        }
     }
 }

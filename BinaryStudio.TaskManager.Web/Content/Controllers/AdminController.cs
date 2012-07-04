@@ -26,6 +26,14 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
             this.employeeRepository = new EmployeeRepository(new DataBaseContext());
         }
 
+        [Authorize(Roles = "admin")]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+
+        [Authorize(Roles = "admin")]
         public ActionResult Register()
         {
             return View();
@@ -34,8 +42,9 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
         //
         // POST: /Account/Register
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
-        public ActionResult Register(RegisterNewUserModel model)
+        public ActionResult RegisterNewUser(RegisterNewUserModel model)
         {
             if (ModelState.IsValid)
             {
@@ -61,14 +70,15 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
 
         //
         // GET: /Account/ChangePassword
-        
+        [Authorize(Roles = "admin")]
         public ActionResult ChangePassword()
         {
             return View();
         }
 
         //
-        // POST: /Account/ChangePassword        
+        // POST: /Account/ChangePassword   
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
@@ -104,19 +114,24 @@ namespace BinaryStudio.TaskManager.Web.Content.Controllers
 
         //
         // GET: /Account/ChangePasswordSuccess
-
+        [Authorize(Roles = "admin")]
         public ActionResult ChangePasswordSuccess()
         {
             return View();
         }
 
-
+        [Authorize(Roles = "admin")]
         public ActionResult ConnectUserWithEmployee()
         {
             var model = new UserViewModel();
             model.Users = userRepository.GetAll().ToList();
             model.Employees = employeeRepository.GetAll().ToList();
             return View(model);
+        }
+        [Authorize(Roles = "admin")]
+        public ActionResult RegisterNewEmployee()
+        {
+            throw new NotImplementedException();
         }
     }
 }

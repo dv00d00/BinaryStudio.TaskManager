@@ -23,6 +23,10 @@
             </div>
             <nav>
                 <ul id="menu">
+                    @if(Roles.IsUserInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("Admin panel","Index","Admin")</li>
+                    }
                     <li>@Html.ActionLink("Reminders List","Index","Reminder")</li>
                     <li>@Html.ActionLink("Managers List","Index","Employee")</li>
                     <li>@Html.ActionLink("All managers with tasks", "AllManagersWithTasks", "HumanTasks")</li>

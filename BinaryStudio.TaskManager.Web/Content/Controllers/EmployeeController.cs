@@ -1,6 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using BinaryStudio.TaskManager.Logic.Domain;
 using BinaryStudio.TaskManager.Logic.Core;
+using BinaryStudio.TaskManager.Logic.Tests;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {   
@@ -11,6 +15,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public EmployeeController(IEmployeeRepository employeeRepository)
         {
             this.employeeRepository = employeeRepository;
+
         }
 
         //
@@ -88,9 +93,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         //
         // POST: /Employee/Delete/5
 
+        /// <summary>
+        /// Deleting manager and moving all task to unassigned.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
+
             employeeRepository.Delete(id);
             return RedirectToAction("Index");
         }

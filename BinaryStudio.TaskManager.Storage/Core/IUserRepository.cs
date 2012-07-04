@@ -21,6 +21,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
         bool LogOn(string userName, string password);
 
         User GetByName(string userName);
+
+        string GetRoleByName(string userName);
     }
 
 }
