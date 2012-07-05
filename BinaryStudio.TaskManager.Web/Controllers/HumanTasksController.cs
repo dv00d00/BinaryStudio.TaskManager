@@ -23,6 +23,8 @@
         private readonly Logger log = LogManager.GetCurrentClassLogger();
 
         private readonly IUserProcessor userProcessor;
+        private ITaskProcessor iTaskProcessor;
+        private IEmployeeRepository iEmployeeRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanTasksController"/> class.
@@ -34,6 +36,12 @@
             this.taskProcessor = taskProcessor;
             this.employeeRepository = employeeRepository;
             this.userProcessor = userProcessor;
+        }
+
+        public HumanTasksController(ITaskProcessor iTaskProcessor, IEmployeeRepository iEmployeeRepository)
+        {
+            this.iTaskProcessor = iTaskProcessor;
+            this.iEmployeeRepository = iEmployeeRepository;
         }
         
         // GET: /HumanTasks/
@@ -155,7 +163,6 @@
         [Authorize]
         public ActionResult AllManagersWithTasks()
         {
-            Employee employee_temp = userProcessor.GetCurrentLoginedEmployee(User.Identity.Name);
             
             ManagersViewModel model = new ManagersViewModel();
             model.ManagerTasks = new List<ManagerTasksViewModel>();

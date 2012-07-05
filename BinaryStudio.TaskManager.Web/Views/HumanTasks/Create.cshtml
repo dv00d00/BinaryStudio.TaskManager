@@ -2,7 +2,7 @@
 @model BinaryStudio.TaskManager.Logic.Domain.HumanTask
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Создание задачи";
 }
 
 <h2>Create</h2>
@@ -13,7 +13,7 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>HumanTask</legend>
+        <legend>Создание задачи</legend>
 
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.AssigneeId)
@@ -50,5 +50,5 @@
 }
 
 <div>
-    @Html.ActionLink("Вернуться в список всех задач", "Index")
+    @Html.ActionLink("Вернуться в список всех задач", "AllTasks")
 </div>
