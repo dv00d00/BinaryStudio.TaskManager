@@ -32,15 +32,28 @@
             this.taskProcessor = taskProcessor;
             this.employeeRepository = employeeRepository;
         }
-        
+
         // GET: /HumanTasks/
         [Authorize]
         public ViewResult AllTasks()
         {
-            var humanTasks = this.taskProcessor.GetAllTasks();
-            return this.View(humanTasks);
+            var model = new List<AllTasksViewModel>();
+            string creatorName, assigneeName;
+            foreach (var task in this.taskProcessor.GetAllTasks().ToList())
+            {                
+                creatorName = task.CreatorId.HasValue ? this.employeeRepository.GetById((int)task.CreatorId).Name : "none";
+                assigneeName = task.AssigneeId.HasValue ? this.employeeRepository.GetById((int) task.AssigneeId).Name : "none";
+                model.Add(new AllTasksViewModel
+                              {
+                                  HumanTask = task,
+                                  AssigneeName = assigneeName,
+                                  CreatorName = creatorName
+                              });
+            }
+
+            return this.View(model);
         }
-        
+
         // GET: /HumanTasks/DetailsEmployee/5
         [Authorize]
         public ViewResult Details(int id)
@@ -48,13 +61,13 @@
             var humantask = this.taskProcessor.GetTaskById(id);
             return this.View(humantask);
         }
-        
+
         // GET: /HumanTasks/Create
         [Authorize]
         public ActionResult Create(int managerId)
         {
             var humanTask = new HumanTask();
-            humanTask.AssigneeId = (managerId != -1) ? managerId : (int?) null;
+            humanTask.AssigneeId = (managerId != -1) ? managerId : (int?)null;
             humanTask.CreatorId = humanTask.AssigneeId;
             //TODO: creator pull from logon screen                
 
@@ -69,7 +82,7 @@
         public ActionResult Create(HumanTask humanTask)
         {
 
-            humanTask.Assigned = humanTask.AssigneeId == (int?) null ? humanTask.Created : (DateTime?) null;
+            humanTask.Assigned = humanTask.AssigneeId == (int?)null ? humanTask.Created : (DateTime?)null;
             if (this.ModelState.IsValid)
             {
                 this.taskProcessor.CreateTask(humanTask);
@@ -79,10 +92,10 @@
             //TODO: refactor this "PossibleCreators" and "PossibleAssignees"
             this.ViewBag.PossibleCreators = new List<Employee>();
             this.ViewBag.PossibleAssignees = new List<Employee>();
-            
+
             return this.View(humanTask);
         }
-        
+
         // GET: /HumanTasks/EditEmployee/5
         [Authorize]
         public ActionResult Edit(int id)
@@ -130,7 +143,7 @@
         public ActionResult ManagerDetails(int managerId)
         {
             this.ViewBag.ManagerName = this.employeeRepository.GetById(managerId).Name;
-            this.ViewBag.ManagerId = managerId;            
+            this.ViewBag.ManagerId = managerId;
             var model = new List<TaskViewModel>();
             var humanTasks = new List<HumanTask>();
             humanTasks = this.taskProcessor.GetTasksList(managerId).ToList();

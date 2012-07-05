@@ -1,42 +1,5 @@
-@using BinaryStudio.TaskManager.Logic.Domain
-@model IEnumerable<HumanTask>
-@helper GetValue(HumanTask item)
-    {
-    <tr>
-        <td>
-            @item.Name
-        </td>
-        <td>
-            @item.Description
-        </td>
-        <td>
-            @item.Priority
-        </td>
-        <td>
-            @String.Format("{0:g}", item.Created)
-        </td>
-        <td>
-            @String.Format("{0:g}", item.Assigned)
-        </td>
-        <td>
-            @String.Format("{0:g}", item.Finished)
-        </td>
-        <td>
-            @String.Format("{0:g}", item.Closed)
-        </td>
-        <td>
-            @item.CreatorId
-        </td>
-        <td>
-            @item.AssigneeId
-        </td>
-        <td>
-            @this.Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) |
-            @this.Html.ActionLink("Детали", "Details", new { id = item.Id }) |
-            @this.Html.ActionLink("Удалить", "Delete", new { id = item.Id })
-        </td>
-    </tr>
-}
+@model IList<BinaryStudio.TaskManager.Web.Models.AllTasksViewModel>   
+
 @{
     ViewBag.Title = "Все задачи";
 }
@@ -70,14 +33,49 @@
             Дата закрытия
         </th>
         <th>
-            Id создавшего
+            Имя создавшего
         </th>
         <th>
-            Id ответственного
+            Имя ответственного
         </th>
     </tr>
+    
     @foreach (var item in Model)
     {
-        @this.GetValue(item)
+        <tr>
+        <td>
+            @item.HumanTask.Name
+        </td>
+        <td>
+            @item.HumanTask.Description
+        </td>
+        <td>
+            @item.HumanTask.Priority
+        </td>
+        <td>
+            @String.Format("{0:g}", item.HumanTask.Created)
+        </td>
+        <td>
+            @String.Format("{0:g}", item.HumanTask.Assigned)
+        </td>
+        <td>
+            @String.Format("{0:g}", item.HumanTask.Finished)
+        </td>
+        <td>
+            @String.Format("{0:g}", item.HumanTask.Closed)
+        </td>
+        <td>
+            @item.CreatorName
+        </td>
+        <td>
+            @item.AssigneeName
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.HumanTask.Id })<br/>
+            @Html.ActionLink("Детали", "Details", new { id = item.HumanTask.Id })<br/>
+            @Html.ActionLink("Удалить", "Delete", new { id = item.HumanTask.Id })
+        </td>
+    </tr>
     }
+
 </table>
