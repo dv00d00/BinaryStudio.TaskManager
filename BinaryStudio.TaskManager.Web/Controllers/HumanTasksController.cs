@@ -33,7 +33,7 @@
         
         // GET: /HumanTasks/
         [Authorize]
-        public ViewResult Index()
+        public ViewResult AllTasks()
         {
             var humanTasks = this.taskProcessor.GetAllTasks();
             return this.View(humanTasks);
@@ -43,7 +43,7 @@
         [Authorize]
         public ViewResult Details(int id)
         {
-            HumanTask humantask = this.taskProcessor.GetTaskById(id);
+            var humantask = this.taskProcessor.GetTaskById(id);
             return this.View(humantask);
         }
         
@@ -51,7 +51,7 @@
         [Authorize]
         public ActionResult Create(int managerId)
         {
-            HumanTask humanTask = new HumanTask();
+            var humanTask = new HumanTask();
             humanTask.AssigneeId = (managerId != -1) ? managerId : (int?) null;
             humanTask.CreatorId = humanTask.AssigneeId;
             //TODO: creator pull from logon screen                
@@ -85,7 +85,7 @@
         [Authorize]
         public ActionResult Edit(int id)
         {
-            HumanTask humantask = this.taskProcessor.GetTaskById(id);
+            var humantask = this.taskProcessor.GetTaskById(id);
             this.ViewBag.PossibleCreators = new List<Employee>();
             this.ViewBag.PossibleAssignees = new List<Employee>();
             return this.View(humantask);
@@ -111,7 +111,7 @@
         [Authorize]
         public ActionResult Delete(int id)
         {
-            HumanTask humantask = this.taskProcessor.GetTaskById(id);
+            var humantask = this.taskProcessor.GetTaskById(id);
             return this.View(humantask);
         }
 
@@ -129,8 +129,8 @@
         {
             this.ViewBag.ManagerName = this.employeeRepository.GetById(managerId).Name;
             this.ViewBag.ManagerId = managerId;            
-            IList<TaskViewModel> model = new List<TaskViewModel>();
-            IList<HumanTask> humanTasks = new List<HumanTask>();
+            var model = new List<TaskViewModel>();
+            var humanTasks = new List<HumanTask>();
             humanTasks = this.taskProcessor.GetTasksList(managerId).ToList();
             foreach (var task in humanTasks)
             {
@@ -150,16 +150,16 @@
         [Authorize]
         public ActionResult AllManagersWithTasks()
         {
-            ManagersViewModel model = new ManagersViewModel();
+            var model = new ManagersViewModel();
             model.ManagerTasks = new List<ManagerTasksViewModel>();
             model.UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList();
-            IList<Employee> employees = this.employeeRepository.GetAll();
-            foreach (Employee employee in employees)
+            var employees = this.employeeRepository.GetAll();
+            foreach (var employee in employees)
             {
-                ManagerTasksViewModel manager = new ManagerTasksViewModel();
-                manager.Manager = employee;
-                manager.Tasks = this.taskProcessor.GetTasksList(employee.Id).ToList();
-                model.ManagerTasks.Add(manager);
+                var managerModel = new ManagerTasksViewModel();
+                managerModel.Manager = employee;
+                managerModel.Tasks = this.taskProcessor.GetTasksList(employee.Id).ToList();
+                model.ManagerTasks.Add(managerModel);
             }
             return this.View(model);
         }

@@ -219,16 +219,13 @@
     <Content Include="Views\HumanTasks\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\HumanTasks\Index.cshtml" />
+    <Content Include="Views\HumanTasks\AllTasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\HumanTasks\_CreateOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\HumanTasks\AllManagersWithTasks.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\SingleManagerTasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\HumanTasks\ManagerTasksTablePartialView.cshtml" />
