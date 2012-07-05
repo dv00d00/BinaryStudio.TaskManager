@@ -61,9 +61,9 @@
     <Compile Include="Core\ReminderRepository.cs" />
     <Compile Include="Core\ReminderSender.cs" />
     <Compile Include="Core\TaskProcessor.cs" />
+    <Compile Include="Core\UserProcessor.cs" />
     <Compile Include="TimeArguments.cs" />
     <Compile Include="Core\TimeManager.cs" />
-    <Compile Include="Core\UserProcessor.cs" />
     <Compile Include="Core\UserRepository.cs" />
     <Compile Include="Domain\DatabaseInitializer.cs" />
     <Compile Include="Domain\IEntity.cs" />
