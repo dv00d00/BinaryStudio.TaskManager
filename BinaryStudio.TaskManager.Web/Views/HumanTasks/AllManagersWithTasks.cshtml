@@ -18,8 +18,7 @@
                 //check, mb sender or receiver are unassigned 
                 stringArray[1] = (typeof senderId == "undefined") ? -1 : senderId;
                 stringArray[2] = (typeof receiverId == "undefined") ? -1 : receiverId;
-                
-                var postData = { values: stringArray };
+                                
                 //alert(stringArray[0] + stringArray[1] + stringArray[2]);
                 $.ajax({
                     type: "POST",

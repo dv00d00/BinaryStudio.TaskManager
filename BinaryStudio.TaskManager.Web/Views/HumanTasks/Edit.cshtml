@@ -10,7 +10,7 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>HumanTask</legend>
+        <legend>Редактирование задачи</legend>
 
         @Html.HiddenFor(model => model.Id)
 		@Html.Partial("_CreateOrEdit", Model)
@@ -22,5 +22,5 @@
 }
 
 <div>
-    @Html.ActionLink("Вернуться в список всех задач", "Index")
+    @Html.ActionLink("Вернуться в список всех задач", "AllTasks")
 </div>

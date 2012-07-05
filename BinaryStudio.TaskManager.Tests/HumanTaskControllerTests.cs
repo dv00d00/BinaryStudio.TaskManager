@@ -39,7 +39,7 @@
         public void Should_GetAllTasksFromTaskProcessor_WhenControllerPrepareMainPage()
         {
             //act
-            controller.Index();
+            controller.AllTasks();
 
             //assert
             this.taskProcessorMock.Verify(x => x.GetAllTasks(), Times.Once());
