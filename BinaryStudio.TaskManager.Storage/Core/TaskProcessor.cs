@@ -62,15 +62,26 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public void MoveTask(int taskId, int employeeId)
         {
-            var task = this.humanTaskRepository.GetById(taskId);
-            task.AssigneeId = employeeId;
-            this.humanTaskRepository.Update(task);
+            var taskToBeAssigned = this.humanTaskRepository.GetById(taskId);
 
-            foreach (var reminder in this.reminderRepository.GetAll())
+            try
             {
-                if (reminder.TaskId == taskId)
+                this.employeeRepository.GetById(employeeId);
+                taskToBeAssigned.AssigneeId = employeeId;
+            }
+            catch
+            {
+                taskToBeAssigned.AssigneeId = null;
+            }
+            finally
+            {
+                this.humanTaskRepository.Update(taskToBeAssigned);
+                foreach (var reminder in this.reminderRepository.GetAll())
                 {
-                    this.reminderRepository.Delete(reminder);
+                    if (reminder.TaskId == taskId)
+                    {
+                        this.reminderRepository.Delete(reminder);
+                    }
                 }
             }
         }
@@ -110,21 +121,22 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.humanTaskRepository.GetById(taskId);
         }
 
-        public void AssignTask(int taskId, int employeeId)
+        /*public void AssignTask(int taskId, int employeeId)
         {
             var taskToBeAssigned = this.humanTaskRepository.GetById(taskId);
             try
             {
-                taskToBeAssigned.AssigneeId = employeeId;
                 this.employeeRepository.GetById(employeeId);
+                taskToBeAssigned.AssigneeId = employeeId;
                 this.humanTaskRepository.Update(taskToBeAssigned);
             }
             catch
             {
-                return;
+                taskToBeAssigned.AssigneeId = null;
+                this.humanTaskRepository.Update(taskToBeAssigned);
             }
         }
-
+        */
         public IEnumerable<HumanTask> GetAllTasks()
         {
             return this.humanTaskRepository.GetAll();
