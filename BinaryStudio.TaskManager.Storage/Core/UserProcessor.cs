@@ -72,8 +72,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public Employee GetCurrentLoginedEmployee(string userName)
         {
-            User user = userRepository.GetByName(userName);
-            return employeeRepository.GetAll().ToList().Single(it => it.UserId == user.Id);
+            try
+            {
+                User user = userRepository.GetByName(userName);
+                return employeeRepository.GetAll().ToList().Single(it => it.UserId == user.Id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
     }
 }
