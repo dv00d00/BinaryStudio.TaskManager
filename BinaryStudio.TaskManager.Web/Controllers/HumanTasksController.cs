@@ -22,17 +22,28 @@
 
         private readonly Logger log = LogManager.GetCurrentClassLogger();
 
+        private readonly IUserProcessor userProcessor;
+        private ITaskProcessor iTaskProcessor;
+        private IEmployeeRepository iEmployeeRepository;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanTasksController"/> class.
         /// </summary>
         /// <param name="taskProcessor">The task processor.</param>
         /// <param name="employeeRepository">The employee repository.</param>
-        public HumanTasksController(ITaskProcessor taskProcessor, IEmployeeRepository employeeRepository)
+        public HumanTasksController(ITaskProcessor taskProcessor, IEmployeeRepository employeeRepository, IUserProcessor userProcessor)
         {
             this.taskProcessor = taskProcessor;
             this.employeeRepository = employeeRepository;
+            this.userProcessor = userProcessor;
         }
 
+        public HumanTasksController(ITaskProcessor iTaskProcessor, IEmployeeRepository iEmployeeRepository)
+        {
+            this.iTaskProcessor = iTaskProcessor;
+            this.iEmployeeRepository = iEmployeeRepository;
+        }
+        
         // GET: /HumanTasks/
         [Authorize]
         public ViewResult AllTasks()
@@ -58,7 +69,7 @@
         [Authorize]
         public ViewResult Details(int id)
         {
-            var humantask = this.taskProcessor.GetTaskById(id);
+            HumanTask humantask = this.taskProcessor.GetTaskById(id);
             return this.View(humantask);
         }
 
@@ -66,22 +77,18 @@
         [Authorize]
         public ActionResult Create(int managerId)
         {
-            var humanTask = new HumanTask();
+            HumanTask humanTask = new HumanTask();
             humanTask.AssigneeId = (managerId != -1) ? managerId : (int?)null;
-            humanTask.CreatorId = humanTask.AssigneeId;
-            //TODO: creator pull from logon screen                
-
+            humanTask.CreatorId = userProcessor.GetCurrentLoginedEmployee(User.Identity.Name).Id;         
             humanTask.Created = DateTime.Now;
             return this.View(humanTask);
         }
-
 
         // POST: /HumanTasks/Create
         [HttpPost]
         [Authorize]
         public ActionResult Create(HumanTask humanTask)
-        {
-
+        {            
             humanTask.Assigned = humanTask.AssigneeId == (int?)null ? humanTask.Created : (DateTime?)null;
             if (this.ModelState.IsValid)
             {
@@ -100,7 +107,7 @@
         [Authorize]
         public ActionResult Edit(int id)
         {
-            var humantask = this.taskProcessor.GetTaskById(id);
+            HumanTask humantask = this.taskProcessor.GetTaskById(id);
             this.ViewBag.PossibleCreators = new List<Employee>();
             this.ViewBag.PossibleAssignees = new List<Employee>();
             return this.View(humantask);
@@ -114,7 +121,7 @@
             if (this.ModelState.IsValid)
             {
                 this.taskProcessor.UpdateTask(humanTask);
-                return this.RedirectToAction("Index");
+                return this.RedirectToAction("AllTasks");
             }
 
             this.ViewBag.PossibleCreators = new List<Employee>();
@@ -126,7 +133,7 @@
         [Authorize]
         public ActionResult Delete(int id)
         {
-            var humantask = this.taskProcessor.GetTaskById(id);
+            HumanTask humantask = this.taskProcessor.GetTaskById(id);
             return this.View(humantask);
         }
 
@@ -136,7 +143,7 @@
         public ActionResult DeleteConfirmed(int id)
         {
             this.taskProcessor.DeleteTask(id);
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction("AllTasks");
         }
 
         [Authorize]
@@ -144,8 +151,8 @@
         {
             this.ViewBag.ManagerName = this.employeeRepository.GetById(managerId).Name;
             this.ViewBag.ManagerId = managerId;
-            var model = new List<TaskViewModel>();
-            var humanTasks = new List<HumanTask>();
+            IList<TaskViewModel> model = new List<TaskViewModel>();
+            IList<HumanTask> humanTasks = new List<HumanTask>();
             humanTasks = this.taskProcessor.GetTasksList(managerId).ToList();
             foreach (var task in humanTasks)
             {
@@ -165,6 +172,7 @@
         [Authorize]
         public ActionResult AllManagersWithTasks()
         {
+            
             var model = new ManagersViewModel();
             model.ManagerTasks = new List<ManagerTasksViewModel>();
             model.UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList();
@@ -179,9 +187,6 @@
             return this.View(model);
         }
 
-        //value 0 - tasks's
-        //value 1 - current task owner
-        //value 2 - move to
         [Authorize]
         public void MoveTask(int taskId, int senderId, int receiverId)
         {
@@ -199,12 +204,13 @@
             }
         }
 
+        //TODO: mb should delete??????
         protected override void OnException(ExceptionContext filterContext)
         {
             if (filterContext == null) return;
 
-            var exception = filterContext.Exception ?? new Exception("No further information");
-            this.log.DebugException("EXCEPTION", exception);
+            var ex = filterContext.Exception ?? new Exception("No further information");
+            this.log.DebugException("EXCEPTION", ex);
 
             filterContext.ExceptionHandled = true;
             filterContext.Result = this.View("Error");

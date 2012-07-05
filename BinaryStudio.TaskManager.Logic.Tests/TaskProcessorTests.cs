@@ -101,7 +101,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         }
 
-        [Test]
+        /*[Test]
         public void Should_AssignTask_WhenSuchEmployeeExists()
         {
             //arrange
@@ -114,9 +114,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             //assert
             mockHumanTaskRepository.Verify(it => it.Update(
                 It.Is<HumanTask>(x => x.AssigneeId == 3)), Times.Once());
-        }
+        }*/
 
-        [Test]
+        /*[Test]
         public void ShouldNot_AssignTask_WhenSuchEmployeeDoesNotExist()
         {
             //arrange
@@ -129,6 +129,36 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             //assert
             mockHumanTaskRepository.Verify(it => it.Update(
                 It.Is<HumanTask>(x => x.AssigneeId == 4)), Times.Never());
+
+        }*/
+        [Test]
+        public void Should_AssignTask_WhenSuchEmployeeExists()
+        {
+            //arrange
+            mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
+            mockEmployeeRepository.Setup(it => it.GetById(3)).Returns(new Employee { Id = 3 });
+
+            //act
+            processorUnderTest.MoveTask(1, 3);
+
+            //assert
+            mockHumanTaskRepository.Verify(it => it.Update(
+                It.Is<HumanTask>(x => x.AssigneeId == 3)), Times.Once());
+        }
+
+        [Test]
+        public void ShouldNot_AssignTask_WhenSuchEmployeeDoesNotExist()
+        {
+            //arrange
+            mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
+            mockEmployeeRepository.Setup(it => it.GetById(5)).Throws<InvalidOperationException>();
+
+            //act
+            processorUnderTest.MoveTask(1, 5);
+
+            //assert
+            mockHumanTaskRepository.Verify(it => it.Update(
+                It.Is<HumanTask>(x => x.AssigneeId == 5)), Times.Never());
 
         }
 

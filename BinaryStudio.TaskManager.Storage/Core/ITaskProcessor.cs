@@ -21,7 +21,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void MoveTaskToUnassigned(int taskId);
         
         
-        void AssignTask(int taskId, int emploeeyId);
+        //void AssignTask(int taskId, int emploeeyId);
 
         void CloseTask(int taskId);
 

@@ -54,6 +54,7 @@ Parameter name: parameters
    at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
    at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
    at System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+<<<<<<< HEAD
 2012-07-05 16:43:29.4808 DEBUG EXCEPTION|System.Web.HttpCompileException (0x80004005): d:\work\academy\github\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Views\HumanTasks\AllTasks.cshtml(76): error CS1061: "BinaryStudio.TaskManager.Web.Models.AllTasksViewModel" не содержит определение дл€ "Id". Ќе удалось найти метод  расширени€ "Id", принимающий первый аргумент типа "BinaryStudio.TaskManager.Web.Models.AllTasksViewModel"  (пропущено использование директивы или ссылка на сборку?)
    в System.Web.Compilation.AssemblyBuilder.Compile()
    в System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
@@ -99,4 +100,31 @@ Parameter name: parameters
    в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilter(IResultFilter filter, ResultExecutingContext preContext, Func`1 continuation)
    в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<>c__DisplayClass1e.<InvokeActionResultWithFilters>b__1b()
    в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+=======
+2012-07-05 15:44:53.3557 DEBUG EXCEPTION|System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.Single[TSource](IEnumerable`1 source, Func`2 predicate)
+   в BinaryStudio.TaskManager.Logic.Core.UserProcessor.GetCurrentLoginedEmployee(String userName) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\UserProcessor.cs:строка 76
+   в BinaryStudio.TaskManager.Web.Controllers.HumanTasksController.AllManagersWithTasks() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\HumanTasksController.cs:строка 158
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-05 15:45:34.0670 DEBUG EXCEPTION|System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.Single[TSource](IEnumerable`1 source, Func`2 predicate)
+   в BinaryStudio.TaskManager.Logic.Core.UserProcessor.GetCurrentLoginedEmployee(String userName) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\UserProcessor.cs:строка 76
+   в BinaryStudio.TaskManager.Web.Controllers.HumanTasksController.AllManagersWithTasks() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\HumanTasksController.cs:строка 158
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+>>>>>>> cdfb0cde3a96dccbeaa562fb1d46784d198a967e
    в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
