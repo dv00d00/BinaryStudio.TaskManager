@@ -1,9 +1,8 @@
-﻿using BinaryStudio.TaskManager.Logic.Domain;
-
-namespace BinaryStudio.TaskManager.Web.Tests
+﻿namespace BinaryStudio.TaskManager.Web.Tests
 {
-    using Logic.Core;
-    using Controllers;
+    using BinaryStudio.TaskManager.Logic.Core;
+    using BinaryStudio.TaskManager.Logic.Domain;
+    using BinaryStudio.TaskManager.Web.Controllers;
 
     using Moq;
 
@@ -23,8 +22,6 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.employeeRepository = new Mock<IEmployeeRepository>();   
             this.controller = new HumanTasksController(taskProcesorMock.Object, this.employeeRepository.Object);
         }
-
-     
 
         [Test]
         public void Should_TakeDataFromTaskProcessorAndEmployeeRepository_WhenLoadingManagerDetails()

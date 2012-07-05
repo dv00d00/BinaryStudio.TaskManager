@@ -83,11 +83,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Content\Controllers\AccountController.cs" />
-    <Compile Include="Content\Controllers\HumanTasksController.cs" />
-    <Compile Include="Content\Controllers\HomeController.cs" />
-    <Compile Include="Content\Controllers\AdminController.cs" />
-    <Compile Include="Content\Controllers\ReminderController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HumanTasksController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ReminderController.cs" />
     <Compile Include="Models\ManagersViewModel.cs" />
     <Compile Include="Models\ManagerTasksViewModel.cs" />
     <Compile Include="Global.asax.cs">

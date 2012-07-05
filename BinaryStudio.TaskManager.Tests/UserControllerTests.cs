@@ -1,6 +1,5 @@
 ﻿using BinaryStudio.TaskManager.Logic.Core;
 using BinaryStudio.TaskManager.Logic.Domain;
-using BinaryStudio.TaskManager.Web.Content.Controllers;
 using BinaryStudio.TaskManager.Web.Models;
 using Moq;
 using NUnit.Framework;

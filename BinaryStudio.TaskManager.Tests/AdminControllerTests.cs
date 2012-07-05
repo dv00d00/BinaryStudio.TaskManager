@@ -1,11 +1,13 @@
 ﻿using BinaryStudio.TaskManager.Logic.Core;
 using BinaryStudio.TaskManager.Logic.Domain;
-using BinaryStudio.TaskManager.Web.Content.Controllers;
+
 using Moq;
 using NUnit.Framework;
 
 namespace BinaryStudio.TaskManager.Web.Tests
 {
+    using BinaryStudio.TaskManager.Web.Controllers;
+
     [TestFixture]
     class AdminControllerTests
     {

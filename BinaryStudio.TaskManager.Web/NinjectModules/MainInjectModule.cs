@@ -1,9 +1,7 @@
-using BinaryStudio.TaskManager.Logic.Domain;
-
 namespace BinaryStudio.TaskManager.Web.NinjectModules
 {
     using BinaryStudio.TaskManager.Logic.Core;
-    using BinaryStudio.TaskManager.Logic.Tests;
+    using BinaryStudio.TaskManager.Logic.Domain;
 
     using Ninject.Modules;
 
@@ -21,11 +19,8 @@ namespace BinaryStudio.TaskManager.Web.NinjectModules
             this.Bind<ITaskProcessor>().To<TaskProcessor>();
             this.Bind<IEmployeeRepository>().To<EmployeeRepository>();
             this.Bind<IUserRepository>().To<UserRepository>();
-           // this.Bind<IHumanTaskRepository>().To<HumanTaskRepository>();
             this.Bind<IHumanTaskRepository>().To<HumanTaskRepository>();
             this.Bind<IReminderRepository>().To<ReminderRepository>();
-
-
         }
     }
 }
