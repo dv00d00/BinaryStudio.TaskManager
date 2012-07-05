@@ -48,13 +48,13 @@
         [Authorize]
         public ViewResult AllTasks()
         {
-            var model = new List<AllTasksViewModel>();
+            var model = new List<SingleTaskViewModel>();
             string creatorName, assigneeName;
             foreach (var task in this.taskProcessor.GetAllTasks().ToList())
             {                
                 creatorName = task.CreatorId.HasValue ? this.employeeRepository.GetById((int)task.CreatorId).Name : "none";
                 assigneeName = task.AssigneeId.HasValue ? this.employeeRepository.GetById((int) task.AssigneeId).Name : "none";
-                model.Add(new AllTasksViewModel
+                model.Add(new SingleTaskViewModel
                               {
                                   HumanTask = task,
                                   AssigneeName = assigneeName,
@@ -69,13 +69,7 @@
         [Authorize]
         public ViewResult Details(int id)
         {
-            var model = new AllTasksViewModel();
-            var task = this.taskProcessor.GetTaskById(id);
-            var creatorName = task.CreatorId.HasValue ? this.employeeRepository.GetById((int)task.CreatorId).Name : "none";
-            var assigneeName = task.AssigneeId.HasValue ? this.employeeRepository.GetById((int)task.AssigneeId).Name : "none";
-            model.HumanTask = task;
-            model.CreatorName = creatorName;
-            model.AssigneeName = assigneeName;
+            var model = CreateSingleTaskViewModelById(id);
             return View(model);
         }
 
@@ -139,17 +133,30 @@
         [Authorize]
         public ActionResult Delete(int id)
         {
-            HumanTask humantask = this.taskProcessor.GetTaskById(id);
-            return this.View(humantask);
+            var model = CreateSingleTaskViewModelById(id);
+            return this.View(model);
+        }
+
+        private SingleTaskViewModel CreateSingleTaskViewModelById(int id)
+        {
+            var model = new SingleTaskViewModel();
+            var task = this.taskProcessor.GetTaskById(id);
+            var creatorName = task.CreatorId.HasValue ? this.employeeRepository.GetById((int) task.CreatorId).Name : "none";
+            var assigneeName = task.AssigneeId.HasValue ? this.employeeRepository.GetById((int) task.AssigneeId).Name : "none";
+            model.HumanTask = task;
+            model.CreatorName = creatorName;
+            model.AssigneeName = assigneeName;
+            return model;
         }
 
         // POST: /HumanTasks/DeleteEmployee/5
-        [HttpPost, ActionName("DeleteEmployee")]
+        [HttpPost]
+        [ActionName("Delete")]        
         [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             this.taskProcessor.DeleteTask(id);
-            return this.RedirectToAction("AllTasks");
+            return RedirectToAction("AllTasks");
         }
 
         [Authorize]
