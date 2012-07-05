@@ -61,9 +61,11 @@
 </fieldset>
 @using (Html.BeginForm())
 {
-    <p>
-        <input type="submit" value="Удаление задачи" />
-        |
-        @Html.ActionLink("Вернуться в список всех задач", "AllTasks")
+    <div>
+        <input type="submit" value="Удаление задачи" /><br/>
+    </div>
+    <p>    
+        @Html.ActionLink("Вернуться в список всех задач", "AllTasks") |
+    @Html.ActionLink("Вернуться к Dashboard", "AllManagersWithTasks")
     </p>
 }

@@ -62,15 +62,21 @@
                               });
             }
 
-            return this.View(model);
+            return View(model);
         }
 
         // GET: /HumanTasks/DetailsEmployee/5
         [Authorize]
         public ViewResult Details(int id)
         {
-            HumanTask humantask = this.taskProcessor.GetTaskById(id);
-            return this.View(humantask);
+            var model = new AllTasksViewModel();
+            var task = this.taskProcessor.GetTaskById(id);
+            var creatorName = task.CreatorId.HasValue ? this.employeeRepository.GetById((int)task.CreatorId).Name : "none";
+            var assigneeName = task.AssigneeId.HasValue ? this.employeeRepository.GetById((int)task.AssigneeId).Name : "none";
+            model.HumanTask = task;
+            model.CreatorName = creatorName;
+            model.AssigneeName = assigneeName;
+            return View(model);
         }
 
         // GET: /HumanTasks/Create

@@ -277,6 +277,7 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\HumanTasks\TaskDetailsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />

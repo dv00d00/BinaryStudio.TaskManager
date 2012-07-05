@@ -1,0 +1,115 @@
+﻿@model BinaryStudio.TaskManager.Web.Models.AllTasksViewModel
+
+<fieldset>
+    <legend>Задание</legend>
+    <table cellspacing="0" border="0">
+        <tr>
+            <td>
+                <div class="display-label">
+                    Название
+                </div>
+            </td>
+            <td>
+                <div class="display-field">
+                    @Model.HumanTask.Name
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="display-label">
+                    Описание
+                </div>
+            </td>
+            <td>
+                <div class="display-field">
+                    @Model.HumanTask.Description
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="display-label">
+                    Приоритет
+                </div>
+            </td>
+            <td>
+                <div class="display-field">
+                    @Model.HumanTask.Priority
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="display-label">
+                    Дата создания
+                </div>
+            </td>
+            <td>
+                <div class="display-field">
+                    @String.Format("{0:g}", Model.HumanTask.Created)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="display-label">
+                    Дата назначения исполнителя
+                </div>
+            </td>
+            <td>
+                <div class="display-field">
+                    @String.Format("{0:g}", Model.HumanTask.Assigned)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="display-label">
+                    Дата окончания
+                </div>
+            </td>
+            <td>
+                <div class="display-field">
+                    @String.Format("{0:g}", Model.HumanTask.Finished)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="display-label">
+                    Дата закрытия
+                </div>
+            </td>
+            <td>
+                <div class="display-field">
+                    @String.Format("{0:g}", Model.HumanTask.Closed)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="display-label">
+                    Имя создавшего
+                </div>
+            </td>
+            <td>
+                <div class="display-field">
+                    @Model.CreatorName
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="display-label">
+                    Имя исполнителя
+                </div>
+            </td>
+            <td>
+                <div class="display-field">
+                    @Model.AssigneeName
+                </div>
+            </td>
+        </tr>
+    </table>
+</fieldset>
