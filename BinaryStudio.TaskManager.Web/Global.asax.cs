@@ -3,9 +3,12 @@ using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Web
 {
+    using System;
     using System.Reflection;
     using System.Web.Mvc;
     using System.Web.Routing;
+
+    using NLog;
 
     using Ninject;
     using Ninject.Web.Common;
@@ -14,9 +17,22 @@ namespace BinaryStudio.TaskManager.Web
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new ErrorHandler());
         }
+        public class ErrorHandler: HandleErrorAttribute
+        {
 
+            private readonly Logger log = LogManager.GetCurrentClassLogger();
+            public override void OnException(ExceptionContext filterContext)
+            {
+                if (filterContext == null) return;
+
+                var ex = filterContext.Exception ?? new Exception("No further information");
+                this.log.DebugException("EXCEPTION", ex);
+
+                filterContext.ExceptionHandled = true;
+            }
+        }
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
