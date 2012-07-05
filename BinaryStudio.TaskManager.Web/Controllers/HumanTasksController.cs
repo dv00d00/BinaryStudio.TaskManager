@@ -20,8 +20,6 @@
 
         private readonly IEmployeeRepository employeeRepository;
 
-        private readonly Logger log = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanTasksController"/> class.
         /// </summary>
@@ -186,15 +184,5 @@
             }
         }
 
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            if (filterContext == null) return;
-
-            var ex = filterContext.Exception ?? new Exception("No further information");
-            this.log.DebugException("EXCEPTION", ex);
-
-            filterContext.ExceptionHandled = true;
-            filterContext.Result = this.View("Error");
-        }
     }
 }
