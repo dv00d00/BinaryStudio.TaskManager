@@ -13,12 +13,7 @@
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>Создание задачи</legend>
-
-        @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.AssigneeId)
-        @Html.HiddenFor(model => model.CreatorId)
-        @Html.HiddenFor(model => model.Created)
-        
+                
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
         </div>
