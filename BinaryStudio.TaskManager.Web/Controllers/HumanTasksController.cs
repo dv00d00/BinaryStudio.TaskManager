@@ -22,15 +22,18 @@
 
         private readonly Logger log = LogManager.GetCurrentClassLogger();
 
+        private readonly IUserProcessor userProcessor;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanTasksController"/> class.
         /// </summary>
         /// <param name="taskProcessor">The task processor.</param>
         /// <param name="employeeRepository">The employee repository.</param>
-        public HumanTasksController(ITaskProcessor taskProcessor, IEmployeeRepository employeeRepository)
+        public HumanTasksController(ITaskProcessor taskProcessor, IEmployeeRepository employeeRepository, IUserProcessor userProcessor)
         {
             this.taskProcessor = taskProcessor;
             this.employeeRepository = employeeRepository;
+            this.userProcessor = userProcessor;
         }
         
         // GET: /HumanTasks/
@@ -68,7 +71,7 @@
         [Authorize]
         public ActionResult Create(HumanTask humanTask)
         {
-
+            Employee employee = userProcessor.GetCurrentLoginedEmployee(User.Identity.Name);
             humanTask.Assigned = humanTask.AssigneeId == (int?) null ? humanTask.Created : (DateTime?) null;
             if (this.ModelState.IsValid)
             {
@@ -152,6 +155,8 @@
         [Authorize]
         public ActionResult AllManagersWithTasks()
         {
+            Employee employee_temp = userProcessor.GetCurrentLoginedEmployee(User.Identity.Name);
+            
             ManagersViewModel model = new ManagersViewModel();
             model.ManagerTasks = new List<ManagerTasksViewModel>();
             model.UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList();

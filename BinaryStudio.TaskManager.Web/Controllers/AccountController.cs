@@ -12,11 +12,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     {
         private readonly IUserRepository userRepository;
         private readonly IEmployeeRepository employeeRepository;
-
-        public AccountController(IUserRepository userRepository, IEmployeeRepository employeeRepository)
+        private readonly IUserProcessor userProcessor;
+        public AccountController(IUserRepository userRepository, IEmployeeRepository employeeRepository, IUserProcessor userProcessor)
         {
             this.userRepository = userRepository;
             this.employeeRepository = employeeRepository;
+            this.userProcessor = userProcessor;
         }
 
         //
@@ -26,7 +27,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             return View();
         }
-
+        
         //
         // POST: /Account/LogOn
 
@@ -35,10 +36,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (userRepository.LogOn(model.UserName, model.Password))
+                if (userProcessor.LogOnUser(model.UserName, model.Password))
                 {
-                    SetUserRoleFromBase(model.UserName);
-
+                    userProcessor.SetRoleToUserFromDB(model.UserName);
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))

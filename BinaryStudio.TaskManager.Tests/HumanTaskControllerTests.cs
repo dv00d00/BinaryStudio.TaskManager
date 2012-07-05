@@ -20,7 +20,7 @@
         {
             this.taskProcesorMock = new Mock<ITaskProcessor>();
             this.employeeRepository = new Mock<IEmployeeRepository>();   
-            this.controller = new HumanTasksController(taskProcesorMock.Object, this.employeeRepository.Object);
+            this.controller = new HumanTasksController(taskProcesorMock.Object, this.employeeRepository.Object,);
         }
 
         [Test]

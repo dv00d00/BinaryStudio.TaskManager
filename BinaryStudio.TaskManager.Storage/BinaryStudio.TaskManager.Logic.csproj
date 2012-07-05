@@ -40,11 +40,14 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Security" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ClientConnection.cs" />
@@ -53,12 +56,14 @@
     <Compile Include="Core\IReminderRepository.cs" />
     <Compile Include="Core\ITaskProcessor.cs" />
     <Compile Include="Core\HumanTaskRepository.cs" />
+    <Compile Include="Core\IUserProcessor.cs" />
     <Compile Include="Core\IUserRepository.cs" />
     <Compile Include="Core\ReminderRepository.cs" />
     <Compile Include="Core\ReminderSender.cs" />
     <Compile Include="Core\TaskProcessor.cs" />
-    <Compile Include="Core\TimeArguments.cs" />
+    <Compile Include="TimeArguments.cs" />
     <Compile Include="Core\TimeManager.cs" />
+    <Compile Include="Core\UserProcessor.cs" />
     <Compile Include="Core\UserRepository.cs" />
     <Compile Include="Domain\DatabaseInitializer.cs" />
     <Compile Include="Domain\IEntity.cs" />
@@ -78,6 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="InstallationDummyFile.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
