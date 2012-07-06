@@ -25,11 +25,10 @@
                 <ul id="menu">
                     @if(Roles.IsUserInRole("admin"))
                     {
-                        <li>@Html.ActionLink("Admin panel","Index","Admin")</li>
+                        <li>@Html.ActionLink("Панель администратора","Index","Admin")</li>
                     }
-                    <li>@Html.ActionLink("Reminders List","Index","Reminder")</li>                    
-                    <li>@Html.ActionLink("All managers with tasks", "AllManagersWithTasks", "HumanTasks")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Список напоминаний","Index","Reminder")</li>                    
+                    <li>@Html.ActionLink("Панель сотрудников и заданий", "AllManagersWithTasks", "HumanTasks")</li>                    
                 </ul>
             </nav>
         </header>

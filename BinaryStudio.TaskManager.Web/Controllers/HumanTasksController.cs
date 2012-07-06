@@ -23,25 +23,18 @@
         private readonly Logger log = LogManager.GetCurrentClassLogger();
 
         private readonly IUserProcessor userProcessor;
-        private ITaskProcessor iTaskProcessor;
-        private IEmployeeRepository iEmployeeRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanTasksController"/> class.
         /// </summary>
         /// <param name="taskProcessor">The task processor.</param>
         /// <param name="employeeRepository">The employee repository.</param>
+        /// <param name="userProcessor">The user processor. </param>
         public HumanTasksController(ITaskProcessor taskProcessor, IEmployeeRepository employeeRepository, IUserProcessor userProcessor)
         {
             this.taskProcessor = taskProcessor;
             this.employeeRepository = employeeRepository;
             this.userProcessor = userProcessor;
-        }
-
-        public HumanTasksController(ITaskProcessor iTaskProcessor, IEmployeeRepository iEmployeeRepository)
-        {
-            this.iTaskProcessor = iTaskProcessor;
-            this.iEmployeeRepository = iEmployeeRepository;
         }
         
         // GET: /HumanTasks/
@@ -50,7 +43,8 @@
         {
             var model = new List<SingleTaskViewModel>();
             string creatorName, assigneeName;
-            foreach (var task in this.taskProcessor.GetAllTasks().ToList())
+            var tasks = this.taskProcessor.GetAllTasks().ToList();
+            foreach (var task in tasks)
             {                
                 creatorName = task.CreatorId.HasValue ? this.employeeRepository.GetById((int)task.CreatorId).Name : "none";
                 assigneeName = task.AssigneeId.HasValue ? this.employeeRepository.GetById((int) task.AssigneeId).Name : "none";
@@ -129,7 +123,6 @@
             return this.View(humanTask);
         }
 
-        // GET: /HumanTasks/DeleteEmployee/5
         [Authorize]
         public ActionResult Delete(int id)
         {

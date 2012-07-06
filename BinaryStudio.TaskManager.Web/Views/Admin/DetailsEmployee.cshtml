@@ -5,15 +5,21 @@
 <fieldset>
     <legend>Данные о сотруднике </legend>
     <div class="display-label">
-        Name</div>
-    <div class="display-field">@Model.Name</div>
+        Имя сотрудника
+    </div>
+    <div class="display-field">
+        @Model.Name
+    </div>
     <div class="display-label">
-        Tasks</div>
-    <div class="display-field">@(Model.Tasks == null ? "None" : Model.Tasks.Count.ToString())</div>
+        Количество заданий
+    </div>
+    <div class="display-field">
+        @(Model.Tasks == null ? "Нет заданий" : Model.Tasks.Count.ToString())
+    </div>
 </fieldset>
 <p>
     @Html.ActionLink("Редактировать", "EditEmployee", new { id = Model.Id }) |
-    @Html.ActionLink("Вернуться в списк всех сотрудников", "EmployeesList")
+    @Html.ActionLink("Вернуться в список всех сотрудников", "EmployeesList")
 </p>
 <p>
     @Html.ActionLink("Вернуться в панель администратора", "Index")
