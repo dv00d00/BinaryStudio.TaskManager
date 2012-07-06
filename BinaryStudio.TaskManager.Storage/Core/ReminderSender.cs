@@ -5,22 +5,31 @@ namespace BinaryStudio.TaskManager.Logic.Core
         private readonly TimeManager timeManager;
         private readonly INotifier notifier;
         private readonly IReminderRepository reminderRepository;
+        private readonly IClientConnectionManager clientConnectionManager;
 
-        public ReminderSender(TimeManager timeManager, INotifier notifier, IReminderRepository reminderRepository)
+        public ReminderSender(TimeManager timeManager, INotifier notifier, IReminderRepository reminderRepository,
+                              IClientConnectionManager clientConnectionManager)
         {
             this.timeManager = timeManager;
             this.notifier = notifier;
             this.reminderRepository = reminderRepository;
+            this.clientConnectionManager = clientConnectionManager;
 
-            this.timeManager.OnTick += (s, e) =>
+            this.timeManager.OnTick += this.OnTick;
+        }
+
+        private void OnTick(object s, TimeArguments e)
+        {
+            var reminders = this.reminderRepository.GetReminderList(e.DateTime);
+
+            foreach (var reminder in reminders)
             {
-                var reminders = this.reminderRepository.GetReminderList(e.DateTime);
-
-                foreach (var reminder in reminders)
+                var clientConnection = this.clientConnectionManager.GetClientByEmployeeId(reminder.EmployeeID);
+                if (clientConnection != null)
                 {
-                    this.notifier.Send(new ClientConnection(), reminder.Content);
+                    this.notifier.Send(clientConnection, reminder.Content);
                 }
-            };
+            }
         }
     }
 }
