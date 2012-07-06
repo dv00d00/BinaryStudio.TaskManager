@@ -58,7 +58,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public User GetByName(string userName)
         {
-            return this.dataBaseContext.Users.ToList().Single(it => it.UserName == userName);
+            var user = this.dataBaseContext.Users.ToList().Single(it => it.UserName.Equals(userName));
+            return user;
         }
 
         public string GetRoleByName(string userName)

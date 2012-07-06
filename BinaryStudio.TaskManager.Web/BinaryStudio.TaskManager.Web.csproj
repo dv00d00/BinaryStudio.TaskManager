@@ -88,6 +88,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ReminderController.cs" />
+    <Compile Include="Models\AllTasksViewModel.cs" />
     <Compile Include="Models\ManagersViewModel.cs" />
     <Compile Include="Models\ManagerTasksViewModel.cs" />
     <Compile Include="Global.asax.cs">
@@ -274,6 +275,7 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\HumanTasks\TaskDetailsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />

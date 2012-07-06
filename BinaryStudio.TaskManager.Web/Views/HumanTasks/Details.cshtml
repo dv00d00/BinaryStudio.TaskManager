@@ -1,79 +1,13 @@
-@using BinaryStudio.TaskManager.Logic.Domain
-@model HumanTask
-
+@model BinaryStudio.TaskManager.Web.Models.SingleTaskViewModel
 @{
     ViewBag.Title = "Детали";
 }
-
-<h2>Детали</h2>
-
-<fieldset>
-    <legend>Задание</legend>
-
-    <div class="display-label">
-        Название
-    </div>
-    <div class="display-field">
-        @Model.Name
-    </div>
-
-    <div class="display-label">
-        Описание
-    </div>
-    <div class="display-field">
-        @Model.Description
-    </div>
-
-    <div class="display-label">
-        Приоритет
-    </div>
-    <div class="display-field">
-        @Model.Priority
-    </div>
-
-    <div class="display-label">
-        Дата создания
-    </div>
-    <div class="display-field">
-        @String.Format("{0:g}", Model.Created)
-    </div>
-
-    <div class="display-label">
-        Дата назначения ответственного
-    </div>
-    <div class="display-field">
-        @String.Format("{0:g}", Model.Assigned)
-    </div>
-
-    <div class="display-label">
-        Дата окончания
-    </div>
-    <div class="display-field">
-        @String.Format("{0:g}", Model.Finished)
-    </div>
-
-    <div class="display-label">
-        Дата закрытия
-    </div>
-    <div class="display-field">
-        @String.Format("{0:g}", Model.Closed)
-    </div>
-
-    <div class="display-label">
-        Id создавшего
-    </div>
-    <div class="display-field">
-        @Model.CreatorId
-    </div>
-
-    <div class="display-label">
-        Id ответственного
-    </div>
-    <div class="display-field">
-        @Model.AssigneeId
-    </div>
-</fieldset>
+<h2>
+    Детали
+</h2>
+    @Html.Partial("TaskDetailsPartial")
 <p>
-    @Html.ActionLink("Редактировать", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Вернуться к списку всех задач", "AllTasks")
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.HumanTask.Id }) |
+    @Html.ActionLink("Вернуться к списку всех задач", "AllTasks") |
+    @Html.ActionLink("Вернуться к Dashboard", "AllManagersWithTasks")
 </p>

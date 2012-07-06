@@ -17,6 +17,7 @@ namespace BinaryStudio.TaskManager.Web.NinjectModules
         {
             this.Bind<DataBaseContext>().ToMethod(it => new DataBaseContext());
             this.Bind<ITaskProcessor>().To<TaskProcessor>();
+            this.Bind<IUserProcessor>().To<UserProcessor>();
             this.Bind<IEmployeeRepository>().To<EmployeeRepository>();
             this.Bind<IUserRepository>().To<UserRepository>();
             this.Bind<IHumanTaskRepository>().To<HumanTaskRepository>();

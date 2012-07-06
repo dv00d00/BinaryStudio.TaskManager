@@ -20,54 +20,76 @@
 
         private readonly IEmployeeRepository employeeRepository;
 
+        private readonly Logger log = LogManager.GetCurrentClassLogger();
+
+        private readonly IUserProcessor userProcessor;
+        private ITaskProcessor iTaskProcessor;
+        private IEmployeeRepository iEmployeeRepository;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanTasksController"/> class.
         /// </summary>
         /// <param name="taskProcessor">The task processor.</param>
         /// <param name="employeeRepository">The employee repository.</param>
-        public HumanTasksController(ITaskProcessor taskProcessor, IEmployeeRepository employeeRepository)
+        public HumanTasksController(ITaskProcessor taskProcessor, IEmployeeRepository employeeRepository, IUserProcessor userProcessor)
         {
             this.taskProcessor = taskProcessor;
             this.employeeRepository = employeeRepository;
+            this.userProcessor = userProcessor;
+        }
+
+        public HumanTasksController(ITaskProcessor iTaskProcessor, IEmployeeRepository iEmployeeRepository)
+        {
+            this.iTaskProcessor = iTaskProcessor;
+            this.iEmployeeRepository = iEmployeeRepository;
         }
         
         // GET: /HumanTasks/
         [Authorize]
         public ViewResult AllTasks()
         {
-            var humanTasks = this.taskProcessor.GetAllTasks();
-            return this.View(humanTasks);
+            var model = new List<SingleTaskViewModel>();
+            string creatorName, assigneeName;
+            foreach (var task in this.taskProcessor.GetAllTasks().ToList())
+            {                
+                creatorName = task.CreatorId.HasValue ? this.employeeRepository.GetById((int)task.CreatorId).Name : "none";
+                assigneeName = task.AssigneeId.HasValue ? this.employeeRepository.GetById((int) task.AssigneeId).Name : "none";
+                model.Add(new SingleTaskViewModel
+                              {
+                                  HumanTask = task,
+                                  AssigneeName = assigneeName,
+                                  CreatorName = creatorName
+                              });
+            }
+
+            return View(model);
         }
-        
+
         // GET: /HumanTasks/DetailsEmployee/5
         [Authorize]
         public ViewResult Details(int id)
         {
-            var humantask = this.taskProcessor.GetTaskById(id);
-            return this.View(humantask);
+            var model = CreateSingleTaskViewModelById(id);
+            return View(model);
         }
-        
+
         // GET: /HumanTasks/Create
         [Authorize]
         public ActionResult Create(int managerId)
         {
-            var humanTask = new HumanTask();
-            humanTask.AssigneeId = (managerId != -1) ? managerId : (int?) null;
-            humanTask.CreatorId = humanTask.AssigneeId;
-            //TODO: creator pull from logon screen                
-
+            HumanTask humanTask = new HumanTask();
+            humanTask.AssigneeId = (managerId != -1) ? managerId : (int?)null;
+            humanTask.CreatorId = userProcessor.GetCurrentLoginedEmployee(User.Identity.Name).Id;         
             humanTask.Created = DateTime.Now;
             return this.View(humanTask);
         }
-
 
         // POST: /HumanTasks/Create
         [HttpPost]
         [Authorize]
         public ActionResult Create(HumanTask humanTask)
-        {
-
-            humanTask.Assigned = humanTask.AssigneeId == (int?) null ? humanTask.Created : (DateTime?) null;
+        {            
+            humanTask.Assigned = humanTask.AssigneeId == (int?)null ? humanTask.Created : (DateTime?)null;
             if (this.ModelState.IsValid)
             {
                 this.taskProcessor.CreateTask(humanTask);
@@ -77,15 +99,15 @@
             //TODO: refactor this "PossibleCreators" and "PossibleAssignees"
             this.ViewBag.PossibleCreators = new List<Employee>();
             this.ViewBag.PossibleAssignees = new List<Employee>();
-            
+
             return this.View(humanTask);
         }
-        
+
         // GET: /HumanTasks/EditEmployee/5
         [Authorize]
         public ActionResult Edit(int id)
         {
-            var humantask = this.taskProcessor.GetTaskById(id);
+            HumanTask humantask = this.taskProcessor.GetTaskById(id);
             this.ViewBag.PossibleCreators = new List<Employee>();
             this.ViewBag.PossibleAssignees = new List<Employee>();
             return this.View(humantask);
@@ -99,7 +121,7 @@
             if (this.ModelState.IsValid)
             {
                 this.taskProcessor.UpdateTask(humanTask);
-                return this.RedirectToAction("Index");
+                return this.RedirectToAction("AllTasks");
             }
 
             this.ViewBag.PossibleCreators = new List<Employee>();
@@ -111,26 +133,39 @@
         [Authorize]
         public ActionResult Delete(int id)
         {
-            var humantask = this.taskProcessor.GetTaskById(id);
-            return this.View(humantask);
+            var model = CreateSingleTaskViewModelById(id);
+            return this.View(model);
+        }
+
+        private SingleTaskViewModel CreateSingleTaskViewModelById(int id)
+        {
+            var model = new SingleTaskViewModel();
+            var task = this.taskProcessor.GetTaskById(id);
+            var creatorName = task.CreatorId.HasValue ? this.employeeRepository.GetById((int) task.CreatorId).Name : "none";
+            var assigneeName = task.AssigneeId.HasValue ? this.employeeRepository.GetById((int) task.AssigneeId).Name : "none";
+            model.HumanTask = task;
+            model.CreatorName = creatorName;
+            model.AssigneeName = assigneeName;
+            return model;
         }
 
         // POST: /HumanTasks/DeleteEmployee/5
-        [HttpPost, ActionName("DeleteEmployee")]
+        [HttpPost]
+        [ActionName("Delete")]        
         [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             this.taskProcessor.DeleteTask(id);
-            return this.RedirectToAction("Index");
+            return RedirectToAction("AllTasks");
         }
 
         [Authorize]
         public ActionResult ManagerDetails(int managerId)
         {
             this.ViewBag.ManagerName = this.employeeRepository.GetById(managerId).Name;
-            this.ViewBag.ManagerId = managerId;            
-            var model = new List<TaskViewModel>();
-            var humanTasks = new List<HumanTask>();
+            this.ViewBag.ManagerId = managerId;
+            IList<TaskViewModel> model = new List<TaskViewModel>();
+            IList<HumanTask> humanTasks = new List<HumanTask>();
             humanTasks = this.taskProcessor.GetTasksList(managerId).ToList();
             foreach (var task in humanTasks)
             {
@@ -150,6 +185,7 @@
         [Authorize]
         public ActionResult AllManagersWithTasks()
         {
+            
             var model = new ManagersViewModel();
             model.ManagerTasks = new List<ManagerTasksViewModel>();
             model.UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList();
@@ -164,9 +200,6 @@
             return this.View(model);
         }
 
-        //value 0 - tasks's
-        //value 1 - current task owner
-        //value 2 - move to
         [Authorize]
         public void MoveTask(int taskId, int senderId, int receiverId)
         {
@@ -184,5 +217,16 @@
             }
         }
 
+        //TODO: mb should delete??????
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            if (filterContext == null) return;
+
+            var ex = filterContext.Exception ?? new Exception("No further information");
+            this.log.DebugException("EXCEPTION", ex);
+
+            filterContext.ExceptionHandled = true;
+            filterContext.Result = this.View("Error");
+        }
     }
 }

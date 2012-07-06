@@ -1,69 +1,21 @@
-@using BinaryStudio.TaskManager.Logic.Domain
-@model HumanTask
+@model BinaryStudio.TaskManager.Web.Models.SingleTaskViewModel
 @{
     ViewBag.Title = "Удаление задачи";
 }
 <h2>
-    Удаление задачи</h2>
+    Удаление задачи
+</h2>
 <h3>
-    Вы уверены в совершаемом действии?</h3>
-<fieldset>
-    <legend>Детали выбранной задачи</legend>
-    <div class="display-label">
-        Название
-    </div>
-    <div class="display-field">
-        @Model.Name
-    </div>
-    <div class="display-label">
-        Описание
-    </div>
-    <div class="display-field">
-        @Model.Description
-    </div>
-    <div class="display-label">
-        Приоритет
-    </div>
-    <div class="display-field">
-        @Model.Priority
-    </div>
-    <div class="display-label">
-        Дата создания
-    </div>
-    <div class="display-field">
-        @String.Format("{0:g}", Model.Created)
-    </div>
-    <div class="display-label">
-        Дата назначения ответственного
-    </div>
-    <div class="display-field">
-        @String.Format("{0:g}", Model.Assigned)
-    </div>
-    <div class="display-label">
-    </div>
-    <div class="display-field">
-        @String.Format("{0:g}", Model.Finished)
-    </div>
-    <div class="display-label">
-        Дата закрытия
-    </div>
-    <div class="display-field">
-        @String.Format("{0:g}", Model.Closed)
-    </div>
-    <div class="display-label">
-        Id создавшего
-    </div>
-    <div class="display-field">@Model.CreatorId</div>
-    <div class="display-label">
-        Id ответственного
-    </div>
-    <div class="display-field">@Model.AssigneeId</div>
-</fieldset>
+    Вы уверены в совершаемом действии?
+</h3>
+@Html.Partial("TaskDetailsPartial")
 @using (Html.BeginForm())
 {
+    <div>
+        <input type="submit" value="Удаление задачи" /><br />
+    </div>
     <p>
-        <input type="submit" value="Удаление задачи" />
-        |
-        @Html.ActionLink("Вернуться в список всех задач", "AllTasks")
+        @Html.ActionLink("Вернуться в список всех задач", "AllTasks") |
+        @Html.ActionLink("Вернуться к Dashboard", "AllManagersWithTasks")
     </p>
 }
