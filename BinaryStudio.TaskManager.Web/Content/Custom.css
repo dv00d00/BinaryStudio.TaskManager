@@ -13,11 +13,14 @@ div.manager{
     height:30px;
 }
 
-div.task{    
-    border:1px solid black;
+div.task  
+{
+    border-radius: 15px 0 0 0; 
+    border:2px solid black;
     width:200px;
     height:100px;
     margin: 5px;
+       
 }
 
 .placeholderTask 
@@ -28,4 +31,19 @@ div.task{
     height:100px;
 }
 
+div.task.priority {
+    
+}
 
+.pr2 {
+    background-color: #1F3E9B;
+    color: white; 
+}
+.pr1 {
+    background-color: #7390E6;
+    color: white; 
+}
+.pr0 {
+    background-color: #AACDFF;
+    color: white; 
+}
