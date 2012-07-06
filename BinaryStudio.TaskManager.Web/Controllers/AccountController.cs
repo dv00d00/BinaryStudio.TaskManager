@@ -47,7 +47,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "HumanTasks");
                     }
                 }
                 else
@@ -67,36 +67,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("LogOn", "Account");
         }
 
-        //TODO: refactor!!!!!!!!!!!!!!!!!!!!!!!!!!
-        Employee GetCurrentEmployee(string userName)
-        {
-            User user = userRepository.GetByName(userName);
-            Employee employee = new Employee();
-            try
-            {
-                employee = employeeRepository.GetAll().ToList().Single(it => it.UserId == user.Id);
-            }
-            catch (Exception)
-            {
-                return new Employee() { Name = "(Not an Employee)" };
-            }
-            return employee;
-        }
-
-        public void SetUserRoleFromBase(string userName)
-        {
-            if (!Roles.RoleExists(userRepository.GetRoleByName(userName)))
-            {
-                Roles.CreateRole(userRepository.GetRoleByName(userName));
-            }
-
-            if (!Roles.IsUserInRole(userName, userRepository.GetRoleByName(userName)))
-            {
-                Roles.AddUserToRole(userName, userRepository.GetRoleByName(userName));
-            }
-        }
+       
     }
 }
