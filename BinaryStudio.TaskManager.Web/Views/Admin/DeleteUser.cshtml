@@ -1,15 +1,15 @@
 ﻿@model BinaryStudio.TaskManager.Logic.Domain.User
 @{
-    ViewBag.Title = "Delete user";
+    ViewBag.Title = "Удаление пользователя";
 }
 <h2>
-    Delete</h2>
+    Удаление пользователя</h2>
 <h3>
-    Are you sure you want to delete this?</h3>
+    Вы уверены, что хотите удалить текущую запись?</h3>
 <fieldset>
     <legend>Details about selected user</legend>
     <div class="display-label">
-        Name</div>
+        Имя</div>
     <div class="display-field">
         @Model.UserName
     </div>
@@ -25,6 +25,6 @@
     <p>
         <input type="submit" value="DeleteUser" />
         |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Вернуться в панель администратора", "Index")
     </p>
 }

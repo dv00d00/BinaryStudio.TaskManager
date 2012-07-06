@@ -1,26 +1,26 @@
 @model BinaryStudio.TaskManager.Logic.Domain.Reminder
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Создание";
 }
 
-<h2>Create</h2>
+<h2>Создание напоминания</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>Reminder</legend>
+        <legend>Напоминание</legend>
 
 		@Html.Partial("_CreateOrEdit", Model)
 
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Создать" />
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Вернуться к предыдущему списку", "Index")
 </div>
 
 

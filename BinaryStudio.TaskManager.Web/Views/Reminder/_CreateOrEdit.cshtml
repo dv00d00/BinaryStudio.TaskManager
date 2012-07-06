@@ -19,7 +19,7 @@
 </div>
 
 <div class="editor-label">
-    Employee
+    Сотрудник
 </div>
 <div class="editor-field">
     @try
@@ -30,7 +30,7 @@
             Text = (option == null ? "None" : option.Name), 
             Value = option.Id.ToString(),
             Selected = (Model != null) && (option.Id == Model.EmployeeID)
-        }), "Choose...")
+        }), "Выберите...")
     }
     catch (System.ArgumentNullException)
     {
@@ -50,7 +50,7 @@
             Text = (option == null ? "None" : option.Name),
             Value = option.Id.ToString(),
             Selected = (Model != null) && (option.Id == Model.TaskId)
-        }), "Choose...")
+        }), "Выберите...")
     }
     
     catch (System.ArgumentNullException)
