@@ -37,7 +37,10 @@
             this.userProcessor = userProcessor;
         }
         
-        // GET: /HumanTasks/
+        /// <summary>
+        /// All the tasks.
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public ViewResult AllTasks()
         {
@@ -59,7 +62,11 @@
             return View(model);
         }
 
-        // GET: /HumanTasks/DetailsEmployee/5
+        /// <summary>
+        /// Detailses the specified id.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns></returns>
         [Authorize]
         public ViewResult Details(int id)
         {
@@ -67,7 +74,11 @@
             return View(model);
         }
 
-        // GET: /HumanTasks/Create
+        /// <summary>
+        /// Creates the specified manager id.
+        /// </summary>
+        /// <param name="managerId">The manager id.</param>
+        /// <returns></returns>
         [Authorize]
         public ActionResult Create(int managerId)
         {
@@ -78,7 +89,11 @@
             return this.View(humanTask);
         }
 
-        // POST: /HumanTasks/Create
+        /// <summary>
+        /// Creates the specified human task.
+        /// </summary>
+        /// <param name="humanTask">The human task.</param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         public ActionResult Create(HumanTask humanTask)
@@ -97,7 +112,11 @@
             return this.View(humanTask);
         }
 
-        // GET: /HumanTasks/EditEmployee/5
+        /// <summary>
+        /// Edits the specified id.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns></returns>
         [Authorize]
         public ActionResult Edit(int id)
         {
@@ -107,7 +126,11 @@
             return this.View(humantask);
         }
 
-        // POST: /HumanTasks/EditEmployee/5
+        /// <summary>
+        /// Edits the specified human task.
+        /// </summary>
+        /// <param name="humanTask">The human task.</param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         public ActionResult Edit(HumanTask humanTask)
@@ -123,6 +146,11 @@
             return this.View(humanTask);
         }
 
+        /// <summary>
+        /// Deletes the specified id.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns></returns>
         [Authorize]
         public ActionResult Delete(int id)
         {
@@ -142,7 +170,11 @@
             return model;
         }
 
-        // POST: /HumanTasks/DeleteEmployee/5
+        /// <summary>
+        /// Deletes the confirmed.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns></returns>
         [HttpPost]
         [ActionName("Delete")]        
         [Authorize]
