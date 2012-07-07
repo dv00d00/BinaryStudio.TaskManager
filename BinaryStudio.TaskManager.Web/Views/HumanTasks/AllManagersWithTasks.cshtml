@@ -67,7 +67,7 @@
             
     <!-- Create a column with tasks-->
     <td align = "center" valign="top" width="250">
-         <div>@Html.ActionLink("Добавить навую нераспределенную задачу", "Create", new {managerId = -1})</div>
+         <div>@Html.ActionLink("Добавить новую нераспределенную задачу", "Create", new {managerId = -1})</div>
         @foreach (var unAssignedTask in Model.UnAssignedTasks)
         {
             <div class="sortableTasks">        

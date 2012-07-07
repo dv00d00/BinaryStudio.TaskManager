@@ -105,7 +105,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         //
         // POST: /Reminder/DeleteEmployee/5
 
-        [HttpPost, ActionName("DeleteEmployee")]
+        [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
             Reminder reminder = reminderRepository.GetById(id); 
