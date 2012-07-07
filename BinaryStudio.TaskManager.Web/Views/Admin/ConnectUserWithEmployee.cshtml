@@ -1,15 +1,15 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.UserViewModel
-
 <script type="text/javascript">
     $(document).ready(function () {
         $("#DropDownUsers :nth-child(0)").attr('selected', 'selected');
         $("#DropDownUsers").change(function () {
+            $("#userSelectDefault").hide();
             var currentUserId = $("#DropDownUsers option:selected").attr("id");
             $("#userId").html();
             $.ajax({
                 type: 'POST',
                 url: '/Admin/SendUserInfo',
-                data:'id='+currentUserId,
+                data: 'id=' + currentUserId,
                 dataType: 'json',
                 success: function (result) {
                     $('#userId').html(result.Id);
@@ -21,6 +21,7 @@
         });
         $("#DropDownEmployees :nth-child(0)").attr('selected', 'selected');
         $("#DropDownEmployees").change(function () {
+            $("#employeeSelectDefault").hide();
             var currentEmployeeId = $("#DropDownEmployees option:selected").attr("id");
             $.ajax({
                 type: 'POST',
@@ -35,88 +36,114 @@
         });
     });
 </script>
-
 <fieldset>
     <legend align="center">Здесь вы можете связать аккаунт с сотрудником</legend>
-
     <table style="width: 100%;" align="center">
         <tr>
-        
             <td align="center">
                 <div class="editor-label">
                     Выберите пользователя
                 </div>
                 <div class="editor-field">
-                    <select id="DropDownUsers">                
-                        @foreach(var user in Model.Users)
+                    <select id="DropDownUsers">
+                        <option id="userSelectDefault">--select--</option>
+                        @foreach (var user in Model.Users)
                         {
                             <option id=@user.Id>
                                 @user.UserName
                             </option>
-                        }                
-                    </select>        
+                        }
+                    </select>
                 </div>
             </td>
             <td align="center">
-                <div class="editor-label" >
+                <div class="editor-label">
                     Выберите сотрудника
                 </div>
                 <div class="editor-field">
-                    <select id="DropDownEmployees">                
-                        @foreach(var emplyee in Model.Employees)
+                    <select id="DropDownEmployees">
+                        <option id="employeeSelectDefault">--select--</option>
+                        @foreach (var emplyee in Model.Employees)
                         {
                             <option id=@emplyee.Id>
                                 @emplyee.Name
                             </option>
-                        }                
-                    </select>        
+                        }
+                    </select>
                 </div>
             </td>
-            <td rowspan="2">           
+            <td rowspan="2">
                 <p align="center">
-                    <input type="submit" value="Save" />
+                    <input type="submit" value="Связать" />
                 </p>
-            </td>        
+            </td>
         </tr>
         <tr>
-        <td>                
-            Информация о текущем аккаунте:<br/>
-            <table  class="userInfo"><tbody>
-                       <tr>
-                           <td>Id:</td>
-                           <td><span id="userId"></span></td>
-                       </tr>
-                       <tr>
-                           <td>Имя пользователя:</td> 
-                           <td><span id="userName"></span></td>
-                       </tr>
-                       <tr>
-                           <td>Email:</td>
-                           <td><span id="userEmail"></span></td>
-                       </tr>
-                       <tr>
-                           <td>Пароль:</td>
-                           <td><span id="userPassword"></span></td>
-                       </tr></tbody></table>
-                                           
-        </td>
-        <td>
-                Информация о текущем пользователе:<br/>
-                <table class="userInfo"><tbody>
-                    <tr>
-                       <td>Имя пользователя:</td>
-                        <td><span id="employeeId"></span></td>
-                    </tr>
-                       <tr>
-                           <td>Email:</td>
-                           <td><span id="employeeName"></span></td>
-                       </tr></tbody></table>
+            <td align="center">
+                Информация о текущем аккаунте:<br />
+                <table class="userInfo" align="center">
+                    <tbody>
+                        <tr>
+                            <td>
+                                Id:
+                            </td>
+                            <td>
+                                <span id="userId"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Имя пользователя:
+                            </td>
+                            <td>
+                                <span id="userName"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Email:
+                            </td>
+                            <td>
+                                <span id="userEmail"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Пароль:
+                            </td>
+                            <td>
+                                <span id="userPassword"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </td>
-
+            <td align="center">
+                Информация о текущем пользователе:<br />
+                <table class="userInfo" align="center">
+                    <tbody>
+                        <tr>
+                            <td>
+                                Имя пользователя:
+                            </td>
+                            <td>
+                                <span id="employeeId"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Email:
+                            </td>
+                            <td>
+                                <span id="employeeName"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </tdalign>
         </tr>
     </table>
 </fieldset>
-
 <p>
     @Html.ActionLink("Вернуться в панель администратора", "Index")
 </p>

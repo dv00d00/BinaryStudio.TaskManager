@@ -1,15 +1,17 @@
 ﻿@model BinaryStudio.TaskManager.Logic.Domain.HumanTask
-@* This partial view draw a task block in table *@   
+@* This partial view draw a task block in table *@
 @{ string divClass = "pr" + Model.Priority.ToString();
     
-<div class="task @divClass" id = @Model.Id.ToString() style="height: 100px">
-        <br/>
+    <div class="task @divClass" id = @Model.Id.ToString() style="height: 100px">
+        <br />
         <b>@Model.Name</b>
-        <br/>
+        <br />
         @Model.Description
-        <br/>Создано: @Model.Created
-        <u><i><br/> @Html.ActionLink("Подробности", "Details", new { id = Model.Id })</i></u>
-                                       
-</div>
-}                           
-                  
+        <br />
+        Создано: @Model.Created
+        <u><i>
+            <br />
+            @Html.ActionLink("Подробности", "Details", new { id = Model.Id })
+        </i></u>
+    </div>
+}

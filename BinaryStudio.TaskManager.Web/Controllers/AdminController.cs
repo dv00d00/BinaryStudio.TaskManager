@@ -45,18 +45,17 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                User user = new User()
-                                {
+                var user = new User()
+                {
 
-                                    Id = model.userId,
-                                    UserName = model.UserName,
-                                    Email = model.Email,
-                                    Password = model.Password,
-                                    RoleId = 2
-                                };
+                    Id = model.userId,
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    Password = model.Password,
+                    RoleId = 2
+                };
                 this.userRepository.CreateUser(user);
 
-                //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
                 //TODO: redirect to view with relation employee with account
                 return this.RedirectToAction("ConnectUserWithEmployee", "Admin");
             }
@@ -65,67 +64,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.View(model);
         }
 
-        //
-        // GET: /Account/ChangePassword
-        [Authorize(Roles = "admin")]
-        public ActionResult ChangePassword()
-        {
-            return this.View();
-        }
-
-        //
-
-
-        [Authorize(Roles = "admin")]
-        [HttpPost]
-        public ActionResult ChangePassword(ChangePasswordModel model)
-        {
-            if (this.ModelState.IsValid)
-            {
-
-                // ChangePassword will throw an exception rather
-                // than return false in certain failure scenarios.
-                bool changePasswordSucceeded;
-                try
-                {
-                    MembershipUser currentUser = Membership.GetUser(this.User.Identity.Name, true /* userIsOnline */);
-                    changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
-                }
-                catch (Exception)
-                {
-                    changePasswordSucceeded = false;
-                }
-
-                if (changePasswordSucceeded)
-                {
-                    return this.RedirectToAction("ChangePasswordSuccess");
-                }
-                else
-                {
-                    this.ModelState.AddModelError("", "Неверен текущий пароль или новый пароль с ошибками.");
-                }
-            }
-
-            // If we got this far, something failed, redisplay form
-            return this.View(model);
-        }
-
-        //
-        // GET: /Account/ChangePasswordSuccess
-        [Authorize(Roles = "admin")]
-        public ActionResult ChangePasswordSuccess()
-        {
-            return this.View();
-        }
-
         [Authorize(Roles = "admin")]
         public ActionResult ConnectUserWithEmployee()
         {
             var model = new UserViewModel();
             model.Users = this.userRepository.GetAll().ToList();
             model.Employees = this.employeeRepository.GetAll().ToList();
-            model.CurrentUser = model.Users.First();
-            model.CurrentEmployee = model.Employees.First();
             return this.View(model);
         }
 
@@ -256,12 +200,14 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public ActionResult SendUserInfo(int id)
         {
             return this.Json(userRepository.GetById(id));
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public ActionResult SendEmployeeInfo(int employeeId)
         {
             var employeeToBeReturned = employeeRepository.GetById(employeeId);

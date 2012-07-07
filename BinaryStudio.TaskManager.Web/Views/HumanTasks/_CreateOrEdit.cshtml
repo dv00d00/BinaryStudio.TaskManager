@@ -4,7 +4,7 @@
 @* This partial view defines form fields that will appear when creating and editing entities *@
 
 <div class="editor-label">
-    @Html.LabelFor(model => model.Name)
+    Название:
 </div>
 <div class="editor-field">
     @Html.EditorFor(model => model.Name)
@@ -12,7 +12,7 @@
 </div>
 
 <div class="editor-label">
-    @Html.LabelFor(model => model.Description)
+    Описание:
 </div>
 <div class="editor-field">
     @Html.EditorFor(model => model.Description)
@@ -20,7 +20,7 @@
 </div>
 
 <div class="editor-label">
-    @Html.LabelFor(model => model.Priority)
+    Приоритет:
 </div>
 <div class="editor-field">
     @Html.EditorFor(model => model.Priority)
@@ -28,23 +28,7 @@
 </div>
 
 <div class="editor-label">
-    @Html.LabelFor(model => model.Created)
-</div>
-<div class="editor-field">
-    @Html.EditorFor(model => model.Created)
-    @Html.ValidationMessageFor(model => model.Created)
-</div>
-
-<div class="editor-label">
-    @Html.LabelFor(model => model.Assigned)
-</div>
-<div class="editor-field">
-    @Html.EditorFor(model => model.Assigned)
-    @Html.ValidationMessageFor(model => model.Assigned)
-</div>
-
-<div class="editor-label">
-    @Html.LabelFor(model => model.Finished)
+    Дата окончания:
 </div>
 <div class="editor-field">
     @Html.EditorFor(model => model.Finished)
@@ -52,26 +36,10 @@
 </div>
 
 <div class="editor-label">
-    @Html.LabelFor(model => model.Closed)
+    Дата закрытия
 </div>
 <div class="editor-field">
     @Html.EditorFor(model => model.Closed)
     @Html.ValidationMessageFor(model => model.Closed)
-</div>
-
-<div class="editor-label">
-    @Html.LabelFor(model => model.CreatorId)
-</div>
-<div class="editor-field">
-    @Html.EditorFor(model => model.CreatorId)
-    @Html.ValidationMessageFor(model => model.CreatorId)
-</div>
-
-<div class="editor-label">
-    @Html.LabelFor(model => model.AssigneeId)
-</div>
-<div class="editor-field">
-    @Html.EditorFor(model => model.AssigneeId)
-    @Html.ValidationMessageFor(model => model.AssigneeId)
 </div>
 

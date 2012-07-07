@@ -8,16 +8,11 @@ namespace BinaryStudio.TaskManager.Web.Models
     {
         [UIHint("User")]
         [Display(Name = "User")]
-        [DisplayFormat(NullDisplayText = "---Please Select---")]        
         public List<User> Users { get; set; }
 
         [UIHint("Employee")]
         [Display(Name = "Employee")]
-        [DisplayFormat(NullDisplayText = "---Please Select---")]
         public List<Employee> Employees { get; set; }
 
-        public User CurrentUser { get; set; }
-
-        public Employee CurrentEmployee { get; set; }
     }
 }

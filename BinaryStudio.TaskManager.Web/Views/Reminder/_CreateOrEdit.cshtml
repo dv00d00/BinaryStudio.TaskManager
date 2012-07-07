@@ -3,7 +3,7 @@
 @* This partial view defines form fields that will appear when creating and editing entities *@
 
 <div class="editor-label">
-    @Html.LabelFor(model => model.ReminderDate)
+    Дата напоминания:
 </div>
 <div class="editor-field">
     @Html.EditorFor(model => model.ReminderDate)
@@ -11,7 +11,7 @@
 </div>
 
 <div class="editor-label">
-    @Html.LabelFor(model => model.Content)
+    Содержание:
 </div>
 <div class="editor-field">
     @Html.EditorFor(model => model.Content)
@@ -39,7 +39,7 @@
     @Html.ValidationMessageFor(model => model.EmployeeID)
 </div>
 <div class="editor-label">
-    Task
+    Задание:
 </div>
 <div class="editor-field">
     @try
