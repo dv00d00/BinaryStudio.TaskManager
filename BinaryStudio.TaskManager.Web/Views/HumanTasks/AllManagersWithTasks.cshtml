@@ -38,19 +38,19 @@
 
 
 <!-- Caption of the table "Managers-Tasks"-->
-<p align="center">Managers and their current tasks.</p>
+<p align="center">Менеджеры и их текущие задачи.</p>
 <table align="center">            
    
     @if (Model.ManagerTasks.Count == 0)
     {
-        <p>No managers found!</p>
+        <p>Менеджеры не найдены!</p>
     }
     else
     {
         <!-- Header of the table (Managers names)-->
         <tr>
             <td align="center" width="250">
-                    <div class="manager">Unassigned Tasks </div>
+                    <div class="manager">Нераспределенные задачи </div>
                 </td>
             @foreach (var manager in Model.ManagerTasks)
             {
@@ -67,7 +67,7 @@
             
     <!-- Create a column with tasks-->
     <td align = "center" valign="top" width="250">
-         <div>@Html.ActionLink("Add new unassigned task", "Create", new {managerId = -1})</div>
+         <div>@Html.ActionLink("Добавить навую нераспределенную задачу", "Create", new {managerId = -1})</div>
         @foreach (var unAssignedTask in Model.UnAssignedTasks)
         {
             <div class="sortableTasks">        
@@ -81,7 +81,7 @@
     @foreach (var manager in Model.ManagerTasks)
     {        
         <td id=@manager.Manager.Id.ToString() align = "center" valign="top" width="250" class="managerTasks">
-                 <div>@Html.ActionLink("Add new task", "Create", new {managerId = manager.Manager.Id})</div>
+                 <div>@Html.ActionLink("Добавить задачу", "Create", new {managerId = manager.Manager.Id})</div>
                 @foreach (var task in manager.Tasks.OrderByDescending(x => x.Priority))
                 {
                     <div class="sortableTasks" >

@@ -7,21 +7,21 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Создание нового", "Create")
 </p>
 <table>
     <tr>
         <th>
-            Employee
+            Сотрудние
         </th>
         <th>
-            Task
+            Задача
         </th>
         <th>
-            ReminderDate
+            Дата напоминания
         </th>
         <th>
-            Content
+            Содержание
         </th>
         <th>
         </th>
@@ -43,7 +43,7 @@
         </td>
         <td>
             @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Детали", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Подробности", "Details", new { id = item.Id }) |
             @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
         </td>
     </tr>

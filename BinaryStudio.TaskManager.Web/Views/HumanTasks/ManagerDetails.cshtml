@@ -27,7 +27,7 @@
         </td>
         <td>
             @this.Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) |
-            @this.Html.ActionLink("Детали", "Details", new { id = item.Id }) |
+            @this.Html.ActionLink("Подробности", "Details", new { id = item.Id }) |
             @this.Html.ActionLink("Удаить", "Delete", new { id = item.Id })
         </td>
     </tr>
@@ -35,33 +35,33 @@
 
 
 
-<h2> @ViewBag.ManagerName's tasks</h2>
+<h2> @ViewBag.ManagerName, Ваши задачи</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create",new{managerId =(int) ViewBag.ManagerId})
+    @Html.ActionLink("Создать новую задачу", "Create",new{managerId =(int) ViewBag.ManagerId})
 </p>
 <table>
     <tr>
         <th>
-            Name
+            Имя
         </th>
         <th>
-            Description
+            Описание
         </th>
         <th>
-            Priority
+            Приоритет
         </th>
         <th>
-            Created
+            Дата создания
         </th>
         <th>
-            Finished
+            Дата окончания
         </th>
         <th>
-            Closed
+            Дата закрытия
         </th>
         <th>
-            Creator
+            Создатель задачи
         </th>
     </tr>
 
