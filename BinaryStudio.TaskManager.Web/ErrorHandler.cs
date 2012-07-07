@@ -4,6 +4,8 @@ using NLog;
 
 namespace BinaryStudio.TaskManager.Web
 {
+    using System.Web.Routing;
+
     /// <summary>
     /// Global Exception Handler, logs all unhandled Exceptions 
     /// </summary>
@@ -17,7 +19,12 @@ namespace BinaryStudio.TaskManager.Web
             var ex = filterContext.Exception ?? new Exception("No further information");
             this.log.DebugException("EXCEPTION", ex);
 
-            filterContext.ExceptionHandled = true;
+            filterContext.ExceptionHandled = true; 
+
+            filterContext.Result = new ViewResult
+            {
+                ViewName = "~/Views/Shared/Error.cshtml"
+            };    
         }
     }
 }

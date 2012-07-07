@@ -20,8 +20,6 @@
 
         private readonly IEmployeeRepository employeeRepository;
 
-        private readonly Logger log = LogManager.GetCurrentClassLogger();
-
         private readonly IUserProcessor userProcessor;
 
         /// <summary>
@@ -138,7 +136,7 @@
             if (this.ModelState.IsValid)
             {
                 this.taskProcessor.UpdateTask(humanTask);
-                return this.RedirectToAction("AllTasks");
+                return this.RedirectToAction("AllManagersWithTasks");
             }
 
             this.ViewBag.PossibleCreators = new List<Employee>();
@@ -242,16 +240,5 @@
             }
         }
 
-        //TODO: mb should delete??????
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            if (filterContext == null) return;
-
-            var ex = filterContext.Exception ?? new Exception("No further information");
-            this.log.DebugException("EXCEPTION", ex);
-
-            filterContext.ExceptionHandled = true;
-            filterContext.Result = this.View("Error");
-        }
     }
 }
