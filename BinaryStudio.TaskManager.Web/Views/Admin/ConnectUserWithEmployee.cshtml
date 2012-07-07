@@ -6,12 +6,32 @@
         $("#DropDownUsers").change(function () {
             var currentUserId = $("#DropDownUsers option:selected").attr("id");
             $("#userId").html();
-            alert("user " + currentUserId);
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/SendUserInfo',
+                data:'id='+currentUserId,
+                dataType: 'json',
+                success: function (result) {
+                    $('#userId').html(result.Id);
+                    $('#userName').html(result.UserName);
+                    $('#userEmail').html(result.Email);
+                    $('#userPassword').html(result.Password);
+                }
+            });
         });
         $("#DropDownEmployees :nth-child(0)").attr('selected', 'selected');
         $("#DropDownEmployees").change(function () {
             var currentEmployeeId = $("#DropDownEmployees option:selected").attr("id");
-            alert("employee " + currentEmployeeId);
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/SendEmployeeInfo',
+                data: 'employeeId=' + currentEmployeeId,
+                dataType: 'json',
+                success: function (result) {
+                    $('#employeeId').html(result.Id);
+                    $('#employeeName').html(result.Name);
+                }
+            });
         });
     });
 </script>
@@ -59,30 +79,38 @@
             </td>        
         </tr>
         <tr>
-            <td>                
-                Информация о текущем аккаунте:<br/>
-                Id: <div id="userId">
-                    
-                </div>
-                <br/>Имя пользователя: 
-                <div id="userName">
-                    
-                </div>
-                <br/>Email:
-                <div id="userEmail">
-                    
-                </div>
-                <br/>Пароль: 
-                <div id="userPassword">
-                    
-                </div>
-                <br/>                                
-            </td>
-            <td>
+        <td>                
+            Информация о текущем аккаунте:<br/>
+            <table  class="userInfo"><tbody>
+                       <tr>
+                           <td>Id:</td>
+                           <td><span id="userId"></span></td>
+                       </tr>
+                       <tr>
+                           <td>Имя пользователя:</td> 
+                           <td><span id="userName"></span></td>
+                       </tr>
+                       <tr>
+                           <td>Email:</td>
+                           <td><span id="userEmail"></span></td>
+                       </tr>
+                       <tr>
+                           <td>Пароль:</td>
+                           <td><span id="userPassword"></span></td>
+                       </tr></tbody></table>
+                                           
+        </td>
+        <td>
                 Информация о текущем пользователе:<br/>
-                ID:  <br/>
-                Name:  <br/>
-                Is already bind?               
+                <table class="userInfo"><tbody>
+                    <tr>
+                       <td>Имя пользователя:</td>
+                        <td><span id="employeeId"></span></td>
+                    </tr>
+                       <tr>
+                           <td>Email:</td>
+                           <td><span id="employeeName"></span></td>
+                       </tr></tbody></table>
             </td>
 
         </tr>

@@ -254,5 +254,22 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.userRepository.Delete(id);
             return this.RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public ActionResult SendUserInfo(int id)
+        {
+            return this.Json(userRepository.GetById(id));
+        }
+
+        [HttpPost]
+        public ActionResult SendEmployeeInfo(int employeeId)
+        {
+            var employeeToBeReturned = employeeRepository.GetById(employeeId);
+            return this.Json(new
+                {
+                    Id = employeeToBeReturned.Id,
+                    Name = employeeToBeReturned.Name
+                });
+        }
     }
 }
