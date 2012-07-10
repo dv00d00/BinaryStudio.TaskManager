@@ -63,6 +63,9 @@
     <Compile Include="Core\ReminderSender.cs" />
     <Compile Include="Core\TaskProcessor.cs" />
     <Compile Include="Core\UserProcessor.cs" />
+    <Compile Include="Domain\Permissions.cs" />
+    <Compile Include="Domain\Project.cs" />
+    <Compile Include="Domain\ProjectsAndUsers.cs" />
     <Compile Include="TimeArguments.cs" />
     <Compile Include="Core\TimeManager.cs" />
     <Compile Include="Core\UserRepository.cs" />

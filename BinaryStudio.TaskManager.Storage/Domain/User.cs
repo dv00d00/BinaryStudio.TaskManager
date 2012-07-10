@@ -3,8 +3,11 @@
     /// <summary>
     ///User
     /// </summary>
-    public class User
+    public class User: IEntity
     {
+        /// <summary>
+        /// Entity unique identifier
+        /// </summary>
         public int Id { get; set; }
 
         /// <summary>
@@ -20,6 +23,8 @@
         //TODO: refactor this for HASH
         public string Password { get; set; }
 
+
+        //TODO: delete
         public int RoleId { get; set; }
 
     }
