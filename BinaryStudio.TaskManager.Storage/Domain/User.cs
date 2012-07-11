@@ -21,11 +21,13 @@
 
         //TODO: refactor this for HASH
         public string Password { get; set; }
-        
+
+
+        //TODO CLEAN ROLES FROM USERS
         public int RoleId { get; set; }
 
-        public ICollection<Project> Projects { get; set; }        
+        public virtual ICollection<ProjectsAndUsers> UserProjects { get; set; } 
 
-        public ICollection<Project> CreatedProjects { get; set; }
+
     }
 }

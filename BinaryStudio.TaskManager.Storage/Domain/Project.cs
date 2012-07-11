@@ -15,10 +15,10 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
         public virtual ICollection<HumanTask> Tasks { get; set; }
 
-        public virtual ICollection<User> Users { get; set; }
+        //public virtual ICollection<User> Users { get; set; }
 
         public virtual User Creator { get; set; }
 
-        public int CreatorId { get; set; }
+        public virtual ICollection<ProjectsAndUsers> ProjectUsers { get; set; }
     }
 }

@@ -26,6 +26,10 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         /// <value>
         /// The users.
         /// </value>
+        
+        //TODO CLEAN ROLES FROM USERS
         public virtual ICollection<User> Users { get; set; }
+
+        public virtual ICollection<ProjectsAndUsers> ProjectsAndUsersesRoles { get; set; } 
     }
 }

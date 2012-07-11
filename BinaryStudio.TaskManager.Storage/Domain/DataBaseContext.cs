@@ -20,13 +20,18 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Project>().HasKey(it => it.Id);
+
+            modelBuilder.Entity<Project>().HasRequired(x => x.Creator) //or HasOptional
+                              .WithMany() //Unidirectional
+                              .Map(x => x.MapKey("Creator")) //FK column Name
+                              .WillCascadeOnDelete(false);
+         /*   modelBuilder.Entity<Project>().HasKey(it => it.Id);
 
             modelBuilder.Entity<Project>().HasMany(it => it.Users).WithMany(it => it.Projects);
 
             modelBuilder.Entity<Project>().HasRequired(it => it.Creator).WithMany(it => it.CreatedProjects).
                 HasForeignKey(it => it.CreatorId).WillCascadeOnDelete(false);
-
+    */
 
         }
     }
