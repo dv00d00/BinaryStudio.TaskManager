@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BinaryStudio.TaskManager.Logic.Domain
 {
@@ -14,26 +15,24 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         /// </summary>
         /// <value>
         /// The user id.
-        /// </value>
-        [ForeignKey("User")]
-        public int UserId { get; set; }
+        /// </value>   
+   
+        public virtual User User { get; set; }
 
         /// <summary>
         /// Gets or sets the project id.
         /// </summary>
         /// <value>
         /// The project id.
-        /// </value>
-        [ForeignKey("Project")]
-        public int ProjectId { get; set; }
+        /// </value>    
+        public virtual Project Project { get; set; }
 
         /// <summary>
         /// Gets or sets the role id.
         /// </summary>
         /// <value>
         /// The role id.
-        /// </value>
-        [ForeignKey("Role")]
-        public int RoleId { get; set; }
+        /// </value>        
+        public virtual UserRoles Role { get; set; }
     }
 }
