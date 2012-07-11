@@ -1,4 +1,6 @@
-﻿namespace BinaryStudio.TaskManager.Logic.Domain
+﻿using System.Collections.Generic;
+
+namespace BinaryStudio.TaskManager.Logic.Domain
 {
     /// <summary>
     /// This model contain information about permissions 
@@ -17,5 +19,7 @@
         /// The name of the role. This name must descript roles.
         /// </value>
         public string RoleName { get; set; }
+
+        public virtual ICollection<Permissions> Permissions { get; set; }
     }
 }

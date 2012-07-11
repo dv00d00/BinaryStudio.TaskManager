@@ -17,9 +17,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         /// <value>
         /// The creator id.
         /// </value>
-        [Required]
-        [ForeignKey("User")]
-        public int CreatorId { get; set; }
+                
 
         public int ololo { get; set; }
 
@@ -28,8 +26,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         public string Name { get; set; }
 
         public string Description { get; set; }
-        
-        [ForeignKey("ProjectsAndUsers")]
+                
         public int ProjectsAndUsersId { get; set; }
 
         public IList<HumanTask> ProjectTasks { get; set; }
