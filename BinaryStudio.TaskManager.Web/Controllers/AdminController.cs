@@ -12,18 +12,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     public class AdminController : Controller
     {
         private readonly IUserRepository userRepository;
-        private readonly IEmployeeRepository employeeRepository;
                 
-        public AdminController(IUserRepository userRepository, IEmployeeRepository employeeRepository)
-        {
-            this.userRepository = userRepository;
-            this.employeeRepository = employeeRepository;
-        }
-
         public AdminController(IUserRepository userRepository)
         {
-            this.userRepository = userRepository;
-            this.employeeRepository = new EmployeeRepository(new DataBaseContext());
+            this.userRepository = userRepository;            
         }
 
         [Authorize(Roles = "admin")]
@@ -57,95 +49,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 this.userRepository.CreateUser(user);
 
                 //TODO: redirect to view with relation employee with account
-                return this.RedirectToAction("ConnectUserWithEmployee", "Admin");
+                return this.RedirectToAction("Index", "Admin");
             }
 
             // If we got this far, something failed, redisplay form
             return this.View(model);
         }
-
-        [Authorize(Roles = "admin")]
-        public ActionResult ConnectUserWithEmployee()
-        {
-            var model = new UserViewModel();
-            model.Users = this.userRepository.GetAll().ToList();
-            model.Employees = this.employeeRepository.GetAll().ToList();
-            return this.View(model);
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "admin")]
-        public ActionResult RegisterNewEmployee()
-        {
-            return this.View();
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "admin")]
-        public ActionResult RegisterNewEmployee(Employee employee)
-        {
-            if (this.ModelState.IsValid)
-            {
-                this.employeeRepository.Add(employee);
-                return this.RedirectToAction("Index");
-            }
-
-            return this.View(employee);
-        }
-
-        [Authorize(Roles = "admin")]
-        public ActionResult EmployeesList()
-        {
-            return this.View(this.employeeRepository.GetAll());
-        }
-
-        [Authorize(Roles = "admin")]
-        public ActionResult DeleteEmployee(int id)
-        {
-            Employee employee = this.employeeRepository.GetById(id);
-            return this.View(employee);
-        }
-
-        /// <summary>
-        /// Deleting manager and moving all task to unassigned.
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <returns></returns>
-        [HttpPost]
-        [ActionName("DeleteEmployee")]
-        [Authorize(Roles = "admin")]
-        public ActionResult DeleteEmployeeConfirmed(int id)
-        {
-            this.employeeRepository.Delete(id);
-            return this.RedirectToAction("Index");
-        }
-
-        [Authorize(Roles = "admin")]
-        public ActionResult EditEmployee(int id)
-        {
-            Employee employee = this.employeeRepository.GetById(id);
-            return this.View(employee);
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "admin")]
-        public ActionResult EditEmployee(Employee employee)
-        {
-            if (this.ModelState.IsValid)
-            {
-                this.employeeRepository.Update(employee);
-                return this.RedirectToAction("Index");
-            }
-            return this.View(employee);
-        }
-
-        [Authorize(Roles = "admin")]
-        public ActionResult DetailsEmployee(int id)
-        {
-            Employee employee = this.employeeRepository.GetById(id);
-            return this.View(employee);
-        }
-
+  
         [Authorize(Roles = "admin")]
         public ActionResult UsersList()
         {
@@ -206,16 +116,5 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.Json(userRepository.GetById(id));
         }
 
-        [HttpPost]
-        [Authorize(Roles = "admin")]
-        public ActionResult SendEmployeeInfo(int employeeId)
-        {
-            var employeeToBeReturned = employeeRepository.GetById(employeeId);
-            return this.Json(new
-                {
-                    Id = employeeToBeReturned.Id,
-                    Name = employeeToBeReturned.Name
-                });
-        }
     }
 }

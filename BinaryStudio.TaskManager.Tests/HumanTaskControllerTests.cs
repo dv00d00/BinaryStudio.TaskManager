@@ -12,7 +12,7 @@
     public class HumanTaskControllerTests
     {
         private Mock<ITaskProcessor> taskProcessorMock;
-        private Mock<IEmployeeRepository> employeeRepository;
+        private Mock<IUserRepository> employeeRepository;
         private HumanTasksController controller;
         private Mock<IUserProcessor> userProcessorMock;
 
@@ -20,13 +20,16 @@
         public void Init()
         {
             this.taskProcessorMock = new Mock<ITaskProcessor>();
-            this.employeeRepository = new Mock<IEmployeeRepository>();
+            this.employeeRepository = new Mock<IUserRepository>();
             this.userProcessorMock = new Mock<IUserProcessor>();
             this.controller = new HumanTasksController(
                 this.taskProcessorMock.Object,
-                this.employeeRepository.Object,
-                this.userProcessorMock.Object);
+                this.userProcessorMock.Object,
+                this.userRepositoryMock.Object
+                );
         }
+
+        private Mock<IUserRepository> userRepositoryMock;
 
         [Test]
         public void Should_CreateAssignedTask_WhenMethodCreateCalledWithAssignedId()

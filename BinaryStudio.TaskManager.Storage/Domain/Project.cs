@@ -21,6 +21,8 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         [ForeignKey("User")]
         public int CreatorId { get; set; }
 
+        public int ololo { get; set; }
+
         public DateTime DateTimeCreation { get; set; }
 
         public string Name { get; set; }

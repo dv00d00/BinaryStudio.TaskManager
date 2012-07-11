@@ -8,17 +8,16 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     public class ReminderController : Controller
     {
         private readonly IReminderRepository reminderRepository;
-        private readonly IEmployeeRepository employeeRepository;
-
         private readonly ITaskProcessor taskProcessor;
+        private readonly IUserRepository userRepository;
 
         public ReminderController(
             IReminderRepository reminderRepository,
-            IEmployeeRepository employeeRepository,
+            IUserRepository userRepository,
             ITaskProcessor taskProcessor)
         {
             this.reminderRepository = reminderRepository;
-            this.employeeRepository = employeeRepository;
+            this.userRepository = userRepository;
             this.taskProcessor = taskProcessor;
         }
 
@@ -27,7 +26,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ViewResult Index()
         {
-              return View(reminderRepository.GetAll());
+            return View(reminderRepository.GetAll());
         }
 
         //
@@ -45,9 +44,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult Create()
         {
             ViewBag.PossibleTasks = taskProcessor.GetAllTasks();
-            ViewBag.PossibleEmployees = employeeRepository.GetAll();
+            //ViewBag.PossibleEmployees = employeeRepository.GetAll();
             return View();
-        } 
+        }
 
         //
         // POST: /Reminder/Create
@@ -61,19 +60,19 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.PossibleTasks = taskProcessor.GetAllTasks();
-            ViewBag.PossibleEmployees = employeeRepository.GetAll();
-            
+            //ViewBag.PossibleEmployees = employeeRepository.GetAll();
+
             return View(reminder);
-            }
-        
+        }
+
         //
         // GET: /Reminder/EditEmployee/5
- 
+
         public ActionResult Edit(int id)
         {
             Reminder reminder = reminderRepository.GetById(id);
             ViewBag.PossibleTasks = taskProcessor.GetAllTasks();
-            ViewBag.PossibleEmployees = employeeRepository.GetAll();
+            //ViewBag.PossibleEmployees = employeeRepository.GetAll();
             return View(reminder);
         }
 
@@ -89,13 +88,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.PossibleTasks = taskProcessor.GetAllTasks();
-            ViewBag.PossibleEmployees = employeeRepository.GetAll();
+            //ViewBag.PossibleEmployees = employeeRepository.GetAll();
             return View(reminder);
         }
 
         //
         // GET: /Reminder/DeleteEmployee/5
- 
+
         public ActionResult Delete(int id)
         {
             Reminder reminder = reminderRepository.GetById(id);
@@ -108,7 +107,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Reminder reminder = reminderRepository.GetById(id); 
+            Reminder reminder = reminderRepository.GetById(id);
             reminderRepository.Delete(reminder);
             return RedirectToAction("Index");
         }

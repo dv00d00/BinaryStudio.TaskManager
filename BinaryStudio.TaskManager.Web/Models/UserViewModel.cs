@@ -9,10 +9,5 @@ namespace BinaryStudio.TaskManager.Web.Models
         [UIHint("User")]
         [Display(Name = "User")]
         public List<User> Users { get; set; }
-
-        [UIHint("Employee")]
-        [Display(Name = "Employee")]
-        public List<Employee> Employees { get; set; }
-
     }
 }

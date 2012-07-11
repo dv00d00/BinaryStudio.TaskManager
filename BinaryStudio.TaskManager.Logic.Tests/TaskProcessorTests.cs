@@ -25,7 +25,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         private Mock<IHumanTaskRepository> mockHumanTaskRepository;
         private Mock<IReminderRepository> mockReminderRepository;
         private TaskProcessor processorUnderTest;
-        private Mock<IEmployeeRepository> mockEmployeeRepository;
+        private Mock<IUserRepository> mockUserRepository;
 
         [SetUp]
         public void TaskProcessorTestsSetup()
@@ -60,10 +60,8 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             //});
 
             mockReminderRepository = new Mock<IReminderRepository>();
-
-            mockEmployeeRepository = new Mock<IEmployeeRepository>();
-
-            processorUnderTest = new TaskProcessor(mockHumanTaskRepository.Object, mockReminderRepository.Object, mockEmployeeRepository.Object);
+            this.mockUserRepository = this.mockUserRepository;
+            processorUnderTest = new TaskProcessor(mockHumanTaskRepository.Object, mockReminderRepository.Object, mockUserRepository.Object);
         }
 
         [Test]
@@ -132,11 +130,11 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         }*/
         [Test]
-        public void Should_AssignTask_WhenSuchEmployeeExists()
+        public void Should_AssignTask_WhenSuchUserExists()
         {
             //arrange
             mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
-            mockEmployeeRepository.Setup(it => it.GetById(3)).Returns(new Employee { Id = 3 });
+            mockUserRepository.Setup(it => it.GetById(3)).Returns(new User{ Id = 3 });
 
             //act
             processorUnderTest.MoveTask(1, 3);
@@ -147,11 +145,11 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         }
 
         [Test]
-        public void ShouldNot_AssignTask_WhenSuchEmployeeDoesNotExist()
+        public void ShouldNot_AssignTask_WhenSuchUserDoesNotExist()
         {
             //arrange
             mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
-            mockEmployeeRepository.Setup(it => it.GetById(5)).Throws<InvalidOperationException>();
+            mockUserRepository.Setup(it => it.GetById(5)).Throws<InvalidOperationException>();
 
             //act
             processorUnderTest.MoveTask(1, 5);

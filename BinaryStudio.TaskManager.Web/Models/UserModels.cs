@@ -35,7 +35,7 @@ namespace BinaryStudio.TaskManager.Web.Models
 
     public class UserAndAccountBinding
     {
-        public List<IEmployeeRepository> Employees { get; set; }           
+        //public List<IEmployeeRepository> Employees { get; set; }           
         //TODO: add list of accounts
     }
 

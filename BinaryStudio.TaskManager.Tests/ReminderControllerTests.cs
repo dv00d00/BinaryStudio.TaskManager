@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace BinaryStudio.TaskManager.Web.Tests
 {
-    using System.Web.Mvc;
-
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
     using BinaryStudio.TaskManager.Web.Controllers;
@@ -21,21 +15,26 @@ namespace BinaryStudio.TaskManager.Web.Tests
     {
         private Mock<ITaskProcessor> mockTaskProcessor;
         private Mock<IReminderRepository> mockReminderRepository;
-        private Mock<IEmployeeRepository> mockEmployeeRepository;
+        private Mock<IUserRepository> mockUserRepository;
 
         private Reminder reminder;
+        private ReminderController reminderController;
 
         private const int taskId = 1; 
 
         [SetUp]
         public void SetUp()
         {
-            mockEmployeeRepository = new Mock<IEmployeeRepository>();
+            mockUserRepository = new Mock<IUserRepository>();
             mockTaskProcessor = new Mock<ITaskProcessor>();
             mockReminderRepository = new Mock<IReminderRepository>();
+            reminderController = new ReminderController(
+                mockReminderRepository.Object,
+                mockUserRepository.Object, 
+                mockTaskProcessor.Object);
 
             reminder = new Reminder { Id = taskId, Content = "asd", EmployeeID = 1 };
-
+            
             mockReminderRepository.Setup(x => x.GetById(taskId)).Returns(reminder);
         }
         
@@ -43,8 +42,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
         public void Should_ReturnIndexView_WhenDefaultIndexIsCalled()
         {
             // arrange
-            var reminderController = new ReminderController(mockReminderRepository.Object,
-               mockEmployeeRepository.Object, mockTaskProcessor.Object);
+
 
             // act
             var result = reminderController.Index();
@@ -57,8 +55,6 @@ namespace BinaryStudio.TaskManager.Web.Tests
         public void Should_ReturnDetailsViewWithReminder_WhenDetailsViewIsCalled()
         {
             //arrange
-            var reminderController = new ReminderController(mockReminderRepository.Object,
-               mockEmployeeRepository.Object, mockTaskProcessor.Object);
             
             //act
             var result = reminderController.Details(taskId);
@@ -71,8 +67,6 @@ namespace BinaryStudio.TaskManager.Web.Tests
         public void Should_ReturnCreateView_WhenCreateIsCalled()
         {
             //arrange
-            var reminderController = new ReminderController(mockReminderRepository.Object,
-                mockEmployeeRepository.Object, mockTaskProcessor.Object);
 
             //act
             var result = reminderController.Create();
@@ -98,10 +92,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
         [Test]
         public void Should_RedirectToIndex_WhenReminderBeingAddedIsCorrect()
         {
-            // arrange
-            var reminderController = new ReminderController(mockReminderRepository.Object,
-               mockEmployeeRepository.Object, mockTaskProcessor.Object);
-            var reminder = new Reminder { Id = 1, Content = "asd", EmployeeID = 1 };
+            // arrange            
             
             //act
             var result = reminderController.Create(reminder);
@@ -114,9 +105,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
         [Test]
         public void Should_ReturnViewWithRemiderData_WhenEditWithIDIsCalled()
         {
-            //arrange
-            var reminderController = new ReminderController(mockReminderRepository.Object, 
-                mockEmployeeRepository.Object, mockTaskProcessor.Object);
+            //arrange            
            
             //act
             var result = reminderController.Edit(taskId);
@@ -130,8 +119,6 @@ namespace BinaryStudio.TaskManager.Web.Tests
         public void Should_ReturnEditViewWithRemiderData_WhenEditWithReminderIsCalled()
         {
             //arrange
-            var reminderController = new ReminderController(mockReminderRepository.Object,
-                mockEmployeeRepository.Object, mockTaskProcessor.Object);
 
             //act
             var result = reminderController.Edit(reminder);
@@ -145,8 +132,6 @@ namespace BinaryStudio.TaskManager.Web.Tests
         public void Should_ReturnDeleteViewWithRemiderData_WhenDeleteIsCalled()
         {
             //arrange
-            var reminderController = new ReminderController(mockReminderRepository.Object,
-                mockEmployeeRepository.Object, mockTaskProcessor.Object);
 
             //act
             var result = reminderController.Delete(taskId);
@@ -160,8 +145,6 @@ namespace BinaryStudio.TaskManager.Web.Tests
         public void Should_RedirectToIndex_WhenDeleteConfirmated()
         {
             //arrange
-            var reminderController = new ReminderController(mockReminderRepository.Object,
-                mockEmployeeRepository.Object, mockTaskProcessor.Object);
             
             //act
             var result = reminderController.DeleteConfirmed(taskId);

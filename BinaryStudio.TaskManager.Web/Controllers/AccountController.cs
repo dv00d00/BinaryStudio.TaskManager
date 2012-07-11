@@ -10,13 +10,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IUserRepository userRepository;
-        private readonly IEmployeeRepository employeeRepository;
+        private readonly IUserRepository userRepository;        
         private readonly IUserProcessor userProcessor;
-        public AccountController(IUserRepository userRepository, IEmployeeRepository employeeRepository, IUserProcessor userProcessor)
+        public AccountController(IUserRepository userRepository, IUserProcessor userProcessor)
         {
             this.userRepository = userRepository;
-            this.employeeRepository = employeeRepository;
             this.userProcessor = userProcessor;
         }
 

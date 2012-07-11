@@ -51,9 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ClientConnection.cs" />
-    <Compile Include="Core\EmployeeRepository.cs" />
     <Compile Include="Core\IClientConnectionManager.cs" />
-    <Compile Include="Core\IEmployeeRepository.cs" />
     <Compile Include="Core\IReminderRepository.cs" />
     <Compile Include="Core\ITaskProcessor.cs" />
     <Compile Include="Core\HumanTaskRepository.cs" />
@@ -75,7 +73,6 @@
     <Compile Include="Domain\UserRoles.cs" />
     <Compile Include="Domain\Reminder.cs" />
     <Compile Include="Domain\DataBaseContext.cs" />
-    <Compile Include="Domain\Employee.cs" />
     <Compile Include="Domain\HumanTask.cs" />
     <Compile Include="Core\INotifier.cs" />
     <Compile Include="Core\IHumanTaskRepository.cs" />

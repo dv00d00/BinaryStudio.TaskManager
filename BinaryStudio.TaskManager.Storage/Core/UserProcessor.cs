@@ -7,31 +7,17 @@ namespace BinaryStudio.TaskManager.Logic.Core
 {
     public class UserProcessor : IUserProcessor
     {
-        private readonly IEmployeeRepository employeeRepository;
         private readonly IUserRepository userRepository;
 
-        public UserProcessor(IUserRepository userRepository, IEmployeeRepository employeeRepository)
+        public UserProcessor(IUserRepository userRepository)
         {
             this.userRepository = userRepository;
-            this.employeeRepository = employeeRepository;
         }
 
 
         public void CreateUser(User userAccount)
         {
             userRepository.CreateUser(userAccount);
-        }
-
-        public void CreateEmployee(Employee employee)
-        {
-            this.CreateEmployee(employee);
-        }
-
-        public void ConnectUserWithEmployee(int userId, int employeeId)
-        {
-            Employee employee = employeeRepository.GetById(employeeId);
-            employee.UserId = userId;
-            employeeRepository.Update(employee);
         }
 
         public void SetRoleToUser(string userName, string roleName)
@@ -70,18 +56,18 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.userRepository.LogOn(userName, password);
         }
 
-        public Employee GetCurrentLoginedEmployee(string userName)
+        public User GetCurrentLoginedEmployee(string userName)
         {
             try
             {
-                User user = userRepository.GetByName(userName);
-                return employeeRepository.GetAll().ToList().Single(it => it.UserId == user.Id);
+                return userRepository.GetByName(userName);
+                
             }
             catch (Exception)
             {
                 return null;
             }
-            
+
         }
     }
 }

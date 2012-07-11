@@ -7,10 +7,11 @@ namespace BinaryStudio.TaskManager.Logic.Domain
     {
         public int Id { get; set; }
 
+        //TODO: refactor
         [ForeignKey("Employee")]
         public int EmployeeID { get; set; }
 
-        public virtual Employee Employee { get; set; }
+        public virtual User User { get; set; }
 
         [ForeignKey("Task")]
         public int? TaskId { get; set; }

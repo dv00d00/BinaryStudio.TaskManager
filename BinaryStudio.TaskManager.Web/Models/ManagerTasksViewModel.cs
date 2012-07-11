@@ -24,7 +24,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         /// <value>
         /// The manager.
         /// </value>
-        public Employee Manager { get; set; }
+        public User Manager { get; set; }
 
         /// <summary>
         /// Gets or sets the tasks.

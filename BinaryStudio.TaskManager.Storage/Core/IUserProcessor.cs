@@ -10,10 +10,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
     {
         void CreateUser(User user);
 
-        void CreateEmployee(Employee employee);
-
-        void ConnectUserWithEmployee(int userId, int employeeId);
-
         void SetRoleToUser(string userName, string roleName);
 
         void SetRoleToUserFromDB(string userName);
@@ -22,7 +18,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         bool LogOnUser(string userName, string password);
 
-        Employee GetCurrentLoginedEmployee(string userName);
+        User GetCurrentLoginedEmployee(string userName);
     }
 
 }

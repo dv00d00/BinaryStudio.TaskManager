@@ -22,14 +22,14 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             var reminders = this.reminderRepository.GetReminderList(e.DateTime);
 
-            foreach (var reminder in reminders)
-            {
-                var clientConnection = this.clientConnectionManager.GetClientByEmployeeId(reminder.EmployeeID);
-                if (clientConnection != null)
-                {
-                    this.notifier.Send(clientConnection, reminder.Content);
-                }
-            }
+            //foreach (var reminder in reminders)
+            //{
+            //    var clientConnection = this.clientConnectionManager.GetClientByEmployeeId(reminder.User.Id);
+            //    if (clientConnection != null)
+            //    {
+            //        this.notifier.Send(clientConnection, reminder.Content);
+            //    }
+            //}
         }
     }
 }
