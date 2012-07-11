@@ -18,6 +18,9 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
         public DbSet<ProjectsAndUsers> ProjectsAndUserses { get; set; }
 
+        public DbSet<HumanTaskHistory> HumanTaskHistories { get; set; }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 

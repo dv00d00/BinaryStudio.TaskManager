@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace BinaryStudio.TaskManager.Logic.Domain
 {
@@ -25,5 +26,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         public int? AssigneeId { get; set; }
 
         public virtual Project Project { get; set; }
+
+        public virtual ICollection<HumanTaskHistory> HumanTaskHistories { get; set; } 
     }
 }
