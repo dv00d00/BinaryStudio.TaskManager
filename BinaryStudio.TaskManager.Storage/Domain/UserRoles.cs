@@ -20,6 +20,12 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         /// </value>
         public string RoleName { get; set; }
 
-        public virtual ICollection<Permissions> Permissions { get; set; }
+        /// <summary>
+        /// Gets or sets the users.
+        /// </summary>
+        /// <value>
+        /// The users.
+        /// </value>
+        public virtual ICollection<User> Users { get; set; }
     }
 }

@@ -17,5 +17,17 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         public DbSet<Project> Projects { get; set; }
 
         public DbSet<ProjectsAndUsers> ProjectsAndUserses { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Project>().HasKey(it => it.Id);
+
+            modelBuilder.Entity<Project>().HasMany(it => it.Users).WithMany(it => it.Projects);
+
+            modelBuilder.Entity<Project>().HasRequired(it => it.Creator).WithMany(it => it.CreatedProjects).
+                HasForeignKey(it => it.CreatorId).WillCascadeOnDelete(false);
+
+
+        }
     }
 }

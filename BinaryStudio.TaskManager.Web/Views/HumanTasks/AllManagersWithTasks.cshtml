@@ -56,7 +56,7 @@
             {
                 <td align="center" width="250">
                     <div class="manager">
-                        @Html.ActionLink(manager.Manager.Name, "ManagerDetails", new { managerId = manager.Manager.Id })
+                        @Html.ActionLink(manager.Manager.UserName, "ManagerDetails", new { managerId = manager.Manager.Id })
                     </div>
                 </td>
             }

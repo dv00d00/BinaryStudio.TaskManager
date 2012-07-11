@@ -2,11 +2,8 @@ using System.Data.Entity;
 
 namespace BinaryStudio.TaskManager.Logic.Domain
 {
-    using System;
-
     public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<DataBaseContext>
     {
-
         protected override void Seed(DataBaseContext context)
         {
             context.Roles.Add(new UserRoles { Id = 1, RoleName = "admin" });

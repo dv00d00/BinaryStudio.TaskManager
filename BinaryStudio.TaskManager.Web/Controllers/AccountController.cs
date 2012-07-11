@@ -45,7 +45,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "HumanTasks");
+                        return RedirectToAction("AllManagersWithTasks", "HumanTasks");
                     }
                 }
                 else

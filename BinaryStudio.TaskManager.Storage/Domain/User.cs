@@ -1,9 +1,8 @@
 ﻿namespace BinaryStudio.TaskManager.Logic.Domain
 {
-    /// <summary>
-    ///User
-    /// </summary>
-    public class User: IEntity
+    using System.Collections.Generic;
+
+    public class User : IEntity
     {
         /// <summary>
         /// Entity unique identifier
@@ -22,10 +21,11 @@
 
         //TODO: refactor this for HASH
         public string Password { get; set; }
-
-
-        //TODO: delete
+        
         public int RoleId { get; set; }
 
+        public ICollection<Project> Projects { get; set; }        
+
+        public ICollection<Project> CreatedProjects { get; set; }
     }
 }

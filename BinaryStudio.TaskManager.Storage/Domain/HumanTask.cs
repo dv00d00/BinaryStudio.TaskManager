@@ -21,13 +21,9 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         public DateTime? Closed { get; set; }
 
         public int? CreatorId { get; set; }
-
-        // public Employee Creator { get; set; }
-
+        
         public int? AssigneeId { get; set; }
 
-        // public Employee Assignee { get; set; }
+        public virtual Project Project { get; set; }
     }
-
-    
 }
