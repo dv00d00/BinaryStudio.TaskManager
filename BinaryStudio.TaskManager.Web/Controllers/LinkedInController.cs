@@ -3,6 +3,8 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Xml.Linq;
+using BinaryStudio.TaskManager.Logic.Core;
+using BinaryStudio.TaskManager.Logic.Domain;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OAuth;
 using DotNetOpenAuth.OAuth.ChannelElements;
@@ -12,6 +14,14 @@ namespace ThirdPartySignup.Controllers
 {
     public class LinkedInController : Controller
     {
+
+        private readonly UserProcessor userProcessor;
+
+        public LinkedInController(UserProcessor userProcessor)
+        {
+            this.userProcessor = userProcessor;
+        }
+        
         private ServiceProviderDescription GetServiceDescription()
         {
             return new ServiceProviderDescription
@@ -43,14 +53,12 @@ namespace ThirdPartySignup.Controllers
             var consumer = new WebConsumer(serviceProvider, TokenHelper.TokenManager);
             var accessTokenResponse = consumer.ProcessUserAuthorization();
 
-            var doc = XDocument.Load(Server.MapPath("~/App_Data/Users.xml"));
-            var query = doc.Descendants("Token").Where(t => t.Value == accessTokenResponse.AccessToken);
-            if(query.Any())
+            User user = userProcessor.GetUserByLinkedInToken(new Guid(accessTokenResponse.AccessToken));
+
+            if(user != null)
             {
-                var userId = query.First().Parent.Element("UserID").Value;
-                var user = Membership.GetUser(new Guid(userId));
                 FormsAuthentication.SetAuthCookie(user.UserName, false);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("AllManagersWithTasks", "HumanTasks");
             }
             else
             {
@@ -70,20 +78,14 @@ namespace ThirdPartySignup.Controllers
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
-                MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, Guid.NewGuid().ToString(), model.Email, null, null, true, null, out createStatus);
-
-                if (createStatus == MembershipCreateStatus.Success)
+                bool createStatus = userProcessor.CreateUser(model.UserName, "", model.Email,
+                                                             new Guid(Session["Token"].ToString()));
+                if (createStatus)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                    var doc = XDocument.Load(Server.MapPath("~/App_Data/Users.xml"));
-                    var node = new XElement("User",
-                                            new XElement("UserID", Membership.GetUser(model.UserName).ProviderUserKey),
-                                            new XElement("Token", Session["Token"]));
-                    doc.Root.Add(node);
-                    doc.Save(Server.MapPath("~/App_Data/Users.xml"));
+
                     Session["Token"] = null;
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("AllManagersWithTasks", "HumanTasks");
                 }
                 else
                 {

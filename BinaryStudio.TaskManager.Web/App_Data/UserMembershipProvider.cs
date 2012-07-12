@@ -1,15 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using BinaryStudio.TaskManager.Logic.Domain;
+
 namespace BinaryStudio.TaskManager.Web.Models
 {
     public class UserMembershipProvider : MembershipProvider
     {
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
-            throw new NotImplementedException();
+            using (var context = new DataBaseContext())
+            {
+
+                if (context.Users.FirstOrDefault(u =>
+                    u.UserName.ToLower() == username.ToLower()) != null)
+                {
+                    status = MembershipCreateStatus.DuplicateUserName;
+                    return null;
+                }
+
+                var newUser = new User();
+                newUser.UserName = username;
+                newUser.Password= password;
+                try
+                {
+                    context.Users.Add(newUser);
+                    context.SaveChanges();
+                }
+                catch
+                {
+                    status = MembershipCreateStatus.ProviderError;
+                    return null;
+                }
+            }
+
+            status = MembershipCreateStatus.Success;
+
+            return null;
         }
 
         public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)

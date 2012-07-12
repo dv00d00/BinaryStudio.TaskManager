@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using BinaryStudio.TaskManager.Logic.Domain;
@@ -58,8 +59,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public User GetByName(string userName)
         {
-            var user = this.dataBaseContext.Users.ToList().Single(it => it.UserName == userName);
-            return user;
+            try
+            {
+                return this.dataBaseContext.Users.ToList().Single(it => it.UserName == userName);
+            }
+            catch (Exception)
+            {
+                
+                return null;
+            }
+
         }
 
         public string GetRoleByName(string userName)

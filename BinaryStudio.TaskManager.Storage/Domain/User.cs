@@ -1,4 +1,6 @@
-﻿namespace BinaryStudio.TaskManager.Logic.Domain
+﻿using System;
+
+namespace BinaryStudio.TaskManager.Logic.Domain
 {
     using System.Collections.Generic;
 
@@ -26,7 +28,9 @@
         //TODO CLEAN ROLES FROM USERS
         public int RoleId { get; set; }
 
-        public virtual ICollection<ProjectsAndUsers> UserProjects { get; set; } 
+        public virtual ICollection<ProjectsAndUsers> UserProjects { get; set; }
+
+        public Guid? LinkedInToken { get; set; }
 
 
     }
