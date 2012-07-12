@@ -1,0 +1,190 @@
+2012-07-12 15:59:53.7593 DEBUG EXCEPTION|System.TypeInitializationException: Инициализатор типа "ThirdPartySignup.Models.TokenHelper" выдал исключение. ---> System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: consumerKey
+   в ThirdPartySignup.Models.InMemoryTokenManager..ctor(String consumerKey, String consumerSecret) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Models\InMemoryTokenManager.cs:строка 19
+   в ThirdPartySignup.Models.TokenHelper..cctor() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Models\TokenHelper.cs:строка 11
+   --- Конец трассировки внутреннего стека исключений ---
+   в ThirdPartySignup.Controllers.LinkedInController.LogonStart() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 30
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-12 16:00:35.5017 DEBUG EXCEPTION|System.InvalidOperationException: The view 'LogonStart' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/LinkedIn/LogonStart.aspx
+~/Views/LinkedIn/LogonStart.ascx
+~/Views/Shared/LogonStart.aspx
+~/Views/Shared/LogonStart.ascx
+~/Views/LinkedIn/LogonStart.cshtml
+~/Views/LinkedIn/LogonStart.vbhtml
+~/Views/Shared/LogonStart.cshtml
+~/Views/Shared/LogonStart.vbhtml
+   в System.Web.Mvc.ViewResult.FindView(ControllerContext context)
+   в System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<InvokeActionResultWithFilters>b__19()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilter(IResultFilter filter, ResultExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<>c__DisplayClass1e.<InvokeActionResultWithFilters>b__1b()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-12 16:01:31.5679 DEBUG EXCEPTION|System.Data.EntityCommandExecutionException: При выполнении определения команды произошла ошибка. Подробные сведения см. во внутреннем исключении. ---> System.Data.SqlClient.SqlException: Недопустимое имя столбца "Project_Id".
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   в System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   в System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   в System.Data.SqlClient.SqlDataReader.get_MetaData()
+   в System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   в System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   в System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   в System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   в System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   в System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   в System.Data.Common.DbCommand.ExecuteReader(CommandBehavior behavior)
+   в System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+   в System.Data.Objects.Internal.ObjectQueryExecutionPlan.Execute[TResultType](ObjectContext context, ObjectParameterCollection parameterValues)
+   в System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   в System.Data.Objects.ObjectQuery`1.System.Collections.Generic.IEnumerable<T>.GetEnumerator()
+   в System.Data.Entity.Internal.Linq.InternalQuery`1.GetEnumerator()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Collections.Generic.IEnumerable<TResult>.GetEnumerator()
+   в System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   в System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   в BinaryStudio.TaskManager.Logic.Core.HumanTaskRepository.GetUnassingnedTasks() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\HumanTaskRepository.cs:строка 30
+   в BinaryStudio.TaskManager.Logic.Core.TaskProcessor.GetUnassignedTasks() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\TaskProcessor.cs:строка 117
+   в BinaryStudio.TaskManager.Web.Controllers.HumanTasksController.AllManagersWithTasks() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\HumanTasksController.cs:строка 213
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-12 16:02:06.6829 DEBUG EXCEPTION|System.Data.EntityCommandExecutionException: При выполнении определения команды произошла ошибка. Подробные сведения см. во внутреннем исключении. ---> System.Data.SqlClient.SqlException: Недопустимое имя столбца "Project_Id".
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   в System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   в System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   в System.Data.SqlClient.SqlDataReader.get_MetaData()
+   в System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   в System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   в System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   в System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   в System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   в System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   в System.Data.Common.DbCommand.ExecuteReader(CommandBehavior behavior)
+   в System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Data.EntityClient.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+   в System.Data.Objects.Internal.ObjectQueryExecutionPlan.Execute[TResultType](ObjectContext context, ObjectParameterCollection parameterValues)
+   в System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   в System.Data.Objects.ObjectQuery`1.System.Collections.Generic.IEnumerable<T>.GetEnumerator()
+   в System.Data.Entity.Internal.Linq.InternalQuery`1.GetEnumerator()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Collections.Generic.IEnumerable<TResult>.GetEnumerator()
+   в System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   в System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   в BinaryStudio.TaskManager.Logic.Core.HumanTaskRepository.GetUnassingnedTasks() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\HumanTaskRepository.cs:строка 30
+   в BinaryStudio.TaskManager.Logic.Core.TaskProcessor.GetUnassignedTasks() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\TaskProcessor.cs:строка 117
+   в BinaryStudio.TaskManager.Web.Controllers.HumanTasksController.AllManagersWithTasks() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\HumanTasksController.cs:строка 213
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-12 16:03:48.9938 DEBUG EXCEPTION|System.InvalidOperationException: The view 'LogonStart' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/LinkedIn/LogonStart.aspx
+~/Views/LinkedIn/LogonStart.ascx
+~/Views/Shared/LogonStart.aspx
+~/Views/Shared/LogonStart.ascx
+~/Views/LinkedIn/LogonStart.cshtml
+~/Views/LinkedIn/LogonStart.vbhtml
+~/Views/Shared/LogonStart.cshtml
+~/Views/Shared/LogonStart.vbhtml
+   в System.Web.Mvc.ViewResult.FindView(ControllerContext context)
+   в System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<InvokeActionResultWithFilters>b__19()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilter(IResultFilter filter, ResultExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<>c__DisplayClass1e.<InvokeActionResultWithFilters>b__1b()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-12 17:10:17.2016 DEBUG EXCEPTION|DotNetOpenAuth.Messaging.ProtocolException: Web request to 'https://api.linkedin.com/uas/oauth/requestToken' failed. ---> System.Net.WebException: Невозможно разрешить удаленное имя: 'api.linkedin.com'
+   в System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   в System.Net.HttpWebRequest.GetRequestStream()
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetRequestStreamCore(HttpWebRequest request)
+   --- Конец трассировки внутреннего стека исключений ---
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetRequestStreamCore(HttpWebRequest request)
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetRequestStream(HttpWebRequest request, DirectWebRequestOptions options)
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetRequestStream(HttpWebRequest request)
+   в DotNetOpenAuth.Messaging.Channel.SendParametersInEntity(HttpWebRequest httpRequest, IDictionary`2 fields)
+   в DotNetOpenAuth.Messaging.Channel.InitializeRequestAsPost(IDirectedProtocolMessage requestMessage)
+   в DotNetOpenAuth.OAuth.ChannelElements.OAuthChannel.CreateHttpRequest(IDirectedProtocolMessage request)
+   в DotNetOpenAuth.Messaging.Channel.RequestCore(IDirectedProtocolMessage request)
+   в DotNetOpenAuth.Messaging.Channel.Request(IDirectedProtocolMessage requestMessage)
+   в DotNetOpenAuth.Messaging.Channel.Request[TResponse](IDirectedProtocolMessage requestMessage)
+   в DotNetOpenAuth.OAuth.ConsumerBase.PrepareRequestUserAuthorization(Uri callback, IDictionary`2 requestParameters, IDictionary`2 redirectParameters, String& requestToken)
+   в DotNetOpenAuth.OAuth.WebConsumer.PrepareRequestUserAuthorization(Uri callback, IDictionary`2 requestParameters, IDictionary`2 redirectParameters)
+   в ThirdPartySignup.Controllers.LinkedInController.LogonStart() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 36
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-12 17:19:01.1146 DEBUG EXCEPTION|DotNetOpenAuth.Messaging.ProtocolException: Web request to 'https://api.linkedin.com/uas/oauth/requestToken' failed. ---> System.Net.WebException: Невозможно разрешить удаленное имя: 'api.linkedin.com'
+   в System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   в System.Net.HttpWebRequest.GetRequestStream()
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetRequestStreamCore(HttpWebRequest request)
+   --- Конец трассировки внутреннего стека исключений ---
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetRequestStreamCore(HttpWebRequest request)
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetRequestStream(HttpWebRequest request, DirectWebRequestOptions options)
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetRequestStream(HttpWebRequest request)
+   в DotNetOpenAuth.Messaging.Channel.SendParametersInEntity(HttpWebRequest httpRequest, IDictionary`2 fields)
+   в DotNetOpenAuth.Messaging.Channel.InitializeRequestAsPost(IDirectedProtocolMessage requestMessage)
+   в DotNetOpenAuth.OAuth.ChannelElements.OAuthChannel.CreateHttpRequest(IDirectedProtocolMessage request)
+   в DotNetOpenAuth.Messaging.Channel.RequestCore(IDirectedProtocolMessage request)
+   в DotNetOpenAuth.Messaging.Channel.Request(IDirectedProtocolMessage requestMessage)
+   в DotNetOpenAuth.Messaging.Channel.Request[TResponse](IDirectedProtocolMessage requestMessage)
+   в DotNetOpenAuth.OAuth.ConsumerBase.PrepareRequestUserAuthorization(Uri callback, IDictionary`2 requestParameters, IDictionary`2 redirectParameters, String& requestToken)
+   в DotNetOpenAuth.OAuth.WebConsumer.PrepareRequestUserAuthorization(Uri callback, IDictionary`2 requestParameters, IDictionary`2 redirectParameters)
+   в ThirdPartySignup.Controllers.LinkedInController.LogonStart() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 36
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-12 17:19:09.0201 DEBUG EXCEPTION|System.InvalidOperationException: The view 'LogonStart' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/LinkedIn/LogonStart.aspx
+~/Views/LinkedIn/LogonStart.ascx
+~/Views/Shared/LogonStart.aspx
+~/Views/Shared/LogonStart.ascx
+~/Views/LinkedIn/LogonStart.cshtml
+~/Views/LinkedIn/LogonStart.vbhtml
+~/Views/Shared/LogonStart.cshtml
+~/Views/Shared/LogonStart.vbhtml
+   в System.Web.Mvc.ViewResult.FindView(ControllerContext context)
+   в System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<InvokeActionResultWithFilters>b__19()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilter(IResultFilter filter, ResultExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<>c__DisplayClass1e.<InvokeActionResultWithFilters>b__1b()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)

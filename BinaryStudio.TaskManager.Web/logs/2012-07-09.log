@@ -1,0 +1,123 @@
+2012-07-09 21:26:27.4426 DEBUG EXCEPTION|System.Data.DataException: An exception occurred while initializing the database. See the InnerException for details. ---> System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   в System.Data.Entity.Internal.InternalContext.SaveChanges()
+   в System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   в System.Data.Entity.DbContext.SaveChanges()
+   в BinaryStudio.TaskManager.Logic.Domain.DatabaseInitializer.Seed(DataBaseContext context) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Domain\DatabaseInitializer.cs:строка 34
+   в System.Data.Entity.DropCreateDatabaseIfModelChanges`1.InitializeDatabase(TContext context)
+   в System.Data.Entity.Database.<>c__DisplayClass2`1.<SetInitializerInternal>b__0(DbContext c)
+   в System.Data.Entity.Internal.InternalContext.<>c__DisplayClass8.<PerformDatabaseInitialization>b__6()
+   в System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   в System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   в System.Data.Entity.Internal.LazyInternalContext.<InitializeDatabase>b__4(InternalContext c)
+   в System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabase()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.GetEnumerator()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Collections.Generic.IEnumerable<TResult>.GetEnumerator()
+   в System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   в System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   в BinaryStudio.TaskManager.Logic.Core.UserRepository.LogOn(String userName, String password) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\UserRepository.cs:строка 49
+   в BinaryStudio.TaskManager.Logic.Core.UserProcessor.LogOnUser(String userName, String password) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\UserProcessor.cs:строка 70
+   в BinaryStudio.TaskManager.Web.Controllers.AccountController.LogOn(LogOnModel model, String returnUrl) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\AccountController.cs:строка 39
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-09 22:17:47.9874 DEBUG EXCEPTION|System.NotImplementedException: Метод или операция не реализована.
+   в BinaryStudio.TaskManager.Logic.Core.UserRepository.GetRoleByName(String userName) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\UserRepository.cs:строка 72
+   в BinaryStudio.TaskManager.Logic.Core.UserProcessor.SetRoleToUserFromDB(String userName) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\UserProcessor.cs:строка 52
+   в BinaryStudio.TaskManager.Web.Controllers.AccountController.LogOn(LogOnModel model, String returnUrl) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\AccountController.cs:строка 41
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-09 22:34:35.7481 DEBUG EXCEPTION|System.Configuration.ConfigurationErrorsException: Не удается найти поставщика членства по умолчанию. (F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\web.config line 32)
+   в System.Web.Security.Membership.InitializeDefaultProvider(Boolean initializeDefaultProvider, MembershipSection settings)
+   в System.Web.Security.Membership.Initialize()
+   в System.Web.Security.Membership.get_Provider()
+   в System.Web.Security.Membership.ValidateUser(String username, String password)
+   в BinaryStudio.TaskManager.Web.Controllers.AccountController.LogOn(LogOnModel model, String returnUrl) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\AccountController.cs:строка 39
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-09 22:36:32.7748 DEBUG EXCEPTION|System.Configuration.ConfigurationErrorsException: Не удается найти поставщика членства по умолчанию. (F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\web.config line 32)
+   в System.Web.Security.Membership.InitializeDefaultProvider(Boolean initializeDefaultProvider, MembershipSection settings)
+   в System.Web.Security.Membership.Initialize()
+   в System.Web.Security.Membership.get_Provider()
+   в System.Web.Security.Membership.ValidateUser(String username, String password)
+   в BinaryStudio.TaskManager.Web.Controllers.AccountController.LogOn(LogOnModel model, String returnUrl) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\AccountController.cs:строка 39
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-09 22:48:43.1085 DEBUG EXCEPTION|System.InvalidOperationException: The context cannot be used while the model is being created.
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source, Expression`1 predicate)
+   в BinaryStudio.TaskManager.Logic.Core.UserMembershipProvider.ValidateUser(String username, String password) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\App_Data\UserMembershipProvider.cs:строка 79
+   в System.Web.Security.Membership.ValidateUser(String username, String password)
+   в BinaryStudio.TaskManager.Web.Controllers.AccountController.LogOn(LogOnModel model, String returnUrl) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\AccountController.cs:строка 39
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-09 22:52:07.1242 DEBUG EXCEPTION|System.NotImplementedException: Метод или операция не реализована.
+   в BinaryStudio.TaskManager.Logic.Core.UserRepository.GetRoleByName(String userName) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\UserRepository.cs:строка 72
+   в BinaryStudio.TaskManager.Logic.Core.UserProcessor.SetRoleToUserFromDB(String userName) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\UserProcessor.cs:строка 52
+   в BinaryStudio.TaskManager.Web.Controllers.AccountController.LogOn(LogOnModel model, String returnUrl) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\AccountController.cs:строка 41
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-09 22:57:58.8713 DEBUG EXCEPTION|System.NotImplementedException: Метод или операция не реализована.
+   в BinaryStudio.TaskManager.Logic.Core.UserRepository.GetRoleByName(String userName) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\UserRepository.cs:строка 72
+   в BinaryStudio.TaskManager.Logic.Core.UserProcessor.SetRoleToUserFromDB(String userName) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\UserProcessor.cs:строка 52
+   в BinaryStudio.TaskManager.Web.Controllers.AccountController.LogOn(LogOnModel model, String returnUrl) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\AccountController.cs:строка 41
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)

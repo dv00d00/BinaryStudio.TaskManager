@@ -36,6 +36,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetOpenAuth.AspNet">
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.1.0.12182\lib\net40-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core">
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.1.0.12182\lib\net40-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
@@ -92,8 +110,11 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HumanTasksController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\LinkedInController.cs" />
     <Compile Include="Controllers\ReminderController.cs" />
     <Compile Include="ErrorHandler.cs" />
+    <Compile Include="Models\InMemoryTokenManager.cs" />
+    <Compile Include="Models\RegisterLinkedInModel.cs" />
     <Compile Include="Models\SingleTaskViewModel.cs" />
     <Compile Include="Models\ManagersViewModel.cs" />
     <Compile Include="Models\ManagerTasksViewModel.cs" />
@@ -101,6 +122,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\TaskViewModel.cs" />
+    <Compile Include="Models\TokenHelper.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="App_Data\UserMembershipProvider.cs" />
     <Compile Include="Models\UserViewModel.cs" />
@@ -109,6 +131,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Users.xml" />
     <Content Include="Content\Custom.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -280,6 +303,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\HumanTasks\TaskDetailsPartial.cshtml" />
+    <Content Include="Views\LinkedIn\RegisterLinkedIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />

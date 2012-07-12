@@ -5,8 +5,9 @@
             @User.Identity.Name
         </strong>!
         [ @Html.ActionLink("Выйти", "LogOff", "Account") ]
-    </text>
+    </text>  
 }
 else {
-    @:[ @Html.ActionLink("Войти", "LogOn", "Account") ]
+    <br/>@:[ @Html.ActionLink("Войти", "LogOn", "Account") ]
+    <br/>@:[ @Html.ActionLink("Login with LinkedOn", "LogonStart", "LinkedIn") ]
 }
