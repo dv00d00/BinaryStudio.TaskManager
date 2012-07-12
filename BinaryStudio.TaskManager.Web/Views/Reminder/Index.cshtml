@@ -32,7 +32,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @(item.Employee == null ? "None" : item.Employee.Name)
+            @(item.User == null ? "None" : item.User.UserName)
         </td>
         <td>
             @(item.Task == null ? "None" : item.Task.Name)

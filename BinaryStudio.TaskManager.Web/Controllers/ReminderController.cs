@@ -44,7 +44,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult Create()
         {
             ViewBag.PossibleTasks = taskProcessor.GetAllTasks();
-            //ViewBag.PossibleEmployees = employeeRepository.GetAll();
+            ViewBag.PossibleEmployees = userRepository.GetAll();
             return View();
         }
 
@@ -60,7 +60,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.PossibleTasks = taskProcessor.GetAllTasks();
-            //ViewBag.PossibleEmployees = employeeRepository.GetAll();
+            ViewBag.PossibleEmployees = userRepository.GetAll();
 
             return View(reminder);
         }
@@ -72,7 +72,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             Reminder reminder = reminderRepository.GetById(id);
             ViewBag.PossibleTasks = taskProcessor.GetAllTasks();
-            //ViewBag.PossibleEmployees = employeeRepository.GetAll();
+            ViewBag.PossibleEmployees = userRepository.GetAll();
             return View(reminder);
         }
 
@@ -88,7 +88,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.PossibleTasks = taskProcessor.GetAllTasks();
-            //ViewBag.PossibleEmployees = employeeRepository.GetAll();
+            ViewBag.PossibleEmployees = userRepository.GetAll();
             return View(reminder);
         }
 

@@ -11,7 +11,7 @@
     <legend>Напоминание</legend>
 
     <div class="display-label">Сотрудник</div>
-    <div class="display-field">@(Model.Employee == null ? "None" : Model.Employee.Name)</div>
+    <div class="display-field">@(Model.User  == null ? "None" : Model.User.UserName)</div>
 
     <div class="display-label">Задача</div>
     <div class="display-field">@(Model.Task == null ? "None" : Model.Task.Name)</div>
