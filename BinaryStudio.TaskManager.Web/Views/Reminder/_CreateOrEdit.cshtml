@@ -25,16 +25,16 @@
     @try
     {
         @Html.DropDownListFor(model => model.EmployeeID, ((IEnumerable<BinaryStudio.TaskManager.Logic
-        .Domain.Employee>)ViewBag.PossibleEmployees).Select(option => new SelectListItem
+        .Domain.User>)ViewBag.PossibleEmployees).Select(option => new SelectListItem
         {
-            Text = (option == null ? "None" : option.Name), 
+            Text = (option == null ? "None" : option.UserName), 
             Value = option.Id.ToString(),
             Selected = (Model != null) && (option.Id == Model.EmployeeID)
         }), "Выберите...")
     }
     catch (System.ArgumentNullException)
     {
-       <input value="Empty Employee List" type="text" disabled="true"/>   
+       <input value="Empty Employee List" type="text" disabled="disabled"/>   
     }
     @Html.ValidationMessageFor(model => model.EmployeeID)
 </div>
@@ -55,7 +55,7 @@
     
     catch (System.ArgumentNullException)
     {
-       <input value="Empty Task List" type="text" disabled="true"/>
+       <input value="Empty Task List" type="text" disabled="disabled"/>
         //throw;
     }
     @Html.ValidationMessageFor(model => model.TaskId)
