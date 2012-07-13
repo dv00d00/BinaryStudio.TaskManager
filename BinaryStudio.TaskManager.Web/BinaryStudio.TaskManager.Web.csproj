@@ -111,6 +111,7 @@
     <Compile Include="Controllers\HumanTasksController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\LinkedInController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ReminderController.cs" />
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
@@ -306,6 +307,9 @@
     </None>
     <Content Include="Views\HumanTasks\TaskDetailsPartial.cshtml" />
     <Content Include="Views\LinkedIn\RegisterLinkedIn.cshtml" />
+    <Content Include="Views\Project\CreateTask.cshtml" />
+    <Content Include="Views\Project\ManagerTasksTablePartialView.cshtml" />
+    <Content Include="Views\Project\PersonalProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />
@@ -339,7 +343,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>54429</DevelopmentServerPort>
+          <DevelopmentServerPort>63189</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
