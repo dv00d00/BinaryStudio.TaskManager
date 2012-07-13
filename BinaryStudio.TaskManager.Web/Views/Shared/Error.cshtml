@@ -1,9 +1,10 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
-
 @{
     ViewBag.Title = "Error";
 }
-
 <h2>
     Извините, произошла ошибка при обработке запроса.
 </h2>
+<p>
+    @Model.Exception.InnerException.ToString()
+</p>
