@@ -30,7 +30,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
         public virtual ICollection<ProjectsAndUsers> UserProjects { get; set; }
 
-        public Guid? LinkedInToken { get; set; }
+        public string LinkedInId { get; set; }
 
 
     }

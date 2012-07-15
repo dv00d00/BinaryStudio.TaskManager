@@ -1,0 +1,27 @@
+Usage
+1. Create a button that sends the user to a page where the login process will start like LinkedInBeginAuth.aspx or Account/LinkedInBeginAuth in MVC
+
+2.Inside LinkedInBeginAuth Page add the following code
+var session = LinkedInSession.RetrieveFromUserSession();
+if (session == null)
+{
+    var token = OAuthManager.Current.CreateToken(callback: "http://localhost:1134/Account/LogOn");
+    //The user is being redirected
+    OAuthManager.Current.BeginAuth(token, endResponse: true, displayAllowDenyScreen: false);
+}
+
+3. Create the page that the user will be redirected after login
+
+4. Inside that page add
+var token = OAuthManager.Current.GetTokenInCallback();
+var session = OAuthManager.Current.CompleteAuth(token);
+if (session.IsAuthorized())
+{
+    session.StoreInUserSession();
+    var p = session.GetProfile();
+    string firstname = p.Firstname;
+}
+
+5.That's it!
+
+Library is in EARLY development so expect major changes... Use it wisely...

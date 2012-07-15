@@ -301,3 +301,71 @@
    â System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<>c__DisplayClass1e.<InvokeActionResultWithFilters>b__1b()
    â System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
    â System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-12 23:36:08.5438 DEBUG EXCEPTION|System.InvalidOperationException: The view 'LogonStart' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/LinkedIn/LogonStart.aspx
+~/Views/LinkedIn/LogonStart.ascx
+~/Views/Shared/LogonStart.aspx
+~/Views/Shared/LogonStart.ascx
+~/Views/LinkedIn/LogonStart.cshtml
+~/Views/LinkedIn/LogonStart.vbhtml
+~/Views/Shared/LogonStart.cshtml
+~/Views/Shared/LogonStart.vbhtml
+   â System.Web.Mvc.ViewResult.FindView(ControllerContext context)
+   â System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   â System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   â System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<InvokeActionResultWithFilters>b__19()
+   â System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilter(IResultFilter filter, ResultExecutingContext preContext, Func`1 continuation)
+   â System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<>c__DisplayClass1e.<InvokeActionResultWithFilters>b__1b()
+   â System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   â System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-12 23:36:45.9350 DEBUG EXCEPTION|System.InvalidOperationException: The view 'LogonStart' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/LinkedIn/LogonStart.aspx
+~/Views/LinkedIn/LogonStart.ascx
+~/Views/Shared/LogonStart.aspx
+~/Views/Shared/LogonStart.ascx
+~/Views/LinkedIn/LogonStart.cshtml
+~/Views/LinkedIn/LogonStart.vbhtml
+~/Views/Shared/LogonStart.cshtml
+~/Views/Shared/LogonStart.vbhtml
+   â System.Web.Mvc.ViewResult.FindView(ControllerContext context)
+   â System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   â System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   â System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<InvokeActionResultWithFilters>b__19()
+   â System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilter(IResultFilter filter, ResultExecutingContext preContext, Func`1 continuation)
+   â System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<>c__DisplayClass1e.<InvokeActionResultWithFilters>b__1b()
+   â System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   â System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-12 23:40:38.4713 DEBUG EXCEPTION|System.InvalidOperationException: The view 'LogonStart' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/LinkedIn/LogonStart.aspx
+~/Views/LinkedIn/LogonStart.ascx
+~/Views/Shared/LogonStart.aspx
+~/Views/Shared/LogonStart.ascx
+~/Views/LinkedIn/LogonStart.cshtml
+~/Views/LinkedIn/LogonStart.vbhtml
+~/Views/Shared/LogonStart.cshtml
+~/Views/Shared/LogonStart.vbhtml
+   â System.Web.Mvc.ViewResult.FindView(ControllerContext context)
+   â System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   â System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   â System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<InvokeActionResultWithFilters>b__19()
+   â System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilter(IResultFilter filter, ResultExecutingContext preContext, Func`1 continuation)
+   â System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<>c__DisplayClass1e.<InvokeActionResultWithFilters>b__1b()
+   â System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   â System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-12 23:42:14.1337 DEBUG EXCEPTION|System.InvalidOperationException: The view 'LogonStart' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/LinkedIn/LogonStart.aspx
+~/Views/LinkedIn/LogonStart.ascx
+~/Views/Shared/LogonStart.aspx
+~/Views/Shared/LogonStart.ascx
+~/Views/LinkedIn/LogonStart.cshtml
+~/Views/LinkedIn/LogonStart.vbhtml
+~/Views/Shared/LogonStart.cshtml
+~/Views/Shared/LogonStart.vbhtml
+   â System.Web.Mvc.ViewResult.FindView(ControllerContext context)
+   â System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   â System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   â System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<InvokeActionResultWithFilters>b__19()
+   â System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilter(IResultFilter filter, ResultExecutingContext preContext, Func`1 continuation)
+   â System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<>c__DisplayClass1e.<InvokeActionResultWithFilters>b__1b()
+   â System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   â System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)

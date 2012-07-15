@@ -20,7 +20,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             userRepository.CreateUser(userAccount);
         }
 
-        public bool CreateUser(string userName, string password, string eMail, Guid? linkeinToken)
+        public bool CreateUser(string userName, string password, string eMail, string linkeinId)
         {
             var user = userRepository.GetByName(userName);
             if (user != null)
@@ -32,7 +32,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
                 UserName = userName,
                 Password = password,
                 Email = eMail,
-                LinkedInToken = linkeinToken
+                LinkedInId= linkeinId
             };
 
             userRepository.CreateUser(newUser);
@@ -94,17 +94,18 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return userRepository.GetById(userId);
         }
 
-        public User GetUserByLinkedInToken(Guid linkedinToken)
+        public User GetUserByLinkedInId(string linkedinId)
         {
             try
             {
-                return userRepository.GetAll().ToList().SingleOrDefault(it => it.LinkedInToken == linkedinToken);
+                return userRepository.GetAll().ToList().Single(it => it.LinkedInId == linkedinId);  
             }
             catch (Exception)
             {
+
                 return null;
             }
-            
+                       
         }
     }
 }
