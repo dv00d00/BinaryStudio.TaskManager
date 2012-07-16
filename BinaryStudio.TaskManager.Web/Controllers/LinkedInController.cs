@@ -66,23 +66,29 @@ namespace ThirdPartySignup.Controllers
 
         public ActionResult RegisterLinkedIn()
         {
-            return View();
+            LinkedInProfile profile = _linkedInService.GetUserProfile();
+            RegisterLinkedInModel model = new RegisterLinkedInModel()
+                                              {
+                                                  FirstName = profile.Firstname,
+                                                  LastName = profile.Lastname,
+                                                  UserName = profile.Firstname+ " " + profile.Lastname,
+                                                  LinkedInId = profile.UserId
+                                              };
+            return View(model);
         }
 
         [HttpPost]
         public ActionResult RegisterLinkedIn(RegisterLinkedInModel model)
         {
-            LinkedInProfile profile = _linkedInService.GetUserProfile();
+            
 
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
-                bool createStatus = _userProcessor.CreateUser(model.UserName, "", model.Email,profile.UserId);
+                bool createStatus = _userProcessor.CreateUser(model.UserName, "", model.Email,model.LinkedInId);
                 if (createStatus)
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-
-                    Session["Token"] = null;
+                    FormsAuthentication.SetAuthCookie(model.UserName,true);
                     return RedirectToAction("AllManagersWithTasks", "HumanTasks");
                 }
                 else

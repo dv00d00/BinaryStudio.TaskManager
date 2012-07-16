@@ -116,7 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
-    <Content Include="LinkedIn.OAuth.Delete.When.ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,0 +1,337 @@
+2012-07-15 17:32:16.5515 DEBUG EXCEPTION|DotNetOpenAuth.Messaging.ProtocolException: Failed to add extra parameter 'first-name' with value ''. ---> System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: value
+   в DotNetOpenAuth.Messaging.ErrorUtilities.VerifyArgumentNotNull(Object value, String paramName)
+   в DotNetOpenAuth.Messaging.Reflection.MessageDictionary.Add(String key, String value)
+   в DotNetOpenAuth.Messaging.Reflection.MessageDictionary.Add(KeyValuePair`2 item)
+   в DotNetOpenAuth.Messaging.MessagingUtilities.AddExtraParameters(MessageDictionary messageDictionary, IDictionary`2 extraParameters)
+   --- Конец трассировки внутреннего стека исключений ---
+   в DotNetOpenAuth.Messaging.MessagingUtilities.AddExtraParameters(MessageDictionary messageDictionary, IDictionary`2 extraParameters)
+   в DotNetOpenAuth.OAuth.ConsumerBase.PrepareRequestUserAuthorization(Uri callback, IDictionary`2 requestParameters, IDictionary`2 redirectParameters, String& requestToken)
+   в DotNetOpenAuth.OAuth.WebConsumer.PrepareRequestUserAuthorization(Uri callback, IDictionary`2 requestParameters, IDictionary`2 redirectParameters)
+   в ThirdPartySignup.Controllers.LinkedInController.LogonStart() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 51
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 17:36:33.4677 DEBUG EXCEPTION|System.InvalidOperationException: The view 'LogonStart' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/LinkedIn/LogonStart.aspx
+~/Views/LinkedIn/LogonStart.ascx
+~/Views/Shared/LogonStart.aspx
+~/Views/Shared/LogonStart.ascx
+~/Views/LinkedIn/LogonStart.cshtml
+~/Views/LinkedIn/LogonStart.vbhtml
+~/Views/Shared/LogonStart.cshtml
+~/Views/Shared/LogonStart.vbhtml
+   в System.Web.Mvc.ViewResult.FindView(ControllerContext context)
+   в System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<InvokeActionResultWithFilters>b__19()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilter(IResultFilter filter, ResultExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<>c__DisplayClass1e.<InvokeActionResultWithFilters>b__1b()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 17:51:14.9712 DEBUG EXCEPTION|System.ArgumentException: Не удалось найти в семействе маршрутов маршрут с именем "http://api.linkedin.com/v1/people/~".
+Имя параметра: name
+   в System.Web.Routing.RouteCollection.GetVirtualPath(RequestContext requestContext, String name, RouteValueDictionary values)
+   в System.Web.Mvc.RouteCollectionExtensions.GetVirtualPathForArea(RouteCollection routes, RequestContext requestContext, String name, RouteValueDictionary values, Boolean& usingAreas)
+   в System.Web.Mvc.UrlHelper.GenerateUrl(String routeName, String actionName, String controllerName, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, Boolean includeImplicitMvcValues)
+   в System.Web.Mvc.UrlHelper.GenerateUrl(String routeName, String actionName, String controllerName, String protocol, String hostName, String fragment, RouteValueDictionary routeValues, RouteCollection routeCollection, RequestContext requestContext, Boolean includeImplicitMvcValues)
+   в System.Web.Mvc.UrlHelper.RouteUrl(String routeName, Object routeValues, String protocol)
+   в System.Web.Mvc.UrlHelper.RouteUrl(String routeName)
+   в ThirdPartySignup.Controllers.LinkedInController.LogonEnd(String oath_token) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 57
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 17:52:45.7274 DEBUG EXCEPTION|DotNetOpenAuth.Messaging.ProtocolException: Error occurred while sending a direct message or getting the response. ---> System.Net.WebException: Удаленный сервер возвратил ошибку: (405) Недопустимый метод.
+   в System.Net.HttpWebRequest.GetResponse()
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetResponse(HttpWebRequest request, DirectWebRequestOptions options)
+   --- Конец трассировки внутреннего стека исключений ---
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetResponse(HttpWebRequest request, DirectWebRequestOptions options)
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetResponse(HttpWebRequest request)
+   в DotNetOpenAuth.OAuth.ConsumerBase.PrepareAuthorizedRequestAndSend(MessageReceivingEndpoint endpoint, String accessToken)
+   в ThirdPartySignup.Controllers.LinkedInController.LogonEnd(String oath_token) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 57
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 17:59:48.7966 DEBUG EXCEPTION|DotNetOpenAuth.Messaging.ProtocolException: Error occurred while sending a direct message or getting the response. ---> System.Net.WebException: Удаленный сервер возвратил ошибку: (405) Недопустимый метод.
+   в System.Net.HttpWebRequest.GetResponse()
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetResponse(HttpWebRequest request, DirectWebRequestOptions options)
+   --- Конец трассировки внутреннего стека исключений ---
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetResponse(HttpWebRequest request, DirectWebRequestOptions options)
+   в DotNetOpenAuth.Messaging.StandardWebRequestHandler.GetResponse(HttpWebRequest request)
+   в DotNetOpenAuth.OAuth.ConsumerBase.PrepareAuthorizedRequestAndSend(MessageReceivingEndpoint endpoint, String accessToken)
+   в ThirdPartySignup.Controllers.LinkedInController.LogonEnd(String oath_token) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 57
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 21:26:12.7856 DEBUG EXCEPTION|System.ArgumentNullException: Ensure that the following entry exists insde AppSettings <add key="Li-ApiKey" value="YOUR_API_KEY" />
+Имя параметра: ApiKey
+   в LinkedIn.OAuth.LinkedInSession..ctor(String token)
+   в LinkedIn.OAuth.OAuthManager.CreateToken(String callback)
+   в BinaryStudio.TaskManager.Logic.Authorize.LinkedInService.BeginAuthorization(String callback) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Authorize\LinkedInService.cs:строка 17
+   в ThirdPartySignup.Controllers.LinkedInController.LogonStart() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 27
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 21:27:21.3796 DEBUG EXCEPTION|System.ArgumentNullException: Ensure that the following entry exists insde AppSettings <add key="Li-ApiKey" value="YOUR_API_KEY" />
+Имя параметра: ApiKey
+   в LinkedIn.OAuth.LinkedInSession..ctor(String token)
+   в LinkedIn.OAuth.OAuthManager.CreateToken(String callback)
+   в BinaryStudio.TaskManager.Logic.Authorize.LinkedInService.BeginAuthorization(String callback) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Authorize\LinkedInService.cs:строка 17
+   в ThirdPartySignup.Controllers.LinkedInController.LogonStart() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 27
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 21:28:34.0727 DEBUG EXCEPTION|System.ArgumentNullException: Ensure that the following entry exists insde AppSettings <add key="Li-ApiKey" value="YOUR_API_KEY" />
+Имя параметра: ApiKey
+   в LinkedIn.OAuth.LinkedInSession..ctor(String token)
+   в LinkedIn.OAuth.OAuthManager.CreateToken(String callback)
+   в BinaryStudio.TaskManager.Logic.Authorize.LinkedInService.BeginAuthorization(String callback) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Authorize\LinkedInService.cs:строка 17
+   в ThirdPartySignup.Controllers.LinkedInController.LogonStart() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 27
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 21:29:09.9798 DEBUG EXCEPTION|System.ArgumentNullException: Ensure that the following entry exists insde AppSettings <add key="Li-ApiSecret" value="YOUR_API_SECRET" />
+Имя параметра: ApiSecret
+   в LinkedIn.OAuth.LinkedInSession..ctor(String token)
+   в LinkedIn.OAuth.OAuthManager.CreateToken(String callback)
+   в BinaryStudio.TaskManager.Logic.Authorize.LinkedInService.BeginAuthorization(String callback) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Authorize\LinkedInService.cs:строка 17
+   в ThirdPartySignup.Controllers.LinkedInController.LogonStart() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 27
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 21:42:50.6087 DEBUG EXCEPTION|System.NullReferenceException: Ссылка на объект не указывает на экземпляр объекта.
+   в ThirdPartySignup.Controllers.LinkedInController.RegisterLinkedIn(RegisterLinkedInModel model) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 69
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 21:53:49.8614 DEBUG EXCEPTION|System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: key
+   в System.Collections.Generic.Dictionary`2.FindEntry(TKey key)
+   в System.Collections.Generic.Dictionary`2.ContainsKey(TKey key)
+   в LinkedIn.OAuth.OAuthTokenList.get_Item(String token)
+   в LinkedIn.OAuth.OAuthManager.GetTokenInCallback()
+   в BinaryStudio.TaskManager.Logic.Authorize.LinkedInService.GetUserToken() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Authorize\LinkedInService.cs:строка 37
+   в ThirdPartySignup.Controllers.LinkedInController.RegisterLinkedIn() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 54
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 21:58:50.1136 DEBUG EXCEPTION|System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: key
+   в System.Collections.Generic.Dictionary`2.FindEntry(TKey key)
+   в System.Collections.Generic.Dictionary`2.ContainsKey(TKey key)
+   в LinkedIn.OAuth.OAuthTokenList.get_Item(String token)
+   в LinkedIn.OAuth.OAuthManager.GetTokenInCallback()
+   в BinaryStudio.TaskManager.Logic.Authorize.LinkedInService.GetUserProfile() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Authorize\LinkedInService.cs:строка 25
+   в ThirdPartySignup.Controllers.LinkedInController.RegisterLinkedIn(String token) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 55
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 22:02:30.2262 DEBUG EXCEPTION|System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: key
+   в System.Collections.Generic.Dictionary`2.FindEntry(TKey key)
+   в System.Collections.Generic.Dictionary`2.ContainsKey(TKey key)
+   в LinkedIn.OAuth.OAuthTokenList.get_Item(String token)
+   в LinkedIn.OAuth.OAuthManager.GetTokenInCallback()
+   в BinaryStudio.TaskManager.Logic.Authorize.LinkedInService.GetUserProfile() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Authorize\LinkedInService.cs:строка 25
+   в ThirdPartySignup.Controllers.LinkedInController.RegisterLinkedIn() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 55
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 22:53:29.3892 DEBUG EXCEPTION|System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: key
+   в System.Collections.Generic.Dictionary`2.Insert(TKey key, TValue value, Boolean add)
+   в System.Collections.Generic.Dictionary`2.set_Item(TKey key, TValue value)
+   в LinkedIn.OAuth.OAuthTokenList.set_Item(String token, OAuthToken value)
+   в LinkedIn.OAuth.LinkedInSession.ExchangeAccessToken()
+   в LinkedIn.OAuth.LinkedInSession.GetProfile(List`1 options, String userId)
+   в LinkedIn.OAuth.LinkedInSession.GetProfile()
+   в BinaryStudio.TaskManager.Logic.Authorize.LinkedInService.GetUserProfile() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Authorize\LinkedInService.cs:строка 30
+   в ThirdPartySignup.Controllers.LinkedInController.LogonEnd() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 38
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 22:58:59.8476 DEBUG EXCEPTION|System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: key
+   в System.Collections.Generic.Dictionary`2.FindEntry(TKey key)
+   в System.Collections.Generic.Dictionary`2.ContainsKey(TKey key)
+   в LinkedIn.OAuth.OAuthTokenList.get_Item(String token)
+   в LinkedIn.OAuth.OAuthManager.GetTokenInCallback()
+   в BinaryStudio.TaskManager.Logic.Authorize.LinkedInService.GetUserProfile() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Authorize\LinkedInService.cs:строка 25
+   в ThirdPartySignup.Controllers.LinkedInController.RegisterLinkedIn(RegisterLinkedInModel model) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 61
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 23:09:44.5775 DEBUG EXCEPTION|System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: key
+   в System.Collections.Generic.Dictionary`2.FindEntry(TKey key)
+   в System.Collections.Generic.Dictionary`2.ContainsKey(TKey key)
+   в LinkedIn.OAuth.OAuthTokenList.get_Item(String token)
+   в LinkedIn.OAuth.OAuthManager.GetTokenInCallback()
+   в BinaryStudio.TaskManager.Logic.Authorize.LinkedInService.BeginAuthorization(String callback) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Authorize\LinkedInService.cs:строка 19
+   в ThirdPartySignup.Controllers.LinkedInController.LogonStart() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 29
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 23:12:31.8600 DEBUG EXCEPTION|System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: key
+   в System.Collections.Generic.Dictionary`2.FindEntry(TKey key)
+   в System.Collections.Generic.Dictionary`2.ContainsKey(TKey key)
+   в LinkedIn.OAuth.OAuthTokenList.get_Item(String token)
+   в LinkedIn.OAuth.OAuthManager.GetTokenInCallback()
+   в BinaryStudio.TaskManager.Logic.Authorize.LinkedInService.BeginAuthorization(String callback) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Authorize\LinkedInService.cs:строка 19
+   в ThirdPartySignup.Controllers.LinkedInController.LogonStart() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 29
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 23:26:45.4688 DEBUG EXCEPTION|System.FormatException: Идентификатор GUID должен содержать 32 цифры и 4 дефиса (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).
+   в System.Guid.TryParseGuidWithNoStyle(String guidString, GuidResult& result)
+   в System.Guid.TryParseGuid(String g, GuidStyles flags, GuidResult& result)
+   в System.Guid..ctor(String g)
+   в ThirdPartySignup.Controllers.LinkedInController.LogonEnd() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 39
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-15 23:35:03.9534 DEBUG EXCEPTION|System.Data.SqlClient.SqlException (0x80131904): Невозможно удалить базу данных "BinaryStudio.TaskManager.Logic.Domain.DataBaseContext", так как она используется в данный момент.
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   в System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(DbAsyncResult result, String methodName, Boolean sendToPipe)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в System.Data.SqlClient.SqlProviderServices.<>c__DisplayClass10.<DbDeleteDatabase>b__f(SqlConnection conn)
+   в System.Data.SqlClient.SqlProviderServices.UsingConnection(SqlConnection sqlConnection, Action`1 act)
+   в System.Data.SqlClient.SqlProviderServices.UsingMasterConnection(SqlConnection sqlConnection, Action`1 act)
+   в System.Data.SqlClient.SqlProviderServices.DbDeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Objects.ObjectContext.DeleteDatabase()
+   в System.Data.Entity.Internal.DatabaseOperations.DeleteIfExists(ObjectContext objectContext)
+   в System.Data.Entity.Database.Delete()
+   в System.Data.Entity.DropCreateDatabaseIfModelChanges`1.InitializeDatabase(TContext context)
+   в System.Data.Entity.Database.<>c__DisplayClass2`1.<SetInitializerInternal>b__0(DbContext c)
+   в System.Data.Entity.Internal.InternalContext.<>c__DisplayClass8.<PerformDatabaseInitialization>b__6()
+   в System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   в System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   в System.Data.Entity.Internal.LazyInternalContext.<InitializeDatabase>b__4(InternalContext c)
+   в System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabase()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.LazyInternalContext.get_ObjectContext()
+   в System.Data.Entity.Internal.InternalContext.DetectChanges(Boolean force)
+   в System.Data.Entity.Internal.InternalContext.GetStateEntry(Object entity)
+   в System.Data.Entity.Internal.InternalEntityEntry..ctor(InternalContext internalContext, Object entity)
+   в System.Data.Entity.DbContext.Entry[TEntity](TEntity entity)
+   в BinaryStudio.TaskManager.Logic.Core.UserRepository.CreateUser(User user) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\UserRepository.cs:строка 27
+   в BinaryStudio.TaskManager.Logic.Core.UserProcessor.CreateUser(String userName, String password, String eMail, String linkeinId) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\UserProcessor.cs:строка 38
+   в ThirdPartySignup.Controllers.LinkedInController.RegisterLinkedIn(RegisterLinkedInModel model) в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 65
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)

@@ -1,0 +1,71 @@
+2012-07-13 14:58:03.5186 DEBUG EXCEPTION|System.InvalidOperationException: The view 'LogonStart' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/LinkedIn/LogonStart.aspx
+~/Views/LinkedIn/LogonStart.ascx
+~/Views/Shared/LogonStart.aspx
+~/Views/Shared/LogonStart.ascx
+~/Views/LinkedIn/LogonStart.cshtml
+~/Views/LinkedIn/LogonStart.vbhtml
+~/Views/Shared/LogonStart.cshtml
+~/Views/Shared/LogonStart.vbhtml
+   в System.Web.Mvc.ViewResult.FindView(ControllerContext context)
+   в System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<InvokeActionResultWithFilters>b__19()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilter(IResultFilter filter, ResultExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<>c__DisplayClass1e.<InvokeActionResultWithFilters>b__1b()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-13 14:59:05.9511 DEBUG EXCEPTION|System.InvalidOperationException: The view 'LogonStart' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/LinkedIn/LogonStart.aspx
+~/Views/LinkedIn/LogonStart.ascx
+~/Views/Shared/LogonStart.aspx
+~/Views/Shared/LogonStart.ascx
+~/Views/LinkedIn/LogonStart.cshtml
+~/Views/LinkedIn/LogonStart.vbhtml
+~/Views/Shared/LogonStart.cshtml
+~/Views/Shared/LogonStart.vbhtml
+   в System.Web.Mvc.ViewResult.FindView(ControllerContext context)
+   в System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<InvokeActionResultWithFilters>b__19()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilter(IResultFilter filter, ResultExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<>c__DisplayClass1e.<InvokeActionResultWithFilters>b__1b()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-13 15:11:36.0760 DEBUG EXCEPTION|System.InvalidOperationException: The view 'LogonStart' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/LinkedIn/LogonStart.aspx
+~/Views/LinkedIn/LogonStart.ascx
+~/Views/Shared/LogonStart.aspx
+~/Views/Shared/LogonStart.ascx
+~/Views/LinkedIn/LogonStart.cshtml
+~/Views/LinkedIn/LogonStart.vbhtml
+~/Views/Shared/LogonStart.cshtml
+~/Views/Shared/LogonStart.vbhtml
+   в System.Web.Mvc.ViewResult.FindView(ControllerContext context)
+   в System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<InvokeActionResultWithFilters>b__19()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilter(IResultFilter filter, ResultExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass1c.<>c__DisplayClass1e.<InvokeActionResultWithFilters>b__1b()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-07-13 15:42:06.6737 DEBUG EXCEPTION|DotNetOpenAuth.Messaging.ProtocolException: Failed to add extra parameter 'first-name' with value ''. ---> System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: value
+   в DotNetOpenAuth.Messaging.ErrorUtilities.VerifyArgumentNotNull(Object value, String paramName)
+   в DotNetOpenAuth.Messaging.Reflection.MessageDictionary.Add(String key, String value)
+   в DotNetOpenAuth.Messaging.Reflection.MessageDictionary.Add(KeyValuePair`2 item)
+   в DotNetOpenAuth.Messaging.MessagingUtilities.AddExtraParameters(MessageDictionary messageDictionary, IDictionary`2 extraParameters)
+   --- Конец трассировки внутреннего стека исключений ---
+   в DotNetOpenAuth.Messaging.MessagingUtilities.AddExtraParameters(MessageDictionary messageDictionary, IDictionary`2 extraParameters)
+   в DotNetOpenAuth.OAuth.ConsumerBase.PrepareRequestUserAuthorization(Uri callback, IDictionary`2 requestParameters, IDictionary`2 redirectParameters, String& requestToken)
+   в DotNetOpenAuth.OAuth.WebConsumer.PrepareRequestUserAuthorization(Uri callback, IDictionary`2 requestParameters, IDictionary`2 redirectParameters)
+   в ThirdPartySignup.Controllers.LinkedInController.LogonStart() в F:\BinaryAcademia\Solutions\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\LinkedInController.cs:строка 51
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
