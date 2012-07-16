@@ -8,10 +8,8 @@
         <br />
         @Model.Description
         <br />
-        Создано: @Model.Created
         <u><i>
-            <br />
-            @Html.ActionLink("Подробности", "Details", new { id = Model.Id })
+            @Html.ActionLink("Details", "Details", new { id = Model.Id })
         </i></u>
     </div>
 }

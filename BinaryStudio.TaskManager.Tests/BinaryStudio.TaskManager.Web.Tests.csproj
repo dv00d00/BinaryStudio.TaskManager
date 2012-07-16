@@ -110,6 +110,7 @@
   <ItemGroup>
     <Compile Include="AdminControllerTests.cs" />
     <Compile Include="HumanTaskControllerTests.cs" />
+    <Compile Include="ProjectControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReminderControllerTests.cs" />
     <Compile Include="UserControllerTests.cs" />

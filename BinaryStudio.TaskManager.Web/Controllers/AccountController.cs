@@ -18,16 +18,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.userProcessor = userProcessor;
         }
 
-        //
-        // GET: /Account/LogOn
-
         public ActionResult LogOn()
         {
             return View();
         }
-        
-        //
-        // POST: /Account/LogOn
 
         [HttpPost]
         public ActionResult LogOn(LogOnModel model, string returnUrl)
@@ -57,9 +51,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-        //
-        // GET: /Account/LogOff
 
         public ActionResult LogOff()
         {

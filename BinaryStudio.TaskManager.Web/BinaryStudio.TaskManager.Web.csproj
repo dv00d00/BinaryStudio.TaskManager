@@ -120,6 +120,7 @@
     <Compile Include="Controllers\HumanTasksController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\LinkedInController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ReminderController.cs" />
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
@@ -224,8 +225,6 @@
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\LogOn.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LogOnPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -278,7 +277,6 @@
     <Content Include="Views\Admin\RegisterNewUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Admin\ConnectUserWithEmployee.cshtml" />
     <Content Include="Views\Reminder\Create.cshtml" />
     <Content Include="Views\Reminder\Delete.cshtml" />
     <Content Include="Views\Reminder\Details.cshtml" />
@@ -290,22 +288,9 @@
     <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Admin\RegisterNewEmployee.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Admin\_CreateOrEditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Admin\EmployeesList.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Admin\DeleteEmployee.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Admin\EditEmployee.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Admin\DetailsEmployee.cshtml" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -314,15 +299,15 @@
     </None>
     <Content Include="Views\HumanTasks\TaskDetailsPartial.cshtml" />
     <Content Include="Views\LinkedIn\RegisterLinkedIn.cshtml" />
+    <Content Include="Views\Project\CreateTask.cshtml" />
+    <Content Include="Views\Project\ManagerTasksTablePartialView.cshtml" />
+    <Content Include="Views\Project\PersonalProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\EditUser.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Admin\_CreateOrEditEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\DetailsUser.cshtml" />
@@ -347,7 +332,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>54429</DevelopmentServerPort>
+          <DevelopmentServerPort>63189</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
