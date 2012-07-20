@@ -134,7 +134,6 @@
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Models\TokenHelper.cs" />
     <Compile Include="Models\UserModels.cs" />
-    <Compile Include="App_Data\UserMembershipProvider.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="NinjectModules\MainInjectModule.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -282,18 +281,12 @@
     <Content Include="Views\HumanTasks\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Admin\RegisterNewUser.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Reminder\Create.cshtml" />
     <Content Include="Views\Reminder\Delete.cshtml" />
     <Content Include="Views\Reminder\Details.cshtml" />
     <Content Include="Views\Reminder\Edit.cshtml" />
     <Content Include="Views\Reminder\Index.cshtml" />
     <Content Include="Views\Reminder\_CreateOrEdit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\_CreateOrEditUser.cshtml" />
@@ -310,6 +303,7 @@
     <Content Include="Views\Project\CreateTask.cshtml" />
     <Content Include="Views\Project\ManagerTasksTablePartialView.cshtml" />
     <Content Include="Views\Project\PersonalProject.cshtml" />
+    <Content Include="Views\Account\RegisterNewUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />
@@ -322,6 +316,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\DeleteUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

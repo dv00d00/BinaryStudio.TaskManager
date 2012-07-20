@@ -31,15 +31,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         /// <summary>
-        /// Creates the specified manager id.
+        /// Creates the specified user id.
         /// </summary>
-        /// <param name="managerId">The manager id.</param>
+        /// <param name="userId">The user id.</param>
         /// <returns></returns>
-        public ActionResult CreateTask(int managerId)
+        public ActionResult CreateTask(int userId)
         {
-            HumanTask humanTask = new HumanTask();
-            humanTask.AssigneeId = (managerId != -1) ? managerId : (int?)null;
-            humanTask.CreatorId = userProcessor.GetCurrentLoginedEmployee(User.Identity.Name).Id;
+            var humanTask = new HumanTask();
+            humanTask.AssigneeId = (userId != -1) ? userId : (int?)null;
+            humanTask.CreatorId = userProcessor.GetCurrentLoginedUser(User.Identity.Name).Id;
             humanTask.Created = DateTime.Now;
             return this.View(humanTask);
         }

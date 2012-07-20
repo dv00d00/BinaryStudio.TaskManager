@@ -3,7 +3,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     using System.Web.Mvc;
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
-    using BinaryStudio.TaskManager.Web.Models;
 
     [Authorize(Roles = "admin")]
     public class AdminController : Controller
@@ -13,40 +12,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public AdminController(IUserRepository userRepository)
         {
             this.userRepository = userRepository;
-        }
-
-        public ActionResult Index()
-        {
-            return this.View();
-        }
-
-        public ActionResult RegisterNewUser()
-        {
-            return this.View();
-        }
-
-        [HttpPost]
-        public ActionResult RegisterNewUser(RegisterNewUserModel model)
-        {
-            if (this.ModelState.IsValid)
-            {
-                var user = new User()
-                {
-
-                    Id = model.userId,
-                    UserName = model.UserName,
-                    Email = model.Email,
-                    Password = model.Password,
-                    RoleId = 2
-                };
-                this.userRepository.CreateUser(user);
-
-                //TODO: redirect to view with relation employee with account
-                return this.RedirectToAction("Index", "Admin");
-            }
-
-            // If we got this far, something failed, redisplay form
-            return this.View(model);
         }
 
         public ActionResult UsersList()
@@ -60,46 +25,86 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.View(user);
         }
 
+        /// <summary>
+        /// The edit user.
+        /// </summary>
+        /// <param name="user">
+        /// The user, which will be modified
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         [HttpPost]
         public ActionResult EditUser(User user)
         {
             if (this.ModelState.IsValid)
             {
-                this.userRepository.Update(user);
-                return this.RedirectToAction("Index");
+                this.userRepository.UpdateUser(user);
+                return this.RedirectToRoute("Default", null);
             }
             return this.View(user);
         }
 
-        public ActionResult DetailsUser(int id)
+        /// <summary>
+        /// The details user.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        public ActionResult DetailsUser(int userId)
         {
-            User user = this.userRepository.GetById(id);
-            return this.View(user);
-        }
-
-        public ActionResult DeleteUser(int id)
-        {
-            User user = this.userRepository.GetById(id);
+            User user = this.userRepository.GetById(userId);
             return this.View(user);
         }
 
         /// <summary>
-        /// Deleting account and moving all task to unassigned.
+        /// The delete user.
         /// </summary>
-        /// <param name="id">The user id.</param>
-        /// <returns></returns>
-        [HttpPost]
-        [ActionName("DeleteUser")]
-        public ActionResult DeleteUserConfirmed(int id)
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        public ActionResult DeleteUser(int userId)
         {
-            this.userRepository.Delete(id);
-            return this.RedirectToAction("Index");
+            User user = this.userRepository.GetById(userId);
+            return this.View(user);
         }
 
+        /// <summary>
+        /// The delete user confirmed.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         [HttpPost]
-        public ActionResult SendUserInfo(int id)
+        [ActionName("DeleteUser")]
+        public ActionResult DeleteUserConfirmed(int userId)
         {
-            return this.Json(userRepository.GetById(id));
+            this.userRepository.DeleteUser(userId);
+            return this.RedirectToRoute("Default", null);
+        }
+
+        /// <summary>
+        /// The send user info.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        [HttpPost]
+        public ActionResult SendUserInfo(int userId)
+        {
+            return this.Json(this.userRepository.GetById(userId));
         }
 
     }

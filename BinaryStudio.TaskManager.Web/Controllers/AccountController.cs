@@ -1,64 +1,139 @@
-﻿using System;
-using System.Linq;
-using System.Web.Mvc;
-using System.Web.Security;
-using BinaryStudio.TaskManager.Logic.Core;
-using BinaryStudio.TaskManager.Logic.Domain;
-using BinaryStudio.TaskManager.Web.Models;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AccountController.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the AccountController type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
+    using System.Web.Mvc;
+    using System.Web.Security;
+
+    using BinaryStudio.TaskManager.Logic.Core;
+    using BinaryStudio.TaskManager.Web.Models;
+
+    /// <summary>
+    /// The account controller.
+    /// </summary>
     public class AccountController : Controller
     {
-        private readonly IUserRepository userRepository;        
+        /// <summary>
+        /// The user processor.
+        /// </summary>
         private readonly IUserProcessor userProcessor;
-        public AccountController(IUserRepository userRepository, IUserProcessor userProcessor)
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountController"/> class.
+        /// </summary>
+        /// <param name="userProcessor">
+        /// The user processor.
+        /// </param>
+        public AccountController(IUserProcessor userProcessor)
         {
-            this.userRepository = userRepository;
             this.userProcessor = userProcessor;
         }
 
-        public ActionResult LogOn()
+        /// <summary>
+        /// The register new user.
+        /// </summary>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        public ActionResult RegisterNewUser()
         {
-            return View();
+            return this.View(new RegisterUserModel());
         }
 
+        /// <summary>
+        /// The register new user.
+        /// </summary>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        [HttpPost]
+        public ActionResult RegisterNewUser(RegisterUserModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (this.userProcessor.CreateUser(model.UserName, model.Password, model.Email, string.Empty))
+                {
+                    this.userProcessor.LogOnUser(model.UserName, model.Password);
+                    return this.RedirectToAction("AllManagersWithTasks", "HumanTasks");
+                }
+
+            }
+            ModelState.AddModelError(string.Empty, "Wrong registration data. Please, try again!");
+            return this.View(model);
+        }
+
+        /// <summary>
+        /// The log on.
+        /// </summary>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        public ActionResult LogOn()
+        {
+            return this.View(new LogOnModel());
+        }
+
+        /// <summary>
+        /// The log on.
+        /// </summary>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        /// <param name="returnUrl">
+        /// The return url.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         [HttpPost]
         public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                if (userProcessor.LogOnUser(model.UserName, model.Password))
+                if (this.userProcessor.LogOnUser(model.UserName, model.Password))
                 {
-                    userProcessor.SetRoleToUserFromDB(model.UserName);
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    this.userProcessor.SetRoleToUserFromDB(model.UserName);
+                    FormsAuthentication.SetAuthCookie(model.UserName, true);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
-                        return Redirect(returnUrl);
+                        return this.Redirect(returnUrl);
                     }
                     else
                     {
-                        return RedirectToAction("AllManagersWithTasks", "HumanTasks");
+                        return this.RedirectToAction("AllManagersWithTasks", "HumanTasks");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Введенное имя пользователя или пароль неверны.");
+                    ModelState.AddModelError(string.Empty, "Incorrect email or password!");
                 }
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            return this.View(model);
         }
 
+        /// <summary>
+        /// The log off.
+        /// </summary>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("LogOn", "Account");
+            return this.RedirectToAction("LogOn", "Account");
         }
-
-       
     }
 }

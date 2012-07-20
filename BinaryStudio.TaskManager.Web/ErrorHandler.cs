@@ -1,17 +1,26 @@
-﻿using System;
-using System.Web.Mvc;
-using NLog;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ErrorHandler.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Global Exception Handler, logs all unhandled Exceptions
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BinaryStudio.TaskManager.Web
 {
-    using System.Web.Routing;
+    using System;
+    using System.Web.Mvc;
+
+    using NLog;
 
     /// <summary>
     /// Global Exception Handler, logs all unhandled Exceptions 
     /// </summary>
     public class ErrorHandler : HandleErrorAttribute
-    {
+    {        
         private readonly Logger log = LogManager.GetCurrentClassLogger();
+
         public override void OnException(ExceptionContext filterContext)
         {
             if (filterContext == null) return;

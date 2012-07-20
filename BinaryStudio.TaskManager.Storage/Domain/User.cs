@@ -20,10 +20,8 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         public string UserName { get; set; }        
 
         public string Email { get; set; }
-
-        //TODO: refactor this for HASH
-        public string Password { get; set; }
-
+        
+        public Credentials Credentials { get; set; }
 
         //TODO CLEAN ROLES FROM USERS
         public int RoleId { get; set; }
@@ -33,5 +31,30 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         public string LinkedInId { get; set; }
 
 
+    }
+
+    public class Credentials
+    {
+        /// <summary>
+        /// Gets or sets the salt.
+        /// </summary>
+        /// <value>
+        /// The salt.
+        /// </value>
+        public string Salt { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the password hash.
+        /// </summary>
+        /// <value>
+        /// The password hash.
+        /// </value>
+        public string Passwordhash { get; set; }
+
+        /// <summary>
+        /// Flag for verify user via email (bot security)
+        /// </summary>
+        public bool IsVerify { get; set; }
     }
 }

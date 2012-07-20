@@ -1,3 +1,12 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MainInjectModule.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Registers types in NInject IoC container
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace BinaryStudio.TaskManager.Web.NinjectModules
 {
     using BinaryStudio.TaskManager.Logic.Core;
@@ -21,6 +30,7 @@ namespace BinaryStudio.TaskManager.Web.NinjectModules
             this.Bind<IUserRepository>().To<UserRepository>();
             this.Bind<IHumanTaskRepository>().To<HumanTaskRepository>();
             this.Bind<IReminderRepository>().To<ReminderRepository>();
+            this.Bind<ICryptoProvider>().To<CryptoProvider>();
         }
     }
 }

@@ -18,13 +18,13 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         bool LogOnUser(string userName, string password);
 
-        User GetCurrentLoginedEmployee(string userName);
+        User GetCurrentLoginedUser(string userName);
 
-        bool CreateUser(string userName, string password, string eMail, string linkeinId);
+        bool CreateUser(string userName, string password, string email, string linkedInId);
 
         User GetUser(int userId);
 
-        User GetUserByLinkedInId(string linkedinId);
+        User GetUserByLinkedInId(string linkedinId);        
     }
 
 }

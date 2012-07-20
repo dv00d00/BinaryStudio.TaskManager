@@ -1,9 +1,15 @@
-using System;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TaskProcessorTests.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the TaskProcessorTests type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BinaryStudio.TaskManager.Logic.Tests
 {
     using System.Collections.Generic;
-    using System.Linq;
 
     using Core;
     using Domain;
@@ -12,6 +18,11 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
     using NUnit.Framework;
 
+    using System;
+
+    /// <summary>
+    /// The task processor tests.
+    /// </summary>
     [TestFixture]
     public class TaskProcessorTests
     {

@@ -1,9 +1,11 @@
 ﻿<div class="btn-group pull-right">
     @if (Request.IsAuthenticated)
     {        
-        <span class="label label-info">@User.Identity.Name
+        <span class="label well label-info">
+            @User.Identity.Name
         </span> 
-        <span>            
+        <span class="divider-vertical"></span> 
+        <span>
             @Html.ActionLink("LogOff", "LogOff", "Account", null, new { @class = "btn btn-danger" })
         </span>
     }

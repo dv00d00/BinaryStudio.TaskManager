@@ -1,12 +1,12 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.LogOnModel
 
 @{
-    ViewBag.Title = "Войти";
+    ViewBag.Title = "Sign In";
 }
 
-<h2 class="well-large">Войти</h2>
+<h2 class="well-large">Sign In</h2>
 <p>
-    Пожалуйста, введите своё имя и пароль.
+    Please, enter your login and password
 </p>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
@@ -17,7 +17,7 @@
 @using (Html.BeginForm()) {
     <div>
         <fieldset class="container-fluid">
-            <legend>Учетная запись</legend>
+            <legend>Account information</legend>
 
             <div class="editor-label">
                 @Html.LabelFor(m => m.UserName)
@@ -36,6 +36,7 @@
             </div>
             <p>
                 <input type="submit" value="Войти" class="btn btn-primary"/>
+                @Html.ActionLink("Register", "RegisterNewUser", "Account", null, new {@class="btn"})
             </p>
         </fieldset>
     </div>

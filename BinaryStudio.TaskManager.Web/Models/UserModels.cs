@@ -1,11 +1,21 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-using BinaryStudio.TaskManager.Logic.Core;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="UserModels.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the RegisterUserModel type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BinaryStudio.TaskManager.Web.Models
 {
-    public class RegisterNewUserModel
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+
+    /// <summary>
+    /// The register user model.
+    /// </summary>
+    public class RegisterUserModel
     {
         public int userId { get; set; }
 
@@ -33,12 +43,9 @@ namespace BinaryStudio.TaskManager.Web.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class UserAndAccountBinding
-    {
-        //public List<IEmployeeRepository> Employees { get; set; }           
-        //TODO: add list of accounts
-    }
-
+    /// <summary>
+    /// The change password model.
+    /// </summary>
     public class ChangePasswordModel
     {
         [Required]

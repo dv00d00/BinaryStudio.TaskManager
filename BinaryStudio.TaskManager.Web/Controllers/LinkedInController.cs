@@ -11,46 +11,76 @@ using ThirdPartySignup.Models;
 
 namespace ThirdPartySignup.Controllers
 {
+    using System.Globalization;
+
+    /// <summary>
+    /// Controller create feature login with LinkedIn account
+    /// </summary>
     public class LinkedInController : Controller
     {
-        private readonly LinkedInService _linkedInService;
-        private readonly UserProcessor _userProcessor;
+        /// <summary>
+        /// The linkedIn service
+        /// </summary>
+        private readonly LinkedInService linkedInService;
 
+        /// <summary>
+        /// The user processor.
+        /// </summary>
+        private readonly UserProcessor userProcessor;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LinkedInController"/> class.
+        /// </summary>
+        /// <param name="userProcessor">
+        /// The user processor.
+        /// </param>
+        /// <param name="linkedInService">
+        /// The linked in service.
+        /// </param>
         public LinkedInController(UserProcessor userProcessor, LinkedInService linkedInService)
         {
-            this._userProcessor = userProcessor;
-            this._linkedInService = linkedInService;
+            this.userProcessor = userProcessor;
+            this.linkedInService = linkedInService;
         }
 
-
+        /// <summary>
+        /// Logons the start.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult LogonStart()
         {
-            string authUrl =Request.Url.Scheme + "://" + Request.Url.Authority + "/LinkedIn/LogonEnd";
-            if(!_linkedInService.IsAutorized())
+            var authUrl = Request.Url.Scheme + "://" + Request.Url.Authority + "/LinkedIn/LogonEnd";
+            if (!this.linkedInService.IsAutorized())
             {
-                _linkedInService.BeginAuthorization(authUrl);
+                this.linkedInService.BeginAuthorization(authUrl);
             }
             else
             {
-                LinkedInProfile profile = _linkedInService.GetUserProfile();
-                User user = _userProcessor.GetUserByLinkedInId(profile.UserId);
+                LinkedInProfile profile = this.linkedInService.GetUserProfile();
+                User user = this.userProcessor.GetUserByLinkedInId(profile.UserId);
                 if (user != null)
                 {
                     FormsAuthentication.SetAuthCookie(user.UserName, false);
-                    return RedirectToAction("AllManagersWithTasks", "HumanTasks");
+                    return this.RedirectToAction("AllManagersWithTasks", "HumanTasks");
                 }
                 else
                 {
-                    return RedirectToAction("RegisterLinkedIn");
+                    return this.RedirectToAction("RegisterLinkedIn");
                 }
             }
             return null;
         }
 
+        /// <summary>
+        /// Logons the end.
+        /// </summary>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         public ActionResult LogonEnd()
         {
-            LinkedInProfile profile = _linkedInService.EndAuthorization();
-            User user = _userProcessor.GetUserByLinkedInId(profile.UserId);
+            LinkedInProfile profile = this.linkedInService.EndAuthorization();
+            User user = this.userProcessor.GetUserByLinkedInId(profile.UserId);
             if (user != null)
             {
                 FormsAuthentication.SetAuthCookie(user.UserName, false);
@@ -62,11 +92,15 @@ namespace ThirdPartySignup.Controllers
             }
         }
 
-
-
+        /// <summary>
+        /// The register linked in.
+        /// </summary>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         public ActionResult RegisterLinkedIn()
         {
-            LinkedInProfile profile = _linkedInService.GetUserProfile();
+            LinkedInProfile profile = this.linkedInService.GetUserProfile();
             RegisterLinkedInModel model = new RegisterLinkedInModel()
                                               {
                                                   FirstName = profile.Firstname,
@@ -77,29 +111,35 @@ namespace ThirdPartySignup.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// The register linked in.
+        /// </summary>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         [HttpPost]
         public ActionResult RegisterLinkedIn(RegisterLinkedInModel model)
-        {
-            
-
+        {            
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
-                bool createStatus = _userProcessor.CreateUser(model.UserName, "", model.Email,model.LinkedInId);
+                var createStatus = this.userProcessor.CreateUser(model.UserName, string.Empty, model.Email,model.LinkedInId);
                 if (createStatus)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName,true);
-                    return RedirectToAction("AllManagersWithTasks", "HumanTasks");
+                    return this.RedirectToAction("AllManagersWithTasks", "HumanTasks");
                 }
                 else
                 {
-                    ModelState.AddModelError("", createStatus.ToString());
+                    ModelState.AddModelError(string.Empty, false.ToString(CultureInfo.InvariantCulture));
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return this.View(model);
         }
-
     }
 }

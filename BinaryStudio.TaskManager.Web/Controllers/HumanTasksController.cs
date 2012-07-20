@@ -82,7 +82,7 @@
         {
             HumanTask humanTask = new HumanTask();
             humanTask.AssigneeId = (managerId != -1) ? managerId : (int?)null;
-            humanTask.CreatorId = userProcessor.GetCurrentLoginedEmployee(User.Identity.Name).Id;         
+            humanTask.CreatorId = userProcessor.GetCurrentLoginedUser(User.Identity.Name).Id;         
             humanTask.Created = DateTime.Now;
             return this.View(humanTask);
         }
