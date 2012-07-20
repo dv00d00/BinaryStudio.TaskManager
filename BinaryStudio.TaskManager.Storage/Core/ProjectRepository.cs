@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Logic.Core
@@ -14,16 +12,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public ProjectRepository(DataBaseContext dataBaseContext)
         {
             this.dataBaseContext = dataBaseContext;
-        }
-
-        public IEnumerable<Project> GetCreatorId(int creatorId)
-        {
-            return this.dataBaseContext.Projects.Where(it => it.CreatorId == creatorId).ToList();
-        }
-
-        public IList<Project> GetAllProjectsForUser(int userId)
-        {
-            return this.dataBaseContext.Projects.Where(it => it.ProjectsAndUsersId == userId).ToList();
         }
 
         public IEnumerable<Project> GetAll()

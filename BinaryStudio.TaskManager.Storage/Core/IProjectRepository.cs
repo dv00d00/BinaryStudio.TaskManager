@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Logic.Core
 {
     public interface IProjectRepository
     {
-        IEnumerable<Project> GetCreatorId(int creatorId);
-
-        IList<Project> GetAllProjectsForUser(int userId);
-
         IEnumerable<Project> GetAll();
 
         Project GetById(int projectId);
@@ -21,5 +14,5 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void Delete(int projectId);
 
         void Update(Project project);
-    } 
+    }
 }
