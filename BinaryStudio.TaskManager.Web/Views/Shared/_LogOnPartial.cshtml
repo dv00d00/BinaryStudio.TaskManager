@@ -1,13 +1,15 @@
-﻿@if(Request.IsAuthenticated) {
-    <text>
-        Добро пожаловать,  
-        <strong>
-            @User.Identity.Name
-        </strong>!
-        [ @Html.ActionLink("Выйти", "LogOff", "Account") ]
-    </text>  
-}
-else {
-    <br/>@:[ @Html.ActionLink("Войти", "LogOn", "Account") ]
-    <br/>@:[ @Html.ActionLink("Login with LinkedOn", "LogonStart", "LinkedIn") ]
-}
+﻿<div class="btn-group pull-right">
+    @if (Request.IsAuthenticated)
+    {        
+        <span class="label label-info">@User.Identity.Name
+        </span> 
+        <span>            
+            @Html.ActionLink("LogOff", "LogOff", "Account", null, new { @class = "btn btn-danger" })
+        </span>
+    }
+    else
+    {
+        @Html.ActionLink("LogIn", "LogOn", "Account", null, new { @class = "btn btn-primary" })            
+        @Html.ActionLink("LogIn with LinkedIn", "LogonStart", "LinkedIn", null, new { @class = "btn btn-primary" })                
+    }
+</div>

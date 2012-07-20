@@ -4,7 +4,7 @@
     ViewBag.Title = "Войти";
 }
 
-<h2>Войти</h2>
+<h2 class="well-large">Войти</h2>
 <p>
     Пожалуйста, введите своё имя и пароль.
 </p>
@@ -16,7 +16,7 @@
 
 @using (Html.BeginForm()) {
     <div>
-        <fieldset>
+        <fieldset class="container-fluid">
             <legend>Учетная запись</legend>
 
             <div class="editor-label">
@@ -34,14 +34,8 @@
                 @Html.PasswordFor(m => m.Password)
                 @Html.ValidationMessageFor(m => m.Password)
             </div>
-
-            <div class="editor-label">
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe)
-            </div>
-
             <p>
-                <input type="submit" value="Войти" />
+                <input type="submit" value="Войти" class="btn btn-primary"/>
             </p>
         </fieldset>
     </div>
