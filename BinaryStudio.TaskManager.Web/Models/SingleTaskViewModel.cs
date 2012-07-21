@@ -1,4 +1,5 @@
-﻿using BinaryStudio.TaskManager.Logic.Domain;
+﻿using System.Collections.Generic;
+using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Web.Models
 {
@@ -9,6 +10,8 @@ namespace BinaryStudio.TaskManager.Web.Models
         public string CreatorName { get; set; }
         
         public string AssigneeName { get; set; }
+
+        public IList<HumanTaskHistory> TaskHistories { get; set; }
 
     }
 }

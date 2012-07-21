@@ -22,5 +22,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void Delete(int humanTaskId);
 
         void Update(HumanTask humanTask);
+
+        IList<HumanTaskHistory> GetAllHistoryForTask(int taskId);
     }
 }

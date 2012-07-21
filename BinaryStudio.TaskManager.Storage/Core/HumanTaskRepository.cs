@@ -53,6 +53,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.dataBaseContext.SaveChanges();
         }
 
+        public IList<HumanTaskHistory> GetAllHistoryForTask(int taskId)
+        {
+            return this.dataBaseContext.HumanTaskHistories.Where(x => x.Task.Id == taskId).ToList();
+        }
+
         //TODO: refactor - why method return the same task, witch is in parameters??
         public HumanTask Add(HumanTask humanTask)
         {
