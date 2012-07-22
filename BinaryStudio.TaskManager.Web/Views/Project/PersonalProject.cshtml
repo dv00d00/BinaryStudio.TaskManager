@@ -1,4 +1,4 @@
-﻿@model BinaryStudio.TaskManager.Web.Models.ManagersViewModel
+﻿@model BinaryStudio.TaskManager.Web.Models.ProjectViewModel
 <script type="text/javascript">
     $(document).ready(function () {
         var senderId, taskId, receiverId;
@@ -38,7 +38,7 @@
 </p>
 
 <table align="left">
-    @if (Model.ManagerTasks.Count == 0)
+    @if (Model.UsersTasks.Count == 0)
     {
         <p>
             There is no any manager!
@@ -52,7 +52,7 @@
                 Actions
             </td>
             <td align="center" width="250">
-                <div class="manager">
+                <div >
                     Unassigned Tasks
                 </div>
             </td>
@@ -72,7 +72,5 @@
                 @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
             </div>
         }
-        <div class="sortableTasks" style="height: 300px">
-        </div>
     </td>
 </table>

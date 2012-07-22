@@ -6,12 +6,6 @@ div.sortableTasks a
     text-decoration: none;
 }
     
-
-div.manager{    
-    border:1px solid black;
-    width:200px;
-    height:30px;
-}
 div.task  
 {
     border-radius: 15px 0 0 0; 

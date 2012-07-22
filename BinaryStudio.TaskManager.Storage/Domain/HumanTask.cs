@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-
 namespace BinaryStudio.TaskManager.Logic.Domain
 {
+    using System;
+    using System.Collections.Generic;
+
     public class HumanTask
     {
         public int Id { get; set; }

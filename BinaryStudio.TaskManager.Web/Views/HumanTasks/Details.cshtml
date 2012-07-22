@@ -1,46 +1,38 @@
 @model BinaryStudio.TaskManager.Web.Models.SingleTaskViewModel
 @{
-    ViewBag.Title = "Подробности";
+    ViewBag.Title = "Task details";
 }
-<script src="../../Scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
-    <script src="../../Scripts/jquery-1.7.2.js" type="text/javascript"></script>  
-    <script src="../../Scripts/bootstrap.js" type="text/javascript"></script>
-    <script src="../../Scripts/bootstrap.min.js" type="text/javascript"></script>
-
-
-
-        <h2 class="well-large">
-    Подробности
+@*<script src="../../Scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
+<script src="../../Scripts/jquery-1.7.2.js" type="text/javascript"></script>
+<script src="../../Scripts/bootstrap.js" type="text/javascript"></script>
+<script src="../../Scripts/bootstrap.min.js" type="text/javascript"></script>*@
+<h2 class="well-large">
+    Details
 </h2>
-    @Html.Partial("TaskDetailsPartial")
+@Html.Partial("TaskDetailsPartial")
 <p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.HumanTask.Id }) |
-    @Html.ActionLink("Вернуться к списку всех задач", "AllTasks") |
-    @Html.ActionLink("Вернуться к Dashboard", "AllManagersWithTasks")
+<p></p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.HumanTask.Id }, new { @class = "btn" })
+    <span class="divider-vertical"></span>
+    @Html.ActionLink("Back in all tasks view", "AllTasks", null, new { @class = "btn" })
+    <span class="divider-vertical"></span>
+    @Html.ActionLink("Back Dashboard", "AllManagersWithTasks", null, new { @class = "btn" })
 </p>
-
-
-          
-    <legend>История изменений</legend>       
-@* <div class="accordion" id="accordion2"> *@
-
-    
-    @foreach(var task in Model.TaskHistories)
-    {
-        
+<legend>Change history</legend>@* <div class="accordion" id="accordion2"> *@
+@foreach (var task in Model.TaskHistories)
+{        
     <div class="accordion-group">
         <div class="accordion-heading">
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#@task.Id">
-                Date of change :  @task.ChangeDateTime 
+                Date of change : @task.ChangeDateTime
             </a>
         </div>
         <div id="@task.Id" class="accordion-body collapse">
             <div class="accordion-inner">
-              New Task Name :  @task.NewName
-              <br />
-              New Task Description : @task.NewDescription
+                New Task Name : @task.NewName
+                <br />
+                New Task Description : @task.NewDescription
             </div>
         </div>
     </div>
-    }
-   
+}

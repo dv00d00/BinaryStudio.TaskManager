@@ -109,9 +109,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [Authorize]
         public ActionResult PersonalProject()
         {
-            var model = new ManagersViewModel
+            var model = new ProjectViewModel
                 {
-                    ManagerTasks = new List<ManagerTasksViewModel>(),
+                    UsersTasks= new List<ManagerTasksViewModel>(),
                     UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList()
                 };
             var users = this.userRepository.GetAll();
@@ -122,7 +122,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                         Manager = user,
                         Tasks = this.taskProcessor.GetTasksList(user.Id).ToList()
                     };
-                model.ManagerTasks.Add(managerModel);
+                model.UsersTasks.Add(managerModel);
             }
 
             return this.View(model);

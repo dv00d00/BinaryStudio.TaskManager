@@ -126,7 +126,7 @@
     <Compile Include="Models\InMemoryTokenManager.cs" />
     <Compile Include="Models\RegisterLinkedInModel.cs" />
     <Compile Include="Models\SingleTaskViewModel.cs" />
-    <Compile Include="Models\ManagersViewModel.cs" />
+    <Compile Include="Models\ProjectViewModel.cs" />
     <Compile Include="Models\ManagerTasksViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -268,16 +268,13 @@
     <Content Include="Views\HumanTasks\AllTasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\HumanTasks\_CreateOrEdit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\HumanTasks\AllManagersWithTasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\HumanTasks\ManagerTasksTablePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\HumanTasks\ManagerDetails.cshtml" />
+    <Content Include="Views\HumanTasks\UserDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\HumanTasks\Create.cshtml" />
@@ -289,9 +286,6 @@
     <Content Include="Views\Reminder\Edit.cshtml" />
     <Content Include="Views\Reminder\Index.cshtml" />
     <Content Include="Views\Reminder\_CreateOrEdit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Admin\_CreateOrEditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.config">

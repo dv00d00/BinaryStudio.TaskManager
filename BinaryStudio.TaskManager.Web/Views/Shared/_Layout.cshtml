@@ -27,14 +27,14 @@
             <div class="container-fluid">
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
                     class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                </a><span class="brand">Task Manager </span>
+                </a><span class="brand"> Task Manager </span>
                 <div id="logindisplay">
                     @Html.Partial("_LogOnPartial")
                 </div>
                 <div class="nav-collapse">
                     <ul class="nav">
                         <li>
-                            @Html.ActionLink("Список напоминаний", "Index", "Reminder")
+                            @Html.ActionLink("All Reminders", "Index", "Reminder")
                         </li>
                         <li>
                             @Html.ActionLink("My project", "PersonalProject", "Project")
