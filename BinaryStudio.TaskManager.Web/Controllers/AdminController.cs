@@ -106,6 +106,5 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             return this.Json(this.userRepository.GetById(userId));
         }
-
     }
 }
