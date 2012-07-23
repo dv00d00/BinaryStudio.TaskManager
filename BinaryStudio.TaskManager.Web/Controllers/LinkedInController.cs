@@ -101,13 +101,13 @@ namespace ThirdPartySignup.Controllers
         public ActionResult RegisterLinkedIn()
         {
             LinkedInProfile profile = this.linkedInService.GetUserProfile();
-            RegisterLinkedInModel model = new RegisterLinkedInModel()
-                                              {
-                                                  FirstName = profile.Firstname,
-                                                  LastName = profile.Lastname,
-                                                  UserName = profile.Firstname+ " " + profile.Lastname,
-                                                  LinkedInId = profile.UserId
-                                              };
+            var model = new RegisterLinkedInModel
+            {
+                FirstName = profile.Firstname,
+                LastName = profile.Lastname,
+                UserName = profile.Firstname+ " " + profile.Lastname,
+                LinkedInId = profile.UserId
+            };
             return View(model);
         }
 
@@ -126,7 +126,7 @@ namespace ThirdPartySignup.Controllers
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
-                var createStatus = this.userProcessor.CreateUser(model.UserName, string.Empty, model.Email,model.LinkedInId);
+                var createStatus = this.userProcessor.CreateUser(model.UserName, string.Empty, model.Email, model.LinkedInId);
                 if (createStatus)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName,true);

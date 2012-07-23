@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AccountController.cs" company="">
-//   
-// </copyright>
-// <summary>
-//   Defines the AccountController type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace BinaryStudio.TaskManager.Web.Controllers
+﻿namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System.Web.Mvc;
     using System.Web.Security;
@@ -66,8 +57,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     this.userProcessor.LogOnUser(model.UserName, model.Password);
                     return this.RedirectToAction("AllManagersWithTasks", "HumanTasks");
                 }
-
             }
+
             ModelState.AddModelError(string.Empty, "Wrong registration data. Please, try again!");
             return this.View(model);
         }
