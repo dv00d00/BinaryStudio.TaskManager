@@ -111,7 +111,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             var model = new ProjectViewModel
                 {
-                    UsersTasks= new List<ManagerTasksViewModel>(),
+                    UsersTasks = new List<ManagerTasksViewModel>(),
                     UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList()
                 };
             var users = this.userRepository.GetAll();

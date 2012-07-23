@@ -1,9 +1,18 @@
-using BinaryStudio.TaskManager.Logic.Domain;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ManagerTasksViewModel.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   View model for the manager tasks view
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BinaryStudio.TaskManager.Web.Models
 {
     using System.Collections.Generic;
     using System.Drawing;
+
+    using BinaryStudio.TaskManager.Logic.Domain;
 
     /// <summary>
     /// View model for the manager tasks view
