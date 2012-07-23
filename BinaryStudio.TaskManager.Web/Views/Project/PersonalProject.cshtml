@@ -52,15 +52,26 @@
                 Actions
             </td>
             <td align="center" width="250">
-                <div >
+                <div class="manager">
                     Unassigned Tasks
                 </div>
             </td>
+            @foreach (var manager in Model.UsersTasks)
+                {
+                    <td align="center" width="250">
+                        <div>
+                            @Html.ActionLink(manager.Manager.UserName, null, new { managerId = manager.Manager.Id }, new { @class = "btn btn-info" })
+                        </div>
+                    </td>
+                }
         </tr>
     }
     <td align="center" valign="top" width="250">
         <div>
-            @Html.ActionLink("Create a new task", "CreateTask", new { userId = -1 }, new {@class="btn"})
+            @Html.ActionLink("Create a new task", "CreateTask", new { userId = -1 }, new { @class = "btn" })
+        </div>
+        <div class="editor-field">
+                 @Html.ActionLink("Invite a new user", "InviteUser", null, new { @class = "btn" })
         </div>
         
     </td>  
@@ -72,5 +83,20 @@
                 @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
             </div>
         }
+        <div class="sortableTasks" style="height: 300px">
+        </div>
     </td>
+    @foreach (var manager in Model.UsersTasks)
+    {        
+        <td id=@manager.Manager.Id.ToString() align = "center" valign="top" width="250" class="managerTasks">
+            @foreach (var task in manager.Tasks.OrderByDescending(x => x.Priority))
+            {
+                <div class="sortableTasks">
+                    @Html.Partial("ManagerTasksTablePartialView", task)
+                </div>
+            }
+            <div class="sortableTasks" style="height: 300px">
+            </div>
+        </td>
+    }
 </table>

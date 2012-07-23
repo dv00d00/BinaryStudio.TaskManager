@@ -30,6 +30,7 @@ namespace BinaryStudio.TaskManager.Web.NinjectModules
             this.Bind<IUserRepository>().To<UserRepository>();
             this.Bind<IHumanTaskRepository>().To<HumanTaskRepository>();
             this.Bind<IReminderRepository>().To<ReminderRepository>();
+            this.Bind<IProjectRepository>().To<ProjectRepository>();
             this.Bind<ICryptoProvider>().To<CryptoProvider>();
         }
     }

@@ -14,6 +14,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.dataBaseContext = dataBaseContext;
         }
 
+        //public IQueryable<Project> All
+        //{
+        //    get { return projectsAndUsers.Project; }
+        //}
+
         public IEnumerable<Project> GetAll()
         {
             return this.dataBaseContext.Projects.ToList();
@@ -22,6 +27,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public Project GetById(int projectId)
         {
             return this.dataBaseContext.Projects.Single(it => it.Id == projectId);
+        }
+
+        //public Project AddNewUserToProject(ProjectsAndUsers projectsAndUsers)
+        //{
+        //    this.dataBaseContext.Entry().
+        //}
+
+        public IEnumerable<ProjectsAndUsers> GetAllUsersInProject(int projectId)
+        {
+            return this.dataBaseContext.ProjectsAndUserses.Where(it => it.Project.Id == projectId).ToList();
         }
 
         public void Add(Project project)

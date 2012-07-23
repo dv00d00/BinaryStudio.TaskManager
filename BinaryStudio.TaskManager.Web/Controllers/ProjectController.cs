@@ -39,6 +39,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly IUserRepository userRepository;
 
         /// <summary>
+        /// The project repository.
+        /// </summary>
+        private readonly IProjectRepository projectRepository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ProjectController"/> class.         
         /// </summary>
         /// <param name="taskProcessor">
@@ -50,11 +55,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="userRepository">
         /// The user repository.
         /// </param>
-        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IUserRepository userRepository)
+        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IUserRepository userRepository, IProjectRepository projectRepository)
         {
             this.taskProcessor = taskProcessor;
             this.userProcessor = userProcessor;
             this.userRepository = userRepository;
+            this.projectRepository = projectRepository;
         }
 
         /// <summary>
@@ -109,17 +115,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [Authorize]
         public ActionResult PersonalProject()
         {
+            int projectId = 1;
             var model = new ProjectViewModel
                 {
                     UsersTasks= new List<ManagerTasksViewModel>(),
                     UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList()
                 };
-            var users = this.userRepository.GetAll();
+            var users = this.projectRepository.GetAllUsersInProject(projectId);
             foreach (var user in users)
             {
                 var managerModel = new ManagerTasksViewModel
                     {
-                        Manager = user,
+                        Manager = user.User,
                         Tasks = this.taskProcessor.GetTasksList(user.Id).ToList()
                     };
                 model.UsersTasks.Add(managerModel);
@@ -152,6 +159,34 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
             // make task unassigned
             this.taskProcessor.MoveTaskToUnassigned(taskId);
+        }
+
+        public ActionResult InviteUser()
+        {
+            return this.View(this.userRepository.GetAll());
+        }
+
+        public ActionResult AddUser(int id)
+        {
+            ProjectsAndUsers projectsAndUsers = new ProjectsAndUsers();
+            projectsAndUsers.User = this.userRepository.GetById(id);
+            //Project project = this.use
+            //projectsAndUsers.Project.ProjectUsers.Add(user);
+            //Project project = this.projectRepository.GetAllUsersInProject(id);
+            //return View(projectsAndUsers);
+            return this.RedirectToAction("PersonalProject");
+        }
+
+        [HttpPost]
+        public ActionResult AddUser(ProjectsAndUsers projectsAndUsers)
+        {
+            return this.RedirectToAction("PersonalProject");
+            //if (this.ModelState.IsValid)
+            //{
+            //    this.taskProcessor.CreateTask(humanTask);
+            //    return this.RedirectToAction("PersonalProject");
+            //}
+            //return this.View(projectsAndUsers);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
         private Mock<ITaskProcessor> taskProcessorMock;
         private Mock<IUserRepository> userRepositoryMock;
         private Mock<IUserProcessor> userProcessorMock;
+        private Mock<IProjectRepository> projectRepositoryMock;
         private ProjectController controller;
 
         [SetUp]
@@ -24,10 +25,12 @@ namespace BinaryStudio.TaskManager.Web.Tests
             taskProcessorMock = new Mock<ITaskProcessor>();
             userRepositoryMock = new Mock<IUserRepository>();
             userProcessorMock = new Mock<IUserProcessor>();
+            projectRepositoryMock = new Mock<IProjectRepository>();
             controller = new ProjectController(
                 this.taskProcessorMock.Object,
                 this.userProcessorMock.Object,
-                this.userRepositoryMock.Object
+                this.userRepositoryMock.Object,
+                this.projectRepositoryMock.Object
                 );
         }
 
