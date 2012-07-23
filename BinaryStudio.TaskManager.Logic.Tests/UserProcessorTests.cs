@@ -58,7 +58,6 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         [Test]
         public void Should_CreateNewUser_WhenThisUserNotExistingYet()
         {
-
             var userProcessor = new UserProcessor(this.userRepositoryMock.Object, this.cryptoProvider);
             const string Username = "username";
             const string Password = "password";
@@ -70,6 +69,6 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
             // assert
             Assert.AreEqual(result, true);            
-        }
+        }        
     }
 }

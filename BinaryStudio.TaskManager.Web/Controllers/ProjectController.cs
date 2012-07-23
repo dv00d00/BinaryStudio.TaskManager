@@ -119,7 +119,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             {
                 var managerModel = new ManagerTasksViewModel
                     {
-                        Manager = user,
+                        User = user,
                         Tasks = this.taskProcessor.GetTasksList(user.Id).ToList()
                     };
                 model.UsersTasks.Add(managerModel);

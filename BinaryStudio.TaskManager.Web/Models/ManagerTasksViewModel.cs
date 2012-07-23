@@ -16,7 +16,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         /// <value>
         /// The color of the manager.
         /// </value>
-        public Color ManagerColor { get; set; }
+        public Color UserColor { get; set; }
 
         /// <summary>
         /// Gets or sets the manager.
@@ -24,7 +24,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         /// <value>
         /// The manager.
         /// </value>
-        public User Manager { get; set; }
+        public User User { get; set; }
 
         /// <summary>
         /// Gets or sets the tasks.

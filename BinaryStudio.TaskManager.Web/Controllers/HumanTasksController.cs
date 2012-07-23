@@ -321,7 +321,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             foreach (var user in users)
             {
                 var managerModel = new ManagerTasksViewModel();
-                managerModel.Manager = user;
+                managerModel.User = user;
                 managerModel.Tasks = this.taskProcessor.GetTasksList(user.Id).ToList();
                 model.UsersTasks.Add(managerModel);
             }
