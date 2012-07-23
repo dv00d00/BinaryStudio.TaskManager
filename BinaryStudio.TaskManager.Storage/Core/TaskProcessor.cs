@@ -97,6 +97,19 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
+        /// Add new history for task
+        /// </summary>
+        /// <param name="newHumanTask">
+        /// Filled history for  task
+        /// </param>
+
+
+        public void AddHistory(HumanTaskHistory newHumanTask)
+        {
+            humanTaskRepository.AddHistory(newHumanTask);
+        }
+
+        /// <summary>
         /// The update current task with reminder.
         /// </summary>
         /// <param name="task">

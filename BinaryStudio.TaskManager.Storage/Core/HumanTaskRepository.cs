@@ -150,11 +150,17 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <returns>
         /// The BinaryStudio.TaskManager.Logic.Domain.HumanTask.
         /// </returns>
-        public HumanTask Add(HumanTask humanTask)
+        public void Add(HumanTask humanTask)
         {
             this.dataBaseContext.Entry(humanTask).State = EntityState.Added;
             this.dataBaseContext.SaveChanges();
-            return humanTask;
         }
+
+        public void AddHistory(HumanTaskHistory humanTaskHistory)
+        {
+            this.dataBaseContext.Entry(humanTaskHistory).State = EntityState.Added;
+            this.dataBaseContext.SaveChanges();
+        }
+
     }
 }

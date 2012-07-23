@@ -15,8 +15,10 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
         public DateTime ChangeDateTime { get; set; }
 
-        public int NewAssigneeId { get; set; }
+        public int? NewAssigneeId { get; set; }
 
         public virtual HumanTask Task { get; set; }
+
+        public int NewPriority { get; set; }
     }
 }
