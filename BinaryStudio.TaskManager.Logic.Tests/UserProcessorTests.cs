@@ -19,40 +19,57 @@ namespace BinaryStudio.TaskManager.Logic.Tests
     [TestFixture]
     public class UserProcessorTests
     {
+        private Mock<IUserRepository> userRepositoryMock;
+
+        private CryptoProvider cryptoProvider;
+
+
+        [SetUp]
+        private void Setup()
+        {
+            this.userRepositoryMock = new Mock<IUserRepository>();
+            this.cryptoProvider = new CryptoProvider();
+        }
+
         [Test]
         public void ShouldNot_CreateNewUser_WhenThisUserAlreadyExist()
-        {
-            var userRepositoryMock = new Mock<IUserRepository>();
-
-            var cryptoProvider = new CryptoProvider();
-
-            var userProcessor = new UserProcessor(userRepositoryMock.Object, cryptoProvider);
+        {            
+            var userProcessor = new UserProcessor(this.userRepositoryMock.Object, this.cryptoProvider);
             const string Username = "username";
             const string Password = "password";
             const string Email = "email@domain.dom";
-            const string LinkedinId = "linked_in_id";
             const int Id = 100500;
-            var salt = cryptoProvider.CreateSalt();
+            
             var user = new User
                 {
                     Id = Id,
                     UserName = Username,
-                    Email = Email,
-                    Credentials = new Credentials
-                        {
-                            Salt = salt,
-                            Passwordhash = cryptoProvider.CreateCryptoPassword(Password, salt),
-                            IsVerify = true
-                        },
-                    LinkedInId = LinkedinId
+                    Email = Email                    
                 };
-            userRepositoryMock.Setup(x => x.GetByName(Username)).Returns(user);              
+            this.userRepositoryMock.Setup(x => x.GetByName(Username)).Returns(user);
 
             // act
-            userProcessor.CreateUser(Username, Password, Email, LinkedinId);
+            var result = userProcessor.CreateUser(Username, Password, Email, string.Empty);
 
             // assert
-            userRepositoryMock.Verify(it => it.CreateUser(It.Is<User>(x => x.Id == Id)), Times.Never());
+            Assert.AreEqual(result, false);            
+        }
+
+        [Test]
+        public void Should_CreateNewUser_WhenThisUserNotExistingYet()
+        {
+
+            var userProcessor = new UserProcessor(this.userRepositoryMock.Object, this.cryptoProvider);
+            const string Username = "username";
+            const string Password = "password";
+            const string Email = "email@domain.dom";                        
+            this.userRepositoryMock.Setup(x => x.GetByName(Username)).Returns((User)null);
+
+            // act
+            var result = userProcessor.CreateUser(Username, Password, Email, string.Empty);
+
+            // assert
+            Assert.AreEqual(result, true);            
         }
     }
 }
