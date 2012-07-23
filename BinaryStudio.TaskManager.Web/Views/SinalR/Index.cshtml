@@ -1,18 +1,22 @@
 ﻿<br/>--------------------------
 <p><input type="button" value="send" id="btn"/></p>
 <p><input type="text" id="inpt"/></p>
-<p id="chatwindow">Messages</p>
+<p id="chattext">Messages</p>
 
-<script language="javascript" type="text/javascript">
-    var chat = $.connection.chat;
+<script type="text/javascript">
+    $(function () {
+        var chat = $.connection.chat;
 
-    chat.receive = function (message) {
-        var msg = $("#chatwindow").html() + "<br/>" + message;
-        $("#chatwindow").html(msg);
-    };
+        chat.Receive = function (msg) {
+            $("#chattext").html(msg);
+        };
 
-    $("#btn").click(function () {
-        chat.distribute($("#inpt").val());
+        $("#btn").click(function () {
+            var msg = $('#inpt').val();
+            chat.distribute(msg);
+        });
+
+        $.connection.hub.start();
     });
- </script>
+</script>
 

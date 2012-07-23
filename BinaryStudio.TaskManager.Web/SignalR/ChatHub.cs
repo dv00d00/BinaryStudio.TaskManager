@@ -2,9 +2,9 @@
 
 namespace BinaryStudio.TaskManager.Web.SignalR
 {
-    public class ChatHub : Hub
+    public class Chat : Hub
     {
-        public void Distribute(string message)
+        public void Distribute(dynamic message)
         {
             Clients.Receive(message);
         }
