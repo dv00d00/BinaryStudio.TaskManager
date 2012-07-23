@@ -189,6 +189,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     Task = humanTask,
                     NewPriority = humanTask.Priority,
                 });
+                
                 return this.RedirectToAction("AllManagersWithTasks");
             }
 
