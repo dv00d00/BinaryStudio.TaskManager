@@ -20,7 +20,7 @@
                 @user.UserName
             </td>
             <td>
-                @Html.ActionLink("Ivite", "AddUser", new { id = user.Id }, new { @class = "btn" }) 
+                @Html.ActionLink("Ivite", "AddUser", new { UserId = user.Id, ProjectId = 1 }, new { @class = "btn" }) 
             </td>
         </tr>
     }

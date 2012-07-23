@@ -166,27 +166,20 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.View(this.userRepository.GetAll());
         }
 
-        public ActionResult AddUser(int id)
+        public ActionResult AddUser(int UserId, int ProjectId)
         {
             ProjectsAndUsers projectsAndUsers = new ProjectsAndUsers();
-            projectsAndUsers.User = this.userRepository.GetById(id);
-            //Project project = this.use
-            //projectsAndUsers.Project.ProjectUsers.Add(user);
-            //Project project = this.projectRepository.GetAllUsersInProject(id);
-            //return View(projectsAndUsers);
+            projectsAndUsers.User = this.userRepository.GetById(UserId);
+            projectsAndUsers.Project = this.projectRepository.GetById(ProjectId);
             return this.RedirectToAction("PersonalProject");
         }
 
         [HttpPost]
         public ActionResult AddUser(ProjectsAndUsers projectsAndUsers)
         {
+            int projectId = 1;
+            this.projectRepository.GetAllUsersInProject(projectId);
             return this.RedirectToAction("PersonalProject");
-            //if (this.ModelState.IsValid)
-            //{
-            //    this.taskProcessor.CreateTask(humanTask);
-            //    return this.RedirectToAction("PersonalProject");
-            //}
-            //return this.View(projectsAndUsers);
         }
     }
 }

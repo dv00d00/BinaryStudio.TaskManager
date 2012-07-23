@@ -29,10 +29,12 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.dataBaseContext.Projects.Single(it => it.Id == projectId);
         }
 
-        //public Project AddNewUserToProject(ProjectsAndUsers projectsAndUsers)
-        //{
-        //    this.dataBaseContext.Entry().
-        //}
+        public ProjectsAndUsers AddNewUserToProject(ProjectsAndUsers projectsAndUsers)
+        {
+            this.dataBaseContext.Entry(projectsAndUsers).State = EntityState.Added;
+            this.dataBaseContext.SaveChanges();
+            return projectsAndUsers;
+        }
 
         public IEnumerable<ProjectsAndUsers> GetAllUsersInProject(int projectId)
         {
