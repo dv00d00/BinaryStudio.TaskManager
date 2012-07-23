@@ -16,8 +16,10 @@
     @Html.ActionLink("Back Dashboard", "AllManagersWithTasks", null, new { @class = "btn" })
 </p>
 <legend>Change history</legend>@* <div class="accordion" id="accordion2"> *@
-@foreach (var task in Model.TaskHistories)
-{        
+@if (Model.TaskHistories != null)
+{
+    foreach (var task in Model.TaskHistories)
+    {        
     <div class="accordion-group">
         <div class="accordion-heading">
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#@task.Id">
@@ -26,10 +28,16 @@
         </div>
         <div id="@task.Id" class="accordion-body collapse">
             <div class="accordion-inner">
-                New Task Name : @task.NewName
-                <br />
-                New Task Description : @task.NewDescription
+                <p>New Task Name : @task.NewName </p>
+                <p>New Task Description : @task.NewDescription</p>
+                <p>New Task Priority : @task.NewPriority </p>
+                
             </div>
         </div>
     </div>
+    }
+}
+else
+{
+    <legend>There is no history for this task</legend>
 }

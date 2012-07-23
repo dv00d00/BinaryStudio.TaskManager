@@ -14,6 +14,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         void UpdateTask(HumanTask task);
         void UpdateTask(HumanTask task, Reminder reminder);
+        void AddHistory(HumanTaskHistory newHumanTaskHistory);
 
         void DeleteTask(int taskId);
 
