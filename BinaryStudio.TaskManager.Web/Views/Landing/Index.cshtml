@@ -4,7 +4,7 @@
     ViewBag.Title = "Landing";
 }
 <link href="@Url.Content("~/Content/Landing.css")" rel="stylesheet" type="text/css" /> 
-<link href="@Url.Content("~/Content/jquery.fancybox.css.css")" rel="stylesheet" type="text/css" /> 
+<link href="@Url.Content("~/Content/jquery.fancybox.css")" rel="stylesheet" type="text/css" /> 
 
 <script src="@Url.Content("~/Scripts/jquery.fancybox.pack.js")" type="text/javascript"></script>
     
@@ -39,11 +39,38 @@
         <br><br><button class="yes"><strong>yes</strong></button>
             <button class="no">no</button>
     </div>
+     <div id='add_proj_box'>
+         <input type="text" autofocus="autofocus"></input>
+         <button class="add_proj_btn">Add Project</button>
+         <span class="add_cancel">Cancel</span>
+     </div>
 </div>
 <script type="text/javascript">
     $(function () {
-        $(".delete_btn").click(function (e) {
-            $("#delete_box").fancybox();
+        $(".fancybox").fancybox({
+            afterLoad: function () {
+                $(".no").click(function () {
+                    $.fancybox.close();
+                });
+            }
+        });
+
+        $(".new_project_btn").click(function () {
+            if ($(".newBox").length == 0) {
+                $(".project_list").append($("#add_proj_box").clone());
+                $("#add_proj_box").addClass("newBox");
+                $(".newBox").css("display", "block");
+            }
+            else {
+                $(".newBox").children("input").focus();
+            }
+            $(".add_cancel").click(function () {
+                $(".newBox").remove();
+            });
+            $(".add_proj_btn").click(function () {
+                var val = $(".newBox").children("input").val();
+                $(".newBox").remove();
+            });
         });
     })
 </script>

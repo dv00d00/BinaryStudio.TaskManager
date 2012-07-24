@@ -166,6 +166,7 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\plus_icon.gif" />
+    <Content Include="Content\jquery.fancybox.css" />
     <Content Include="Content\Landing.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -233,6 +234,7 @@
     <Content Include="Scripts\jquery-1.7.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.fancybox.pack.js" />
     <Content Include="Scripts\jquery.signalR.js" />
     <Content Include="Scripts\jquery.signalR-0.5.2.min.js" />
     <Content Include="Scripts\jquery.validate.min.js" />

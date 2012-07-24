@@ -8,11 +8,13 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
+using FizzWare.NBuilder.Dates;
 
 namespace BinaryStudio.TaskManager.Logic.Domain
 {
     using System.Data.Entity;
+    using FizzWare.NBuilder;
+    using FizzWare.NBuilder.Generators;
 
     using BinaryStudio.TaskManager.Logic.Core;
 
@@ -42,6 +44,10 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         /// </param>
         protected override void Seed(DataBaseContext context)
         {
+            var projectRepository = new ProjectRepository(context);
+            
+            //createProjects(projectRepository);
+            
             context.Roles.Add(new UserRoles { Id = 1, RoleName = "admin" });
             context.Roles.Add(new UserRoles { Id = 2, RoleName = "simpleEmployee" });
 
@@ -120,5 +126,22 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
             context.SaveChanges();
         }
+
+        //private void createProjects(ProjectRepository projectRepository)
+        //{
+        //    var projects = Builder<Project>.CreateListOfSize(10)
+        //        .Random(2)
+        //        .With(x => x.Created = GetRandom.DateTime(January.The1st, DateTime.Now))
+        //        .With(x => x.Name = GetRandom.Phrase(5))
+        //        .With(x => x.Description = GetRandom.Phrase(5))
+        //        .With(x => x.Id = 0)
+        //        .With(x => x.Creator = 1)
+        //    .Build();
+
+        //    foreach (var project in projects)
+        //    {
+        //        projectRepository.Update(project);
+        //    }
+        //}
     }
 }
