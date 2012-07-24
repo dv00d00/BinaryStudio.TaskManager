@@ -245,7 +245,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             model.HumanTask = task;
             model.CreatorName = creatorName;
             model.AssigneeName = assigneeName;
-            model.TaskHistories = taskProcessor.GetAllHistoryForTask(id).OrderByDescending(x => x.ChangeDateTime).ToList();
+            model.TaskHistories = this.taskProcessor.GetAllHistoryForTask(id).OrderByDescending(x => x.ChangeDateTime).ToList();
             return model;
         }
 

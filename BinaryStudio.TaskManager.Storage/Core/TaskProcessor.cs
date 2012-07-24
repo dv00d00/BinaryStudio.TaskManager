@@ -102,11 +102,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <param name="newHumanTask">
         /// Filled history for  task
         /// </param>
-
-
         public void AddHistory(HumanTaskHistory newHumanTask)
         {
-            humanTaskRepository.AddHistory(newHumanTask);
+            this.humanTaskRepository.AddHistory(newHumanTask);
         }
 
         /// <summary>
