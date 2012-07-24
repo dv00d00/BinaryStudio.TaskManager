@@ -126,13 +126,15 @@
         public void Should_MoveTaskWithId5ToUnassignedEmployees()
         {
             //arrange
-            const int taskId = 5, senderId = 1, receiverId = -1;
+            const int TaskId = 5;
+            const int SenderId = 1;
+            const int ReceiverId = -1;
 
             //act
-            this.controller.MoveTask(taskId, senderId, receiverId);
+            this.controller.MoveTask(TaskId, SenderId, ReceiverId);
 
             //assert
-            this.taskProcessorMock.Verify(x => x.MoveTaskToUnassigned(taskId), Times.AtLeastOnce());
+            this.taskProcessorMock.Verify(x => x.MoveTaskToUnassigned(TaskId), Times.AtLeastOnce());
         }
     }
 }

@@ -113,20 +113,19 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         }
 
-        /*[Test]
-        public void Should_AssignTask_WhenSuchEmployeeExists()
+        [Test]
+        public void Should_AssignTask_WhenSuchUserExists()
         {
-            //arrange
-            mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
-            mockEmployeeRepository.Setup(it => it.GetById(3)).Returns(new Employee { Id = 3 });
+            // arrange
+            this.mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
+            this.mockUserRepository.Setup(it => it.GetById(3)).Returns(new User { Id = 3 });            
 
-            //act
-            processorUnderTest.AssignTask(1, 3);
+            // act
+            this.processorUnderTest.MoveTask(1, 3);
 
             //assert
-            mockHumanTaskRepository.Verify(it => it.Update(
-                It.Is<HumanTask>(x => x.AssigneeId == 3)), Times.Once());
-        }*/
+            this.mockHumanTaskRepository.Verify(it => it.Update(It.Is<HumanTask>(x => x.AssigneeId == 3)), Times.Once());
+        }
 
         /*[Test]
         public void ShouldNot_AssignTask_WhenSuchEmployeeDoesNotExist()
