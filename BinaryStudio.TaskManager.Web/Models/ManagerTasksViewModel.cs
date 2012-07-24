@@ -1,9 +1,18 @@
-using BinaryStudio.TaskManager.Logic.Domain;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ManagerTasksViewModel.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   View model for the manager tasks view
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BinaryStudio.TaskManager.Web.Models
 {
     using System.Collections.Generic;
     using System.Drawing;
+
+    using BinaryStudio.TaskManager.Logic.Domain;
 
     /// <summary>
     /// View model for the manager tasks view
@@ -16,7 +25,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         /// <value>
         /// The color of the manager.
         /// </value>
-        public Color ManagerColor { get; set; }
+        public Color UserColor { get; set; }
 
         /// <summary>
         /// Gets or sets the manager.
@@ -24,7 +33,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         /// <value>
         /// The manager.
         /// </value>
-        public User Manager { get; set; }
+        public User User { get; set; }
 
         /// <summary>
         /// Gets or sets the tasks.

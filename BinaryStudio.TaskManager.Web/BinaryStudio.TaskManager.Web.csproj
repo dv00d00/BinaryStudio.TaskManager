@@ -131,12 +131,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HumanTasksController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\LandingController.cs" />
     <Compile Include="Controllers\LinkedInController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ReminderController.cs" />
     <Compile Include="Controllers\SinalRController.cs" />
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
+    <Compile Include="Models\LandingModel.cs" />
     <Compile Include="Models\RegisterLinkedInModel.cs" />
     <Compile Include="Models\SingleTaskViewModel.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />
@@ -160,8 +162,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Custom.css" />
     <Content Include="Content\datepicker.css" />
+    <Content Include="Content\images\delete-icon.gif" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\images\plus_icon.gif" />
+    <Content Include="Content\Landing.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -322,8 +327,9 @@
     <Content Include="Views\Project\ManagerTasksTablePartialView.cshtml" />
     <Content Include="Views\Project\PersonalProject.cshtml" />
     <Content Include="Views\Account\RegisterNewUser.cshtml" />
-    <Content Include="Views\Project\InviteUser.cshtml" />
+    <Content Include="Views\Project\InviteOrDeleteUser.cshtml" />
     <Content Include="Views\SinalR\Index.cshtml" />
+    <Content Include="Views\Landing\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />

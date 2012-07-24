@@ -7,8 +7,7 @@ using BinaryStudio.TaskManager.Logic.Domain;
 namespace BinaryStudio.TaskManager.Logic.Core
 {
     public interface IUserProcessor
-    {
-        void CreateUser(User user);
+    {        
 
         void SetRoleToUser(string userName, string roleName);
 

@@ -19,13 +19,13 @@
         public void Init()
         {
             this.taskProcessorMock = new Mock<ITaskProcessor>();
-            this.userRepositoryMock = new Mock<IUserRepository>();
             this.userProcessorMock = new Mock<IUserProcessor>();
+            this.userRepositoryMock = new Mock<IUserRepository>();
+
             this.controller = new HumanTasksController(
                 this.taskProcessorMock.Object,
                 this.userProcessorMock.Object,
-                this.userRepositoryMock.Object
-                );
+                this.userRepositoryMock.Object);
         }
 
         private Mock<IUserRepository> userRepositoryMock;

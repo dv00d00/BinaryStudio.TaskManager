@@ -1,4 +1,13 @@
-﻿namespace BinaryStudio.TaskManager.Web.Models
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ProjectViewModel.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the ProjectViewModel type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace BinaryStudio.TaskManager.Web.Models
 {
     using System.Collections.Generic;
 

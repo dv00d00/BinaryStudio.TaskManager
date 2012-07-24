@@ -30,13 +30,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.dataBaseContext.Projects.Single(it => it.Id == projectId);
         }
 
-        //public User AddNewUserToProject(User user)
-        //{
-        //    this.dataBaseContext.Entry(projectsAndUsers).State = EntityState.Added;
-        //    this.dataBaseContext.SaveChanges();
-        //    return user;
-        //}
-
         public IEnumerable<User> GetAllUsersInProject(int projectId)
         {
             return dataBaseContext.Projects.First(x => x.Id == projectId).ProjectUsers;
