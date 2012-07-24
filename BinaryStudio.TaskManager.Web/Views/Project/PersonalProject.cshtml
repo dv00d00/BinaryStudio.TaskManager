@@ -71,10 +71,7 @@
             @Html.ActionLink("Create a new task", "CreateTask", new { userId = -1 }, new { @class = "btn" })
         </div>
         <div class="editor-field">
-                 @Html.ActionLink("Invite a new user", "InviteOrDeleteUser", null, new { @class = "btn" })
-        </div>
-        <div>
-                 @Html.ActionLink("Delete the user", "InviteOrDeleteUser", null, new { @class = "btn" })
+            @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", null, new { @class = "btn" })
         </div>
     </td>  
     <!-- Create a column with tasks-->

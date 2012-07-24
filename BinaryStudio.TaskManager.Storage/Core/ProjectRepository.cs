@@ -15,11 +15,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.dataBaseContext = dataBaseContext;
         }
 
-        //public IQueryable<Project> All
-        //{
-        //    get { return projectsAndUsers.Project; }
-        //}
-
         public IEnumerable<Project> GetAll()
         {
             return this.dataBaseContext.Projects.ToList();
@@ -33,6 +28,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public IEnumerable<User> GetAllUsersInProject(int projectId)
         {
             return dataBaseContext.Projects.First(x => x.Id == projectId).ProjectUsers;
+        }
+
+        public IEnumerable<Project> GetAllProjectsForUser(int userId)
+        {
+            return dataBaseContext.Users.First(x => x.Id == userId).UserProjects;
         }
 
         public void Add(Project project)
