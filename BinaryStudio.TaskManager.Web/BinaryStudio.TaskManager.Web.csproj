@@ -135,7 +135,7 @@
     <Compile Include="Controllers\LinkedInController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ReminderController.cs" />
-    <Compile Include="Controllers\SinalRController.cs" />
+    <Compile Include="Controllers\SignalRController.cs" />
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
     <Compile Include="Models\LandingModel.cs" />
@@ -330,7 +330,7 @@
     <Content Include="Views\Project\PersonalProject.cshtml" />
     <Content Include="Views\Account\RegisterNewUser.cshtml" />
     <Content Include="Views\Project\InviteOrDeleteUser.cshtml" />
-    <Content Include="Views\SinalR\Index.cshtml" />
+    <Content Include="Views\SignalR\Index.cshtml" />
     <Content Include="Views\Landing\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

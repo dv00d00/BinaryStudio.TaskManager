@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
-    public class SinalRController : Controller
+    public class SignalRController : Controller
     {
         //
         // GET: /SinalR/
