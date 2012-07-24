@@ -178,7 +178,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             if (this.ModelState.IsValid)
             {
+
                 this.taskProcessor.UpdateTask(humanTask);
+                this.taskProcessor.AddHistory(new HumanTaskHistory
+                {
+                    NewDescription = humanTask.Description,
+                    ChangeDateTime = DateTime.Now,
+                    NewAssigneeId = humanTask.AssigneeId,
+                    NewName = humanTask.Name,
+                    Task = humanTask,
+                    NewPriority = humanTask.Priority,
+                });
+                
                 return this.RedirectToAction("AllManagersWithTasks");
             }
 
@@ -225,33 +236,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             model.HumanTask = task;
             model.CreatorName = creatorName;
             model.AssigneeName = assigneeName;
-            model.TaskHistories = new List<HumanTaskHistory>
-                {
-                    new HumanTaskHistory
-                        {
-                            ChangeDateTime = new DateTime(2012, 1, 20),
-                            NewName = "Ololo",
-                            NewDescription = "faaaaail",
-                            Id = 1,
-                        },
-                    new HumanTaskHistory
-                        {
-                            ChangeDateTime = new DateTime(2012, 5, 3),
-                            NewName = "Ololo",
-                            NewDescription = "faaaaail",
-                            Id = 2,
-                        },
-                    new HumanTaskHistory
-                        {
-                            ChangeDateTime = new DateTime(2012, 2, 1),
-                            NewName = "Ololo",
-                            NewDescription = "faaaaail",
-                            Id = 3,
-                        }
-                };
-            //model.TaskHistories= taskProcessor.GetAllHistoryForTask(id);
-
-            model.TaskHistories = model.TaskHistories.OrderBy(x => x.ChangeDateTime).ToList();
+            model.TaskHistories = taskProcessor.GetAllHistoryForTask(id).OrderByDescending(x => x.ChangeDateTime).ToList();
             return model;
         }
 

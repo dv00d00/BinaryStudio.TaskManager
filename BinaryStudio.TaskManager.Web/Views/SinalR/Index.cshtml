@@ -1,0 +1,22 @@
+﻿<br/>--------------------------
+<p><input type="button" value="send" id="btn"/></p>
+<p><input type="text" id="inpt"/></p>
+<p id="chattext">Messages</p>
+
+<script type="text/javascript">
+    $(function () {
+        var chat = $.connection.chat;
+
+        chat.Receive = function (msg) {
+            $("#chattext").html(msg);
+        };
+
+        $("#btn").click(function () {
+            var msg = $('#inpt').val();
+            chat.distribute(msg);
+        });
+
+        $.connection.hub.start();
+    });
+</script>
+

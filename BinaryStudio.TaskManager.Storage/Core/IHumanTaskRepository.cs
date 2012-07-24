@@ -17,12 +17,14 @@ namespace BinaryStudio.TaskManager.Logic.Core
         HumanTask GetById(int humanTaskId);
 
         //TODO: refactor - why method return the same task, witch is in parameters??
-        HumanTask Add(HumanTask humanTask);
+        void Add(HumanTask humanTask);
 
         void Delete(int humanTaskId);
 
         void Update(HumanTask humanTask);
 
         IList<HumanTaskHistory> GetAllHistoryForTask(int taskId);
+
+        void AddHistory(HumanTaskHistory humanTaskHistory);
     }
 }
