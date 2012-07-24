@@ -14,9 +14,6 @@
 <table>
     <tr>
         <th>
-            Сотрудник
-        </th>
-        <th>
             Задача
         </th>
         <th>
@@ -31,9 +28,6 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @(item.User == null ? "None" : item.User.UserName)
-        </td>
         <td>
             @(item.Task == null ? "None" : item.Task.Name)
         </td>

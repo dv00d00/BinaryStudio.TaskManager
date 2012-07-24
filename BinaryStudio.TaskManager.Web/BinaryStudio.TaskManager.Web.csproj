@@ -312,7 +312,7 @@
     <Content Include="Views\Reminder\Delete.cshtml" />
     <Content Include="Views\Reminder\Details.cshtml" />
     <Content Include="Views\Reminder\Edit.cshtml" />
-    <Content Include="Views\Reminder\Index.cshtml" />
+    <Content Include="Views\Reminder\MyReminders.cshtml" />
     <Content Include="Views\Reminder\_CreateOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>

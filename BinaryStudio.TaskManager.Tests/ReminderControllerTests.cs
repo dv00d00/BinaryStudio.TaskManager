@@ -45,7 +45,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
 
 
             // act
-            var result = reminderController.Index();
+            var result = reminderController.MyReminders();
             
             // assert
             result.AssertViewRendered().ForView("");

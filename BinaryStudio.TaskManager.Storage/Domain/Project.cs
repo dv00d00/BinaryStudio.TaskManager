@@ -16,6 +16,7 @@
         public virtual ICollection<HumanTask> Tasks { get; set; }
 
         //public virtual ICollection<User> Users { get; set; }
+        public int CreatorId { get; set; }
 
         public virtual User Creator { get; set; }
 
