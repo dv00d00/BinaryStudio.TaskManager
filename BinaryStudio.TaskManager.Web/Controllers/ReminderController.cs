@@ -1,10 +1,12 @@
+using System;
+
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System.Web.Mvc;
 
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
-
+    [Authorize]
     public class ReminderController : Controller
     {
         private readonly IReminderRepository reminderRepository;
@@ -33,9 +35,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.taskProcessor = taskProcessor;
         }
         
-        public ViewResult Index()
+        public ViewResult MyReminders()
         {
-            return this.View(this.reminderRepository.GetAll());
+            return this.View(this.reminderRepository.GetAllRemindersForUser(userRepository.GetByName(User.Identity.Name).Id));
         }
         
         public ViewResult Details(int id)
@@ -46,9 +48,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.PossibleTasks = this.taskProcessor.GetAllTasks();
-            ViewBag.PossibleEmployees = this.userRepository.GetAll();
-            return this.View();
+            ViewBag.PossibleTasks = this.taskProcessor.GetTasksList(userRepository.GetByName(User.Identity.Name).Id);
+            var reminder = new Reminder();
+            reminder.ReminderDate = DateTime.Now;
+            return this.View(reminder);
         }
         
         [HttpPost]
@@ -56,8 +59,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                reminder.UserId = userRepository.GetByName(User.Identity.Name).Id;
                 this.reminderRepository.Add(reminder);
-                return this.RedirectToAction("Index");
+                return this.RedirectToAction("MyReminders");
             }
             ViewBag.PossibleTasks = this.taskProcessor.GetAllTasks();
             ViewBag.PossibleEmployees = this.userRepository.GetAll();
@@ -78,8 +82,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                reminder.UserId = userRepository.GetByName(User.Identity.Name).Id;
                 this.reminderRepository.Update(reminder);
-                return this.RedirectToAction("Index");
+                return this.RedirectToAction("MyReminders");
             }
             ViewBag.PossibleTasks = this.taskProcessor.GetAllTasks();
             ViewBag.PossibleEmployees = this.userRepository.GetAll();
