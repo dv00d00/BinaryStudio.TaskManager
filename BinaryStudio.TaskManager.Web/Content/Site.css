@@ -128,6 +128,7 @@ footer,
 
 /* TAB MENU   
 ----------------------------------------------------------*/
+
 ul#menu {
     border-bottom: 1px #5C87B2 solid;
     padding: 0 0 2px;
@@ -244,7 +245,7 @@ table th {
 .error {
     color: Red;
 }
-
+/*
 nav, 
 #menucontainer {
     margin-top: 40px;
@@ -278,7 +279,7 @@ div#title {
     color: white;
     text-decoration: none;
 }
-
+*/
 /* Styles for validation helpers
 -----------------------------------------------------------*/
 .field-validation-error {

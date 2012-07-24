@@ -7,7 +7,7 @@
                     @User.Identity.Name
                 </span><span class="caret"></span>
             </div>
-            <ul class="dropdown-menu label">
+            <ul class="dropdown-menu">
                 <li>Profile </li>
                 <li class="divider"></li>
                 <li>
@@ -18,7 +18,18 @@
     }
     else
     {
-        @Html.ActionLink("LogIn", "LogOn", "Account", null, new { @class = "btn btn-primary" })            
-        @Html.ActionLink("LogIn with LinkedIn", "LogonStart", "LinkedIn", null, new { @class = "btn btn-primary" })                
+        @Html.ActionLink("LogIn", "LogOn", "Account", null, new { @class = "btn btn-primary" })        
+        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                @Html.ActionLink("LogIn with LinkedIn", "LogonStart", "LinkedIn")
+            </li>
+            @*<li class="divider"></li>*@
+        </ul>
+          
+                       
+        //
     }
 </div>
