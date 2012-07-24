@@ -12,7 +12,6 @@
     public class HumanTaskControllerTests
     {
         private Mock<ITaskProcessor> taskProcessorMock;
-        private Mock<IUserRepository> employeeRepository;
         private HumanTasksController controller;
         private Mock<IUserProcessor> userProcessorMock;
 
@@ -20,7 +19,7 @@
         public void Init()
         {
             this.taskProcessorMock = new Mock<ITaskProcessor>();
-            this.employeeRepository = new Mock<IUserRepository>();
+            this.userRepositoryMock = new Mock<IUserRepository>();
             this.userProcessorMock = new Mock<IUserProcessor>();
             this.controller = new HumanTasksController(
                 this.taskProcessorMock.Object,

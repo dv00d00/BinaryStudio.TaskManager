@@ -19,6 +19,6 @@
 
         public virtual User Creator { get; set; }
 
-        public ICollection<User> ProjectUsers { get; set; }
+        public virtual ICollection<User> ProjectUsers { get; set; }
     }
 }
