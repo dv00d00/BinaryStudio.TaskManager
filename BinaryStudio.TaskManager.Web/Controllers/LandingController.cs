@@ -18,10 +18,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             var model = new LandingModel();
                 model.Projects = new List<Project>{
-                new Project { Name = "1asdfsdf", Description = "1deasdasdasdas" },
-                new Project { Name = "2asdfsdf", Description = "2deasdasdasdas" },
-                new Project { Name = "3asdfsdf", Description = "3deasdasdasdas" },
-                new Project { Name = "4asdfsdf", Description = "4deasdasdasdas" }
+                new Project { Id = 1, Name = "1asdfsdf", Description = "1deasdasdasdas" },
+                new Project { Id = 2,  Name = "2asdfsdf", Description = "2deasdasdasdas" },
+                new Project { Id = 3,  Name = "3asdfsdf", Description = "3deasdasdasdas" },
+                new Project { Id = 4,  Name = "4asdfsdf", Description = "4deasdasdasdas" }
             };
             return this.View(model);
         }

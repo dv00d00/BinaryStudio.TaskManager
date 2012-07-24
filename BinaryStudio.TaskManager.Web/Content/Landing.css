@@ -76,3 +76,12 @@
     width: 300px;
     padding-top: 20px;
 }
+
+#add_proj_box {
+    display: none;
+}
+
+.add_cancel:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
