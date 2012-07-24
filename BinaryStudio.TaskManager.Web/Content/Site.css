@@ -179,7 +179,7 @@ ul#menu li.selected a {
 
 /* FORM LAYOUT ELEMENTS   
 ----------------------------------------------------------*/
-
+/*
 fieldset {
     border: 1px solid #ddd;
     padding: 0 1.4em 1.4em 1.4em;
@@ -190,7 +190,7 @@ legend {
     font-size: 1.2em;
     font-weight: bold;
 }
-
+*/
 textarea {
     min-height: 75px;
 }
