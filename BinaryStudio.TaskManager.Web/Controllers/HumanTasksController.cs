@@ -111,6 +111,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [Authorize]
         public ActionResult Create(int managerId)
         {
+            ViewBag.Priorities = taskProcessor.GetPrioritiesList();
+            IEnumerable<SelectListItem> listItems = taskProcessor.GetPrioritiesList();
             var humanTask = new HumanTask();
             humanTask.AssigneeId = (managerId != -1) ? managerId : (int?)null;
             humanTask.CreatorId = this.userProcessor.GetCurrentLoginedUser(User.Identity.Name).Id;

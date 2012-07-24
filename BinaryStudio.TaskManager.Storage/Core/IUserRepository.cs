@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Linq;
+
 namespace BinaryStudio.TaskManager.Logic.Core
 {
     using System.Collections.Generic;
@@ -82,5 +84,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The System.String.
         /// </returns>
         string GetRoleByName(string userName);
+
+        
     }
 }

@@ -162,5 +162,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.dataBaseContext.SaveChanges();
         }
 
+        public IQueryable<Priority> GetPriorities()
+        {
+            return this.dataBaseContext.Priorities;
+        }
     }
 }

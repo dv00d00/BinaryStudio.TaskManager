@@ -5,13 +5,15 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 {
     public class Priority
     {
+
         [Key]
         public Guid Id { get; set; }
 
         [Required]
-        public string Descriptio { get; set; }
+        public string Description { get; set; }
 
         [Required]
         public int Value { get; set; }
+        public int Value2 { get; set; }
     }
 }

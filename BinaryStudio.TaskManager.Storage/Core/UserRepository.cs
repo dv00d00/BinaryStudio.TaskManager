@@ -133,10 +133,5 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             return this.dataBaseContext.Roles.ToList().Where(it => it.Id == this.GetByName(userName).RoleId).Select(x => x.RoleName).First();
         }
-
-        public IQueryable<Priority> GetPriorities()
-        {
-            return this.dataBaseContext.Priorities;
-        }
     }
 }
