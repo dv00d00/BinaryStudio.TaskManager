@@ -135,6 +135,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             if (this.ModelState.IsValid)
             {
                 this.taskProcessor.CreateTask(humanTask);
+                this.taskProcessor.AddHistory(new HumanTaskHistory
+                {
+                    NewDescription = humanTask.Description,
+                    ChangeDateTime = DateTime.Now,
+                    NewAssigneeId = humanTask.AssigneeId,
+                    NewName = humanTask.Name,
+                    Task = humanTask,
+                    NewPriority = humanTask.Priority,
+                });
                 return this.RedirectToAction("AllManagersWithTasks");
             }
 
