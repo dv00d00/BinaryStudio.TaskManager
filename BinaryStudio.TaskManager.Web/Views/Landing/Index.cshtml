@@ -1,0 +1,34 @@
+﻿@model BinaryStudio.TaskManager.Web.Models.LandingModel
+
+@{
+    ViewBag.Title = "Landing";
+}
+<link href="@Url.Content("~/Content/Landing.css")" rel="stylesheet" type="text/css" /> 
+  
+<h2 class="well-large">
+    Landing
+</h2>
+<div class="row">
+    <div id="left_panel" class="span3">
+        <div id="project_groups">
+            <h3>Project Groups</h3>
+        </div>
+        <div id="projects">
+            <div class="new_project_btn">Add Project</div>
+            <h3>Projects</h3>
+            <ul class="project_list">
+                @foreach (var project in Model.Projects)
+                {
+                    <li data-id="@project.Id">
+                        <a href="#delete_box" class="fancybox"><div class="delete_btn"></div></a>
+                        <div class="project_name">@project.Name</div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div id="content" class="span6">
+    </div>
+    <div id="right_panel" class="span3">
+    </div>
+</div>

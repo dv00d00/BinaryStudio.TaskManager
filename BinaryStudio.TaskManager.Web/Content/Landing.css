@@ -1,0 +1,71 @@
+﻿/***************** Left panel ***********************/
+
+#project_groups {
+    border-bottom: 5px ridge #7199B7;
+}
+#projects 
+{
+    position: relative;
+}
+.project_list {
+    list-style: none;
+    padding: 0px;
+}
+
+.project_list li{
+    clear: left;
+    position: relative;
+}
+
+.project_list li .project_name{
+    padding: 5px 0;
+    padding-left: 10px;
+    float: left;
+    position: absolute;
+    width: 100%;
+    left: 20px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.project_list li .project_name:hover{
+    cursor: pointer;
+    background: #64AAD0;
+}
+
+.delete_btn 
+{
+    height: 14px;
+    width: 14px;
+    background: url('images/delete-icon.gif');
+    float: left;
+    margin: 5px 0;
+    margin-right: 20px;
+    cursor: pointer;
+    opacity: 0.3;
+}
+
+.delete_btn:hover {
+    opacity: 1;
+}
+
+.new_project_btn {
+    height: 16px;
+    position: absolute;
+    right: 20px;
+    padding: 10px;
+    padding-right: 20px;
+    background: url("images/plus_icon.gif") no-repeat;
+    background-position: right;
+    cursor: pointer;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+
+.new_project_btn:hover {
+    background: #A0F06C url("images/plus_icon.gif") no-repeat;
+    background-position: right;
+    
+}
