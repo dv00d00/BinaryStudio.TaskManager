@@ -26,7 +26,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         private UserProcessor userProcessor;
 
         [SetUp]
-        private void Setup()
+        public void Setup()
         {
             this.userRepositoryMock = new Mock<IUserRepository>();
             this.cryptoProvider = new CryptoProvider();
