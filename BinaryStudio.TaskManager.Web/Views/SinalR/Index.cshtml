@@ -8,7 +8,8 @@
         var chat = $.connection.chat;
 
         chat.Receive = function (msg) {
-            $("#chattext").html(msg);
+            var message = $("#chattext").html() + "<br/>" + msg;
+            $("#chattext").html(message);
         };
 
         $("#btn").click(function () {

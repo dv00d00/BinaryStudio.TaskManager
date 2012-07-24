@@ -2,7 +2,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var senderId, taskId, receiverId;
-
+        
+        var chat = $.connection.chat;
+        $.connection.hub.start();
+        
         $(".sortableTasks").sortable({
             start: function (event, ui) {
                 senderId = $(this).closest(".managerTasks").attr("id");
@@ -24,12 +27,16 @@
                     dataType: "json",
                     traditional: true
                 });
+
+                // signalr
+                chat.distribute("Task id:" +stringArray[0] +"moved to meneger:"+ stringArray[2]);
             },
             connectWith: $(".sortableTasks"),
             placeholder: "placeholderTask",
             cursor: 'move'
         });
         $(".sortableTasks").disableSelection();
+        
     });
 </script>
 <!-- Caption of the table "Managers-Tasks"-->
