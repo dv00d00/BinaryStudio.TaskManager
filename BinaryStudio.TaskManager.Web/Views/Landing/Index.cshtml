@@ -39,6 +39,11 @@
         <br><br><button class="yes"><strong>yes</strong></button>
             <button class="no">no</button>
     </div>
+     <div id='add_proj_box'>
+         <input type="text" autofocus="autofocus"></input>
+         <button class="add_proj_btn">Add Project</button>
+         <span class="add_cancel">Cancel</span>
+     </div>
 </div>
 <script type="text/javascript">
     $(function () {
@@ -48,6 +53,24 @@
                     $.fancybox.close();
                 });
             }
+        });
+
+        $(".new_project_btn").click(function () {
+            if ($(".newBox").length == 0) {
+                $(".project_list").append($("#add_proj_box").clone());
+                $("#add_proj_box").addClass("newBox");
+                $(".newBox").css("display", "block");
+            }
+            else {
+                $(".newBox").children("input").focus();
+            }
+            $(".add_cancel").click(function () {
+                $(".newBox").remove();
+            });
+            $(".add_proj_btn").click(function () {
+                var val = $(".newBox").children("input").val();
+                $(".newBox").remove();
+            });
         });
     })
 </script>
