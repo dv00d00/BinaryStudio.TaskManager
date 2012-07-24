@@ -69,3 +69,10 @@
     background-position: right;
     
 }
+/****************** Boxes ********************/
+
+#delete_box {
+    display: none;
+    width: 300px;
+    padding-top: 20px;
+}
