@@ -322,11 +322,8 @@
     <Content Include="Views\Project\ManagerTasksTablePartialView.cshtml" />
     <Content Include="Views\Project\PersonalProject.cshtml" />
     <Content Include="Views\Account\RegisterNewUser.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Project\InviteUser.cshtml" />
-=======
     <Content Include="Views\SinalR\Index.cshtml" />
->>>>>>> f5bc5a036f096f351e765c74aebaac69f213a1d9
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />

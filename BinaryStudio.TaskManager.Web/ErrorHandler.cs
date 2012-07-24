@@ -23,16 +23,23 @@ namespace BinaryStudio.TaskManager.Web
 
         public override void OnException(ExceptionContext filterContext)
         {
-            if (filterContext == null) return;
+            if (filterContext == null)
+            {
+                return;
+            }
 
-            var ex = filterContext.Exception ?? new Exception("No further information");
-            this.log.DebugException("EXCEPTION", ex);
+            var exception = filterContext.Exception ?? new Exception("No further information");
+            this.log.DebugException("EXCEPTION", exception);
 
-            filterContext.ExceptionHandled = true; 
+            filterContext.ExceptionHandled = true;
+
+            string controllerName = filterContext.RouteData.Values["Controller"] as string ?? string.Empty;
+            string actionName = filterContext.RouteData.Values["Action"] as string ?? string.Empty;
 
             filterContext.Result = new ViewResult
             {
-                ViewName = "~/Views/Shared/Error.cshtml"
+                ViewName = "~/Views/Shared/Error.cshtml",
+                ViewData = new ViewDataDictionary(new HandleErrorInfo(exception, controllerName, actionName))
             };    
         }
     }
