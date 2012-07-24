@@ -51,7 +51,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
-        /// The create user.
+        /// The create new user.
         /// </summary>
         /// <param name="user">
         /// The user.

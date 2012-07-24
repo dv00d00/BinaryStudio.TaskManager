@@ -46,7 +46,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
-        /// The create crypto password.
+        /// The create crypto password with salt.
         /// </summary>
         /// <param name="password">
         /// The password.
@@ -63,7 +63,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
-        /// The compare password.
+        /// The compare password with user password in database.
         /// </summary>
         /// <param name="passwordHash">
         /// The user password hash.

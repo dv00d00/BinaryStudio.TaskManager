@@ -135,6 +135,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             if (this.ModelState.IsValid)
             {
                 this.taskProcessor.CreateTask(humanTask);
+                this.taskProcessor.AddHistory(new HumanTaskHistory
+                {
+                    NewDescription = humanTask.Description,
+                    ChangeDateTime = DateTime.Now,
+                    NewAssigneeId = humanTask.AssigneeId,
+                    NewName = humanTask.Name,
+                    Task = humanTask,
+                    NewPriority = humanTask.Priority,
+                });
                 return this.RedirectToAction("AllManagersWithTasks");
             }
 
@@ -236,7 +245,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             model.HumanTask = task;
             model.CreatorName = creatorName;
             model.AssigneeName = assigneeName;
-            model.TaskHistories = taskProcessor.GetAllHistoryForTask(id).OrderByDescending(x => x.ChangeDateTime).ToList();
+            model.TaskHistories = this.taskProcessor.GetAllHistoryForTask(id).OrderByDescending(x => x.ChangeDateTime).ToList();
             return model;
         }
 
@@ -306,7 +315,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             foreach (var user in users)
             {
                 var managerModel = new ManagerTasksViewModel();
-                managerModel.Manager = user;
+                managerModel.User = user;
                 managerModel.Tasks = this.taskProcessor.GetTasksList(user.Id).ToList();
                 model.UsersTasks.Add(managerModel);
             }

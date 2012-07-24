@@ -46,18 +46,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
-        /// The create user.
-        /// </summary>
-        /// <param name="userAccount">
-        /// The user account.
-        /// </param>
-        public void CreateUser(User userAccount)
-        {
-            this.userRepository.CreateUser(userAccount);
-        }
-
-        /// <summary>
-        /// The create user.
+        /// The create new user.
         /// </summary>
         /// <param name="userName">
         /// The user name.

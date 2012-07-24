@@ -329,7 +329,7 @@
     <Content Include="Views\Project\ManagerTasksTablePartialView.cshtml" />
     <Content Include="Views\Project\PersonalProject.cshtml" />
     <Content Include="Views\Account\RegisterNewUser.cshtml" />
-    <Content Include="Views\Project\InviteUser.cshtml" />
+    <Content Include="Views\Project\InviteOrDeleteUser.cshtml" />
     <Content Include="Views\SinalR\Index.cshtml" />
     <Content Include="Views\Landing\Index.cshtml" />
   </ItemGroup>

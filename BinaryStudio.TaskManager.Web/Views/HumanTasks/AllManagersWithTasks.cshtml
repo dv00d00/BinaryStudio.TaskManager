@@ -2,7 +2,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var senderId, taskId, receiverId;
-
+        
+        var chat = $.connection.chat;
+        $.connection.hub.start();
+        
         $(".sortableTasks").sortable({
             start: function (event, ui) {
                 senderId = $(this).closest(".managerTasks").attr("id");
@@ -24,12 +27,16 @@
                     dataType: "json",
                     traditional: true
                 });
+
+                // signalr
+                chat.distribute("Task id:" +stringArray[0] +"moved to meneger:"+ stringArray[2]);
             },
             connectWith: $(".sortableTasks"),
             placeholder: "placeholderTask",
             cursor: 'move'
         });
         $(".sortableTasks").disableSelection();
+        
     });
 </script>
 <!-- Caption of the table "Managers-Tasks"-->
@@ -51,11 +58,11 @@
                         Unassigned tasks
                     </div>
                 </td>
-                @foreach (var manager in Model.UsersTasks)
+                @foreach (var task in Model.UsersTasks)
                 {
                     <td align="center" width="250">
                         <div>
-                            @Html.ActionLink(manager.Manager.UserName, "UserDetails", new { managerId = manager.Manager.Id }, new { @class = "btn btn-info" })
+                            @Html.ActionLink(task.User.UserName, "UserDetails", new { userId = task.User.Id }, new { @class = "btn btn-info" })
                         </div>
                     </td>
                 }
@@ -77,8 +84,8 @@
         </td>
         @foreach (var user in Model.UsersTasks)
         {        
-            <td id=@user.Manager.Id.ToString() align = "center" valign="top" width="250" class="managerTasks">
-                <div>@Html.ActionLink("Create task", "Create", new { managerId = user.Manager.Id }, new { @class = "btn" })</div>
+            <td id=@user.User.Id.ToString() align = "center" valign="top" width="250" class="managerTasks">
+                <div>@Html.ActionLink("Create task", "Create", new { managerId = user.User.Id }, new { @class = "btn" })</div>
                 @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
                 {
                     <div class="sortableTasks">

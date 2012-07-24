@@ -118,15 +118,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             int projectId = 1;
             var model = new ProjectViewModel
                 {
-                    UsersTasks= new List<ManagerTasksViewModel>(),
+                    UsersTasks = new List<ManagerTasksViewModel>(),
                     UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList()
                 };
-            var users = this.userRepository.GetAll();//this.projectRepository.GetAllUsersInProject(projectId);
+            var users = this.projectRepository.GetAllUsersInProject(projectId);//this.userRepository.GetAll();
             foreach (var user in users)
             {
                 var managerModel = new ManagerTasksViewModel
                     {
-                        Manager = user,
+                        User = user,
                         Tasks = this.taskProcessor.GetTasksList(user.Id).ToList()
                     };
                 model.UsersTasks.Add(managerModel);
@@ -161,7 +161,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.taskProcessor.MoveTaskToUnassigned(taskId);
         }
 
-        public ActionResult InviteUser()
+        public ActionResult InviteOrDeleteUser()
         {
             return this.View(this.userRepository.GetAll());
         }
@@ -179,11 +179,16 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.RedirectToAction("PersonalProject");
         }
 
-        [HttpPost]
-        public ActionResult AddUser(User user)
+        public ActionResult DeleteUser(int UserId, int ProjectId)
         {
-            int projectId = 1;
-            //this.projectRepository.GetAllUsersInProject(projectId);
+            var user = this.userRepository.GetById(UserId);
+            user.UserProjects.Remove(this.projectRepository.GetById(ProjectId));
+            this.userRepository.UpdateUser(user);
+
+            var project = this.projectRepository.GetById(ProjectId);
+            project.ProjectUsers.Remove(this.userRepository.GetById(UserId));
+            this.projectRepository.Update(project);
+
             return this.RedirectToAction("PersonalProject");
         }
     }

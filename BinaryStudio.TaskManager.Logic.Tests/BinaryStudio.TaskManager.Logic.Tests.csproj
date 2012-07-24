@@ -90,6 +90,7 @@
     <Compile Include="ReminderRepositoryTest.cs" />
     <Compile Include="ReminderSenderTests.cs" />
     <Compile Include="TaskProcessorTests.cs" />
+    <Compile Include="UserProcessorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
