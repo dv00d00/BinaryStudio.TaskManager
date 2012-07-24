@@ -9,9 +9,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         Project GetById(int projectId);
 
-        ProjectsAndUsers AddNewUserToProject(ProjectsAndUsers projectsAndUsers);
+        //User AddNewUserToProject(User user);
 
-        IEnumerable<ProjectsAndUsers> GetAllUsersInProject(int projectId);
+        IEnumerable<User> GetAllUsersInProject(int projectId);
 
         void Add(Project project);
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using BinaryStudio.TaskManager.Logic.Domain;
@@ -29,16 +30,18 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.dataBaseContext.Projects.Single(it => it.Id == projectId);
         }
 
-        public ProjectsAndUsers AddNewUserToProject(ProjectsAndUsers projectsAndUsers)
-        {
-            this.dataBaseContext.Entry(projectsAndUsers).State = EntityState.Added;
-            this.dataBaseContext.SaveChanges();
-            return projectsAndUsers;
-        }
+        //public User AddNewUserToProject(User user)
+        //{
+        //    this.dataBaseContext.Entry(projectsAndUsers).State = EntityState.Added;
+        //    this.dataBaseContext.SaveChanges();
+        //    return user;
+        //}
 
-        public IEnumerable<ProjectsAndUsers> GetAllUsersInProject(int projectId)
+        public IEnumerable<User> GetAllUsersInProject(int projectId)
         {
-            return this.dataBaseContext.ProjectsAndUserses.Where(it => it.Project.Id == projectId).ToList();
+            //return dataBaseContext.Projects.Where(x => x.Id == projectId).Select(it => it.ProjectUsers).ToList();
+            //return this.dataBaseContext.Users.Where(it => it.UserProjects.Where(x => x.Id == projectId)).ToList();
+            throw new NullReferenceException();
         }
 
         public void Add(Project project)

@@ -17,7 +17,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         /// <value>
         /// Just the name of the user.
         /// </value>
-        public string UserName { get; set; }        
+        public string UserName { get; set; }
 
         public string Email { get; set; }
         
@@ -26,7 +26,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         //TODO CLEAN ROLES FROM USERS
         public int RoleId { get; set; }
 
-        public virtual ICollection<ProjectsAndUsers> UserProjects { get; set; }
+        public virtual ICollection<Project> UserProjects { get; set; }
 
         public string LinkedInId { get; set; }
 
