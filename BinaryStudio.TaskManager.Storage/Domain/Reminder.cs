@@ -7,7 +7,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
     {
         public int Id { get; set; }
 
-        public int EmployeeID { get; set; }
+        public int UserId { get; set; }
 
         public virtual User User { get; set; }
 

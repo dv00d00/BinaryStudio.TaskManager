@@ -118,41 +118,12 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         {
             // arrange
             this.mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
-            this.mockUserRepository.Setup(it => it.GetById(3)).Returns(new User { Id = 3 });            
+            this.mockUserRepository.Setup(it => it.GetById(3)).Returns(new User { Id = 3 });
 
             // act
             this.processorUnderTest.MoveTask(1, 3);
 
-            //assert
-            this.mockHumanTaskRepository.Verify(it => it.Update(It.Is<HumanTask>(x => x.AssigneeId == 3)), Times.Once());
-        }
-
-        /*[Test]
-        public void ShouldNot_AssignTask_WhenSuchEmployeeDoesNotExist()
-        {
-            //arrange
-            mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
-            mockEmployeeRepository.Setup(it => it.GetById(4)).Throws<InvalidOperationException>();
-
-            //act
-            processorUnderTest.AssignTask(1, 4);
-
-            //assert
-            mockHumanTaskRepository.Verify(it => it.Update(
-                It.Is<HumanTask>(x => x.AssigneeId == 4)), Times.Never());
-
-        }*/
-        [Test]
-        public void Should_AssignTask_WhenSuchUserExists()
-        {
-            //arrange
-            this.mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
-            this.mockUserRepository.Setup(it => it.GetById(3)).Returns(new User { Id = 3 });
-
-            //act
-            this.processorUnderTest.MoveTask(1, 3);
-
-            //assert
+            // assert
             this.mockHumanTaskRepository.Verify(it => it.Update(It.Is<HumanTask>(x => x.AssigneeId == 3)), Times.Once());
         }
 

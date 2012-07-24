@@ -25,17 +25,17 @@ namespace BinaryStudio.TaskManager.Web.Tests
         [SetUp]
         public void SetUp()
         {
-            mockUserRepository = new Mock<IUserRepository>();
-            mockTaskProcessor = new Mock<ITaskProcessor>();
-            mockReminderRepository = new Mock<IReminderRepository>();
-            reminderController = new ReminderController(
-                mockReminderRepository.Object,
-                mockUserRepository.Object, 
-                mockTaskProcessor.Object);
+            this.mockUserRepository = new Mock<IUserRepository>();
+            this.mockTaskProcessor = new Mock<ITaskProcessor>();
+            this.mockReminderRepository = new Mock<IReminderRepository>();
+            this.reminderController = new ReminderController(
+                this.mockReminderRepository.Object,
+                this.mockUserRepository.Object, 
+                this.mockTaskProcessor.Object);
 
-            reminder = new Reminder { Id = taskId, Content = "asd", EmployeeID = 1 };
+            this.reminder = new Reminder { Id = taskId, Content = "asd", UserId = 1 };
             
-            mockReminderRepository.Setup(x => x.GetById(taskId)).Returns(reminder);
+            this.mockReminderRepository.Setup(x => x.GetById(taskId)).Returns(reminder);
         }
         
         [Test]

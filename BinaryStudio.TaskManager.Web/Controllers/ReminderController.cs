@@ -11,6 +11,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly ITaskProcessor taskProcessor;
         private readonly IUserRepository userRepository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReminderController"/> class.
+        /// </summary>
+        /// <param name="reminderRepository">
+        /// The reminder repository.
+        /// </param>
+        /// <param name="userRepository">
+        /// The user repository.
+        /// </param>
+        /// <param name="taskProcessor">
+        /// The task processor.
+        /// </param>
         public ReminderController(
             IReminderRepository reminderRepository,
             IUserRepository userRepository,
@@ -20,96 +32,72 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.userRepository = userRepository;
             this.taskProcessor = taskProcessor;
         }
-
-        //
-        // GET: /Reminder/
-
+        
         public ViewResult Index()
         {
-            return View(reminderRepository.GetAll());
+            return this.View(this.reminderRepository.GetAll());
         }
-
-        //
-        // GET: /Reminder/DetailsEmployee/5
-
+        
         public ViewResult Details(int id)
         {
-            Reminder reminder = reminderRepository.GetById(id);
-            return View(reminder);
+            var reminder = this.reminderRepository.GetById(id);
+            return this.View(reminder);
         }
-
-        //
-        // GET: /Reminder/Create
 
         public ActionResult Create()
         {
-            ViewBag.PossibleTasks = taskProcessor.GetAllTasks();
-            ViewBag.PossibleEmployees = userRepository.GetAll();
-            return View();
+            ViewBag.PossibleTasks = this.taskProcessor.GetAllTasks();
+            ViewBag.PossibleEmployees = this.userRepository.GetAll();
+            return this.View();
         }
-
-        //
-        // POST: /Reminder/Create
-
+        
         [HttpPost]
         public ActionResult Create(Reminder reminder)
         {
             if (ModelState.IsValid)
             {
-                reminderRepository.Add(reminder);
-                return RedirectToAction("Index");
+                this.reminderRepository.Add(reminder);
+                return this.RedirectToAction("Index");
             }
-            ViewBag.PossibleTasks = taskProcessor.GetAllTasks();
-            ViewBag.PossibleEmployees = userRepository.GetAll();
+            ViewBag.PossibleTasks = this.taskProcessor.GetAllTasks();
+            ViewBag.PossibleEmployees = this.userRepository.GetAll();
 
-            return View(reminder);
+            return this.View(reminder);
         }
-
-        //
-        // GET: /Reminder/EditEmployee/5
 
         public ActionResult Edit(int id)
         {
-            Reminder reminder = reminderRepository.GetById(id);
-            ViewBag.PossibleTasks = taskProcessor.GetAllTasks();
-            ViewBag.PossibleEmployees = userRepository.GetAll();
-            return View(reminder);
+            var reminder = this.reminderRepository.GetById(id);
+            ViewBag.PossibleTasks = this.taskProcessor.GetAllTasks();
+            ViewBag.PossibleEmployees = this.userRepository.GetAll();
+            return this.View(reminder);
         }
-
-        //
-        // POST: /Reminder/EditEmployee/5
-
+        
         [HttpPost]
         public ActionResult Edit(Reminder reminder)
         {
             if (ModelState.IsValid)
             {
-                reminderRepository.Update(reminder);
-                return RedirectToAction("Index");
+                this.reminderRepository.Update(reminder);
+                return this.RedirectToAction("Index");
             }
-            ViewBag.PossibleTasks = taskProcessor.GetAllTasks();
-            ViewBag.PossibleEmployees = userRepository.GetAll();
-            return View(reminder);
+            ViewBag.PossibleTasks = this.taskProcessor.GetAllTasks();
+            ViewBag.PossibleEmployees = this.userRepository.GetAll();
+            return this.View(reminder);
         }
-
-        //
-        // GET: /Reminder/DeleteEmployee/5
 
         public ActionResult Delete(int id)
         {
-            Reminder reminder = reminderRepository.GetById(id);
-            return View(reminder);
+            var reminder = this.reminderRepository.GetById(id);
+            return this.View(reminder);
         }
-
-        //
-        // POST: /Reminder/DeleteEmployee/5
-
+        
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Reminder reminder = reminderRepository.GetById(id);
-            reminderRepository.Delete(reminder);
-            return RedirectToAction("Index");
+            Reminder reminder = this.reminderRepository.GetById(id);
+            this.reminderRepository.Delete(reminder);
+            return this.RedirectToAction("Index");
         }
     }
 }

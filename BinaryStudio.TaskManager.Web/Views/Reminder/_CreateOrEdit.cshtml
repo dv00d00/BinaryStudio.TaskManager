@@ -24,19 +24,19 @@
 <div class="editor-field">
     @try
     {
-        @Html.DropDownListFor(model => model.EmployeeID, ((IEnumerable<BinaryStudio.TaskManager.Logic
+        @Html.DropDownListFor(model => model.UserId, ((IEnumerable<BinaryStudio.TaskManager.Logic
         .Domain.User>)ViewBag.PossibleEmployees).Select(option => new SelectListItem
         {
             Text = (option == null ? "None" : option.UserName), 
             Value = option.Id.ToString(),
-            Selected = (Model != null) && (option.Id == Model.EmployeeID)
+            Selected = (Model != null) && (option.Id == Model.UserId)
         }), "Выберите...")
     }
     catch (System.ArgumentNullException)
     {
        <input value="Empty Employee List" type="text" disabled="disabled"/>   
     }
-    @Html.ValidationMessageFor(model => model.EmployeeID)
+    @Html.ValidationMessageFor(model => model.UserId)
 </div>
 <div class="editor-label">
     Задание:

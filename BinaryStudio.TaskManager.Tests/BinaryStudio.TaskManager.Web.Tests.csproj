@@ -108,7 +108,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminControllerTests.cs" />
     <Compile Include="HumanTaskControllerTests.cs" />
     <Compile Include="ProjectControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
