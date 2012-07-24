@@ -2,13 +2,13 @@
 @{
     ViewBag.Title = "Task details";
 }
-
 <h2 class="well-large">
     Details
 </h2>
 @Html.Partial("TaskDetailsPartial")
 <p>
-<p></p>
+    <p>
+    </p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.HumanTask.Id }, new { @class = "btn" })
     <span class="divider-vertical"></span>
     @Html.ActionLink("Back in all tasks view", "AllTasks", null, new { @class = "btn" })
@@ -28,20 +28,19 @@
         </div>
         <div id="@task.Id" class="accordion-body collapse">
             <div class="accordion-inner">
-                <p>New Task Name : @task.NewName </p>
-                <p>New Task Description : @task.NewDescription</p>
-                <p>New Task Priority : @task.NewPriority </p>
-                
+                <p>
+                    New Task Name : @task.NewName
+                </p>
+                <p>
+                    New Task Description : @task.NewDescription</p>
+                <p>
+                    New Task Priority : @task.NewPriority
+                </p>
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-}
-=======
+
     }
-}
-else
-{
-    <legend>There is no history for this task</legend>
-}
->>>>>>> f5bc5a036f096f351e765c74aebaac69f213a1d9
+
+
+} else { <legend>There is no history for this task</legend>} 
