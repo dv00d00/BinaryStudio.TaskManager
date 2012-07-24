@@ -33,22 +33,32 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Priority)
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Priority)
-            @Html.ValidationMessageFor(model => model.Priority)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Finished)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Finished)
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Priority)
+        @Html.ValidationMessageFor(model => model.Priority)
+    </div>
+   
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Finished)
+            </div>
+        
+    <div class="editor-field">
+            <input class="text-box single-line" id="Finished" name="Finished" type="text" value='@(Model.Finished != null ? Model.Finished.Value.ToShortDateString().Replace('.', '-') : "06-09-2011")' />
+
+        @*Html.EditorFor(model => model.Finished)*@
+                
             @Html.ValidationMessageFor(model => model.Finished)
-        </div>
+        
+    </div>
+       
         <div class="editor-label">
             @Html.LabelFor(model => model.Closed)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Closed)
+            
+            <input class="text-box single-line" id="Closed" name="Closed" type="text" value='@(Model.Closed != null ? Model.Closed.Value.ToShortDateString().Replace('.', '-') : "06-09-2011")' />
+                @*Html.EditorFor(model => model.Closed) *@
+        
             @Html.ValidationMessageFor(model => model.Closed)
         </div>
         <p>
@@ -61,3 +71,18 @@
     <span class="divider-vertical"></span>
     @Html.ActionLink("Back in  Dashboard", "AllManagersWithTasks", null, new { @class = "btn" })
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+       
+        $('#Finished').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+        $('#Closed').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+         
+
+    });
+</script>

@@ -39,6 +39,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly IUserRepository userRepository;
 
         /// <summary>
+        /// The project repository.
+        /// </summary>
+        private readonly IProjectRepository projectRepository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ProjectController"/> class.         
         /// </summary>
         /// <param name="taskProcessor">
@@ -50,11 +55,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="userRepository">
         /// The user repository.
         /// </param>
-        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IUserRepository userRepository)
+        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IUserRepository userRepository, IProjectRepository projectRepository)
         {
             this.taskProcessor = taskProcessor;
             this.userProcessor = userProcessor;
             this.userRepository = userRepository;
+            this.projectRepository = projectRepository;
         }
 
         /// <summary>
@@ -109,12 +115,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [Authorize]
         public ActionResult PersonalProject()
         {
+            int projectId = 1;
             var model = new ProjectViewModel
                 {
                     UsersTasks = new List<ManagerTasksViewModel>(),
                     UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList()
                 };
-            var users = this.userRepository.GetAll();
+            var users = this.userRepository.GetAll();//this.projectRepository.GetAllUsersInProject(projectId);
             foreach (var user in users)
             {
                 var managerModel = new ManagerTasksViewModel
@@ -152,6 +159,32 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
             // make task unassigned
             this.taskProcessor.MoveTaskToUnassigned(taskId);
+        }
+
+        public ActionResult InviteUser()
+        {
+            return this.View(this.userRepository.GetAll());
+        }
+
+        public ActionResult AddUser(int UserId, int ProjectId)
+        {
+            var user = this.userRepository.GetById(UserId);
+            user.UserProjects.Add(this.projectRepository.GetById(ProjectId));
+            this.userRepository.UpdateUser(user);
+
+            var project = this.projectRepository.GetById(ProjectId);
+            project.ProjectUsers.Add(this.userRepository.GetById(UserId));
+            this.projectRepository.Update(project);
+            
+            return this.RedirectToAction("PersonalProject");
+        }
+
+        [HttpPost]
+        public ActionResult AddUser(User user)
+        {
+            int projectId = 1;
+            //this.projectRepository.GetAllUsersInProject(projectId);
+            return this.RedirectToAction("PersonalProject");
         }
     }
 }

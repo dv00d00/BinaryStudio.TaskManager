@@ -16,8 +16,6 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
         public DbSet<Project> Projects { get; set; }
 
-        public DbSet<ProjectsAndUsers> ProjectsAndUserses { get; set; }
-
         public DbSet<HumanTaskHistory> HumanTaskHistories { get; set; }
 
 
@@ -35,7 +33,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
             modelBuilder.Entity<Project>().HasRequired(it => it.Creator).WithMany(it => it.CreatedProjects).
                 HasForeignKey(it => it.CreatorId).WillCascadeOnDelete(false);
     */
-
+            modelBuilder.Entity<User>().HasMany(x => x.UserProjects).WithMany(x => x.ProjectUsers);
         }
     }
 }
