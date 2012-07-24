@@ -104,6 +104,7 @@ header h1, #header h1 {
 #main 
 {
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 30px 30px 15px 30px;
     background-color: #fff;
     border-radius: 4px 0 0 0;
