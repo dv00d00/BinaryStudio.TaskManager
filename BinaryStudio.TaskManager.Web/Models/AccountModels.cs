@@ -5,12 +5,12 @@ namespace BinaryStudio.TaskManager.Web.Models
     public class LogOnModel
     {
         [Required]
-        [Display(Name = "Пользователь")]
+        [Display(Name = "Username")]
         public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
     }
 }
