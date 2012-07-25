@@ -57,7 +57,7 @@
 
         $(".new_project_btn").click(function () {
             if ($(".newBox").length == 0) {
-                $(".project_list").append($("#add_proj_box").clone());
+                $(".project_list").prepend($("#add_proj_box").clone());
                 $("#add_proj_box").addClass("newBox");
                 $(".newBox").css("display", "block");
             }
