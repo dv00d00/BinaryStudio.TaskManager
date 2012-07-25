@@ -1,20 +1,31 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="ProjectProcessorTests.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace BinaryStudio.TaskManager.Logic.Tests
+﻿namespace BinaryStudio.TaskManager.Logic.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    using BinaryStudio.TaskManager.Logic.Core;
+    using BinaryStudio.TaskManager.Logic.Domain;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
+    using Moq;
+
+    using NUnit.Framework;
+
+    [TestFixture]
     public class ProjectProcessorTests
     {
+        [Test]
+        public void Should_CreateProject()
+        {
+            // arrange
+            var projectRepositoryMock = new Mock<IProjectRepository>();
+            var projectProcessor = new ProjectProcessor(projectRepositoryMock.Object);
+            const string Description = "simply description";
+            const string ProjectName = "NameProject";
+            const int UserId = 1;
+            var user = new User { Id = UserId };
+
+            // act
+            projectProcessor.CreateProject(user, ProjectName, Description);
+
+            // assert
+            projectRepositoryMock.Verify(x => x.Add(It.Is<Project>(it => it.CreatorId == UserId)), Times.Once());
+        }
     }
 }
