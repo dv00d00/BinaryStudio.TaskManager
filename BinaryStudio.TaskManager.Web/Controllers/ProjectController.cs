@@ -166,7 +166,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult InviteOrDeleteUser()
         {
-            return this.View(this.userRepository.GetAll());
+            return this.View(this.userProcessor.GetAllUsers());
         }
 
         public ActionResult AddUser(int UserId, int ProjectId)
