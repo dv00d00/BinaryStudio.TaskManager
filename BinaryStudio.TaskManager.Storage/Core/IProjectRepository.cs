@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using BinaryStudio.TaskManager.Logic.Domain;
-
-namespace BinaryStudio.TaskManager.Logic.Core
+﻿namespace BinaryStudio.TaskManager.Logic.Core
 {
+    using System.Collections.Generic;
+
+    using BinaryStudio.TaskManager.Logic.Domain;
+
     public interface IProjectRepository
     {
         IEnumerable<Project> GetAll();

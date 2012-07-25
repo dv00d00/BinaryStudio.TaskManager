@@ -44,16 +44,19 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly IProjectRepository projectRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProjectController"/> class.         
+        /// Initializes a new instance of the <see cref="ProjectController"/> class.
         /// </summary>
         /// <param name="taskProcessor">
         /// The task processor.
         /// </param>
         /// <param name="userProcessor">
-        /// The user processor. 
+        /// The user processor.
         /// </param>
         /// <param name="userRepository">
         /// The user repository.
+        /// </param>
+        /// <param name="projectRepository">
+        /// The project repository.
         /// </param>
         public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IUserRepository userRepository, IProjectRepository projectRepository)
         {

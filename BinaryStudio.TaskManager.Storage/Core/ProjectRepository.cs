@@ -1,15 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using BinaryStudio.TaskManager.Logic.Domain;
-
-namespace BinaryStudio.TaskManager.Logic.Core
+﻿namespace BinaryStudio.TaskManager.Logic.Core
 {
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
+
+    using BinaryStudio.TaskManager.Logic.Domain;
+
+    /// <summary>
+    /// The project repository.
+    /// </summary>
     public class ProjectRepository : IProjectRepository
     {
+        /// <summary>
+        /// The data base context.
+        /// </summary>
         private readonly DataBaseContext dataBaseContext;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectRepository"/> class.
+        /// </summary>
+        /// <param name="dataBaseContext">
+        /// The data base context.
+        /// </param>
         public ProjectRepository(DataBaseContext dataBaseContext)
         {
             this.dataBaseContext = dataBaseContext;
