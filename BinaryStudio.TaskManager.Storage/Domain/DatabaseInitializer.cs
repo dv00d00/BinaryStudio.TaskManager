@@ -52,19 +52,19 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                                        {
                                            Id = Guid.NewGuid(),
                                            Description = "Low",
-                                           Value = 1
+                                           Value = 0
                                        });
             context.Priorities.Add(new Priority
             {
                                             Id = Guid.NewGuid(),
                                             Description = "Middle",
-                                            Value = 2
+                                            Value = 1
             });
             context.Priorities.Add(new Priority
             {
                                             Id = Guid.NewGuid(),
                                             Description = "High",
-                                            Value = 3
+                                            Value = 2
             });
             context.SaveChanges();
         }

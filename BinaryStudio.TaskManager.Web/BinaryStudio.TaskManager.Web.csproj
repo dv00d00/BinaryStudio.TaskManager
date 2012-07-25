@@ -137,6 +137,7 @@
     <Compile Include="Controllers\ReminderController.cs" />
     <Compile Include="Controllers\SignalRController.cs" />
     <Compile Include="ErrorHandler.cs" />
+    <Compile Include="Models\CreateTaskViewModel.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
     <Compile Include="Models\LandingModel.cs" />
     <Compile Include="Models\RegisterLinkedInModel.cs" />
