@@ -109,12 +109,12 @@
             var users = this.projectProcessor.GetAllUsersInProject(ProjectId);
             foreach (var user in users)
             {
-                var managerModel = new ManagerTasksViewModel
+                var viewModel = new ManagerTasksViewModel
                     {
                         User = user,
                         Tasks = this.taskProcessor.GetTasksList(user.Id).ToList()
                     };
-                model.UsersTasks.Add(managerModel);
+                model.UsersTasks.Add(viewModel);
             }
 
             return this.View(model);
@@ -171,16 +171,7 @@
         /// </returns>
         public ActionResult InviteUserInProject(int userId, int projectId)
         {
-            this.projectProcessor.InviteUserInProject(userId, projectId);
-
-            //var user = this.userRepository.GetById(userId);
-            //user.UserProjects.Add(this.projectRepository.GetById(projectId));
-            //this.userRepository.UpdateUser(user);
-
-            //var project = this.projectRepository.GetById(projectId);
-            //project.ProjectUsers.Add(this.userRepository.GetById(userId));
-            //this.projectRepository.Update(project);
-            
+            this.projectProcessor.InviteUserInProject(userId, projectId);                        
             return this.RedirectToAction("PersonalProject");
         }
 

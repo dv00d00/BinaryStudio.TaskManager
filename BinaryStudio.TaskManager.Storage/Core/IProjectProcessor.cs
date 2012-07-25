@@ -49,5 +49,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.User].
         /// </returns>
         IEnumerable<User> GetAllUsersInProject(int projectId);
+
+        /// <summary>
+        /// The confirm invitation in project.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        void ConfirmInvitationInProject(Invitation invitation);
     }
 }
