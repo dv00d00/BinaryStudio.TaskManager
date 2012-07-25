@@ -102,6 +102,7 @@
     <Compile Include="Core\TaskProcessor.cs" />
     <Compile Include="Core\UserProcessor.cs" />
     <Compile Include="Domain\HumanTaskHistory.cs" />
+    <Compile Include="Domain\Invitation.cs" />
     <Compile Include="Domain\Permissions.cs" />
     <Compile Include="Domain\Priority.cs" />
     <Compile Include="Domain\Project.cs" />
