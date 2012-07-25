@@ -102,6 +102,28 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
+        /// The confirm invitation in project.
+        /// </summary>
+        /// <param name="invitation">
+        /// The invitation.
+        /// </param>
+        public void ConfirmInvitationInProject(Invitation invitation)
+        {
+            int userId = invitation.UserId;
+            int projectId = invitation.ProjectId;            
+
+            var user = this.userRepository.GetById(userId);
+            user.UserProjects.Add(this.projectRepository.GetById(projectId));
+            this.userRepository.UpdateUser(user);
+
+            var project = this.projectRepository.GetById(projectId);
+            project.ProjectUsers.Add(this.userRepository.GetById(userId));
+            this.projectRepository.Update(project);
+
+            invitation.IsInvitationConfirmed = true;
+        }
+
+        /// <summary>
         /// The create custom project with project name and description.
         /// </summary>
         /// <param name="user">
