@@ -43,6 +43,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </summary>
         private readonly IProjectRepository projectRepository;
 
+        private readonly IProjectProcessor projectProcessor;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectController"/> class.
         /// </summary>
@@ -58,8 +60,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="projectRepository">
         /// The project repository.
         /// </param>
-        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IUserRepository userRepository, IProjectRepository projectRepository)
+        /// <param name="projectProcessor"> </param>
+        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IUserRepository userRepository, IProjectRepository projectRepository, IProjectProcessor projectProcessor)
         {
+            this.projectProcessor = projectProcessor;
             this.taskProcessor = taskProcessor;
             this.userProcessor = userProcessor;
             this.userRepository = userRepository;
@@ -171,6 +175,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult AddUser(int UserId, int ProjectId)
         {
+            this.projectProcessor
             var user = this.userRepository.GetById(UserId);
             user.UserProjects.Add(this.projectRepository.GetById(ProjectId));
             this.userRepository.UpdateUser(user);
