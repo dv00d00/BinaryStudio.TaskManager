@@ -188,16 +188,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.RedirectToAction("PersonalProject");
         }
 
-        public ActionResult DeleteUser(int UserId, int ProjectId)
+        public ActionResult RemoveUserFromProject(int userId, int projectId)
         {
-            var user = this.userRepository.GetById(UserId);
-            user.UserProjects.Remove(this.projectRepository.GetById(ProjectId));
-            this.userRepository.UpdateUser(user);
-
-            var project = this.projectRepository.GetById(ProjectId);
-            project.ProjectUsers.Remove(this.userRepository.GetById(UserId));
-            this.projectRepository.Update(project);
-
+            this.projectProcessor.RemoveUserFromProject(userId, projectId);
             return this.RedirectToAction("PersonalProject");
         }
     }

@@ -14,11 +14,15 @@
 
         private ProjectProcessor projectProcessor;
 
+        private Mock<IUserRepository> userRepositoryMock;
+
+
         [SetUp]
         public void Setup()
         {
             this.projectRepositoryMock = new Mock<IProjectRepository>();
-            this.projectProcessor = new ProjectProcessor(this.projectRepositoryMock.Object);
+            this.userRepositoryMock = new Mock<IUserRepository>();
+            this.projectProcessor = new ProjectProcessor(this.projectRepositoryMock.Object, this.userRepositoryMock.Object);
         }
 
         [Test]
@@ -48,6 +52,6 @@
 
             // assert
             this.projectRepositoryMock.Verify(x => x.CreateInvitationUserInProject(It.Is<Invitation>(it => it.UserId == UserId)), Times.Once());
-        }
+        }                
     }
 }

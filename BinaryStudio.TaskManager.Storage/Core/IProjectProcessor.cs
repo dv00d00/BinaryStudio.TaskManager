@@ -7,5 +7,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void CreateDefaultProject(User user);
 
         void InviteUserInProject(int userId, int projectId);
+
+        void RemoveUserFromProject(int userId, int projectId);
     }
 }
