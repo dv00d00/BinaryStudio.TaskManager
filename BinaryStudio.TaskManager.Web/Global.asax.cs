@@ -1,15 +1,12 @@
-﻿using System.Data.Entity;
-using BinaryStudio.TaskManager.Logic.Core;
-using BinaryStudio.TaskManager.Logic.Domain;
-
-namespace BinaryStudio.TaskManager.Web
+﻿namespace BinaryStudio.TaskManager.Web
 {
-    using System;
+    using System.Data.Entity;
     using System.Reflection;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using System.Web.Security;
 
-    using NLog;
+    using BinaryStudio.TaskManager.Logic.Domain;
 
     using Ninject;
     using Ninject.Web.Common;
@@ -47,6 +44,7 @@ namespace BinaryStudio.TaskManager.Web
         {
             base.OnApplicationStarted();
 
+            FormsAuthentication.SignOut();
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);

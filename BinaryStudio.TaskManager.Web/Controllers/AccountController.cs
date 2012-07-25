@@ -103,8 +103,7 @@
             if (ModelState.IsValid)
             {
                 if (this.userProcessor.LogOnUser(model.UserName, model.Password))
-                {
-                    this.userProcessor.SetRoleToUserFromDB(model.UserName);
+                {                    
                     FormsAuthentication.SetAuthCookie(model.UserName, true);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
