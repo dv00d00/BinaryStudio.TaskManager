@@ -109,8 +109,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// </param>
         public void ConfirmInvitationInProject(Invitation invitation)
         {
-            int userId = invitation.UserId;
-            int projectId = invitation.ProjectId;            
+            var userId = invitation.UserId;
+            var projectId = invitation.ProjectId;            
 
             var user = this.userRepository.GetById(userId);
             user.UserProjects.Add(this.projectRepository.GetById(projectId));
@@ -121,6 +121,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.projectRepository.Update(project);
 
             invitation.IsInvitationConfirmed = true;
+            this.projectRepository.UpdateInvitation(invitation);
         }
 
         /// <summary>

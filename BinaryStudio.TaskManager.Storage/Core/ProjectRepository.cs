@@ -71,5 +71,11 @@
             this.dataBaseContext.Entry(invitation).State = EntityState.Added;
             this.dataBaseContext.SaveChanges();
         }
+
+        public void UpdateInvitation(Invitation invitation)
+        {
+            this.dataBaseContext.Entry(invitation).State = EntityState.Modified;
+            this.dataBaseContext.SaveChanges();
+        }
     }
 }
