@@ -64,7 +64,7 @@
                 if (this.userProcessor.CreateUser(model.UserName, model.Password, model.Email, string.Empty))
                 {
                     this.userProcessor.LogOnUser(model.UserName, model.Password);
-                    var user = userProcessor.GetCurrentLoginedUser(model.UserName);
+                    var user = this.userProcessor.GetCurrentLoginedUser(model.UserName);
                     this.projectProcessor.CreateDefaultProject(user);
                     return this.RedirectToAction("AllManagersWithTasks", "HumanTasks");
                 }

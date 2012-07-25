@@ -112,12 +112,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult Create(int managerId)
         {
             var createModel = new CreateTaskViewModel
-                                  {
-                                      Priorities = taskProcessor.GetPrioritiesList(),
-                                      AssigneeId = (managerId != -1) ? managerId : (int?) null,
-                                      CreatorId = this.userProcessor.GetCurrentLoginedUser(User.Identity.Name).Id,
-                                      Created = DateTime.Now
-                                  };
+                {
+                    Priorities = this.taskProcessor.GetPrioritiesList().OrderBy(x => x.Value),
+                    AssigneeId = (managerId != -1) ? managerId : (int?)null,
+                    CreatorId = this.userProcessor.GetCurrentLoginedUser(User.Identity.Name).Id,
+                    Created = DateTime.Now
+                };
             return this.View(createModel);
         }
 
@@ -214,7 +214,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     Task = humanTask,
                     NewPriority = humanTask.Priority,
                 });
-                
+
                 return this.RedirectToAction("AllManagersWithTasks");
             }
 
