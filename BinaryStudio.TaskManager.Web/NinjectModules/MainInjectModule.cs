@@ -33,6 +33,7 @@ namespace BinaryStudio.TaskManager.Web.NinjectModules
             this.Bind<IReminderRepository>().To<ReminderRepository>().InRequestScope();
             this.Bind<IProjectRepository>().To<ProjectRepository>().InRequestScope();
             this.Bind<ICryptoProvider>().To<CryptoProvider>().InRequestScope();
+            this.Bind<IProjectProcessor>().To<ProjectProcessor>().InRequestScope();
         }
     }
 }
