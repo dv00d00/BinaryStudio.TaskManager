@@ -1,9 +1,13 @@
 namespace BinaryStudio.TaskManager.Logic.Core
 {
     using System;
+    using System.Collections.Generic;
 
     using BinaryStudio.TaskManager.Logic.Domain;
 
+    /// <summary>
+    /// The project processor.
+    /// </summary>
     public class ProjectProcessor : IProjectProcessor
     {
         /// <summary>
@@ -14,13 +18,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <summary>
         /// The user repository.
         /// </summary>
-        private IUserRepository userRepository;
+        private readonly IUserRepository userRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectProcessor"/> class.
         /// </summary>
         /// <param name="projectRepository">
         /// The project repository.
+        /// </param>
+        /// <param name="userRepository">
+        /// The user Repository.
         /// </param>
         public ProjectProcessor(IProjectRepository projectRepository, IUserRepository userRepository)
         {
@@ -32,7 +39,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The create default project.
         /// </summary>
         /// <param name="user">
-        /// The user.
+        /// The current user.
         /// </param>
         public void CreateDefaultProject(User user)
         {
@@ -81,10 +88,24 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
-        /// The create custom project.
+        /// The get all users in project.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.User].
+        /// </returns>
+        public IEnumerable<User> GetAllUsersInProject(int projectId)
+        {            
+            return this.projectRepository.GetAllUsersInProject(projectId);
+        }
+
+        /// <summary>
+        /// The create custom project with project name and description.
         /// </summary>
         /// <param name="user">
-        /// The user.
+        /// The user tied to project.
         /// </param>
         /// <param name="projectName">
         /// The project name.

@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BinaryStudio.TaskManager.Logic.Core;
-using BinaryStudio.TaskManager.Logic.Domain;
-using BinaryStudio.TaskManager.Web.Controllers;
-using Moq;
-using NUnit.Framework;
-
-namespace BinaryStudio.TaskManager.Web.Tests
+﻿namespace BinaryStudio.TaskManager.Web.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    using BinaryStudio.TaskManager.Logic.Core;
+    using BinaryStudio.TaskManager.Logic.Domain;
+    using BinaryStudio.TaskManager.Web.Controllers;
+
+    using Moq;
+
+    using NUnit.Framework;
+
     [TestFixture]
     public class ProjectControllerTests
     {
         private Mock<ITaskProcessor> taskProcessorMock;
-        private Mock<IUserRepository> userRepositoryMock;
+
         private Mock<IUserProcessor> userProcessorMock;
-        private Mock<IProjectRepository> projectRepositoryMock;
+
         private ProjectController controller;
         private Mock<IProjectProcessor> projectProcessorMock;
 
@@ -24,16 +27,10 @@ namespace BinaryStudio.TaskManager.Web.Tests
         public void Init()
         {
             this.taskProcessorMock = new Mock<ITaskProcessor>();
-            this.userRepositoryMock = new Mock<IUserRepository>();
             this.userProcessorMock = new Mock<IUserProcessor>();
-            this.projectRepositoryMock = new Mock<IProjectRepository>();
             this.projectProcessorMock = new Mock<IProjectProcessor>();
             this.controller = new ProjectController(
-                this.taskProcessorMock.Object,
-                this.userProcessorMock.Object,
-                this.userRepositoryMock.Object,
-                this.projectRepositoryMock.Object,
-                this.projectProcessorMock.Object);
+                this.taskProcessorMock.Object, this.userProcessorMock.Object, this.projectProcessorMock.Object);
         }
 
         [Test]
@@ -53,7 +50,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.controller.InviteUserInProject(1, 1);
 
             // assert
-            this.projectProcessorMock.Verify(x =>x.InviteUserInProject(1, 1));
+            this.projectProcessorMock.Verify(x => x.InviteUserInProject(1, 1));
         }
     }
 }
