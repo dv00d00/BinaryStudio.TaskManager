@@ -19,27 +19,27 @@ namespace BinaryStudio.TaskManager.Web.Models
     {
         public int userId { get; set; }
 
-        [Required(ErrorMessage = "Имя пользователя обязательно к заполнению!")]
-        [Display(Name = "Имя пользователя")]
-        [MaxLength(50, ErrorMessage = "Имя пользователя не может содержать более 50 символов!")]
+        [Required(ErrorMessage = "Username is required!")]
+        [Display(Name = "User name")]
+        [MaxLength(50, ErrorMessage = "Username maximum length is 50 symbols!")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Email обязателен к заполнению!")]
-        [Display(Name = "Email:")]        
+        [Required(ErrorMessage = "Email is required!")]
+        [Display(Name = "Email")]        
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
 
-        [Required(ErrorMessage = "Пароль обязателен к заполнению!")]
-        [Display(Name = "Пароль:")]
+        [Required(ErrorMessage = "Password is required!")]
+        [Display(Name = "Password")]
         [DataType(DataType.Password)]
-        [StringLength(100, ErrorMessage = "Пароль должен иметь минимальную длину 6 символов.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} maximum length is 100 symbols and minimum length is {2} symbol.", MinimumLength = 1)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Подтверждение пароля обязательно к заполнению!")]
-        [Display(Name = "Подтверждение пароля:")]
+        [Required(ErrorMessage = "Confirm password is required!")]
+        [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Введённые пароли не совпадают!")]
+        [Compare("Password", ErrorMessage = "The passwords do not match!")]
         public string ConfirmPassword { get; set; }
     }
 

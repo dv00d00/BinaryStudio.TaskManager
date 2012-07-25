@@ -14,5 +14,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
         IEnumerable<Reminder> Get(Func<Reminder> selector);
         IEnumerable<Reminder> GetReminderList(DateTime dateTime);
         IEnumerable<Reminder> GetAll();
+        IEnumerable<Reminder> GetAllRemindersForUser(int userId);
     }
 }

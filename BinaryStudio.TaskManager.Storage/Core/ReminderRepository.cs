@@ -56,5 +56,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             return this.dataBaseContext.Reminders.ToList();
         }
+
+        public IEnumerable<Reminder> GetAllRemindersForUser(int userId)
+        {
+            return this.dataBaseContext.Reminders.Where(it => it.User.Id == userId);
+        }
     }
 }
