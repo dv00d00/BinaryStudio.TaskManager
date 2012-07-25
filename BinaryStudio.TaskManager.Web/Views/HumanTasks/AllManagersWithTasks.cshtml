@@ -2,10 +2,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var senderId, taskId, receiverId;
-        
-        var chat = $.connection.chat;
-        $.connection.hub.start();
-        
+
+        var taskHub = $.connection.taskHub;
+        $.connection.hub.start(function () {
+            taskHub.join("@User.Identity.Name.ToString()");
+        });
+
         $(".sortableTasks").sortable({
             start: function (event, ui) {
                 senderId = $(this).closest(".managerTasks").attr("id");
@@ -29,14 +31,13 @@
                 });
 
                 // signalr
-                chat.distribute("Task id:" +stringArray[0] +"moved to meneger:"+ stringArray[2]);
+                taskHub.moveTask(taskId, receiverId);
             },
             connectWith: $(".sortableTasks"),
             placeholder: "placeholderTask",
             cursor: 'move'
         });
         $(".sortableTasks").disableSelection();
-        
     });
 </script>
 <!-- Caption of the table "Managers-Tasks"-->

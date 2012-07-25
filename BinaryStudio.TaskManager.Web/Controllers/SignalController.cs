@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
-    public class SignalRController : Controller
+    public class SignalController : Controller
     {
         //
-        // GET: /SinalR/
+        // GET: /Signal/
 
         public ActionResult Index()
         {

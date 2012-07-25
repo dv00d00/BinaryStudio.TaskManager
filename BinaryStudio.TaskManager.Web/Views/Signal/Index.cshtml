@@ -1,23 +1,30 @@
-﻿<br/>--------------------------
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>title</h2>
+
+<br/>--------------------------
 <p><input type="button" value="send" id="btn"/></p>
 <p><input type="text" id="inpt"/></p>
 <p id="chattext">Messages</p>
 
 <script type="text/javascript">
     $(function () {
-        var chat = $.connection.chat;
+        var task = $.connection.taskHub;
 
-        chat.Receive = function (msg) {
+        task.Receive = function (msg) {
             var message = $("#chattext").html() + "<br/>" + msg;
             $("#chattext").html(message);
         };
 
         $("#btn").click(function () {
             var msg = $('#inpt').val();
-            chat.distribute(msg);
+            task.distribute(msg);
         });
 
         $.connection.hub.start();
     });
 </script>
-

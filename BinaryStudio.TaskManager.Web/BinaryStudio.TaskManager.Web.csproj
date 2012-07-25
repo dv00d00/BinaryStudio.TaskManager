@@ -135,7 +135,7 @@
     <Compile Include="Controllers\LinkedInController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ReminderController.cs" />
-    <Compile Include="Controllers\SignalRController.cs" />
+    <Compile Include="Controllers\SignalController.cs" />
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="Models\CreateTaskViewModel.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
@@ -154,7 +154,7 @@
     <Compile Include="NinjectModules\MainInjectModule.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SignalR\ChatHub.cs" />
+    <Compile Include="SignalR\TaskHub.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-responsive.css" />
@@ -331,8 +331,8 @@
     <Content Include="Views\Project\PersonalProject.cshtml" />
     <Content Include="Views\Account\RegisterNewUser.cshtml" />
     <Content Include="Views\Project\InviteOrDeleteUser.cshtml" />
-    <Content Include="Views\SignalR\Index.cshtml" />
     <Content Include="Views\Landing\Index.cshtml" />
+    <Content Include="Views\Signal\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />
