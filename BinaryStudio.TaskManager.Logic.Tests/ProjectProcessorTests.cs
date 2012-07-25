@@ -10,22 +10,44 @@
     [TestFixture]
     public class ProjectProcessorTests
     {
+        private Mock<IProjectRepository> projectRepositoryMock;
+
+        private ProjectProcessor projectProcessor;
+
+        [SetUp]
+        public void Setup()
+        {
+            this.projectRepositoryMock = new Mock<IProjectRepository>();
+            this.projectProcessor = new ProjectProcessor(this.projectRepositoryMock.Object);
+        }
+
         [Test]
         public void Should_CreateProject()
         {
-            // arrange
-            var projectRepositoryMock = new Mock<IProjectRepository>();
-            var projectProcessor = new ProjectProcessor(projectRepositoryMock.Object);
+            // arrange            
             const string Description = "simply description";
             const string ProjectName = "NameProject";
             const int UserId = 1;
             var user = new User { Id = UserId };
 
             // act
-            projectProcessor.CreateProject(user, ProjectName, Description);
+            this.projectProcessor.CreateProject(user, ProjectName, Description);
 
             // assert
-            projectRepositoryMock.Verify(x => x.Add(It.Is<Project>(it => it.CreatorId == UserId)), Times.Once());
+            this.projectRepositoryMock.Verify(x => x.Add(It.Is<Project>(it => it.CreatorId == UserId)), Times.Once());
+        }
+
+        [Test]
+        public void Should_CreateInvitation()
+        {
+            const int ProjectId = 1;
+            const int UserId = 1;
+
+            // act
+            this.projectProcessor.InviteUserInProject(UserId, ProjectId);
+
+            // assert
+            this.projectRepositoryMock.Verify(x => x.CreateInvitationUserInProject(It.Is<Invitation>(it => it.UserId == UserId)), Times.Once());
         }
     }
 }
