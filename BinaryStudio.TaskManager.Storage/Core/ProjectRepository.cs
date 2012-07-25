@@ -55,7 +55,7 @@
 
         public void Delete(int projectId)
         {
-            Project project = this.dataBaseContext.Projects.Single(x => x.Id == projectId);
+            var project = this.dataBaseContext.Projects.Single(x => x.Id == projectId);
             this.dataBaseContext.Projects.Remove(project);
             this.dataBaseContext.SaveChanges();
         }
@@ -63,6 +63,12 @@
         public void Update(Project project)
         {
             this.dataBaseContext.Entry(project).State = EntityState.Modified;
+            this.dataBaseContext.SaveChanges();
+        }
+
+        public void CreateInvitationUserInProject(Invitation invitation)
+        {
+            this.dataBaseContext.Entry(invitation).State = EntityState.Added;
             this.dataBaseContext.SaveChanges();
         }
     }

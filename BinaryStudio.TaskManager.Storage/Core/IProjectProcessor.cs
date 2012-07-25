@@ -5,5 +5,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
     public interface IProjectProcessor
     {
         void CreateDefaultProject(User user);
+
+        void InviteUserInProject(int userId, int projectId);
     }
 }

@@ -33,6 +33,18 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.CreateProject(user, "Home Project", string.Empty);
         }
 
+        public void InviteUserInProject(int userId, int projectId)
+        {
+            var invitation = new Invitation
+                {
+                    UserId = userId,
+                    ProjectId = projectId,
+                    IsInvitationSended = true,
+                    IsInvitationConfirmed = false
+                };
+            this.projectRepository.CreateInvitationUserInProject(invitation);
+        }
+
         /// <summary>
         /// The create custom project.
         /// </summary>

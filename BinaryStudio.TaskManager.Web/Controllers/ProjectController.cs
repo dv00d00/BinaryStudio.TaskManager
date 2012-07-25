@@ -173,16 +173,17 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.View(this.userProcessor.GetAllUsers());
         }
 
-        public ActionResult AddUser(int UserId, int ProjectId)
+        public ActionResult InviteUserInProject(int userId, int projectId)
         {
-            this.projectProcessor
-            var user = this.userRepository.GetById(UserId);
-            user.UserProjects.Add(this.projectRepository.GetById(ProjectId));
-            this.userRepository.UpdateUser(user);
+            this.projectProcessor.InviteUserInProject(userId, projectId);
 
-            var project = this.projectRepository.GetById(ProjectId);
-            project.ProjectUsers.Add(this.userRepository.GetById(UserId));
-            this.projectRepository.Update(project);
+            //var user = this.userRepository.GetById(userId);
+            //user.UserProjects.Add(this.projectRepository.GetById(projectId));
+            //this.userRepository.UpdateUser(user);
+
+            //var project = this.projectRepository.GetById(projectId);
+            //project.ProjectUsers.Add(this.userRepository.GetById(userId));
+            //this.projectRepository.Update(project);
             
             return this.RedirectToAction("PersonalProject");
         }

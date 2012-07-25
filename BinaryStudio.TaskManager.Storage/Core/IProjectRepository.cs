@@ -19,5 +19,7 @@
         void Delete(int projectId);
 
         void Update(Project project);
+
+        void CreateInvitationUserInProject(Invitation invitation);
     }
 }

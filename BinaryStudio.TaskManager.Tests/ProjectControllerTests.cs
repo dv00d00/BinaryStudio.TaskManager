@@ -18,27 +18,29 @@ namespace BinaryStudio.TaskManager.Web.Tests
         private Mock<IUserProcessor> userProcessorMock;
         private Mock<IProjectRepository> projectRepositoryMock;
         private ProjectController controller;
+        private Mock<IProjectProcessor> projectProcessorMock;
 
         [SetUp]
         public void Init()
         {
-            taskProcessorMock = new Mock<ITaskProcessor>();
-            userRepositoryMock = new Mock<IUserRepository>();
-            userProcessorMock = new Mock<IUserProcessor>();
-            projectRepositoryMock = new Mock<IProjectRepository>();
-            controller = new ProjectController(
+            this.taskProcessorMock = new Mock<ITaskProcessor>();
+            this.userRepositoryMock = new Mock<IUserRepository>();
+            this.userProcessorMock = new Mock<IUserProcessor>();
+            this.projectRepositoryMock = new Mock<IProjectRepository>();
+            this.projectProcessorMock = new Mock<IProjectProcessor>();
+            this.controller = new ProjectController(
                 this.taskProcessorMock.Object,
                 this.userProcessorMock.Object,
                 this.userRepositoryMock.Object,
-                this.projectRepositoryMock.Object
-                );
+                this.projectRepositoryMock.Object,
+                this.projectProcessorMock.Object);
         }
 
         [Test]
         public void Should_CreateTask_WhenMethodCreateTaskWasCalledWithAssignedId3()
         {
             //act
-            this.controller.CreateTask(new HumanTask() { AssigneeId = 3 });
+            this.controller.CreateTask(new HumanTask { AssigneeId = 3 });
 
             //assert
             this.taskProcessorMock.Verify(x => x.CreateTask(It.Is<HumanTask>(it => it.AssigneeId == 3)), Times.Once());
