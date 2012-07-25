@@ -17,25 +17,50 @@ namespace BinaryStudio.TaskManager.Web.Models
     /// </summary>
     public class RegisterUserModel
     {
-        public int userId { get; set; }
+        /// <summary>
+        /// Gets or sets the user id.
+        /// </summary>
+        public int UserId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the image data.
+        /// </summary>
+        public byte[] ImageData { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image mime tipe.
+        /// </summary>
+        [HiddenInput(DisplayValue = false)]
+        public string ImageMimeType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user name.
+        /// </summary>
         [Required(ErrorMessage = "Имя пользователя обязательно к заполнению!")]
         [Display(Name = "Имя пользователя")]
         [MaxLength(50, ErrorMessage = "Имя пользователя не может содержать более 50 символов!")]
         public string UserName { get; set; }
 
+        /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
         [Required(ErrorMessage = "Email обязателен к заполнению!")]
         [Display(Name = "Email:")]        
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-
+        /// <summary>
+        /// Gets or sets the password.
+        /// </summary>
         [Required(ErrorMessage = "Пароль обязателен к заполнению!")]
         [Display(Name = "Пароль:")]
         [DataType(DataType.Password)]
         [StringLength(100, ErrorMessage = "Пароль должен иметь минимальную длину 6 символов.", MinimumLength = 6)]
         public string Password { get; set; }
 
+        /// <summary>
+        /// Gets or sets the confirm password.
+        /// </summary>
         [Required(ErrorMessage = "Подтверждение пароля обязательно к заполнению!")]
         [Display(Name = "Подтверждение пароля:")]
         [DataType(DataType.Password)]

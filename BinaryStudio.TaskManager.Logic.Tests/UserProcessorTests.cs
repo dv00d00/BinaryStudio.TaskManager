@@ -50,7 +50,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.userRepositoryMock.Setup(x => x.GetByName(Username)).Returns(user);
 
             // act
-            var result = userProcessor.CreateUser(Username, Password, Email, string.Empty);
+            var result = userProcessor.CreateUser(Username, Password, Email, string.Empty, null, null);
 
             // assert
             Assert.AreEqual(result, false);            
@@ -65,7 +65,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.userRepositoryMock.Setup(x => x.GetByName(Username)).Returns((User)null);
 
             // act
-            var result = this.userProcessor.CreateUser(Username, Password, Email, string.Empty);
+            var result = this.userProcessor.CreateUser(Username, Password, Email, string.Empty, null, null);
 
             // assert
             Assert.AreEqual(result, true);            

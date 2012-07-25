@@ -46,7 +46,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
-        /// The create new user.
+        /// The create user.
         /// </summary>
         /// <param name="userName">
         /// The user name.
@@ -55,15 +55,21 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The password.
         /// </param>
         /// <param name="email">
-        /// The e mail.
+        /// The email.
         /// </param>
         /// <param name="linkedInId">
-        /// The linkedIn id.
+        /// The linked in id.
+        /// </param>
+        /// <param name="imageData">
+        /// The image data.
+        /// </param>
+        /// <param name="imageMimeType">
+        /// The image mime type.
         /// </param>
         /// <returns>
         /// The System.Boolean.
         /// </returns>
-        public bool CreateUser(string userName, string password, string email, string linkedInId)
+        public bool CreateUser(string userName, string password, string email, string linkedInId, byte[] imageData, string imageMimeType)
         {
             var user = this.userRepository.GetByName(userName);
             if (user != null)
@@ -83,7 +89,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
                                       IsVerify = true
                                   },
                 Email = email,
-                LinkedInId = linkedInId
+                LinkedInId = linkedInId,
+                ImageData = imageData,
+                ImageMimeType = imageMimeType
             };
 
             this.userRepository.CreateUser(newUser);

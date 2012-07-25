@@ -43,18 +43,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </summary>
         private readonly IProjectRepository projectRepository;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProjectController"/> class.         
-        /// </summary>
-        /// <param name="taskProcessor">
-        /// The task processor.
-        /// </param>
-        /// <param name="userProcessor">
-        /// The user processor. 
-        /// </param>
-        /// <param name="userRepository">
-        /// The user repository.
-        /// </param>
         public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IUserRepository userRepository, IProjectRepository projectRepository)
         {
             this.taskProcessor = taskProcessor;
@@ -161,35 +149,87 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.taskProcessor.MoveTaskToUnassigned(taskId);
         }
 
+        /// <summary>
+        /// The invite or delete user.
+        /// </summary>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         public ActionResult InviteOrDeleteUser()
         {
             return this.View(this.userRepository.GetAll());
         }
 
-        public ActionResult AddUser(int UserId, int ProjectId)
+        /// <summary>
+        /// The add user.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        public ActionResult AddUser(int userId, int projectId)
         {
-            var user = this.userRepository.GetById(UserId);
-            user.UserProjects.Add(this.projectRepository.GetById(ProjectId));
+            var user = this.userRepository.GetById(userId);
+            user.UserProjects.Add(this.projectRepository.GetById(projectId));
             this.userRepository.UpdateUser(user);
 
-            var project = this.projectRepository.GetById(ProjectId);
-            project.ProjectUsers.Add(this.userRepository.GetById(UserId));
+            var project = this.projectRepository.GetById(projectId);
+            project.ProjectUsers.Add(this.userRepository.GetById(userId));
             this.projectRepository.Update(project);
             
             return this.RedirectToAction("PersonalProject");
         }
 
-        public ActionResult DeleteUser(int UserId, int ProjectId)
+        /// <summary>
+        /// The delete user.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        public ActionResult DeleteUser(int userId, int projectId)
         {
-            var user = this.userRepository.GetById(UserId);
-            user.UserProjects.Remove(this.projectRepository.GetById(ProjectId));
+            var user = this.userRepository.GetById(userId);
+            user.UserProjects.Remove(this.projectRepository.GetById(projectId));
             this.userRepository.UpdateUser(user);
 
-            var project = this.projectRepository.GetById(ProjectId);
-            project.ProjectUsers.Remove(this.userRepository.GetById(UserId));
+            var project = this.projectRepository.GetById(projectId);
+            project.ProjectUsers.Remove(this.userRepository.GetById(userId));
             this.projectRepository.Update(project);
 
             return this.RedirectToAction("PersonalProject");
+        }
+
+        /// <summary>
+        /// The get image.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        public ActionResult GetImage(int userId)
+        {
+            User user = this.userRepository.GetById(userId);
+            if (user != null)
+            {
+                return this.File(user.ImageData, user.ImageMimeType);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

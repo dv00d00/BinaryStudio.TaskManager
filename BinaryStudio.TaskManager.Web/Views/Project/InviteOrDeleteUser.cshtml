@@ -5,17 +5,31 @@
 <h2>
     All users list
 </h2>
+
 <table>
     <tr>
+        <th>
+        </th>
         <th>
             User name
         </th>
         <th>
         </th>
     </tr>
+
     @foreach (var user in Model)
     {
         <tr>
+            <td>
+                @if(@user.ImageData == null)
+                {
+                    @:None
+                }
+                else
+                {
+                    <img width="100" height="100" src="@Url.Action("GetImage", "Project", new {UserId = user.Id})" />
+                }
+            </td>
             <td>
                 @user.UserName
             </td>

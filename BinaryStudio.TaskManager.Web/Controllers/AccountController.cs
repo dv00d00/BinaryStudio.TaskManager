@@ -1,5 +1,15 @@
-﻿namespace BinaryStudio.TaskManager.Web.Controllers
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AccountController.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The account controller.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace BinaryStudio.TaskManager.Web.Controllers
 {
+    using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
 
@@ -17,14 +27,23 @@
         private readonly IUserProcessor userProcessor;
 
         /// <summary>
+        /// The user repository.
+        /// </summary>
+        private readonly IUserRepository userRepository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AccountController"/> class.
         /// </summary>
         /// <param name="userProcessor">
         /// The user processor.
         /// </param>
-        public AccountController(IUserProcessor userProcessor)
+        /// <param name="userRepository">
+        /// The user repository.
+        /// </param>
+        public AccountController(IUserProcessor userProcessor, IUserRepository userRepository)
         {
             this.userProcessor = userProcessor;
+            this.userRepository = userRepository;
         }
 
         /// <summary>
@@ -44,15 +63,25 @@
         /// <param name="model">
         /// The model.
         /// </param>
+        /// <param name="image">
+        /// The image.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         [HttpPost]
-        public ActionResult RegisterNewUser(RegisterUserModel model)
+        public ActionResult RegisterNewUser(RegisterUserModel model, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
-                if (this.userProcessor.CreateUser(model.UserName, model.Password, model.Email, string.Empty))
+                if (image != null)
+                {
+                    model.ImageMimeType = image.ContentType;
+                    model.ImageData = new byte[image.ContentLength];
+                    image.InputStream.Read(model.ImageData, 0, image.ContentLength);
+                }
+
+                if (this.userProcessor.CreateUser(model.UserName, model.Password, model.Email, string.Empty, model.ImageData, model.ImageMimeType))
                 {
                     this.userProcessor.LogOnUser(model.UserName, model.Password);
                     return this.RedirectToAction("AllManagersWithTasks", "HumanTasks");
