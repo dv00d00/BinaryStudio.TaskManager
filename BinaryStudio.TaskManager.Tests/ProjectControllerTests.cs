@@ -39,12 +39,21 @@ namespace BinaryStudio.TaskManager.Web.Tests
         [Test]
         public void Should_CreateTask_WhenMethodCreateTaskWasCalledWithAssignedId3()
         {
-            //act
+            // act
             this.controller.CreateTask(new HumanTask { AssigneeId = 3 });
 
-            //assert
+            // assert
             this.taskProcessorMock.Verify(x => x.CreateTask(It.Is<HumanTask>(it => it.AssigneeId == 3)), Times.Once());
         }
 
+        [Test]
+        public void Should_InviteUserInProject()
+        {
+            // act
+            this.controller.InviteUserInProject(1, 1);
+
+            // assert
+            this.projectProcessorMock.Verify(x =>x.InviteUserInProject(1, 1));
+        }
     }
 }
