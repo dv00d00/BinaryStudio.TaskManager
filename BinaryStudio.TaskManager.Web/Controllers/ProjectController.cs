@@ -208,5 +208,11 @@
             var model = invitationsToUser.Select(invitation => new InvitationsViewModel { Invitation = invitation, Sender = invitation.Sender, Project = invitation.Project }).ToList();
             return this.View(model);
         }
+
+        public ActionResult SubmitInvitationInProject(Invitation invitation)
+        {            
+            this.projectProcessor.ConfirmInvitationInProject(invitation);
+            return this.View("Invitations");
+        }
     }
 }

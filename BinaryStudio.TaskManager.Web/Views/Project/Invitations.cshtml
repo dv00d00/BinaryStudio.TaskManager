@@ -12,7 +12,7 @@
             <div>
                 @item.Sender.UserName invite you to project @item.Project.Name
             </div>
-            @Html.ActionLink("Agree", "SubmitInvitationInProject", "Project", new {invitationId = item.Invitation.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Agree", "SubmitInvitationInProject", "Project", new {invitation = item.Invitation }, new { @class = "btn btn-primary" })
         </p>        
     }
 </div>
