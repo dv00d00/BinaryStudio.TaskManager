@@ -44,14 +44,15 @@
         [Test]
         public void Should_CreateInvitation()
         {
+            const int SenderId = 2;
             const int ProjectId = 1;
-            const int UserId = 1;
+            const int ReceiverId = 1;
 
             // act
-            this.projectProcessor.InviteUserInProject(UserId, ProjectId);
+            this.projectProcessor.InviteUserInProject(SenderId, ProjectId, ReceiverId);
 
             // assert
-            this.projectRepositoryMock.Verify(x => x.CreateInvitationUserInProject(It.Is<Invitation>(it => it.UserId == UserId)), Times.Once());
+            this.projectRepositoryMock.Verify(x => x.AddInvitation(It.Is<Invitation>(it => it.SenderId == SenderId)), Times.Once());
         }                
     }
 }

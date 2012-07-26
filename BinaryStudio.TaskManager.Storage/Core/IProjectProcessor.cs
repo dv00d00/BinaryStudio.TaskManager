@@ -20,13 +20,14 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <summary>
         /// The invite user in project.
         /// </summary>
-        /// <param name="userId">
-        /// The user id.
+        /// <param name="receiverId">
+        ///   The user id.
         /// </param>
         /// <param name="projectId">
-        /// The project id.
+        ///   The project id.
         /// </param>
-        void InviteUserInProject(int userId, int projectId);
+        /// <param name="senderId"> </param>
+        void InviteUserInProject(int senderId, int projectId, int receiverId);
 
         /// <summary>
         /// The remove user from project.
@@ -53,13 +54,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <summary>
         /// The confirm invitation in project.
         /// </summary>
-        /// <param name="userId">
-        /// The user id.
+        /// <param name="invitationId">
+        /// The invitation Id.
         /// </param>
-        /// <param name="projectId">
-        /// The project id.
-        /// </param>
-        void ConfirmInvitationInProject(Invitation invitation);
+        void ConfirmInvitationInProject(int invitationId);
 
         /// <summary>
         /// The get all invitations to user.
@@ -71,5 +69,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.Invitation].
         /// </returns>
         IEnumerable<Invitation> GetAllInvitationsToUser(int userId);
+
+        /// <summary>
+        /// The get project by id.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The BinaryStudio.TaskManager.Logic.Domain.Project.
+        /// </returns>
+        Project GetProjectById(int projectId);
     }
 }

@@ -141,6 +141,8 @@
     <Compile Include="Models\InMemoryTokenManager.cs" />
     <Compile Include="Models\InvitationsViewModel.cs" />
     <Compile Include="Models\LandingModels.cs" />
+    <Compile Include="Models\LandingModel.cs" />
+    <Compile Include="Models\ProjectCollaboratorsViewModel.cs" />
     <Compile Include="Models\RegisterLinkedInModel.cs" />
     <Compile Include="Models\SingleTaskViewModel.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />
@@ -334,6 +336,11 @@
     <Content Include="Views\Project\InviteOrDeleteUser.cshtml" />
     <Content Include="Views\SignalR\Index.cshtml" />
     <Content Include="Views\Landing\Index.cshtml" />
+    <Content Include="Views\Project\Details.cshtml" />
+    <Content Include="Views\Project\TaskDetailsPartial.cshtml" />
+    <Content Include="Views\Project\AllTasks.cshtml" />
+    <Content Include="Views\Project\Edit.cshtml" />
+    <Content Include="Views\Project\Delete.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Project\Invitations.cshtml" />
   </ItemGroup>
@@ -368,8 +375,8 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>63189</DevelopmentServerPort>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>8081</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

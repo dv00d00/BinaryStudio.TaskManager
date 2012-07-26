@@ -1,5 +1,6 @@
 ﻿namespace BinaryStudio.TaskManager.Web.Controllers
 {
+    using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
 
@@ -28,7 +29,7 @@
         /// The user processor.
         /// </param>
         /// <param name="projectProcessor">
-        /// The project Processor.
+        /// The project processor.
         /// </param>
         public AccountController(IUserProcessor userProcessor, IProjectProcessor projectProcessor)
         {
@@ -53,15 +54,25 @@
         /// <param name="model">
         /// The model.
         /// </param>
+        /// <param name="image">
+        /// The image.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         [HttpPost]
-        public ActionResult RegisterNewUser(RegisterUserModel model)
+        public ActionResult RegisterNewUser(RegisterUserModel model, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
-                if (this.userProcessor.CreateUser(model.UserName, model.Password, model.Email, string.Empty))
+                if (image != null)
+                {
+                    model.ImageMimeType = image.ContentType;
+                    model.ImageData = new byte[image.ContentLength];
+                    image.InputStream.Read(model.ImageData, 0, image.ContentLength);
+                }
+
+                if (this.userProcessor.CreateUser(model.UserName, model.Password, model.Email, string.Empty, model.ImageData, model.ImageMimeType))
                 {
                     this.userProcessor.LogOnUser(model.UserName, model.Password);
                     var user = this.userProcessor.GetUserByName(model.UserName);
@@ -137,6 +148,7 @@
             return this.RedirectToAction("LogOn", "Account");
         }
 
+        [Authorize]
         public ActionResult Profile()
         {
             return this.View();

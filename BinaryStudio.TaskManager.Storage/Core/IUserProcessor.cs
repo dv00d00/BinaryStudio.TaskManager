@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BinaryStudio.TaskManager.Logic.Domain;
+﻿using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Logic.Core
 {
+    using System.Collections.Generic;
+
     public interface IUserProcessor
     {        
 
@@ -19,7 +17,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         User GetUserByName(string userName);
 
-        bool CreateUser(string userName, string password, string email, string linkedInId);
+        bool CreateUser(string userName, string password, string email, string linkedInId, byte[] imageData, string imageMimeType);
 
         User GetUser(int userId);
 

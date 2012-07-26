@@ -80,7 +80,7 @@
         /// <param name="invitation">
         /// The invitation.
         /// </param>
-        void CreateInvitationUserInProject(Invitation invitation);
+        void AddInvitation(Invitation invitation);
 
         /// <summary>
         /// The update invitation.
@@ -100,5 +100,16 @@
         /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.Invitation].
         /// </returns>
         IEnumerable<Invitation> GetAllInvitationsForUser(int userId);
+
+        /// <summary>
+        /// The get invitation by id.
+        /// </summary>
+        /// <param name="invitationId">
+        /// The invitation id.
+        /// </param>
+        /// <returns>
+        /// The BinaryStudio.TaskManager.Logic.Domain.Invitation.
+        /// </returns>
+        Invitation GetInvitationById(int invitationId);
     }
 }
