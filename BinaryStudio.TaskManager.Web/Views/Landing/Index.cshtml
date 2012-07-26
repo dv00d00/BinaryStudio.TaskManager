@@ -56,6 +56,7 @@
                     });
                     $(".yes").click(function () {
                         $.fancybox.close();
+                        location.reload(true);
                         $.ajax({
                             data: { projectId: projectId },
                             dataType: 'JSON',
@@ -92,13 +93,13 @@
             $(".add_proj_btn").click(function () {
                 var val = $(".newBox").children("input").val();
                 $(".newBox").remove();
+                location.reload(true);
                 $.ajax({
                     data: { projectName: val },
                     dataType: "JSON",
                     type: "POST",
                     url: "/Landing/AddProject",
                     success: function (response) {
-
                         var list = $(".project_list");
                         list.html("");
                         for (var proj in response.Projects) {
