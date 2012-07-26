@@ -10,6 +10,7 @@
 namespace BinaryStudio.TaskManager.Logic.Core
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Security;
 
@@ -228,6 +229,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
             {
                 return null;
             }
+        }
+
+        public IEnumerable<User> GetAllUsers()
+        {
+            return this.userRepository.GetAll();
         }
     }
 }
