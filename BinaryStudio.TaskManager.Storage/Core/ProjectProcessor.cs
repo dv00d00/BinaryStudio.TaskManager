@@ -108,10 +108,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The confirm invitation in project.
         /// </summary>
         /// <param name="invitation">
-        /// The invitation.
+        ///   The invitation.
         /// </param>
-        public void ConfirmInvitationInProject(Invitation invitation)
-        {            
+        public void ConfirmInvitationInProject(int invitationId)
+        {
+            var invitation = this.projectRepository.GetInvitationById(invitationId);
             var projectId = invitation.ProjectId;
             var receiverId = invitation.ReceiverId;
 

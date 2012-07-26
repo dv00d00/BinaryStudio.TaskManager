@@ -12,6 +12,7 @@
     /// <summary>
     /// The project controller.
     /// </summary>
+    [Authorize]
     public class ProjectController : Controller
     {
         /// <summary>
@@ -77,8 +78,7 @@
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        [HttpPost]
-        [Authorize]
+        [HttpPost]        
         public ActionResult CreateTask(HumanTask humanTask)
         {
             if (this.ModelState.IsValid)
@@ -209,10 +209,19 @@
             return this.View(model);
         }
 
-        public ActionResult SubmitInvitationInProject(Invitation invitation)
+        /// <summary>
+        /// The submit invitation in project.
+        /// </summary>
+        /// <param name="invitationId">
+        /// The invitation id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        public ActionResult SubmitInvitationInProject(int invitationId)
         {            
-            this.projectProcessor.ConfirmInvitationInProject(invitation);
-            return this.View("Invitations");
+            this.projectProcessor.ConfirmInvitationInProject(invitationId);
+            return this.RedirectToAction("Invitations");
         }
     }
 }

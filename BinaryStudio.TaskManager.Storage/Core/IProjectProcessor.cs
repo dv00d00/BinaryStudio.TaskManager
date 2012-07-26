@@ -54,13 +54,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <summary>
         /// The confirm invitation in project.
         /// </summary>
-        /// <param name="userId">
-        /// The user id.
+        /// <param name="invitationId">
+        /// The invitation Id.
         /// </param>
-        /// <param name="projectId">
-        /// The project id.
-        /// </param>
-        void ConfirmInvitationInProject(Invitation invitation);
+        void ConfirmInvitationInProject(int invitationId);
 
         /// <summary>
         /// The get all invitations to user.

@@ -45,8 +45,6 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         /// </param>
         protected override void Seed(DataBaseContext context)
         {
-            var projectRepository = new ProjectRepository(context);
-            
             //createProjects(projectRepository);
 
             context.Priorities.Add(new Priority
@@ -57,15 +55,15 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                                        });
             context.Priorities.Add(new Priority
             {
-                                            Id = Guid.NewGuid(),
-                                            Description = "Middle",
-                                            Value = 1
+                Id = Guid.NewGuid(),
+                Description = "Middle",
+                Value = 1
             });
             context.Priorities.Add(new Priority
             {
-                                            Id = Guid.NewGuid(),
-                                            Description = "High",
-                                            Value = 2
+                Id = Guid.NewGuid(),
+                Description = "High",
+                Value = 2
             });
             context.SaveChanges();
         }

@@ -9,6 +9,8 @@
 
 namespace BinaryStudio.TaskManager.Web.NinjectModules
 {
+    using BinaryStdio.TaskManager.Logic.Core;
+
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
 

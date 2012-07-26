@@ -1,9 +1,10 @@
-﻿namespace BinaryStudio.TaskManager.Logic.Core
+﻿namespace BinaryStdio.TaskManager.Logic.Core
 {
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
 
+    using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
 
     /// <summary>
@@ -82,10 +83,13 @@
         {
 
 
-            var invitations =
-                this.dataBaseContext.Invitations.Where(x => x.ReceiverId == userId).Select(
-                    x => x.IsInvitationConfirmed == false).ToList();
-            return invitations as IEnumerable<Invitation>;
+            return this.dataBaseContext.Invitations.Where(x => x.ReceiverId == userId && x.IsInvitationConfirmed == false).ToList();
+            
+        }
+
+        public Invitation GetInvitationById(int invitationId)
+        {
+            return this.dataBaseContext.Invitations.FirstOrDefault(x => x.Id == invitationId);
         }
     }
 }

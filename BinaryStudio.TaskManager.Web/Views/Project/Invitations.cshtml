@@ -5,14 +5,21 @@
 <div class="well-large">
     Invitations
 </div>
-<div>
+<ul>
     @foreach (var item in Model)
     {
-        <p>
+        <li class="" id=@item.Invitation.Id>
             <div>
                 @item.Sender.UserName invite you to project @item.Project.Name
             </div>
-            @Html.ActionLink("Agree", "SubmitInvitationInProject", "Project", new {invitation = item.Invitation }, new { @class = "btn btn-primary" })
-        </p>        
+            <div>
+                @Html.ActionLink("Agree", "SubmitInvitationInProject", "Project", new { invitationId = item.Invitation.Id }, new { @class = "btn btn-primary" })
+            </div>
+            <span class="divider"></span></li>        
     }
-</div>
+</ul>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+</script>
