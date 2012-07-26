@@ -123,10 +123,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public void Delete(int humanTaskId)
         {
             HumanTask humantask = this.dataBaseContext.HumanTasks.Single(x => x.Id == humanTaskId);
-            this.dataBaseContext.HumanTasks.Remove(humantask);
+            this.dataBaseContext.Entry(humantask).State = EntityState.Deleted;
             this.dataBaseContext.SaveChanges();
         }
-
+        
         /// <summary>
         /// The update.
         /// </summary>
