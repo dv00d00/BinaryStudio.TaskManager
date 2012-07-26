@@ -148,7 +148,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                    Description = createModel.Description,
                                    Id = createModel.Id,
                                    Name = createModel.Name,
-                                   Priority = createModel.Priority
+                                   Priority = createModel.Priority,
+                                   ProjectId = 1,
                                };
                 this.taskProcessor.CreateTask(task);
                 this.taskProcessor.AddHistory(new HumanTaskHistory

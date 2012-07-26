@@ -156,7 +156,7 @@
     <Compile Include="NinjectModules\MainInjectModule.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SignalR\ChatHub.cs" />
+    <Compile Include="SignalR\TaskHub.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-responsive.css" />
@@ -301,12 +301,6 @@
     <Content Include="Views\HumanTasks\AllTasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\HumanTasks\AllManagersWithTasks.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\HumanTasks\ManagerTasksTablePartialView.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\HumanTasks\UserDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -336,7 +330,7 @@
     <Content Include="Views\Account\RegisterNewUser.cshtml" />
     <Content Include="Views\Project\InviteOrDeleteUser.cshtml" />
     <Content Include="Views\SignalR\Index.cshtml" />
-    <Content Include="Views\Landing\Index.cshtml" />
+    <Content Include="Views\LinkedIn\Landing\Index.cshtml" />
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\Project\TaskDetailsPartial.cshtml" />
     <Content Include="Views\Project\AllTasks.cshtml" />
@@ -344,6 +338,8 @@
     <Content Include="Views\Project\Delete.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Project\Invitations.cshtml" />
+    <Content Include="Views\HumanTasks\AllManagersWithTasks.cshtml" />
+    <Content Include="Views\HumanTasks\ManagerTasksTablePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />
