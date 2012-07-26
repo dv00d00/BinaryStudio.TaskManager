@@ -140,7 +140,7 @@
     <Compile Include="Models\CreateTaskViewModel.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
     <Compile Include="Models\InvitationsViewModel.cs" />
-    <Compile Include="Models\LandingModel.cs" />
+    <Compile Include="Models\LandingModels.cs" />
     <Compile Include="Models\RegisterLinkedInModel.cs" />
     <Compile Include="Models\SingleTaskViewModel.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />

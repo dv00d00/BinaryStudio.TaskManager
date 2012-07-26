@@ -28,7 +28,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult Index()
         {
-            var model = new LandingModel();
+            var model = new LandingIndexModel();
             var user = userRepository.GetByName(User.Identity.Name);
             model.Projects = projectRepository.GetAllProjectsForUser(user.Id);
             return View(model);
@@ -48,11 +48,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 };
             this.projectRepository.Add(project);
             var projectList = projectRepository.GetAllProjectsForUser(user.Id);
-
-            var model = new LandingModel
-                {
-                    Projects    = projectList
-                };
+            var projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name }).ToList();
+            var model = new LandingProjectsModel { Projects = projectsToModel };
             return Json(model);
         }
 
@@ -62,11 +59,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.projectRepository.Delete(projectId);
             var user = userRepository.GetByName(User.Identity.Name);
             var projectList = projectRepository.GetAllProjectsForUser(user.Id);
-
-            var model = new LandingModel
-            {
-                Projects = projectList
-            };
+            var projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name }).ToList();
+            var model = new LandingProjectsModel { Projects = projectsToModel };
             return Json(model);
         }
 

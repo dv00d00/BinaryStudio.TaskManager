@@ -4,7 +4,7 @@ namespace BinaryStudio.TaskManager.Web.Models
 
     using BinaryStudio.TaskManager.Logic.Domain;
 
-    public class LandingModel
+    public class LandingIndexModel
     {
         /// <summary>
         /// Gets or sets the projects.
@@ -13,5 +13,17 @@ namespace BinaryStudio.TaskManager.Web.Models
         /// The projects.
         /// </value>
         public IEnumerable<Project> Projects { get; set; }
+    }
+
+    public class LandingProjectsModel
+    {
+        public IEnumerable<ProjectView> Projects { get; set; }
+    }
+
+    public class ProjectView
+    {
+        public int Id { get; set; }
+        
+        public string Name { get; set; }
     }
 }

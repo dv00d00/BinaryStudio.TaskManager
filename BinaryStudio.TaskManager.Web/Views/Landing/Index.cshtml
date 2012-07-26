@@ -1,4 +1,4 @@
-﻿@model BinaryStudio.TaskManager.Web.Models.LandingModel
+﻿@model BinaryStudio.TaskManager.Web.Models.LandingIndexModel
 
 @{
     ViewBag.Title = "Landing";
@@ -23,7 +23,7 @@
                 @foreach (var project in Model.Projects)
                 {
                     <li data-id="@project.Id">
-                        <a href="#delete_box" class="fancybox"><div class="delete_btn"></div></a>
+                        <a href="#" class="delete_link"><div class="delete_btn"></div></a>
                         <div class="project_name">@project.Name</div>
                     </li>
                 }
@@ -34,10 +34,17 @@
     </div>
     <div id="right_panel" class="span3">
     </div>
-    <div id="delete_box">
-        <span class="box_text">Are you sure, you wanna delete project</span>
-        <br><br><button class="yes"><strong>yes</strong></button>
-            <button class="no">no</button>
+    <div class="modal hide" id="delete_box">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>Delete Project</h3>
+          </div>
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn no" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-primary yes" data-dismiss="modal">Delete</a>
+          </div>
     </div>
      <div id='add_proj_box'>
          <input type="text" autofocus="autofocus"></input>
@@ -47,35 +54,35 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        $(".fancybox").click(function () {
-            var projectId = $(this).parent("li").attr("data-id");
-            $(".fancybox").fancybox({
-                afterLoad: function () {
-                    $(".no").click(function () {
-                        $.fancybox.close();
-                    });
-                    $(".yes").click(function () {
-                        $.fancybox.close();
-                        setTimeout(location.reload(true),1200);
-                        $.ajax({
-                            data: { projectId: projectId },
-                            dataType: 'JSON',
-                            type: 'POST',
-                            url: '/Landing/DeleteProject',
-                            success: function (response) {
-                                var list = $(".project_list");
-                                list.html("");
-                                for (var proj in response.Projects) {
-                                    list.append("\
-                            <li data-id='" + proj.Id + "'> \
-                                    <a href='#delete_box' class='fancybox'><div class='delete_btn'></div></a>\
-                                    <div class='project_name'>" + proj.Name + "</div>\
-                                </li>");
-                                }
-                            }
-                        });
-                    });
+        $("#delete_box").on('hidden', function () {
+            $(".yes").off();
+        });
+
+        $(".project_name").each(function () {
+            var text = $(this).html();
+            if (text.length > 20) {
+                $(this).attr("title",text);
+                $(this).html(text.substr(0, 20) + "...");
+            }
+        });
+
+        $(document).on("click", ".delete_link", function () {
+            var proj = $(this).parent("li").attr("data-id");
+            $(".modal-body").html("<p>Are you sure, that you want to delete project</p>\
+            <span> <b>" + $(this).parent("li").children(".project_name").html() + "</b>?</span>");
+            $("#delete_box").modal('show');
+            $(".yes").on("click", function () {
+                deleteProjectQuery(proj);
+                $(".yes").off();
+            });
+            $(window).on("keydown", function (e) {
+                var code = null;
+                code = (e.keyCode ? e.keyCode : e.which);
+                if (code == 13) {
+                    deleteProjectQuery(proj);
+                    $("#delete_box").modal('hide');
                 }
+                $(window).off("keydown");
             });
         });
         $(".new_project_btn").click(function () {
@@ -83,8 +90,7 @@
                 $(".project_list").prepend($("#add_proj_box").clone());
                 $("#add_proj_box").addClass("newBox");
                 $(".newBox").css("display", "block");
-            }
-            else {
+            } else {
                 $(".newBox").children("input").focus();
             }
             $(".add_cancel").click(function () {
@@ -98,35 +104,56 @@
                 code = (e.keyCode ? e.keyCode : e.which);
                 if (code == 27) {
                     $(".newBox").remove();
-                }
-                else if (code == 13) {
+                } else if (code == 13) {
                     sendNewProject();
                 }
             });
         });
-    })
+    });
     
     function sendNewProject() {
         var val = $(".newBox").children("input").val();
         $(".newBox").remove();
-        setTimeout(location.reload(true), 1200);
         $.ajax({
             data: { projectName: val },
             dataType: "JSON",
             type: "POST",
             url: "/Landing/AddProject",
             success: function (response) {
-                var list = $(".project_list");
-                list.html("");
-                for (var proj in response.Projects) {
-                    list.append("\
-                            <li data-id='" + proj.Id + "'> \
-                                    <a href='#delete_box' class='fancybox'><div class='delete_btn'></div></a>\
-                                    <div class='project_name'>" + proj.Name + "</div>\
-                                </li>");
-                }
-
+                listProjects(response);
             }
         });
+    }
+    
+
+    function deleteProjectQuery(proj) {
+        $.ajax({
+            data: { projectId: proj },
+            dataType: 'JSON',
+            type: 'POST',
+            url: '/Landing/DeleteProject',
+            success: function (response) {
+                listProjects(response);
+            }
+        });
+    }
+    
+    function listProjects(response) {
+        var list = $(".project_list");
+        list.html("");
+        var name = null;
+        for (var i = 0; i < response.Projects.length; i++) {
+            if (response.Projects[i].Name.length < 20)
+                name = response.Projects[i].Name;
+            else
+                name = response.Projects[i].Name.substr(0, 20) + '...';
+            list.append("\
+                                <li data-id='" + response.Projects[i].Id + "'> \
+                                <a href='#delete_box' class='delete_link'><div class='delete_btn'></div></a>\
+                                <div class='project_name'>" + name + "</div>\
+                                </li>");
+            if (response.Projects[i].Name.length >= 20)
+                $("li[data-id=" + response.Projects[i].Id + "]").attr("title", response.Projects[i].Name);
+        }
     }
 </script>
