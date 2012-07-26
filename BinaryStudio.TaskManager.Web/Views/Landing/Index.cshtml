@@ -29,7 +29,9 @@
                     </li>
                 }
             </ul>
-        </div>
+            <div id="loader">
+                
+            </div>
     </div>
     <div id="content" class="span6">
     </div>
@@ -121,7 +123,11 @@
             dataType: "JSON",
             type: "POST",
             url: "/Landing/AddProject",
+            beforeSend: function () {
+                $("#loader").show();
+            },
             success: function (response) {
+                $("#loader").hide();
                 listProjects(response);
             }
         });
@@ -130,13 +136,15 @@
 
     function deleteProjectQuery(proj) {
         $.ajax({
-            data: { projectId: proj },
-            dataType: 'JSON',
-            type: 'POST',
-            url: '/Landing/DeleteProject',
-            success: function (response) {
-                listProjects(response);
-            }
+            data        : { projectId: proj },
+            dataType    : 'JSON',
+            type        : 'POST',
+            url         : '/Landing/DeleteProject',
+            beforeSend  : function (){
+                    $("#loader").show();},
+            success     : function (response) {
+                $("#loader").hide();
+                listProjects(response);}
         });
     }
     
