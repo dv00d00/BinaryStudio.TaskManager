@@ -70,6 +70,24 @@
             $(".add_proj_btn").click(function () {
                 var val = $(".newBox").children("input").val();
                 $(".newBox").remove();
+                $.ajax({
+                    data: { projectName: val },
+                    dataType: "JSON",
+                    type: "POST",
+                    url: "/Landing/AddProject",
+                    success: function (response) {
+                        var list = $(".project_list");
+                        list.html("");
+                        for (var proj in response.Projects) {
+                            list.append("\
+                            <li data-id='" + proj.Id + "'> \
+                                    <a href='#delete_box' class='fancybox'><div class='delete_btn'></div></a>\
+                                    <div class='project_name'>" + proj.Name + "</div>\
+                                </li>");
+                        }
+
+                    }
+                });
             });
         });
     })

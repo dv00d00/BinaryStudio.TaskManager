@@ -6,10 +6,12 @@ using System.Web.Mvc;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
+    using System.Collections.ObjectModel;
+
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
     using BinaryStudio.TaskManager.Web.Models;
-
+    [Authorize]
     public class LandingController : Controller
     {
         //
@@ -27,28 +29,31 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult Index()
         {
             var model = new LandingModel();
-            model.Projects = new List<Project>
-                {
-                    new Project { Id = 1, Name = "1asdfsdf", Description = "1deasdasdasdas" },
-                    new Project { Id = 2, Name = "2asdfsdf", Description = "2deasdasdasdas" },
-                    new Project { Id = 3, Name = "3asdfsdf", Description = "3deasdasdasdas" },
-                    new Project { Id = 4, Name = "4asdfsdf", Description = "4deasdasdasdas" }
-                };
-            return this.View(model);
+            var user = userRepository.GetByName(User.Identity.Name);
+            model.Projects = projectRepository.GetAllProjectsForUser(user.Id);
+            return View(model);
         }
 
         [HttpPost]
-        private ActionResult AddProject(string projectName)
+        public ActionResult AddProject(string projectName)
         {
+            var user = userRepository.GetByName(User.Identity.Name);
             var project = new Project
                 {
                     Created = DateTime.Now,
-                    Creator = this.userRepository.GetByName(@User.Identity.Name),
-                    Name = projectName                    
+                    Creator = user,
+                    Name = projectName,
+                    CreatorId = user.Id,
+                    ProjectUsers = new Collection<User>{user}
                 };
             this.projectRepository.Add(project);
-            var model = new LandingModel();
-            return this.Json(model);
+            var projectList = projectRepository.GetAllProjectsForUser(user.Id);
+
+            var model = new LandingModel
+                {
+                    Projects    = projectList
+                };
+            return Json(model);
         }
 
 }
