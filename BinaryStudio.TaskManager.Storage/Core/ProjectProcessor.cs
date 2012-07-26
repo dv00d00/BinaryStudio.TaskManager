@@ -1,0 +1,157 @@
+namespace BinaryStudio.TaskManager.Logic.Core
+{
+    using System;
+    using System.Collections.Generic;
+
+    using BinaryStudio.TaskManager.Logic.Domain;
+
+    /// <summary>
+    /// The project processor.
+    /// </summary>
+    public class ProjectProcessor : IProjectProcessor
+    {
+        /// <summary>
+        /// The project repository.
+        /// </summary>
+        private readonly IProjectRepository projectRepository;
+
+        /// <summary>
+        /// The user repository.
+        /// </summary>
+        private readonly IUserRepository userRepository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectProcessor"/> class.
+        /// </summary>
+        /// <param name="projectRepository">
+        /// The project repository.
+        /// </param>
+        /// <param name="userRepository">
+        /// The user Repository.
+        /// </param>
+        public ProjectProcessor(IProjectRepository projectRepository, IUserRepository userRepository)
+        {
+            this.projectRepository = projectRepository;
+            this.userRepository = userRepository;
+        }
+
+        /// <summary>
+        /// The create default project.
+        /// </summary>
+        /// <param name="user">
+        /// The current user.
+        /// </param>
+        public void CreateDefaultProject(User user)
+        {
+            this.CreateProject(user, "Home Project", string.Empty);
+        }
+
+        /// <summary>
+        /// Send invitation to user in project.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        public void InviteUserInProject(int userId, int projectId)
+        {
+            var invitation = new Invitation
+                {
+                    UserId = userId,
+                    ProjectId = projectId,
+                    IsInvitationSended = true,
+                    IsInvitationConfirmed = false
+                };
+            this.projectRepository.CreateInvitationUserInProject(invitation);
+        }
+
+        /// <summary>
+        /// The remove user from project.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        public void RemoveUserFromProject(int userId, int projectId)
+        {
+            var user = this.userRepository.GetById(userId);
+            user.UserProjects.Remove(this.projectRepository.GetById(projectId));
+            this.userRepository.UpdateUser(user);
+
+            var project = this.projectRepository.GetById(projectId);
+            project.ProjectUsers.Remove(this.userRepository.GetById(userId));
+            this.projectRepository.Update(project);
+        }
+
+        /// <summary>
+        /// The get all users in project.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.User].
+        /// </returns>
+        public IEnumerable<User> GetAllUsersInProject(int projectId)
+        {            
+            return this.projectRepository.GetAllUsersInProject(projectId);
+        }
+
+        /// <summary>
+        /// The confirm invitation in project.
+        /// </summary>
+        /// <param name="invitation">
+        /// The invitation.
+        /// </param>
+        public void ConfirmInvitationInProject(Invitation invitation)
+        {
+            var userId = invitation.UserId;
+            var projectId = invitation.ProjectId;            
+
+            var user = this.userRepository.GetById(userId);
+            user.UserProjects.Add(this.projectRepository.GetById(projectId));
+            this.userRepository.UpdateUser(user);
+
+            var project = this.projectRepository.GetById(projectId);
+            project.ProjectUsers.Add(this.userRepository.GetById(userId));
+            this.projectRepository.Update(project);
+
+            invitation.IsInvitationConfirmed = true;
+            this.projectRepository.UpdateInvitation(invitation);
+        }
+
+        public IEnumerable<Invitation> GetAllInvitationsToUser(int userId)
+        {
+            return this.projectRepository.GetAllInvitationsForUser(userId);
+        }
+
+        /// <summary>
+        /// The create custom project with project name and description.
+        /// </summary>
+        /// <param name="user">
+        /// The user tied to project.
+        /// </param>
+        /// <param name="projectName">
+        /// The project name.
+        /// </param>
+        /// <param name="projectDescription">
+        /// The project description.
+        /// </param>
+        public void CreateProject(User user, string projectName, string projectDescription)
+        {
+            var project = new Project
+                {
+                    CreatorId = user.Id,
+                    Creator = user,
+                    Created = DateTime.Now,
+                    Name = projectName,
+                    Description = projectDescription
+                };
+            this.projectRepository.Add(project);
+        }
+    }
+}

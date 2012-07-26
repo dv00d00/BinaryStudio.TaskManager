@@ -10,6 +10,7 @@
 namespace BinaryStudio.TaskManager.Logic.Core
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Security;
 
@@ -183,7 +184,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
-        /// The get current logined user.
+        /// The get user by name.
         /// </summary>
         /// <param name="userName">
         /// The user name.
@@ -191,7 +192,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <returns>
         /// The BinaryStudio.TaskManager.Logic.Domain.User.
         /// </returns>
-        public User GetCurrentLoginedUser(string userName)
+        public User GetUserByName(string userName)
         {
             try
             {
@@ -236,6 +237,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
             {
                 return null;
             }
+        }
+
+        public IEnumerable<User> GetAllUsers()
+        {
+            return this.userRepository.GetAll();
         }
     }
 }

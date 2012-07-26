@@ -1,3 +1,4 @@
+using System.Linq;
 using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Logic.Core
@@ -28,5 +29,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         IList<HumanTaskHistory> GetAllHistoryForTask(int taskId);
 
         void AddHistory(HumanTaskHistory humanTaskHistory);
+
+        IQueryable<Priority> GetPriorities();
     }
 }

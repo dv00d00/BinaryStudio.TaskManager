@@ -73,5 +73,32 @@
         /// The project.
         /// </param>
         void Update(Project project);
+
+        /// <summary>
+        /// The create invitation user in project.
+        /// </summary>
+        /// <param name="invitation">
+        /// The invitation.
+        /// </param>
+        void CreateInvitationUserInProject(Invitation invitation);
+
+        /// <summary>
+        /// The update invitation.
+        /// </summary>
+        /// <param name="invitation">
+        /// The invitation.
+        /// </param>
+        void UpdateInvitation(Invitation invitation);
+
+        /// <summary>
+        /// The get all invitations for user.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.Invitation].
+        /// </returns>
+        IEnumerable<Invitation> GetAllInvitationsForUser(int userId);
     }
 }

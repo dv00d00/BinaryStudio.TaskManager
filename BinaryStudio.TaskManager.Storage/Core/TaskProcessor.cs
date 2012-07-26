@@ -7,6 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Globalization;
+using System.Linq;
+using System.Web.Mvc;
+
 namespace BinaryStudio.TaskManager.Logic.Core
 {
     using System;
@@ -277,6 +281,18 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public IEnumerable<HumanTask> GetAllTasks()
         {
             return this.humanTaskRepository.GetAll();
+        }
+
+        public IEnumerable<SelectListItem> GetPrioritiesList()
+        {
+            IEnumerable<SelectListItem> priorities = this.humanTaskRepository.GetPriorities()
+                .ToList().
+                Select(it => new SelectListItem
+                                 {
+                                     Text = it.Description,
+                                     Value = it.Value.ToString(CultureInfo.InvariantCulture)
+                                 });
+            return priorities;
         }
 
         /// <summary>

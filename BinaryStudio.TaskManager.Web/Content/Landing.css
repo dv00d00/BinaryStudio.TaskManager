@@ -79,6 +79,7 @@
 
 #add_proj_box {
     display: none;
+    margin-top: 20px;
 }
 
 .add_cancel:hover{

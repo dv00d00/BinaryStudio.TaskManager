@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ProjectController.cs" company="">
-//   
-// </copyright>
-// <summary>
-//   The project controller.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace BinaryStudio.TaskManager.Web.Controllers
+﻿namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -34,16 +25,19 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly IUserProcessor userProcessor;
 
         /// <summary>
-        /// The user repository.
+        /// The project processor.
         /// </summary>
-        private readonly IUserRepository userRepository;
+        private readonly IProjectProcessor projectProcessor;
 
         /// <summary>
+<<<<<<< HEAD
         /// The project repository.
         /// </summary>
         private readonly IProjectRepository projectRepository;
 
         /// <summary>
+=======
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
         /// Initializes a new instance of the <see cref="ProjectController"/> class.
         /// </summary>
         /// <param name="taskProcessor">
@@ -52,18 +46,21 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="userProcessor">
         /// The user processor.
         /// </param>
-        /// <param name="userRepository">
-        /// The user repository.
+        /// <param name="projectProcessor">
+        /// The project processor.
         /// </param>
+<<<<<<< HEAD
         /// <param name="projectRepository">
         /// The project repository.
         /// </param>
         public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IUserRepository userRepository, IProjectRepository projectRepository)
+=======
+        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor)
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
         {
+            this.projectProcessor = projectProcessor;
             this.taskProcessor = taskProcessor;
             this.userProcessor = userProcessor;
-            this.userRepository = userRepository;
-            this.projectRepository = projectRepository;
         }
 
         /// <summary>
@@ -77,10 +74,19 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>
         public ActionResult CreateTask(int userId)
         {
+<<<<<<< HEAD
             var humanTask = new HumanTask();
             humanTask.AssigneeId = (userId != -1) ? userId : (int?)null;
             humanTask.CreatorId = this.userProcessor.GetCurrentLoginedUser(User.Identity.Name).Id;
             humanTask.Created = DateTime.Now;
+=======
+            var humanTask = new HumanTask
+                {
+                    AssigneeId = (userId != -1) ? userId : (int?)null,
+                    CreatorId = this.userProcessor.GetUserByName(this.User.Identity.Name).Id,
+                    Created = DateTime.Now
+                };
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
             return this.View(humanTask);
         }
 
@@ -118,28 +124,32 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [Authorize]
         public ActionResult PersonalProject()
         {
-            int projectId = 1;
+            const int ProjectId = 1;
             var model = new ProjectViewModel
                 {
                     UsersTasks = new List<ManagerTasksViewModel>(),
                     UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList()
                 };
+<<<<<<< HEAD
             var users = this.projectRepository.GetAllUsersInProject(projectId);
+=======
+            var users = this.projectProcessor.GetAllUsersInProject(ProjectId);
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
             foreach (var user in users)
             {
-                var managerModel = new ManagerTasksViewModel
+                var viewModel = new ManagerTasksViewModel
                     {
                         User = user,
                         Tasks = this.taskProcessor.GetTasksList(user.Id).ToList()
                     };
-                model.UsersTasks.Add(managerModel);
+                model.UsersTasks.Add(viewModel);
             }
 
             return this.View(model);
         }
 
         /// <summary>
-        /// The move task.
+        /// The move task from one user to another.
         /// </summary>
         /// <param name="taskId">
         /// The task id.
@@ -172,11 +182,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>
         public ActionResult InviteOrDeleteUser()
         {
-            return this.View(this.userRepository.GetAll());
+            return this.View(this.userProcessor.GetAllUsers());
         }
 
         /// <summary>
+<<<<<<< HEAD
         /// The add user.
+=======
+        /// The invite user in project.
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
         /// </summary>
         /// <param name="userId">
         /// The user id.
@@ -187,6 +201,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
+<<<<<<< HEAD
         public ActionResult AddUser(int userId, int projectId)
         {
             var user = this.userRepository.GetById(userId);
@@ -197,11 +212,20 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             project.ProjectUsers.Add(this.userRepository.GetById(userId));
             this.projectRepository.Update(project);
             
+=======
+        public ActionResult InviteUserInProject(int userId, int projectId)
+        {
+            this.projectProcessor.InviteUserInProject(userId, projectId);                        
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
             return this.RedirectToAction("PersonalProject");
         }
 
         /// <summary>
+<<<<<<< HEAD
         /// The delete user.
+=======
+        /// The remove user from project.
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
         /// </summary>
         /// <param name="userId">
         /// The user id.
@@ -212,6 +236,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
+<<<<<<< HEAD
         public ActionResult DeleteUser(int userId, int projectId)
         {
             var user = this.userRepository.GetById(userId);
@@ -221,8 +246,21 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var project = this.projectRepository.GetById(projectId);
             project.ProjectUsers.Remove(this.userRepository.GetById(userId));
             this.projectRepository.Update(project);
-
+=======
+        public ActionResult RemoveUserFromProject(int userId, int projectId)
+        {
+            this.projectProcessor.RemoveUserFromProject(userId, projectId);
             return this.RedirectToAction("PersonalProject");
+        }
+
+        public ActionResult Invitations()
+        {
+            var model = new List<InvitationsViewModel>();
+            var user = this.userProcessor.GetUserByName(User.Identity.Name);
+            var invitationsToUser = this.projectProcessor.GetAllInvitationsToUser(user.Id);
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
+
+            return this.View();
         }
 
         /// <summary>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ProjectControllerTests.cs" company="">
 //   
@@ -10,20 +11,34 @@
 namespace BinaryStudio.TaskManager.Web.Tests
 {
     using System.Collections.Generic;
+=======
+﻿namespace BinaryStudio.TaskManager.Web.Tests
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
 
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
     using BinaryStudio.TaskManager.Web.Controllers;
 
+<<<<<<< HEAD
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+=======
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
     using Moq;
 
     using NUnit.Framework;
 
+<<<<<<< HEAD
     /// <summary>
     /// The project controller tests.
     /// </summary>
+=======
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
     [TestFixture]
     public class ProjectControllerTests
     {
@@ -32,6 +47,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
         /// </summary>
         private Mock<ITaskProcessor> taskProcessorMock;
 
+<<<<<<< HEAD
         /// <summary>
         /// The user repository mock.
         /// </summary>
@@ -50,7 +66,12 @@ namespace BinaryStudio.TaskManager.Web.Tests
         /// <summary>
         /// The controller.
         /// </summary>
+=======
+        private Mock<IUserProcessor> userProcessorMock;
+
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
         private ProjectController controller;
+        private Mock<IProjectProcessor> projectProcessorMock;
 
         /// <summary>
         /// The init.
@@ -59,6 +80,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
         public void Init()
         {
             this.taskProcessorMock = new Mock<ITaskProcessor>();
+<<<<<<< HEAD
             this.userRepositoryMock = new Mock<IUserRepository>();
             this.userProcessorMock = new Mock<IUserProcessor>();
             this.projectRepositoryMock = new Mock<IProjectRepository>();
@@ -67,6 +89,12 @@ namespace BinaryStudio.TaskManager.Web.Tests
                 this.userProcessorMock.Object,
                 this.userRepositoryMock.Object,
                 this.projectRepositoryMock.Object);
+=======
+            this.userProcessorMock = new Mock<IUserProcessor>();
+            this.projectProcessorMock = new Mock<IProjectProcessor>();
+            this.controller = new ProjectController(
+                this.taskProcessorMock.Object, this.userProcessorMock.Object, this.projectProcessorMock.Object);
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
         }
 
         /// <summary>
@@ -82,6 +110,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.taskProcessorMock.Verify(x => x.CreateTask(It.Is<HumanTask>(it => it.AssigneeId == 3)), Times.Once());
         }
 
+<<<<<<< HEAD
         /// <summary>
         /// The should_ get task with id 5 from task processor_ when task was edited.
         /// </summary>
@@ -205,6 +234,16 @@ namespace BinaryStudio.TaskManager.Web.Tests
 
             //assert
             this.taskProcessorMock.Verify(x => x.DeleteTask(5), Times.Once());
+=======
+        [Test]
+        public void Should_InviteUserInProject()
+        {
+            // act
+            this.controller.InviteUserInProject(1, 1);
+
+            // assert
+            this.projectProcessorMock.Verify(x => x.InviteUserInProject(1, 1));
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
         }
     }
 }

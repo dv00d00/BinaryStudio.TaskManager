@@ -1,17 +1,35 @@
 ﻿<div class="btn-group pull-right">
     @if (Request.IsAuthenticated)
-    {        
-        <span class="label well label-info">
-            @User.Identity.Name
-        </span> 
-        <span class="divider-vertical"></span> 
-        <span>
-            @Html.ActionLink("LogOff", "LogOff", "Account", null, new { @class = "btn btn-danger" })
-        </span>
+    {
+        <div class="btn-group pull-right">
+            <div class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+                <i class="icon-user"></i><span class="label label-info">
+                    @User.Identity.Name
+                </span><span class="caret"></span>
+            </div>
+            <ul class="dropdown-menu">
+                <li>
+                @Html.ActionLink("Profile", "Profile", "Account")        
+                 </li>
+                <li class="divider"></li>
+                <li>
+                    @Html.ActionLink("LogOff", "LogOff", "Account")
+                </li>
+            </ul>
+        </div>
     }
     else
     {
-        @Html.ActionLink("LogIn", "LogOn", "Account", null, new { @class = "btn btn-primary" })            
-        @Html.ActionLink("LogIn with LinkedIn", "LogonStart", "LinkedIn", null, new { @class = "btn btn-primary" })                
+        @Html.ActionLink("LogIn", "LogOn", "Account", null, new { @class = "btn btn-primary" })        
+        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                @Html.ActionLink("LogIn with LinkedIn", "LogonStart", "LinkedIn")
+            </li>
+            @*<li class="divider"></li>*@
+        </ul>
     }
+    @*@Html.Partial("_UpperMenuPartial")*@
 </div>

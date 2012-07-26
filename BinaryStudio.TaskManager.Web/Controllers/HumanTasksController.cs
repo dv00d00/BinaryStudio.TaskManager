@@ -111,17 +111,20 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [Authorize]
         public ActionResult Create(int managerId)
         {
-            var humanTask = new HumanTask();
-            humanTask.AssigneeId = (managerId != -1) ? managerId : (int?)null;
-            humanTask.CreatorId = this.userProcessor.GetCurrentLoginedUser(User.Identity.Name).Id;
-            humanTask.Created = DateTime.Now;
-            return this.View(humanTask);
+            var createModel = new CreateTaskViewModel
+                {
+                    Priorities = this.taskProcessor.GetPrioritiesList().OrderBy(x => x.Value),
+                    AssigneeId = (managerId != -1) ? managerId : (int?)null,
+                    CreatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id,
+                    Created = DateTime.Now
+                };
+            return this.View(createModel);
         }
 
         /// <summary>
         /// Creates the specified human task.
         /// </summary>
-        /// <param name="humanTask">
+        /// <param name="createModel">
         /// The human task.
         /// </param>
         /// <returns>
@@ -129,29 +132,42 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>
         [HttpPost]
         [Authorize]
-        public ActionResult Create(HumanTask humanTask)
+        public ActionResult Create(CreateTaskViewModel createModel)
         {
-            humanTask.Assigned = humanTask.AssigneeId == (int?)null ? humanTask.Created : (DateTime?)null;
+            createModel.Assigned = createModel.AssigneeId == (int?)null ? createModel.Created : (DateTime?)null;
             if (this.ModelState.IsValid)
             {
-                this.taskProcessor.CreateTask(humanTask);
+                var task = new HumanTask
+                               {
+                                   Assigned = createModel.Assigned,
+                                   AssigneeId = createModel.AssigneeId,
+                                   Closed = createModel.Closed,
+                                   Finished = createModel.Finished,
+                                   Created = createModel.Created,
+                                   CreatorId = createModel.CreatorId,
+                                   Description = createModel.Description,
+                                   Id = createModel.Id,
+                                   Name = createModel.Name,
+                                   Priority = createModel.Priority
+                               };
+                this.taskProcessor.CreateTask(task);
                 this.taskProcessor.AddHistory(new HumanTaskHistory
                 {
-                    NewDescription = humanTask.Description,
+                    NewDescription = task.Description,
                     ChangeDateTime = DateTime.Now,
-                    NewAssigneeId = humanTask.AssigneeId,
-                    NewName = humanTask.Name,
-                    Task = humanTask,
-                    NewPriority = humanTask.Priority,
+                    NewAssigneeId = task.AssigneeId,
+                    NewName = task.Name,
+                    Task = task,
+                    NewPriority = task.Priority,
                 });
                 return this.RedirectToAction("AllManagersWithTasks");
             }
-
+            createModel.Priorities = taskProcessor.GetPrioritiesList();
             // TODO: refactor this "PossibleCreators" and "PossibleAssignees"
             this.ViewBag.PossibleCreators = new List<User>();
             this.ViewBag.PossibleAssignees = new List<User>();
 
-            return this.View(humanTask);
+            return this.View(createModel);
         }
 
         /// <summary>
@@ -198,7 +214,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     Task = humanTask,
                     NewPriority = humanTask.Priority,
                 });
-                
+
                 return this.RedirectToAction("AllManagersWithTasks");
             }
 
@@ -224,7 +240,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         /// <summary>
-        /// The create single task view model by id.
+        /// The create single task view createModel by id.
         /// </summary>
         /// <param name="id">
         /// The id.

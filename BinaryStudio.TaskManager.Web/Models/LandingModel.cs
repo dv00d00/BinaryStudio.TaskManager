@@ -12,6 +12,6 @@ namespace BinaryStudio.TaskManager.Web.Models
         /// <value>
         /// The projects.
         /// </value>
-        public List<Project> Projects { get; set; }
+        public IEnumerable<Project> Projects { get; set; }
     }
 }

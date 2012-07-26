@@ -135,9 +135,11 @@
     <Compile Include="Controllers\LinkedInController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ReminderController.cs" />
-    <Compile Include="Controllers\SinalRController.cs" />
+    <Compile Include="Controllers\SignalRController.cs" />
     <Compile Include="ErrorHandler.cs" />
+    <Compile Include="Models\CreateTaskViewModel.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
+    <Compile Include="Models\InvitationsViewModel.cs" />
     <Compile Include="Models\LandingModel.cs" />
     <Compile Include="Models\RegisterLinkedInModel.cs" />
     <Compile Include="Models\SingleTaskViewModel.cs" />
@@ -312,7 +314,7 @@
     <Content Include="Views\Reminder\Delete.cshtml" />
     <Content Include="Views\Reminder\Details.cshtml" />
     <Content Include="Views\Reminder\Edit.cshtml" />
-    <Content Include="Views\Reminder\Index.cshtml" />
+    <Content Include="Views\Reminder\MyReminders.cshtml" />
     <Content Include="Views\Reminder\_CreateOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -330,13 +332,18 @@
     <Content Include="Views\Project\PersonalProject.cshtml" />
     <Content Include="Views\Account\RegisterNewUser.cshtml" />
     <Content Include="Views\Project\InviteOrDeleteUser.cshtml" />
-    <Content Include="Views\SinalR\Index.cshtml" />
+    <Content Include="Views\SignalR\Index.cshtml" />
     <Content Include="Views\Landing\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\Project\TaskDetailsPartial.cshtml" />
     <Content Include="Views\Project\AllTasks.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
+=======
+    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Project\Invitations.cshtml" />
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />

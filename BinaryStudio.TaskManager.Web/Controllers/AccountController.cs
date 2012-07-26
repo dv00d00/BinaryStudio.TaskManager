@@ -27,9 +27,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly IUserProcessor userProcessor;
 
         /// <summary>
+<<<<<<< HEAD
         /// The user repository.
         /// </summary>
         private readonly IUserRepository userRepository;
+=======
+        /// The project processor.
+        /// </summary>
+        private readonly IProjectProcessor projectProcessor;
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountController"/> class.
@@ -37,6 +43,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="userProcessor">
         /// The user processor.
         /// </param>
+<<<<<<< HEAD
         /// <param name="userRepository">
         /// The user repository.
         /// </param>
@@ -44,6 +51,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             this.userProcessor = userProcessor;
             this.userRepository = userRepository;
+=======
+        /// <param name="projectProcessor">
+        /// The project Processor.
+        /// </param>
+        public AccountController(IUserProcessor userProcessor, IProjectProcessor projectProcessor)
+        {
+            this.userProcessor = userProcessor;
+            this.projectProcessor = projectProcessor;
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
         }
 
         /// <summary>
@@ -84,6 +100,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 if (this.userProcessor.CreateUser(model.UserName, model.Password, model.Email, string.Empty, model.ImageData, model.ImageMimeType))
                 {
                     this.userProcessor.LogOnUser(model.UserName, model.Password);
+                    var user = this.userProcessor.GetUserByName(model.UserName);
+                    this.projectProcessor.CreateDefaultProject(user);
                     return this.RedirectToAction("AllManagersWithTasks", "HumanTasks");
                 }
             }
@@ -121,8 +139,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             if (ModelState.IsValid)
             {
                 if (this.userProcessor.LogOnUser(model.UserName, model.Password))
-                {
-                    this.userProcessor.SetRoleToUserFromDB(model.UserName);
+                {                    
                     FormsAuthentication.SetAuthCookie(model.UserName, true);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
@@ -154,6 +171,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             FormsAuthentication.SignOut();
 
             return this.RedirectToAction("LogOn", "Account");
+        }
+
+        public ActionResult Profile()
+        {
+            return this.View();
         }
     }
 }

@@ -47,17 +47,40 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        $(".fancybox").fancybox({
-            afterLoad: function () {
-                $(".no").click(function () {
-                    $.fancybox.close();
-                });
-            }
+        $(".fancybox").click(function () {
+            var projectId = $(this).parent("li").attr("data-id");
+            $(".fancybox").fancybox({
+                afterLoad: function () {
+                    $(".no").click(function () {
+                        $.fancybox.close();
+                    });
+                    $(".yes").click(function () {
+                        $.fancybox.close();
+                        setTimeout(location.reload(true),1200);
+                        $.ajax({
+                            data: { projectId: projectId },
+                            dataType: 'JSON',
+                            type: 'POST',
+                            url: '/Landing/DeleteProject',
+                            success: function (response) {
+                                var list = $(".project_list");
+                                list.html("");
+                                for (var proj in response.Projects) {
+                                    list.append("\
+                            <li data-id='" + proj.Id + "'> \
+                                    <a href='#delete_box' class='fancybox'><div class='delete_btn'></div></a>\
+                                    <div class='project_name'>" + proj.Name + "</div>\
+                                </li>");
+                                }
+                            }
+                        });
+                    });
+                }
+            });
         });
-
         $(".new_project_btn").click(function () {
             if ($(".newBox").length == 0) {
-                $(".project_list").append($("#add_proj_box").clone());
+                $(".project_list").prepend($("#add_proj_box").clone());
                 $("#add_proj_box").addClass("newBox");
                 $(".newBox").css("display", "block");
             }
@@ -68,9 +91,42 @@
                 $(".newBox").remove();
             });
             $(".add_proj_btn").click(function () {
-                var val = $(".newBox").children("input").val();
-                $(".newBox").remove();
+                sendNewProject();
+            });
+            $(".newBox").children("input").keyup(function (e) {
+                var code = null;
+                code = (e.keyCode ? e.keyCode : e.which);
+                if (code == 27) {
+                    $(".newBox").remove();
+                }
+                else if (code == 13) {
+                    sendNewProject();
+                }
             });
         });
     })
+    
+    function sendNewProject() {
+        var val = $(".newBox").children("input").val();
+        $(".newBox").remove();
+        setTimeout(location.reload(true), 1200);
+        $.ajax({
+            data: { projectName: val },
+            dataType: "JSON",
+            type: "POST",
+            url: "/Landing/AddProject",
+            success: function (response) {
+                var list = $(".project_list");
+                list.html("");
+                for (var proj in response.Projects) {
+                    list.append("\
+                            <li data-id='" + proj.Id + "'> \
+                                    <a href='#delete_box' class='fancybox'><div class='delete_btn'></div></a>\
+                                    <div class='project_name'>" + proj.Name + "</div>\
+                                </li>");
+                }
+
+            }
+        });
+    }
 </script>

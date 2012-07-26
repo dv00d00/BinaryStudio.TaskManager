@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ProjectRepository.cs" company="">
 //   
@@ -8,6 +9,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace BinaryStudio.TaskManager.Logic.Core
+=======
+﻿namespace BinaryStudio.TaskManager.Logic.Core
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
 {
     using System.Collections.Generic;
     using System.Data;
@@ -109,7 +113,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// </param>
         public void Delete(int projectId)
         {
-            Project project = this.dataBaseContext.Projects.Single(x => x.Id == projectId);
+            var project = this.dataBaseContext.Projects.Single(x => x.Id == projectId);
             this.dataBaseContext.Projects.Remove(project);
             this.dataBaseContext.SaveChanges();
         }
@@ -124,6 +128,26 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             this.dataBaseContext.Entry(project).State = EntityState.Modified;
             this.dataBaseContext.SaveChanges();
+        }
+
+        public void CreateInvitationUserInProject(Invitation invitation)
+        {
+            this.dataBaseContext.Entry(invitation).State = EntityState.Added;
+            this.dataBaseContext.SaveChanges();
+        }
+
+        public void UpdateInvitation(Invitation invitation)
+        {
+            this.dataBaseContext.Entry(invitation).State = EntityState.Modified;
+            this.dataBaseContext.SaveChanges();
+        }
+
+        public IEnumerable<Invitation> GetAllInvitationsForUser(int userId)
+        {
+            var invitations =
+                this.dataBaseContext.Invitations.Where(x => x.UserId == userId).Where(x => x.IsInvitationSended).Select(
+                    x => x.IsInvitationConfirmed == false);
+            return (IEnumerable<Invitation>)invitations;
         }
     }
 }

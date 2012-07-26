@@ -1,4 +1,4 @@
-﻿@model BinaryStudio.TaskManager.Logic.Domain.HumanTask
+﻿@model BinaryStudio.TaskManager.Web.Models.CreateTaskViewModel
 @{
     ViewBag.Title = "Creating new task";
 }
@@ -20,21 +20,21 @@
             Name:
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
+            @Html.TextBoxFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
         <div class="editor-label">
             Description:
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
+            @Html.TextBoxFor(model => model.Description)
             @Html.ValidationMessageFor(model => model.Description)
         </div>
         <div class="editor-label">
             Priority:
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Priority)
+            @Html.DropDownListFor(model => model.Priority, Model.Priorities, "Choose...");
             @Html.ValidationMessageFor(model => model.Priority)
         </div>
         <p>
@@ -43,13 +43,12 @@
         </div>
         <div class="editor-field">
             <div class="input-append date" data-date="06-09-2011" data-date-format="dd-mm-yyyy">
-            @Html.EditorFor(model => model.Finished)
-            
+            @Html.TextBoxFor(model => model.Finished)            
             @Html.ValidationMessageFor(model => model.Finished)
         </div>
         </div>
-            <input type="submit" value="Сохранить" class="btn btn-primary" />
-            @Html.ActionLink("Вернуться в список всех задач", "AllTasks", null, new { @class = "btn" })
+            <input type="submit" value="Save" class="btn btn-primary" />
+            @Html.ActionLink("Return to task list", "AllTasks", null, new { @class = "btn" })
         </p>
     </fieldset>
 }

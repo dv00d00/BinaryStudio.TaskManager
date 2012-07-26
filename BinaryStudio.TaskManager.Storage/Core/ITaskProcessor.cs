@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.Mvc;
 using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Logic.Core
@@ -30,6 +31,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
         IEnumerable<HumanTask> GetUnassignedTasks();
         IEnumerable<HumanTask> GetTasksList(int employeeId);
         IEnumerable<HumanTask>  GetAllTasks();
+<<<<<<< HEAD
         IEnumerable<HumanTask> GetAllTasksInProject(int projectId); 
+=======
+
+        IEnumerable<SelectListItem> GetPrioritiesList();
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
     }
 }

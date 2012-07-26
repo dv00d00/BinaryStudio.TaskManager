@@ -42,9 +42,15 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         /// </summary>
         public virtual ICollection<HumanTask> Tasks { get; set; }
 
+<<<<<<< HEAD
         /// <summary>
         /// Gets or sets the creator.
         /// </summary>
+=======
+        //public virtual ICollection<User> Users { get; set; }
+        public int CreatorId { get; set; }
+
+>>>>>>> 715b24ea12f2d4451d1f27b55174f928386b2726
         public virtual User Creator { get; set; }
 
         /// <summary>
