@@ -20,7 +20,6 @@
 
         taskHub.TaskMoved = function (movedtaskId, moveToId, senderConnectionId) {
             if (senderConnectionId != $.connection.hub.id) {
-                alert(jQuery("[data-taskid=" + movedtaskId + "]").html());
                 jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
             };
         };
@@ -50,7 +49,6 @@
                 });
 
                 // signalr
-                alert(receiverId);
                 taskHub.moveTask(taskId, receiverId, $.connection.hub.id);
             },
             placeholder: "placeholderTask",
