@@ -43,6 +43,21 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </summary>
         private readonly IProjectRepository projectRepository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectController"/> class.
+        /// </summary>
+        /// <param name="taskProcessor">
+        /// The task processor.
+        /// </param>
+        /// <param name="userProcessor">
+        /// The user processor.
+        /// </param>
+        /// <param name="userRepository">
+        /// The user repository.
+        /// </param>
+        /// <param name="projectRepository">
+        /// The project repository.
+        /// </param>
         public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IUserRepository userRepository, IProjectRepository projectRepository)
         {
             this.taskProcessor = taskProcessor;
@@ -109,7 +124,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     UsersTasks = new List<ManagerTasksViewModel>(),
                     UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList()
                 };
-            var users = this.projectRepository.GetAllUsersInProject(projectId);//this.userRepository.GetAll();
+            var users = this.projectRepository.GetAllUsersInProject(projectId);
             foreach (var user in users)
             {
                 var managerModel = new ManagerTasksViewModel
@@ -226,10 +241,78 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             {
                 return this.File(user.ImageData, user.ImageMimeType);
             }
-            else
+
+            return null;
+        }
+
+        /// <summary>
+        /// The all tasks.
+        /// </summary>
+        /// <returns>
+        /// The System.Web.Mvc.ViewResult.
+        /// </returns>
+        [Authorize]
+        public ViewResult AllTasks()
+        {
+            var model = new List<SingleTaskViewModel>();
+            string creatorName, assigneeName;
+            var tasks = this.taskProcessor.GetAllTasks().ToList();
+            foreach (var task in tasks)
             {
-                return null;
+                // TODO: fix usrRepo for userProcessor
+                creatorName = task.CreatorId.HasValue ? this.userRepository.GetById((int)task.CreatorId).UserName : "none";
+                assigneeName = task.AssigneeId.HasValue ? this.userRepository.GetById((int)task.AssigneeId).UserName : "none";
+                model.Add(new SingleTaskViewModel
+                {
+                    HumanTask = task,
+                    AssigneeName = assigneeName,
+                    CreatorName = creatorName
+                });
             }
+
+            return View(model);
+        }
+
+        /// <summary>
+        /// The details.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        [Authorize]
+        public ActionResult Details(int id)
+        {
+            var model = this.CreateSingleTaskViewModelById(id);
+            return this.View(model);
+        }
+
+        /// <summary>
+        /// The create single task view model by id.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The BinaryStudio.TaskManager.Web.Models.SingleTaskViewModel.
+        /// </returns>
+        private SingleTaskViewModel CreateSingleTaskViewModelById(int id)
+        {
+            var model = new SingleTaskViewModel();
+            var task = this.taskProcessor.GetTaskById(id);
+            var creatorName = task.CreatorId.HasValue
+                                  ? this.userRepository.GetById((int)task.CreatorId).UserName
+                                  : "none";
+            var assigneeName = task.AssigneeId.HasValue
+                                   ? this.userRepository.GetById((int)task.AssigneeId).UserName
+                                   : "none";
+            model.HumanTask = task;
+            model.CreatorName = creatorName;
+            model.AssigneeName = assigneeName;
+            model.TaskHistories = this.taskProcessor.GetAllHistoryForTask(id).OrderByDescending(x => x.ChangeDateTime).ToList();
+            return model;
         }
     }
 }
