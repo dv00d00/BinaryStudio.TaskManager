@@ -20,13 +20,15 @@
 
         taskHub.TaskMoved = function (movedtaskId, moveToId, senderConnectionId) {
             if (senderConnectionId != $.connection.hub.id) {
+                jQuery("[data-taskid=" + movedtaskId + "]").fadeOut();
                 jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
+                jQuery("[data-taskid=" + movedtaskId + "]").fadeIn();
             };
         };
 
         $(".column").sortable({
             connectWith: ".column",
-            cancel:  ".ui-state-disabled",
+            cancel: ".ui-state-disabled",
             start: function (event, ui) {
                 senderId = $(this).closest(".column").attr("id");
             },
