@@ -8,7 +8,9 @@
                 </span><span class="caret"></span>
             </div>
             <ul class="dropdown-menu">
-                <li>Profile </li>
+                <li>
+                @Html.ActionLink("Profile", "Profile", "Account")        
+                 </li>
                 <li class="divider"></li>
                 <li>
                     @Html.ActionLink("LogOff", "LogOff", "Account")

@@ -17,7 +17,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         bool LogOnUser(string userName, string password);
 
-        User GetCurrentLoginedUser(string userName);
+        User GetUserByName(string userName);
 
         bool CreateUser(string userName, string password, string email, string linkedInId);
 

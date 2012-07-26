@@ -115,7 +115,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 {
                     Priorities = this.taskProcessor.GetPrioritiesList().OrderBy(x => x.Value),
                     AssigneeId = (managerId != -1) ? managerId : (int?)null,
-                    CreatorId = this.userProcessor.GetCurrentLoginedUser(User.Identity.Name).Id,
+                    CreatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id,
                     Created = DateTime.Now
                 };
             return this.View(createModel);

@@ -64,7 +64,7 @@
                 if (this.userProcessor.CreateUser(model.UserName, model.Password, model.Email, string.Empty))
                 {
                     this.userProcessor.LogOnUser(model.UserName, model.Password);
-                    var user = this.userProcessor.GetCurrentLoginedUser(model.UserName);
+                    var user = this.userProcessor.GetUserByName(model.UserName);
                     this.projectProcessor.CreateDefaultProject(user);
                     return this.RedirectToAction("AllManagersWithTasks", "HumanTasks");
                 }
@@ -135,6 +135,11 @@
             FormsAuthentication.SignOut();
 
             return this.RedirectToAction("LogOn", "Account");
+        }
+
+        public ActionResult Profile()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
