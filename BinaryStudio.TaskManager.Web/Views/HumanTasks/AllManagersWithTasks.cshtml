@@ -10,10 +10,9 @@
 
         taskHub.TaskMoved = function (movedtaskId, moveToId, senderConnectionId) {
             if (senderConnectionId != $.connection.hub.id) {
-                //alert("sd");
-                //var task = jQuery("[data-taskid=" + movedtaskId + "]");
+                alert("i msut move to!" + movedtaskId);;
+                alert(jQuery("[data-taskid=" + movedtaskId + "]").html());
                 jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
-                //jQuery("[data-taskid=" + movedtaskId + "]").fadeOut();
             };
         };
 
@@ -41,7 +40,8 @@
                 });
 
                 // signalr
-                taskHub.moveTask(taskId, receiverId, $.connection.hub.id);
+                alert(receiverId);
+                taskHub.moveTask(taskId, (typeof receiverId == "undefined") ? 0 : receiverId, $.connection.hub.id);
             },
             connectWith: $(".sortableTasks"),
             placeholder: "placeholderTask",
@@ -86,11 +86,11 @@
             </div>
             @foreach (var unAssignedTask in Model.UnAssignedTasks)
             {
-                <div class="sortableTasks">
+                <div class="sortableTasks" data-taskid = @unAssignedTask.Id.ToString()>
                     @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
                 </div>
             }
-            <div class="sortableTasks" style="height: 300px" data-managerid="-1">
+            <div class="sortableTasks" style="height: 300px" data-managerid="0">
             </div>
         </td>
         @foreach (var user in Model.UsersTasks)

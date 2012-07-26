@@ -18,6 +18,7 @@ namespace BinaryStudio.TaskManager.Web.SignalR
 
         public void MoveTask(int taskId, int moveToId, string senderConnectionId)
         {
+            if (moveToId == -1) moveToId = 0;
             Clients.TaskMoved(taskId, moveToId,senderConnectionId);
         }
     }
