@@ -1,4 +1,14 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.ProjectViewModel
+ <style>
+	.column { width: 270px; float: left;min-height: 300px;}
+	.portlet { margin: 0 1em 1em 0; }
+	.portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
+	.portlet-header .ui-icon { float: right; }
+	.portlet-content { padding: 0.4em; }
+	.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+	.ui-sortable-placeholder * { visibility: hidden; }
+</style>
+
 <script type="text/javascript">
     $(document).ready(function () {
         var senderId, taskId, receiverId;
@@ -16,8 +26,8 @@
             };
         };
 
-        $(".sortableTasks").sortable({
-
+        $(".column").sortable({
+            connectWith: ".column",
             start: function (event, ui) {
                 senderId = $(this).closest(".managerTasks").attr("id");
             },
@@ -43,11 +53,11 @@
                 alert(receiverId);
                 taskHub.moveTask(taskId, (typeof receiverId == "undefined") ? 0 : receiverId, $.connection.hub.id);
             },
-            connectWith: $(".sortableTasks"),
+            connectWith: $(".column"),
             placeholder: "placeholderTask",
             cursor: 'move'
         });
-        $(".sortableTasks").disableSelection();
+        $(".column").disableSelection();
     });
 </script>
 <!-- Caption of the table "Managers-Tasks"-->
@@ -64,50 +74,52 @@
         {
             <!-- Header of the table (Managers names)-->
             <tr>
-                <td align="center" width="250">
-                    <div>
-                        Unassigned tasks
+                <td>
+                    @Html.ActionLink("Create unassigned task", "Create", new { managerId = -1 }, new { @class = "btn" })
+                </td>
+                @foreach (var user in Model.UsersTasks)
+                {   
+                    <td>
+                        @Html.ActionLink("Create task", "Create", new { managerId = user.User.Id }, new { @class = "btn" })
+                    </td> 
+                }
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    <div class="column" align="center" valign="top" width="250">
+                        @foreach (var unAssignedTask in Model.UnAssignedTasks)
+                        {
+                            <div data-taskid = @unAssignedTask.Id.ToString()>
+                                @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
+                            </div>
+                        }
                     </div>
                 </td>
-                @foreach (var task in Model.UsersTasks)
-                {
-                    <td align="center" width="250">
-                        <div>
-                            @Html.ActionLink(task.User.UserName, "UserDetails", new { userId = task.User.Id }, new { @class = "btn btn-info" })
-                        </div>
-                    </td>
+                @foreach (var user in Model.UsersTasks)
+                {   
+                <td>
+                    <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250" class="managerTasks" >
+                        @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
+                        {
+                            <div data-taskid = @task.Id.ToString()>
+                                @Html.Partial("ManagerTasksTablePartialView", task)
+                            </div>
+                                }
+                    </div>
+                </td> 
                 }
+                
             </tr>
         }
         <!-- Create a column with tasks-->
-        <td align="center" valign="top" width="250">
-            <div>
-                @Html.ActionLink("Create unassigned task", "Create", new { managerId = -1 }, new { @class = "btn" })
-            </div>
-            @foreach (var unAssignedTask in Model.UnAssignedTasks)
-            {
-                <div class="sortableTasks" data-taskid = @unAssignedTask.Id.ToString()>
-                    @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
-                </div>
-            }
-            <div class="sortableTasks" style="height: 300px" data-managerid="0">
-            </div>
-        </td>
-        @foreach (var user in Model.UsersTasks)
-        {        
-            <td id=@user.User.Id.ToString() align = "center" valign="top" width="250" class="managerTasks" >
-                <div>@Html.ActionLink("Create task", "Create", new { managerId = user.User.Id }, new { @class = "btn" })</div>
-                @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
-                {
-                    <div class="sortableTasks" data-taskid = @task.Id.ToString()>
-                        @Html.Partial("ManagerTasksTablePartialView", task)
-                    </div>
-                }
-                <div class="sortableTasks" style="height: 300px" data-managerid =@user.User.Id.ToString()>
-                </div>
-            </td>
-        }
+       
+        
     </table>
 </fieldset>
 <p align="center" class="well-large">
 </p>
+
+
+
