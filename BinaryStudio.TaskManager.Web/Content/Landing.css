@@ -10,6 +10,7 @@
 .project_list {
     list-style: none;
     padding: 0px;
+    padding-top: 10px;
 }
 
 .project_list li{
@@ -22,7 +23,7 @@
     padding-left: 10px;
     float: left;
     position: absolute;
-    width: 70%;
+    width: 75%;
     left: 20px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -68,6 +69,17 @@
     background: #A0F06C url("images/plus_icon.gif") no-repeat;
     background-position: right;
     
+}
+
+.dashboard_btn 
+{
+    width: 25px;
+    height: 25px;
+    background: url("images/to_dashboard.png") no-repeat;
+    background-position: right;
+    background-size: 100%;
+    position: absolute;
+    right: 0px;
 }
 /****************** Boxes ********************/
 

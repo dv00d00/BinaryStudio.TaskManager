@@ -169,6 +169,7 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\plus_icon.gif" />
+    <Content Include="Content\images\to_dashboard.png" />
     <Content Include="Content\jquery.fancybox.css" />
     <Content Include="Content\Landing.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />

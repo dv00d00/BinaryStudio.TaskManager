@@ -25,6 +25,7 @@
                     <li data-id="@project.Id">
                         <a href="#" class="delete_link"><div class="delete_btn"></div></a>
                         <div class="project_name">@project.Name</div>
+                       <a href="/HumanTasks/AllManagersWithTasks"><div class="dashboard_btn"></div></a>
                     </li>
                 }
             </ul>
@@ -152,7 +153,7 @@
                                 <li data-id='" + response.Projects[i].Id + "'> \
                                 <a href='#delete_box' class='delete_link'><div class='delete_btn'></div></a>\
                                 <div class='project_name'>" + name + "</div>\
-                                </li>");
+                       <a href='/HumanTasks/AllManagersWithTasks'><div class='dashboard_btn'></div></a></li>");
             if (response.Projects[i].Name.length >= 20)
                 $("li[data-id=" + response.Projects[i].Id + "]").attr("title", response.Projects[i].Name);
         }
