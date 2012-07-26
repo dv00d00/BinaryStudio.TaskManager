@@ -65,7 +65,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
                     ReceiverId = receiverId,
                     SenderId = senderId,
                     ProjectId = projectId,
-                    IsInvitationSended = true,
                     IsInvitationConfirmed = false
                 };
             this.projectRepository.AddInvitation(invitation);

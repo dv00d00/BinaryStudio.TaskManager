@@ -29,6 +29,12 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                               .WithMany() //Unidirectional
                               .Map(x => x.MapKey("Creator")) //FK column Name
                               .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Invitation>()
+                    .HasRequired(e => e.Sender)
+                    .WithMany()
+                    .HasForeignKey(e => e.SenderId)
+                    .WillCascadeOnDelete(false);
          /*   modelBuilder.Entity<Project>().HasKey(it => it.Id);
 
             modelBuilder.Entity<Project>().HasMany(it => it.Users).WithMany(it => it.Projects);

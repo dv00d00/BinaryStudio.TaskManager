@@ -83,7 +83,7 @@
 
 
             var invitations =
-                this.dataBaseContext.Invitations.Where(x => x.ReceiverId == userId).Where(x => x.IsInvitationSended).Select(
+                this.dataBaseContext.Invitations.Where(x => x.ReceiverId == userId).Select(
                     x => x.IsInvitationConfirmed == false).ToList();
             return invitations as IEnumerable<Invitation>;
         }

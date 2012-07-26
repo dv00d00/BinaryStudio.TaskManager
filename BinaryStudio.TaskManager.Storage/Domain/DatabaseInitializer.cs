@@ -7,9 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using FizzWare.NBuilder.Dates;
-
 namespace BinaryStudio.TaskManager.Logic.Domain
 {
     using System.Data.Entity;
@@ -18,10 +15,14 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
     using BinaryStudio.TaskManager.Logic.Core;
 
+    using System;
+
+    using FizzWare.NBuilder.Dates;
+
     /// <summary>
     /// The database initializer.
     /// </summary>
-    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<DataBaseContext>
+    public class DatabaseInitializer : DropCreateDatabaseAlways<DataBaseContext>
     {
         /// <summary>
         /// The crypto provider.
