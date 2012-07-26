@@ -8,7 +8,16 @@
             taskHub.join("@User.Identity.Name.ToString()");
         });
 
+        taskHub.TaskMoved = function (movedtaskId, moveToId, senderConnectionId) {
+            if (senderConnectionId != $.connection.hub.id) {
+                jQuery("[data-taskid=" + movedtaskId + "]").fadeOut();
+            };
+            
+
+        };
+
         $(".sortableTasks").sortable({
+
             start: function (event, ui) {
                 senderId = $(this).closest(".managerTasks").attr("id");
             },
@@ -31,7 +40,7 @@
                 });
 
                 // signalr
-                taskHub.moveTask(taskId, receiverId);
+                taskHub.moveTask(taskId, receiverId, $.connection.hub.id);
             },
             connectWith: $(".sortableTasks"),
             placeholder: "placeholderTask",
@@ -89,7 +98,7 @@
                 <div>@Html.ActionLink("Create task", "Create", new { managerId = user.User.Id }, new { @class = "btn" })</div>
                 @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
                 {
-                    <div class="sortableTasks">
+                    <div class="sortableTasks" data-taskid = @task.Id.ToString()>
                         @Html.Partial("ManagerTasksTablePartialView", task)
                     </div>
                 }

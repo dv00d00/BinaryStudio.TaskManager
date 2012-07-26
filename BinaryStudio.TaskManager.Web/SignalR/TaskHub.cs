@@ -16,9 +16,9 @@ namespace BinaryStudio.TaskManager.Web.SignalR
             Distribute(id);
         }
 
-        public void MoveTask(int taskId, int moveToId)
+        public void MoveTask(int taskId, int moveToId, string senderConnectionId)
         {
-            Clients.TaskMoved(taskId, moveToId);
+            Clients.TaskMoved(taskId, moveToId,senderConnectionId);
         }
     }
 }
