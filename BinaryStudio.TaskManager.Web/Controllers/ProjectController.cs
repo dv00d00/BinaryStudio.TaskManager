@@ -153,13 +153,11 @@
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         public ActionResult InviteOrDeleteUser()
-        {
-            var model = new ProjectCollaboratorsViewModel();
+        {           
             var currentUser = this.userProcessor.GetUserByName(User.Identity.Name);
             var users = this.userProcessor.GetAllUsers();
-            var list = new List<User>();
-            list.Add(currentUser);
-            model.Collaborators = users.Except(list);
+            var listWithCurrentUser = new List<User> { currentUser };
+            var model = new ProjectCollaboratorsViewModel { Collaborators = users.Except(listWithCurrentUser) };
             return this.View(model);
         }
 

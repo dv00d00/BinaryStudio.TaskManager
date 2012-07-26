@@ -1,6 +1,6 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.ProjectCollaboratorsViewModel
 @{
-    ViewBag.Title = "All users list";
+    ViewBag.Title = "Manage collaborators";
 }
 <h2 class="well-large">
     Manage collaborators
@@ -20,8 +20,8 @@
                 @user.UserName
             </td>
             <td>
-                @Html.ActionLink("Invite", "InviteUserInProject", new { receiverId = user.Id, projectId = 1 }, new { @class = "btn" }) 
-                @Html.ActionLink("Delete", "RemoveUserFromProject", new { receiverId = user.Id, projectId = 1 }, new { @class = "btn" }) 
+                @Html.ActionLink("Invite", "InviteUserInProject", new { receiverId = user.Id, projectId = 1 }, new { @class = "btn" })
+                @Html.ActionLink("Delete", "RemoveUserFromProject", new { receiverId = user.Id, projectId = 1 }, new { @class = "btn" })
             </td>
         </tr>
     }
