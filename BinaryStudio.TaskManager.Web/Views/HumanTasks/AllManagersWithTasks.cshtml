@@ -10,10 +10,11 @@
 
         taskHub.TaskMoved = function (movedtaskId, moveToId, senderConnectionId) {
             if (senderConnectionId != $.connection.hub.id) {
-                jQuery("[data-taskid=" + movedtaskId + "]").fadeOut();
+                //alert("sd");
+                //var task = jQuery("[data-taskid=" + movedtaskId + "]");
+                jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
+                //jQuery("[data-taskid=" + movedtaskId + "]").fadeOut();
             };
-            
-
         };
 
         $(".sortableTasks").sortable({
@@ -89,12 +90,12 @@
                     @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
                 </div>
             }
-            <div class="sortableTasks" style="height: 300px">
+            <div class="sortableTasks" style="height: 300px" data-managerid="-1">
             </div>
         </td>
         @foreach (var user in Model.UsersTasks)
         {        
-            <td id=@user.User.Id.ToString() align = "center" valign="top" width="250" class="managerTasks">
+            <td id=@user.User.Id.ToString() align = "center" valign="top" width="250" class="managerTasks" >
                 <div>@Html.ActionLink("Create task", "Create", new { managerId = user.User.Id }, new { @class = "btn" })</div>
                 @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
                 {
@@ -102,7 +103,7 @@
                         @Html.Partial("ManagerTasksTablePartialView", task)
                     </div>
                 }
-                <div class="sortableTasks" style="height: 300px">
+                <div class="sortableTasks" style="height: 300px" data-managerid =@user.User.Id.ToString()>
                 </div>
             </td>
         }
