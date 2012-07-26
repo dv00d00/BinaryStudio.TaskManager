@@ -192,5 +192,10 @@
             this.projectProcessor.RemoveUserFromProject(userId, projectId);
             return this.RedirectToAction("PersonalProject");
         }
+
+        public ActionResult Invitations()
+        {
+            return this.View();
+        }
     }
 }

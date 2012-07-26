@@ -139,7 +139,7 @@
 
         public ActionResult Profile()
         {
-            throw new System.NotImplementedException();
+            return this.View();
         }
     }
 }
