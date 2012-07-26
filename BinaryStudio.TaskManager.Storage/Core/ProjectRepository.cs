@@ -66,7 +66,7 @@
             this.dataBaseContext.SaveChanges();
         }
 
-        public void CreateInvitationUserInProject(Invitation invitation)
+        public void AddInvitation(Invitation invitation)
         {
             this.dataBaseContext.Entry(invitation).State = EntityState.Added;
             this.dataBaseContext.SaveChanges();
@@ -80,10 +80,12 @@
 
         public IEnumerable<Invitation> GetAllInvitationsForUser(int userId)
         {
+
+
             var invitations =
-                this.dataBaseContext.Invitations.Where(x => x.UserId == userId).Where(x => x.IsInvitationSended).Select(
-                    x => x.IsInvitationConfirmed == false);
-            return (IEnumerable<Invitation>)invitations;
+                this.dataBaseContext.Invitations.Where(x => x.ReceiverId == userId).Where(x => x.IsInvitationSended).Select(
+                    x => x.IsInvitationConfirmed == false).ToList();
+            return invitations as IEnumerable<Invitation>;
         }
     }
 }

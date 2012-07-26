@@ -47,24 +47,28 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
-        /// Send invitation to user in project.
+        /// The invite user in project.
         /// </summary>
-        /// <param name="userId">
-        /// The user id.
+        /// <param name="senderId">
+        /// The sender id.
         /// </param>
         /// <param name="projectId">
         /// The project id.
         /// </param>
-        public void InviteUserInProject(int userId, int projectId)
-        {
+        /// <param name="receiverId">
+        /// The receiver id.
+        /// </param>
+        public void InviteUserInProject(int senderId, int projectId, int receiverId)
+        {                        
             var invitation = new Invitation
                 {
-                    UserId = userId,
+                    ReceiverId = receiverId,
+                    SenderId = senderId,
                     ProjectId = projectId,
                     IsInvitationSended = true,
                     IsInvitationConfirmed = false
                 };
-            this.projectRepository.CreateInvitationUserInProject(invitation);
+            this.projectRepository.AddInvitation(invitation);
         }
 
         /// <summary>
@@ -108,16 +112,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The invitation.
         /// </param>
         public void ConfirmInvitationInProject(Invitation invitation)
-        {
-            var userId = invitation.UserId;
-            var projectId = invitation.ProjectId;            
+        {            
+            var projectId = invitation.ProjectId;
+            var receiverId = invitation.ReceiverId;
 
-            var user = this.userRepository.GetById(userId);
+            var user = this.userRepository.GetById(receiverId);
             user.UserProjects.Add(this.projectRepository.GetById(projectId));
             this.userRepository.UpdateUser(user);
 
             var project = this.projectRepository.GetById(projectId);
-            project.ProjectUsers.Add(this.userRepository.GetById(userId));
+            project.ProjectUsers.Add(this.userRepository.GetById(receiverId));
             this.projectRepository.Update(project);
 
             invitation.IsInvitationConfirmed = true;

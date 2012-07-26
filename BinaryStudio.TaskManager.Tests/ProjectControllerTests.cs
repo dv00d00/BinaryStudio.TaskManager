@@ -1,10 +1,5 @@
 ﻿namespace BinaryStudio.TaskManager.Web.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
     using BinaryStudio.TaskManager.Web.Controllers;
@@ -50,7 +45,7 @@
             this.controller.InviteUserInProject(1, 1);
 
             // assert
-            this.projectProcessorMock.Verify(x => x.InviteUserInProject(1, 1));
+            this.projectProcessorMock.Verify(x => x.InviteUserInProject(1, 1, 1));
         }
     }
 }

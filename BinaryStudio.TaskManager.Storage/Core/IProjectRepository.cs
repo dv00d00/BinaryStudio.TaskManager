@@ -80,7 +80,7 @@
         /// <param name="invitation">
         /// The invitation.
         /// </param>
-        void CreateInvitationUserInProject(Invitation invitation);
+        void AddInvitation(Invitation invitation);
 
         /// <summary>
         /// The update invitation.

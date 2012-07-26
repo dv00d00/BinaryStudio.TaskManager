@@ -160,18 +160,22 @@
         /// <summary>
         /// The invite user in project.
         /// </summary>
-        /// <param name="userId">
-        /// The user id.
+        /// <param name="senderId">
+        /// The sender Id.
         /// </param>
         /// <param name="projectId">
         /// The project id.
         /// </param>
+        /// <param name="receiverId">
+        /// The receiver Id.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult InviteUserInProject(int userId, int projectId)
+        public ActionResult InviteUserInProject(int receiverId, int projectId)
         {
-            this.projectProcessor.InviteUserInProject(userId, projectId);                        
+            var senderId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
+            this.projectProcessor.InviteUserInProject(senderId, projectId, receiverId);
             return this.RedirectToAction("PersonalProject");
         }
 
@@ -195,11 +199,10 @@
 
         public ActionResult Invitations()
         {
-            var model = new List<InvitationsViewModel>();
             var user = this.userProcessor.GetUserByName(User.Identity.Name);
             var invitationsToUser = this.projectProcessor.GetAllInvitationsToUser(user.Id);
-
-            return this.View();
+            var model = invitationsToUser.Select(invitation => new InvitationsViewModel { Invitation = invitation, Sender = invitation.Sender, Project = invitation.Project }).ToList();
+            return this.View(model);
         }
     }
 }

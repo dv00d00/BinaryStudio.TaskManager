@@ -20,13 +20,14 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <summary>
         /// The invite user in project.
         /// </summary>
-        /// <param name="userId">
-        /// The user id.
+        /// <param name="receiverId">
+        ///   The user id.
         /// </param>
         /// <param name="projectId">
-        /// The project id.
+        ///   The project id.
         /// </param>
-        void InviteUserInProject(int userId, int projectId);
+        /// <param name="senderId"> </param>
+        void InviteUserInProject(int senderId, int projectId, int receiverId);
 
         /// <summary>
         /// The remove user from project.

@@ -6,7 +6,7 @@
 
     public class InvitationsViewModel
     {
-        public User User { get; set; }
+        public User Sender { get; set; }
 
         public Project Project { get; set; }
 
