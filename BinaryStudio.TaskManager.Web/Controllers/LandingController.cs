@@ -56,5 +56,19 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return Json(model);
         }
 
+        [HttpPost]
+        public ActionResult DeleteProject(int projectId)
+        {
+            this.projectRepository.Delete(projectId);
+            var user = userRepository.GetByName(User.Identity.Name);
+            var projectList = projectRepository.GetAllProjectsForUser(user.Id);
+
+            var model = new LandingModel
+            {
+                Projects = projectList
+            };
+            return Json(model);
+        }
+
 }
 }
