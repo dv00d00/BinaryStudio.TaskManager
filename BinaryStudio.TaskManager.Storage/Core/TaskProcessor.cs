@@ -282,6 +282,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return priorities;
         }
 
+        public IEnumerable<HumanTask> GetUnAssignedTasksForProject(int projectId)
+        {
+           return humanTaskRepository.GetUnassingnedTasks(projectId);
+        }
+
         /// <summary>
         /// The get all history for task.
         /// </summary>

@@ -31,5 +31,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void AddHistory(HumanTaskHistory humanTaskHistory);
 
         IQueryable<Priority> GetPriorities();
+
+        IList<HumanTask> GetUnassingnedTasks(int projectId);
     }
 }
