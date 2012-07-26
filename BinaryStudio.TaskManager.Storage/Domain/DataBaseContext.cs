@@ -35,6 +35,8 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                     .WithMany()
                     .HasForeignKey(e => e.SenderId)
                     .WillCascadeOnDelete(false);
+
+
          /*   modelBuilder.Entity<Project>().HasKey(it => it.Id);
 
             modelBuilder.Entity<Project>().HasMany(it => it.Users).WithMany(it => it.Projects);

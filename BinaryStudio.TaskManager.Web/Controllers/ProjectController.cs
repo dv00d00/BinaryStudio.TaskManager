@@ -154,7 +154,13 @@
         /// </returns>
         public ActionResult InviteOrDeleteUser()
         {
-            return this.View(this.userProcessor.GetAllUsers());
+            var model = new ProjectCollaboratorsViewModel();
+            var currentUser = this.userProcessor.GetUserByName(User.Identity.Name);
+            var users = this.userProcessor.GetAllUsers();
+            var list = new List<User>();
+            list.Add(currentUser);
+            model.Collaborators = users.Except(list);
+            return this.View(model);
         }
 
         /// <summary>

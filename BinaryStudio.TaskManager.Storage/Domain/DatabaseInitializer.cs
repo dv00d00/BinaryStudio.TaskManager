@@ -22,7 +22,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
     /// <summary>
     /// The database initializer.
     /// </summary>
-    public class DatabaseInitializer : DropCreateDatabaseAlways<DataBaseContext>
+    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<DataBaseContext>
     {
         /// <summary>
         /// The crypto provider.

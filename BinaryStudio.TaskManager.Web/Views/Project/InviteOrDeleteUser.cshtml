@@ -1,11 +1,11 @@
-﻿@model IEnumerable<BinaryStudio.TaskManager.Logic.Domain.User>
+﻿@model BinaryStudio.TaskManager.Web.Models.ProjectCollaboratorsViewModel
 @{
     ViewBag.Title = "All users list";
 }
-<h2>
-    All users list
+<h2 class="well-large">
+    Manage collaborators
 </h2>
-<table>
+<table class="tabbable">
     <tr>
         <th>
             User name
@@ -13,7 +13,7 @@
         <th>
         </th>
     </tr>
-    @foreach (var user in Model)
+    @foreach (var user in Model.Collaborators)
     {
         <tr>
             <td>
