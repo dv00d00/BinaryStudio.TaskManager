@@ -195,6 +195,10 @@
 
         public ActionResult Invitations()
         {
+            var model = new List<InvitationsViewModel>();
+            var user = this.userProcessor.GetUserByName(User.Identity.Name);
+            var invitationsToUser = this.projectProcessor.GetAllInvitationsToUser(user.Id);
+
             return this.View();
         }
     }
