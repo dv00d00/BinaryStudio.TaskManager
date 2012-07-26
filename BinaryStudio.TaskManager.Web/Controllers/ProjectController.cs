@@ -293,6 +293,41 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         /// <summary>
+        /// The edit.
+        /// </summary>
+        /// <param name="humanTask">
+        /// The human task.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        [HttpPost]
+        [Authorize]
+        public ActionResult Edit(HumanTask humanTask)
+        {
+            if (this.ModelState.IsValid)
+            {
+
+                this.taskProcessor.UpdateTask(humanTask);
+                this.taskProcessor.AddHistory(new HumanTaskHistory
+                {
+                    NewDescription = humanTask.Description,
+                    ChangeDateTime = DateTime.Now,
+                    NewAssigneeId = humanTask.AssigneeId,
+                    NewName = humanTask.Name,
+                    Task = humanTask,
+                    NewPriority = humanTask.Priority,
+                });
+
+                return this.RedirectToAction("PersonalProject");
+            }
+
+            this.ViewBag.PossibleCreators = new List<User>();
+            this.ViewBag.PossibleAssignees = new List<User>();
+            return this.View(humanTask);
+        }
+
+        /// <summary>
         /// The details.
         /// </summary>
         /// <param name="id">
@@ -306,6 +341,40 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             var model = this.CreateSingleTaskViewModelById(id);
             return this.View(model);
+        }
+
+        /// <summary>
+        /// The delete.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        [Authorize]
+        public ActionResult Delete(int id)
+        {
+            var model = this.CreateSingleTaskViewModelById(id);
+            return this.View(model);
+        }
+
+        /// <summary>
+        /// The delete confirmed.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        [HttpPost]
+        [ActionName("Delete")]
+        [Authorize]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            this.taskProcessor.DeleteTask(id);
+            return this.RedirectToAction("AllTasks");
         }
 
         /// <summary>

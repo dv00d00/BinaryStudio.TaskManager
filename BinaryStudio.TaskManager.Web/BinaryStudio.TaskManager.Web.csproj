@@ -336,6 +336,7 @@
     <Content Include="Views\Project\TaskDetailsPartial.cshtml" />
     <Content Include="Views\Project\AllTasks.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
+    <Content Include="Views\Project\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />
