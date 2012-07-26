@@ -3,12 +3,12 @@
 @{ string divClass = "pr" + Model.Priority.ToString();
     
     <div class="task @divClass" id = @Model.Id.ToString()>
+        <div></div>
         <br />
         <b>@Model.Name</b>
         <br />
         @Model.Description
         <br />
-        <div>@Html.ActionLink("Details", "Details", new { id = Model.Id }, new { @class = "label label-info" })</div>
-
+        @Html.ActionLink("Details", "Details", new { id = Model.Id }, new { @class = "label label-info ui-state-disabled" })
     </div>
 }

@@ -20,7 +20,6 @@
 
         taskHub.TaskMoved = function (movedtaskId, moveToId, senderConnectionId) {
             if (senderConnectionId != $.connection.hub.id) {
-                alert("i msut move to!" + movedtaskId);;
                 alert(jQuery("[data-taskid=" + movedtaskId + "]").html());
                 jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
             };
@@ -28,11 +27,12 @@
 
         $(".column").sortable({
             connectWith: ".column",
+            cancel:  ".ui-state-disabled",
             start: function (event, ui) {
-                senderId = $(this).closest(".managerTasks").attr("id");
+                senderId = $(this).closest(".column").attr("id");
             },
             receive: function (event, ui) {
-                receiverId = $(this).closest(".managerTasks").attr("id");
+                receiverId = $(this).closest(".column").attr("id");
                 taskId = $(ui.item).attr("id");
 
                 var stringArray = new Array();
@@ -51,9 +51,8 @@
 
                 // signalr
                 alert(receiverId);
-                taskHub.moveTask(taskId, (typeof receiverId == "undefined") ? 0 : receiverId, $.connection.hub.id);
+                taskHub.moveTask(taskId, receiverId, $.connection.hub.id);
             },
-            connectWith: $(".column"),
             placeholder: "placeholderTask",
             cursor: 'move'
         });
@@ -61,6 +60,12 @@
     });
 </script>
 <!-- Caption of the table "Managers-Tasks"-->
+
+	<div class="portlet">
+		<div class="portlet-header">Feeds</div>
+		<div class="portlet-content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+	</div>
+
 <fieldset>
     <legend class="well-large">Users with their tasks in current project</legend>
     <table align="center" class="container-fluid">
@@ -74,13 +79,14 @@
         {
             <!-- Header of the table (Managers names)-->
             <tr>
-                <td>
-                    @Html.ActionLink("Create unassigned task", "Create", new { managerId = -1 }, new { @class = "btn" })
+                <td align="center">
+                    <p>@Html.ActionLink("Create unassigned task", "Create", new { managerId = -1 }, new { @class = "btn" })</p>
                 </td>
                 @foreach (var user in Model.UsersTasks)
                 {   
-                    <td>
-                        @Html.ActionLink("Create task", "Create", new { managerId = user.User.Id }, new { @class = "btn" })
+                    <td align="center">
+                        <p>@Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })</p>
+                        <p>@Html.ActionLink("Create task", "Create", new { managerId = user.User.Id }, new { @class = "btn" })</p>
                     </td> 
                 }
                 
@@ -88,27 +94,31 @@
             
             <tr>
                 <td>
-                    <div class="column" align="center" valign="top" width="250">
+                    
+                    <div class="column" align="center" valign="top" width="250" id="-1">
                         @foreach (var unAssignedTask in Model.UnAssignedTasks)
                         {
-                            <div data-taskid = @unAssignedTask.Id.ToString()>
+                            <div data-taskid= @unAssignedTask.Id.ToString() id = @unAssignedTask.Id.ToString()>
                                 @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
                             </div>
                         }
+                        <div data-managerid = "0"></div>
                     </div>
                 </td>
                 @foreach (var user in Model.UsersTasks)
                 {   
-                <td>
-                    <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250" class="managerTasks" >
-                        @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
-                        {
-                            <div data-taskid = @task.Id.ToString()>
-                                @Html.Partial("ManagerTasksTablePartialView", task)
-                            </div>
-                                }
-                    </div>
-                </td> 
+                    <td>
+                        
+                        <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
+                            @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
+                            {
+                                <div data-taskid= @task.Id.ToString() id=@task.Id.ToString()>
+                                    @Html.Partial("ManagerTasksTablePartialView", task)
+                                </div>
+                            }
+                            <div data-managerid = @user.User.Id.ToString()></div>
+                        </div>
+                    </td> 
                 }
                 
             </tr>
