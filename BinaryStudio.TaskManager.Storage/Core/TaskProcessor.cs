@@ -216,6 +216,20 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
+        /// The get all tasks in project.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.HumanTask].
+        /// </returns>
+        public IEnumerable<HumanTask> GetAllTasksInProject(int projectId)
+        {
+            return this.humanTaskRepository.GetAllTasksInProject(projectId);
+        }
+
+        /// <summary>
         /// The get tasks list.
         /// </summary>
         /// <param name="employeeId">

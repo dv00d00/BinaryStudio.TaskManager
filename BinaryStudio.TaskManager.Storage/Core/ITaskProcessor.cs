@@ -29,6 +29,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         HumanTask GetTaskById(int taskId);
         IEnumerable<HumanTask> GetUnassignedTasks();
         IEnumerable<HumanTask> GetTasksList(int employeeId);
-        IEnumerable<HumanTask>  GetAllTasks(); 
+        IEnumerable<HumanTask>  GetAllTasks();
+        IEnumerable<HumanTask> GetAllTasksInProject(int projectId); 
     }
 }

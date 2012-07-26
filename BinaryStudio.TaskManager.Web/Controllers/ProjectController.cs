@@ -77,12 +77,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>
         public ActionResult CreateTask(int userId)
         {
-            var humanTask = new HumanTask
-                {
-                    AssigneeId = (userId != -1) ? userId : (int?)null,
-                    CreatorId = this.userProcessor.GetCurrentLoginedUser(this.User.Identity.Name).Id,
-                    Created = DateTime.Now
-                };
+            var humanTask = new HumanTask();
+            humanTask.AssigneeId = (userId != -1) ? userId : (int?)null;
+            humanTask.CreatorId = this.userProcessor.GetCurrentLoginedUser(User.Identity.Name).Id;
+            humanTask.Created = DateTime.Now;
             return this.View(humanTask);
         }
 
@@ -99,9 +97,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [Authorize]
         public ActionResult CreateTask(HumanTask humanTask)
         {
+            int projectId = 1;
             if (this.ModelState.IsValid)
             {
                 humanTask.Assigned = humanTask.AssigneeId == (int?)null ? humanTask.Created : (DateTime?)null;
+                humanTask.Project = this.projectRepository.GetById(projectId);
                 this.taskProcessor.CreateTask(humanTask);
                 return this.RedirectToAction("PersonalProject");
             }
@@ -256,7 +256,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             var model = new List<SingleTaskViewModel>();
             string creatorName, assigneeName;
-            var tasks = this.taskProcessor.GetAllTasks().ToList();
+            int projectId = 1;
+            var tasks = this.taskProcessor.GetAllTasksInProject(projectId).ToList();
             foreach (var task in tasks)
             {
                 // TODO: fix usrRepo for userProcessor
@@ -271,6 +272,24 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             }
 
             return View(model);
+        }
+
+        /// <summary>
+        /// The edit.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        [Authorize]
+        public ActionResult Edit(int id)
+        {
+            var humantask = this.taskProcessor.GetTaskById(id);
+            this.ViewBag.PossibleCreators = new List<User>();
+            this.ViewBag.PossibleAssignees = new List<User>();
+            return this.View(humantask);
         }
 
         /// <summary>

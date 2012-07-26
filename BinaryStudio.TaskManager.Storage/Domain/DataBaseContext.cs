@@ -34,6 +34,8 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                 HasForeignKey(it => it.CreatorId).WillCascadeOnDelete(false);
     */
             modelBuilder.Entity<User>().HasMany(x => x.UserProjects).WithMany(x => x.ProjectUsers);
+
+            modelBuilder.Entity<Project>().HasMany(x => x.Tasks);
         }
     }
 }

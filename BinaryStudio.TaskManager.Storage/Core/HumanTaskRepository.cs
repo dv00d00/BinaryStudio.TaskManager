@@ -64,7 +64,19 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.dataBaseContext.HumanTasks.Where(it => it.AssigneeId == employeeId).ToList();
         }
 
-        //public IList<HumanTask>  
+        /// <summary>
+        /// The get all tasks in project.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IList`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.HumanTask].
+        /// </returns>
+        public IList<HumanTask> GetAllTasksInProject(int projectId)
+        {
+            return this.dataBaseContext.Projects.First(it => it.Id == projectId).Tasks.ToList();
+        }
 
         /// <summary>
         /// The get unassingned tasks.
