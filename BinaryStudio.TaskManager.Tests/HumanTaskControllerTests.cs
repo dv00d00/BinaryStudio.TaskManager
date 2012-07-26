@@ -81,7 +81,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
         public void Should_UpdateTaskFromTaskProcessor_WhenTaskWithId5WasEdited()
         {
             //act
-            this.controller.Edit(new HumanTask() { Id = 5 });
+            this.controller.Edit(new SingleTaskViewModel{ HumanTask = new HumanTask() { Id = 5 }});
 
             //assert
             this.taskProcessorMock.Verify(x => x.UpdateTask(It.Is<HumanTask>(it => it.Id == 5)), Times.Once());
