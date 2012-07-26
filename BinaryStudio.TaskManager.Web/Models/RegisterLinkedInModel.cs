@@ -1,11 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="RegisterLinkedInModel.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the RegisterLinkedInModel type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace ThirdPartySignup.Models
 {
+    using System.Web.Mvc;
+
     public class RegisterLinkedInModel
     {
         [Required]
@@ -24,5 +31,16 @@ namespace ThirdPartySignup.Models
         public string LastName { get; set; }
 
         public string LinkedInId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image data.
+        /// </summary>
+        public byte[] ImageData { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image mime tipe.
+        /// </summary>
+        [HiddenInput(DisplayValue = false)]
+        public string ImageMimeType { get; set; }
     }
 }

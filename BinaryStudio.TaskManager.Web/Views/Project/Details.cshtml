@@ -1,0 +1,46 @@
+﻿@model BinaryStudio.TaskManager.Web.Models.SingleTaskViewModel
+@{
+    ViewBag.Title = "Task details";
+}
+<h2 class="well-large">
+    Details
+</h2>
+@Html.Partial("TaskDetailsPartial")
+<p>
+    <p>
+    </p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.HumanTask.Id }, new { @class = "btn" })
+    <span class="divider-vertical"></span>
+    @Html.ActionLink("Back to all tasks view", "AllTasks", null, new { @class = "btn" })
+    <span class="divider-vertical"></span>
+    @Html.ActionLink("Back to project dashboard", "PersonalProject", null, new { @class = "btn" })
+</p>
+<legend>Change history</legend>@* <div class="accordion" id="accordion2"> *@
+@if (Model.TaskHistories != null)
+{
+    foreach (var task in Model.TaskHistories)
+    {        
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#@task.Id">
+                Date of change : @task.ChangeDateTime
+            </a>
+        </div>
+        <div id="@task.Id" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <p>
+                    New Task Name : @task.NewName
+                </p>
+                <p>
+                    New Task Description : @task.NewDescription</p>
+                <p>
+                    New Task Priority : @task.NewPriority
+                </p>
+            </div>
+        </div>
+    </div>
+
+    }
+
+
+} else { <legend>There is no history for this task</legend>} 

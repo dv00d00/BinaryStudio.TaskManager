@@ -69,5 +69,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.Invitation].
         /// </returns>
         IEnumerable<Invitation> GetAllInvitationsToUser(int userId);
+
+        /// <summary>
+        /// The get project by id.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The BinaryStudio.TaskManager.Logic.Domain.Project.
+        /// </returns>
+        Project GetProjectById(int projectId);
     }
 }

@@ -183,9 +183,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult Edit(int id)
         {
             var humantask = this.taskProcessor.GetTaskById(id);
+            var model = new SingleTaskViewModel
+                            {
+                                HumanTask = humantask,
+                                Priorities = this.taskProcessor.GetPrioritiesList().OrderBy(x => x.Value)
+                            };
+            
             this.ViewBag.PossibleCreators = new List<User>();
             this.ViewBag.PossibleAssignees = new List<User>();
-            return this.View(humantask);
+            return this.View(model);
         }
 
         /// <summary>
@@ -199,20 +205,20 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(HumanTask humanTask)
+        public ActionResult Edit(SingleTaskViewModel model)
         {
             if (this.ModelState.IsValid)
             {
 
-                this.taskProcessor.UpdateTask(humanTask);
+                this.taskProcessor.UpdateTask(model.HumanTask);
                 this.taskProcessor.AddHistory(new HumanTaskHistory
                 {
-                    NewDescription = humanTask.Description,
+                    NewDescription = model.HumanTask.Description,
                     ChangeDateTime = DateTime.Now,
-                    NewAssigneeId = humanTask.AssigneeId,
-                    NewName = humanTask.Name,
-                    Task = humanTask,
-                    NewPriority = humanTask.Priority,
+                    NewAssigneeId = model.HumanTask.AssigneeId,
+                    NewName = model.HumanTask.Name,
+                    Task = model.HumanTask,
+                    NewPriority = model.HumanTask.Priority,
                 });
 
                 return this.RedirectToAction("AllManagersWithTasks");
@@ -220,7 +226,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
             this.ViewBag.PossibleCreators = new List<User>();
             this.ViewBag.PossibleAssignees = new List<User>();
-            return this.View(humanTask);
+            return this.View(model);
         }
 
         /// <summary>

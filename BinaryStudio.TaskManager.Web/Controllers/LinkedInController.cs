@@ -1,17 +1,25 @@
-﻿using System;
-using System.Web.Mvc;
-using System.Web.Security;
-using BinaryStudio.TaskManager.Logic.Authorize;
-using BinaryStudio.TaskManager.Logic.Core;
-using BinaryStudio.TaskManager.Logic.Domain;
-using DotNetOpenAuth.OAuth;
-using LinkedIn.OAuth;
-using LinkedIn.OAuth.Model;
-using ThirdPartySignup.Models;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="LinkedInController.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Controller create feature login with LinkedIn account
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ThirdPartySignup.Controllers
 {
     using System.Globalization;
+    using System.Web.Mvc;
+    using System.Web.Security;
+
+    using BinaryStudio.TaskManager.Logic.Authorize;
+    using BinaryStudio.TaskManager.Logic.Core;
+    using BinaryStudio.TaskManager.Logic.Domain;
+
+    using LinkedIn.OAuth.Model;
+
+    using ThirdPartySignup.Models;
 
     /// <summary>
     /// Controller create feature login with LinkedIn account
@@ -105,7 +113,7 @@ namespace ThirdPartySignup.Controllers
             {
                 FirstName = profile.Firstname,
                 LastName = profile.Lastname,
-                UserName = profile.Firstname+ " " + profile.Lastname,
+                UserName = profile.Firstname + " " + profile.Lastname,
                 LinkedInId = profile.UserId
             };
             return View(model);
@@ -126,7 +134,7 @@ namespace ThirdPartySignup.Controllers
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
-                var createStatus = this.userProcessor.CreateUser(model.UserName, string.Empty, model.Email, model.LinkedInId);
+                var createStatus = this.userProcessor.CreateUser(model.UserName, string.Empty, model.Email, model.LinkedInId, model.ImageData, model.ImageMimeType);
                 if (createStatus)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName,true);

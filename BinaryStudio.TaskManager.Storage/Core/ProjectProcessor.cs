@@ -133,6 +133,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.projectRepository.GetAllInvitationsForUser(userId);
         }
 
+        public Project GetProjectById(int projectId)
+        {
+            return this.projectRepository.GetById(projectId);
+        }
+
         /// <summary>
         /// The create custom project with project name and description.
         /// </summary>

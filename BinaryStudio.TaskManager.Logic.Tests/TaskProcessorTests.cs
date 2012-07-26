@@ -9,16 +9,15 @@
 
 namespace BinaryStudio.TaskManager.Logic.Tests
 {
+    using System;
     using System.Collections.Generic;
 
-    using Core;
-    using Domain;
+    using BinaryStudio.TaskManager.Logic.Core;
+    using BinaryStudio.TaskManager.Logic.Domain;
 
     using Moq;
 
     using NUnit.Framework;
-
-    using System;
 
     /// <summary>
     /// The task processor tests.
@@ -26,18 +25,39 @@ namespace BinaryStudio.TaskManager.Logic.Tests
     [TestFixture]
     public class TaskProcessorTests
     {
-        IList<HumanTask> tasks = new List<HumanTask>
+        /// <summary>
+        /// The tasks.
+        /// </summary>
+        public IList<HumanTask> tasks = new List<HumanTask>
                 {
                     new HumanTask{ Id = 1, Name = "First Task"},
                     new HumanTask{Id = 2, Name = "Second Task"},
                     new HumanTask{Id = 3, Name = "Third Task"}
                 };
 
+        /// <summary>
+        /// The mock human task repository.
+        /// </summary>
         private Mock<IHumanTaskRepository> mockHumanTaskRepository;
+
+        /// <summary>
+        /// The mock reminder repository.
+        /// </summary>
         private Mock<IReminderRepository> mockReminderRepository;
+
+        /// <summary>
+        /// The processor under test.
+        /// </summary>
         private TaskProcessor processorUnderTest;
+
+        /// <summary>
+        /// The mock user repository.
+        /// </summary>
         private Mock<IUserRepository> mockUserRepository;
 
+        /// <summary>
+        /// The task processor tests setup.
+        /// </summary>
         [SetUp]
         public void TaskProcessorTestsSetup()
         {
@@ -221,6 +241,16 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.processorUnderTest.GetTaskById(1);
 
             this.mockHumanTaskRepository.Verify(it => it.GetById(1), Times.Once());
+        }
+
+        [Test]
+        public void Should_ReturnListOfTasksForProjectByItsId()
+        {
+            // act
+            this.processorUnderTest.GetAllTasksInProject(1);
+
+            // assert
+            this.mockHumanTaskRepository.Verify(it => it.GetAllTasksInProject(1), Times.Once());
         }
 
         [Test]

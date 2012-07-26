@@ -50,7 +50,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <param name="userRepository">
         /// The user repository.
         /// </param>
-        public TaskProcessor(IHumanTaskRepository humanTaskRepository, IReminderRepository reminderRepository,IUserRepository userRepository)
+        public TaskProcessor(IHumanTaskRepository humanTaskRepository, IReminderRepository reminderRepository, IUserRepository userRepository)
         {
             this.humanTaskRepository = humanTaskRepository;
             this.reminderRepository = reminderRepository;
@@ -58,25 +58,20 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
-        /// The create new task.
+        /// The create task without reminder.
         /// </summary>
-        /// <param name="task">
-        /// The task.
-        /// </param>
+        /// <param name="task">The current task.</param>
         public void CreateTask(HumanTask task)
         {
             this.humanTaskRepository.Add(task);
         }
 
+
         /// <summary>
-        /// The create new task with reminder.
+        /// The create task with reminder.
         /// </summary>
-        /// <param name="task">
-        /// The task.
-        /// </param>
-        /// <param name="reminder">
-        /// The reminder.
-        /// </param>
+        /// <param name="task">The current task.</param>
+        /// <param name="reminder">The reminder.</param>
         public void CreateTask(HumanTask task, Reminder reminder)
         {
             this.humanTaskRepository.Add(task);
@@ -90,40 +85,32 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
-        /// The update current task.
+        /// The update task.
         /// </summary>
-        /// <param name="task">
-        /// The task.
-        /// </param>
+        /// <param name="task">The current task.</param>
         public void UpdateTask(HumanTask task)
         {
             this.humanTaskRepository.Update(task);
         }
 
         /// <summary>
-        /// Add new history for task
+        /// Adds the history.
         /// </summary>
-        /// <param name="newHumanTask">
-        /// Filled history for  task
-        /// </param>
+        /// <param name="newHumanTask">The new human task.</param>
         public void AddHistory(HumanTaskHistory newHumanTask)
         {
             this.humanTaskRepository.AddHistory(newHumanTask);
         }
 
         /// <summary>
-        /// The update current task with reminder.
+        /// The update task with reminder.
         /// </summary>
-        /// <param name="task">
-        /// The task.
-        /// </param>
-        /// <param name="reminder">
-        /// The reminder.
-        /// </param>
+        /// <param name="task">The current task.</param>
+        /// <param name="reminder">The reminder.</param>
         public void UpdateTask(HumanTask task, Reminder reminder)
         {
             this.humanTaskRepository.Update(task);
-            
+
             this.reminderRepository.Update(reminder);
         }
 
@@ -220,17 +207,31 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
-        /// The get tasks list.
+        /// The get all tasks in project.
         /// </summary>
-        /// <param name="employeeId">
-        /// The employee id.
+        /// <param name="projectId">
+        /// The project id.
         /// </param>
         /// <returns>
         /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.HumanTask].
         /// </returns>
-        public IEnumerable<HumanTask> GetTasksList(int employeeId)
+        public IEnumerable<HumanTask> GetAllTasksInProject(int projectId)
         {
-            return this.humanTaskRepository.GetAllTasksForEmployee(employeeId);
+            return this.humanTaskRepository.GetAllTasksInProject(projectId);
+        }
+
+        /// <summary>
+        /// The get tasks list.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.HumanTask].
+        /// </returns>
+        public IEnumerable<HumanTask> GetTasksList(int userId)
+        {
+            return this.humanTaskRepository.GetAllTasksForEmployee(userId);
         }
 
         /// <summary>

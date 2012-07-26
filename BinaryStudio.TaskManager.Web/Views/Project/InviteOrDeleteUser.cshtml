@@ -5,17 +5,39 @@
 <h2 class="well-large">
     Manage collaborators
 </h2>
+<<<<<<< HEAD
 <table class="tabbable">
+=======
+
+<table>
+>>>>>>> 61c7cb74ada9b10d429456d0e942b3b640fd3032
     <tr>
+        <th>
+        </th>
         <th>
             User name
         </th>
         <th>
         </th>
     </tr>
+<<<<<<< HEAD
     @foreach (var user in Model.Collaborators)
+=======
+
+    @foreach (var user in Model)
+>>>>>>> 61c7cb74ada9b10d429456d0e942b3b640fd3032
     {
         <tr>
+            <td>
+                @if(@user.ImageData == null)
+                {
+                    @:None
+                }
+                else
+                {
+                    <img width="80" height="80" src="@Url.Action("GetImage", "Project", new {UserId = user.Id})" />
+                }
+            </td>
             <td>
                 @user.UserName
             </td>

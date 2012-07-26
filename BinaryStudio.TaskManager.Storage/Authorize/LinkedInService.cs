@@ -27,7 +27,7 @@ namespace BinaryStudio.TaskManager.Logic.Authorize
             {
                 session.StoreInUserSession();
                 return session.GetProfile();
-            };
+            }
             return null;
         }
 

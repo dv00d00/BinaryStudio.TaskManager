@@ -17,7 +17,21 @@ namespace BinaryStudio.TaskManager.Web.Models
     /// </summary>
     public class RegisterUserModel
     {
-        public int userId { get; set; }
+        /// <summary>
+        /// Gets or sets the user id.
+        /// </summary>
+        public int UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image data.
+        /// </summary>
+        public byte[] ImageData { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image mime tipe.
+        /// </summary>
+        [HiddenInput(DisplayValue = false)]
+        public string ImageMimeType { get; set; }
 
         [Required(ErrorMessage = "Username is required!")]
         [Display(Name = "User name")]

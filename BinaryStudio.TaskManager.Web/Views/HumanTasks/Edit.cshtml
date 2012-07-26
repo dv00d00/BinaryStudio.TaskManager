@@ -1,5 +1,5 @@
-@using BinaryStudio.TaskManager.Logic.Domain
-@model HumanTask
+@using BinaryStudio.TaskManager.Web.Models
+@model SingleTaskViewModel
 @{
     ViewBag.Title = "Редактировать";
 }
@@ -11,56 +11,53 @@
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>Edit task </legend>
-        @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.Created)
-        @Html.HiddenFor(model => model.Assigned)
-        @Html.HiddenFor(model => model.CreatorId)
-        @Html.HiddenFor(model => model.AssigneeId)
+        @Html.HiddenFor(model => model.HumanTask.Id)
+        @Html.HiddenFor(model => model.HumanTask.Created)
+        @Html.HiddenFor(model => model.HumanTask.Assigned)
+        @Html.HiddenFor(model => model.HumanTask.CreatorId)
+        @Html.HiddenFor(model => model.HumanTask.AssigneeId)
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+            @Html.LabelFor(model => model.HumanTask.Name)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
+            @Html.EditorFor(model => model.HumanTask.Name)
+            @Html.ValidationMessageFor(model => model.HumanTask.Name)
         </div>
         <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
+            @Html.LabelFor(model => model.HumanTask.Description)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
-            @Html.ValidationMessageFor(model => model.Description)
+            @Html.EditorFor(model => model.HumanTask.Description)
+            @Html.ValidationMessageFor(model => model.HumanTask.Description)
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Priority)
-        </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Priority)
-        @Html.ValidationMessageFor(model => model.Priority)
-    </div>
    
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Finished)
+        <div class="editor-label">
+            Priority
+        </div>
+
+    <div class="editor-field">
+        @Html.DropDownListFor(model => model.HumanTask.Priority, Model.Priorities)
+        @Html.ValidationMessageFor(model => model.HumanTask.Priority)
+    </div>
+        
+        
+        
+
+   
+        <div class="editor-label">
+                @Html.LabelFor(model => model.HumanTask.Finished)
             </div>
         
     <div class="editor-field">
-            <input class="text-box single-line" id="Finished" name="Finished" type="text" value='@(Model.Finished != null ? Model.Finished.Value.ToShortDateString().Replace('.', '-') : "06-09-2011")' />
+            <input class="text-box single-line" id="HumanTask_Finished" name="HumanTask_Finished" type="text" value='@(Model.HumanTask.Finished != null ? Model.HumanTask.Finished.Value.ToShortDateString().Replace('.', '-') : "06-09-2011")' />
 
         @*Html.EditorFor(model => model.Finished)*@
                 
-            @Html.ValidationMessageFor(model => model.Finished)
+            @Html.ValidationMessageFor(model => model.HumanTask.Finished)
         
     </div>
        
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Closed)
-        </div>
-        <div class="editor-field">
-            
-            <input class="text-box single-line" id="Closed" name="Closed" type="text" value='@(Model.Closed != null ? Model.Closed.Value.ToShortDateString().Replace('.', '-') : "06-09-2011")' />
-                @*Html.EditorFor(model => model.Closed) *@
-        
-            @Html.ValidationMessageFor(model => model.Closed)
-        </div>
+       
         <p>
             <input type="submit" value="Сохранить" class="btn btn-primary" />
         </p>
@@ -75,8 +72,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-       
-        $('#Finished').datepicker({
+
+        $('#HumanTask_Finished').datepicker({
             format: 'dd-mm-yyyy'
         });
         $('#Closed').datepicker({
