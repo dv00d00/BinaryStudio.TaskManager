@@ -61,11 +61,12 @@
         $(".project_name").each(function () {
             var text = $(this).html();
             if (text.length > 20) {
-                $(this).attr("title",text);
+                $(this).attr("title", text);
                 $(this).html(text.substr(0, 20) + "...");
             }
         });
-
+        if ($(".project_name").length == 0)
+            $(".project_list").html("<li>There are no projects yet</li>");
         $(document).on("click", ".delete_link", function () {
             var proj = $(this).parent("li").attr("data-id");
             $(".modal-body").html("<p>Are you sure, that you want to delete project</p>\
@@ -154,6 +155,9 @@
                                 </li>");
             if (response.Projects[i].Name.length >= 20)
                 $("li[data-id=" + response.Projects[i].Id + "]").attr("title", response.Projects[i].Name);
+        }
+        if (i == 0) {
+            $(".project_list").html("<li>There are no projects yet</li>");
         }
     }
 </script>
