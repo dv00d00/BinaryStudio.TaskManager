@@ -63,7 +63,10 @@
         /// </returns>
         public IEnumerable<User> GetAllUsersInProject(int projectId)
         {
-            return this.dataBaseContext.Projects.First(x => x.Id == projectId).ProjectUsers;
+            var project = this.dataBaseContext.Projects.First(x => x.Id == projectId);
+            ICollection<User> users = project.ProjectUsers;
+            users.Add(project.Creator);
+            return users;
         }
 
         /// <summary>

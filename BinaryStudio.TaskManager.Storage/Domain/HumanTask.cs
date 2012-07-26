@@ -25,6 +25,8 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         
         public int? AssigneeId { get; set; }
 
+        public int ProjectId { get; set; }
+
         public virtual Project Project { get; set; }
 
         public virtual ICollection<HumanTaskHistory> HumanTaskHistories { get; set; } 

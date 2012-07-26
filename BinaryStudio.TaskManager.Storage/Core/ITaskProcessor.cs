@@ -158,5 +158,7 @@
         /// The System.Collections.Generic.IEnumerable`1[T -&gt; System.Web.Mvc.SelectListItem].
         /// </returns>
         IEnumerable<SelectListItem> GetPrioritiesList();
+
+        IEnumerable<HumanTask> GetUnAssignedTasksForProject(int projectId);
     }
 }

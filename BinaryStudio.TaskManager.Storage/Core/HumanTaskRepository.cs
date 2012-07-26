@@ -89,6 +89,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.dataBaseContext.HumanTasks.Where(it => it.AssigneeId.Equals(null)).ToList();
         }
 
+        public IList<HumanTask> GetUnassingnedTasks(int projectId)
+        {
+            return this.dataBaseContext.HumanTasks.Where(it => it.AssigneeId.Equals(null)&& it.ProjectId==projectId).ToList();
+        }
+
         /// <summary>
         /// The get all.
         /// </summary>
