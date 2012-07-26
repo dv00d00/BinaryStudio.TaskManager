@@ -62,7 +62,7 @@
             var humanTask = new HumanTask
                 {
                     AssigneeId = (userId != -1) ? userId : (int?)null,
-                    CreatorId = this.userProcessor.GetCurrentLoginedUser(this.User.Identity.Name).Id,
+                    CreatorId = this.userProcessor.GetUserByName(this.User.Identity.Name).Id,
                     Created = DateTime.Now
                 };
             return this.View(humanTask);
@@ -191,6 +191,15 @@
         {
             this.projectProcessor.RemoveUserFromProject(userId, projectId);
             return this.RedirectToAction("PersonalProject");
+        }
+
+        public ActionResult Invitations()
+        {
+            var model = new List<InvitationsViewModel>();
+            var user = this.userProcessor.GetUserByName(User.Identity.Name);
+            var invitationsToUser = this.projectProcessor.GetAllInvitationsToUser(user.Id);
+
+            return this.View();
         }
     }
 }

@@ -124,6 +124,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.projectRepository.UpdateInvitation(invitation);
         }
 
+        public IEnumerable<Invitation> GetAllInvitationsToUser(int userId)
+        {
+            return this.projectRepository.GetAllInvitationsForUser(userId);
+        }
+
         /// <summary>
         /// The create custom project with project name and description.
         /// </summary>

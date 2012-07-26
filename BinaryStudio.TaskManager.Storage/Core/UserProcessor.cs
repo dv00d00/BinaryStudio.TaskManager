@@ -176,7 +176,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
-        /// The get current logined user.
+        /// The get user by name.
         /// </summary>
         /// <param name="userName">
         /// The user name.
@@ -184,7 +184,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <returns>
         /// The BinaryStudio.TaskManager.Logic.Domain.User.
         /// </returns>
-        public User GetCurrentLoginedUser(string userName)
+        public User GetUserByName(string userName)
         {
             try
             {

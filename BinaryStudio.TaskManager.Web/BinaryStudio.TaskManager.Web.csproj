@@ -139,6 +139,7 @@
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="Models\CreateTaskViewModel.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
+    <Compile Include="Models\InvitationsViewModel.cs" />
     <Compile Include="Models\LandingModel.cs" />
     <Compile Include="Models\RegisterLinkedInModel.cs" />
     <Compile Include="Models\SingleTaskViewModel.cs" />
@@ -333,6 +334,8 @@
     <Content Include="Views\Project\InviteOrDeleteUser.cshtml" />
     <Content Include="Views\SignalR\Index.cshtml" />
     <Content Include="Views\Landing\Index.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Project\Invitations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />

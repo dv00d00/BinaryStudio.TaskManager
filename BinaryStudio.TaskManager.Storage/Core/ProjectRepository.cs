@@ -77,5 +77,13 @@
             this.dataBaseContext.Entry(invitation).State = EntityState.Modified;
             this.dataBaseContext.SaveChanges();
         }
+
+        public IEnumerable<Invitation> GetAllInvitationsForUser(int userId)
+        {
+            var invitations =
+                this.dataBaseContext.Invitations.Where(x => x.UserId == userId).Where(x => x.IsInvitationSended).Select(
+                    x => x.IsInvitationConfirmed == false);
+            return (IEnumerable<Invitation>)invitations;
+        }
     }
 }
