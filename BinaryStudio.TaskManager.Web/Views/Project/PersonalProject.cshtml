@@ -68,7 +68,7 @@
     }
     <td align="center" valign="top" width="250">
         <div>
-            @Html.ActionLink("Create a new task", "CreateTask", new { userId = -1 }, new { @class = "btn" })
+            @Html.ActionLink("Create a new task", "CreateTask", new { userId = -1 , projectId = 1}, new { @class = "btn" })
         </div>
         <div class="editor-field">
             @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", null, new { @class = "btn" })

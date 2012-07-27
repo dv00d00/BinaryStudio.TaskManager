@@ -143,6 +143,7 @@
     <Compile Include="Models\InMemoryTokenManager.cs" />
     <Compile Include="Models\InvitationsViewModel.cs" />
     <Compile Include="Models\LandingModels.cs" />
+    <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\ProjectCollaboratorsViewModel.cs" />
     <Compile Include="Models\RegisterLinkedInModel.cs" />
     <Compile Include="Models\SingleTaskViewModel.cs" />

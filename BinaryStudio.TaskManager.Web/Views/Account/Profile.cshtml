@@ -1,5 +1,6 @@
-﻿
-<div id="details" class="container">
+﻿@model BinaryStudio.TaskManager.Web.Models.ProfileModel
+@using (Html.BeginForm("ProfileChanges", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     <div class="page-header">
         <h2>Profile</h2>
     </div>
@@ -14,12 +15,20 @@
                         <div class="span8 primary-info">
                             <span class="name">@User.Identity.Name</span><br/>
                         </div>
+                        <div class="editor-label">
+                            Image
+                        </div>
+                        <div class="editor-field">
+                            Load your image: <input type="file" name="Image" />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-         @Html.ActionLink("Your invitations", "Invitations", "Project", null, new {@class="btn"})
+    <div class="row-fluid">
+        <div class="span2">
+            <a class="btn" href="@Url.Action("Invitations", "Project", null)">Your invitations</a>
+        </div>
     </div>
-</div>
+}
