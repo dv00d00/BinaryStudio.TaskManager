@@ -203,15 +203,20 @@
             // to default project
             const int ProjectId = 1;
             var currentUser = this.userProcessor.GetUserByName(User.Identity.Name);
+            var listWithCurrentUser = new List<User> { currentUser };  
             var users = this.userProcessor.GetAllUsers();
+            users = users.Except(listWithCurrentUser);
+            
+            //to default project
+            var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false && x.Receiver == currentUser).Distinct();            
+            
+            // var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false).Distinct();            
+            
+            var listAlreadyInvited = invitationsToProject.Select(invitation => invitation.Receiver).ToList();
 
-            var listWithCurrentUser = new List<User> { currentUser };
-
-            //var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(1);
-            //var listInvited = (from user in users from invitation in invitationsToProject where invitation.ProjectId == ProjectId && user.Id == invitation.ReceiverId select user).ToList();
-            //var collaborators = users.Except(listWithCurrentUser).Except(listInvited);
-            //var model = new ProjectCollaboratorsViewModel { Collaborators = collaborators, Invited = listInvited };
-            var model = new ProjectCollaboratorsViewModel { Collaborators = users.Except(listWithCurrentUser)};
+            var collaborators = this.projectProcessor.GetAllUsersInProject(ProjectId);
+            var listToInvite = users.Except(collaborators).Except(listAlreadyInvited);
+            var model = new ProjectCollaboratorsViewModel { Collaborators = collaborators, PossibleCollaborators = listToInvite, AlreadyInvited = listAlreadyInvited };
             return this.View(model);
         }
 
@@ -240,13 +245,10 @@
         /// <param name="projectId">
         /// The project id.
         /// </param>
-        /// <returns>
-        /// The System.Web.Mvc.ActionResult.
-        /// </returns>
-        public ActionResult RemoveUserFromProject(int userId, int projectId)
+        [HttpPost]
+        public void RemoveUserFromProject(int userId, int projectId)
         {
-            this.projectProcessor.RemoveUserFromProject(userId, projectId);
-            return this.RedirectToAction("PersonalProject");
+            this.projectProcessor.RemoveUserFromProject(userId, projectId);            
         }
 
         /// <summary>
