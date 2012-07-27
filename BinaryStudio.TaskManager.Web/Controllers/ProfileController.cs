@@ -101,7 +101,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             var userId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
             var model = new ProfileModel
-                { InvitationsCount = this.projectProcessor.GetAllInvitationsToUser(userId).Count() };
+                { InvitationsCount = this.projectProcessor.GetAllInvitationsToUser(userId).Count(),UserName = this.userProcessor.GetUserByName(User.Identity.Name).UserName};
             return this.View(model);
         }
     }

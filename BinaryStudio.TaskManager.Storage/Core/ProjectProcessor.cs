@@ -60,11 +60,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The receiver id.
         /// </param>
         public void InviteUserInProject(int senderId, int projectId, int receiverId)
-        {
+        {            
             var invitations = this.GetAllInvitationsToProject(projectId);
-            if (invitations.Any(oneInvitation => oneInvitation.ReceiverId == receiverId))
+            if (invitations.Any(oneInvitation => oneInvitation.ReceiverId == receiverId && oneInvitation.ProjectId == projectId))
             {
-                return;
+                //return;
             }
 
             var invitation = new Invitation
@@ -107,7 +107,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.User].
         /// </returns>
         public IEnumerable<User> GetAllUsersInProject(int projectId)
-        {            
+        {
             return this.projectRepository.GetAllUsersInProject(projectId);
         }
 

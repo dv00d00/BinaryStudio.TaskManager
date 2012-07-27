@@ -1,4 +1,7 @@
 ﻿﻿@model BinaryStudio.TaskManager.Web.Models.ProfileModel
+@{
+    ViewBag.Title = "Profile " + @Model.UserName;
+}
 <div class="page-header">
     <h2>
         Profile</h2>
@@ -35,14 +38,15 @@
 
 }
 <div class="row-fluid">
-    <div >
-        @Html.ActionLink("Your invitations", "Invitations", "Project", null, new {@class="btn"})
+    <div>
+        @Html.ActionLink("Your invitations", "Invitations", "Project", null, new { @class = "btn" })
         @if (@Model.InvitationsCount == 0)
         {
-            <span>There are no new invitation</span>
-        } else
+         
+        }
+        else
         {
-            <span> + @Model.InvitationsCount new invitation</span>
+            <span style="color: red; font-size: 14pt"> + @Model.InvitationsCount </span>
         }
     </div>
 </div>
