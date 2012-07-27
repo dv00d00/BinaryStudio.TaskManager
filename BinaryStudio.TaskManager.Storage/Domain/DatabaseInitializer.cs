@@ -7,6 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
 namespace BinaryStudio.TaskManager.Logic.Domain
 {
     using System.Data.Entity;
@@ -49,6 +52,29 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                 Description = "High",
                 Value = 2
             });
+
+            var user = new User
+                           {
+                               Id = 1, 
+                               UserName = "Test User", 
+                               Credentials = new Credentials{IsVerify = true},
+                               RoleId = 2
+                           };
+            context.Users.Add(user);
+            context.SaveChanges();
+            context.Projects.Add(new Project
+                                     {
+                                         Id = 1,
+                                         Name = "Test Project",
+                                         ProjectUsers = new Collection<User>
+                                                            {
+                                                                user
+                                                            },
+                                         Creator = user,
+                                         Created = DateTime.Now,
+                                         CreatorId = user.Id
+                                     });
+           
             context.SaveChanges();
         }
     }

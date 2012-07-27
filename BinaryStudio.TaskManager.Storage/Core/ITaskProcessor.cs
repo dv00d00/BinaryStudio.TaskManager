@@ -160,5 +160,7 @@
         IEnumerable<SelectListItem> GetPrioritiesList();
 
         IEnumerable<HumanTask> GetUnAssignedTasksForProject(int projectId);
+
+        IEnumerable<HumanTask> GetAllTasksForUserInProject(int projectId, int userId);
     }
 }

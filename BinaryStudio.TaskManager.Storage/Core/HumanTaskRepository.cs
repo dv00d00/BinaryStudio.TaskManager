@@ -185,5 +185,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             return this.dataBaseContext.Priorities;
         }
+
+        public IEnumerable<HumanTask> GetAllTasksForUserInProject(int projectId, int userId)
+        {
+            return this.dataBaseContext.HumanTasks.Where(x => x.ProjectId == projectId && x.AssigneeId == userId);
+        }
     }
 }
