@@ -2,6 +2,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using BinaryStudio.TaskManager.Logic.Domain;
 
@@ -59,7 +60,13 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The receiver id.
         /// </param>
         public void InviteUserInProject(int senderId, int projectId, int receiverId)
-        {                        
+        {
+            var invitations = this.GetAllInvitationsToProject(projectId);
+            if (invitations.Any(oneInvitation => oneInvitation.ReceiverId == receiverId))
+            {
+                return;
+            }
+
             var invitation = new Invitation
                 {
                     ReceiverId = receiverId,
