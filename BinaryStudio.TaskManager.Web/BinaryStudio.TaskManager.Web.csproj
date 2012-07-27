@@ -329,7 +329,6 @@
     <Content Include="Views\Account\RegisterNewUser.cshtml" />
     <Content Include="Views\Project\InviteOrDeleteUser.cshtml" />
     <Content Include="Views\SignalR\Index.cshtml" />
-    <Content Include="Views\Landing\Index.cshtml" />
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\Project\TaskDetailsPartial.cshtml" />
     <Content Include="Views\Project\AllTasks.cshtml" />
@@ -339,10 +338,10 @@
     <Content Include="Views\Project\Invitations.cshtml" />
     <Content Include="Views\HumanTasks\AllManagersWithTasks.cshtml" />
     <Content Include="Views\HumanTasks\ManagerTasksTablePartialView.cshtml" />
-    <Content Include="Views\Landing\Index.cshtml" />
     <Content Include="Views\Project\Project.cshtml" />
     <Content Include="Views\Project\UserDetails.cshtml" />
     <Content Include="Views\Project\ManagerTasksTablePartialView.cshtml" />
+    <Content Include="Views\Landing\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />
