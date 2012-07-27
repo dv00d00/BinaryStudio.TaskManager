@@ -1,62 +1,74 @@
-﻿@model BinaryStudio.TaskManager.Web.Models.LandingIndexModel
+﻿@using BinaryStudio.TaskManager.Web.Helpers
+@using BinaryStudio.TaskManager.Logic.Domain
+@model BinaryStudio.TaskManager.Web.Models.LandingIndexModel
 
 @{
-    ViewBag.Title = "Landing";
+    ViewBag.Title = "Task Manager";
 }
 <link href="@Url.Content("~/Content/Landing.css")" rel="stylesheet" type="text/css" /> 
 <link href="@Url.Content("~/Content/jquery.fancybox.css")" rel="stylesheet" type="text/css" /> 
 
 <script src="@Url.Content("~/Scripts/jquery.fancybox.pack.js")" type="text/javascript"></script>
-    
-<h2 class="well-large">
-    Landing
-</h2>
-<div class="row">
+<div class="row main-row">
     <div id="left_panel" class="span3">
-        <div id="project_groups">
-            <h3>Project Groups</h3>
-        </div>
-        <div id="projects">
-            <div class="new_project_btn">Add Project</div>
-            <h3>Projects</h3>
-            <ul class="project_list">
-                @foreach (var project in Model.Projects)
-                {
-                    <li data-id="@project.Id">
-                        <a href="#" class="delete_link"><div class="delete_btn"></div></a>
-                        <div class="project_name">@project.Name</div>
-                       <a href="/HumanTasks/AllManagersWithTasks"><div class="dashboard_btn"></div></a>
-                    </li>
-                }
+        @Html.TypeaheadFor(model => model.ProjectHumanTask, 
+             Model.Projects.Select(x => x.Tasks).SelectMany(tasks => tasks).Distinct().Select(x => x.Name))
+        <div id="task_groups">
+            <h3>Task Groups</h3>
+            <ul class="task_group_list">
+                <li>All</li>
+                <li>My Tasks</li>
+                <li>Unassigned</li>
             </ul>
-            <div id="loader">
+        </div>
+    <div id="projects">
+        <div class="new_project_btn">Add Project</div>
+        <h3>Projects</h3>
+        <ul class="project_list">
+            @foreach (var project in Model.Projects)
+            {
+                <li data-id="@project.Id">
+                    <a href="#" class="delete_link"><div class="delete_btn"></div></a>
+                    <div class="project_name">@project.Name</div>
+                    <a href="/HumanTasks/AllManagersWithTasks"><div class="dashboard_btn"></div></a>
+                </li>
+            }
+        </ul>
+        <div id="loader">
                 
+        </div>
+    </div>
+        <div id="content" class="span6">
+              </div>
+        <div id="right_panel" class="span3">
+        </div>
+        <div class="modal hide" id="delete_box">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3>Delete Project</h3>
             </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn no" data-dismiss="modal">Close</a>
+                <a href="#" class="btn btn-primary yes" data-dismiss="modal">Delete</a>
+            </div>
+        </div>
+        <div id='add_proj_box'>
+            <input type="text" autofocus="autofocus"></input>
+            <button class="add_proj_btn">Add Project</button>
+            <span class="add_cancel">Cancel</span>
+        </div>
     </div>
-    <div id="content" class="span6">
-    </div>
-    <div id="right_panel" class="span3">
-    </div>
-    <div class="modal hide" id="delete_box">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">×</button>
-            <h3>Delete Project</h3>
-          </div>
-          <div class="modal-body">
-          </div>
-          <div class="modal-footer">
-            <a href="#" class="btn no" data-dismiss="modal">Close</a>
-            <a href="#" class="btn btn-primary yes" data-dismiss="modal">Delete</a>
-          </div>
-    </div>
-     <div id='add_proj_box'>
-         <input type="text" autofocus="autofocus"></input>
-         <button class="add_proj_btn">Add Project</button>
-         <span class="add_cancel">Cancel</span>
-     </div>
 </div>
 <script type="text/javascript">
     $(function () {
+        $("#left_panel input").val("Filter tasks");
+        $("#left_panel input").on("click", function () {
+            $(this).val("");
+            $(this).off("click");
+        });
+
         $("#delete_box").on('hidden', function () {
             $(".yes").off();
         });
@@ -70,6 +82,7 @@
         });
         if ($(".project_name").length == 0)
             $(".project_list").html("<li>There are no projects yet</li>");
+
         $(document).on("click", ".delete_link", function () {
             var proj = $(this).parent("li").attr("data-id");
             $(".modal-body").html("<p>Are you sure, that you want to delete project</p>\

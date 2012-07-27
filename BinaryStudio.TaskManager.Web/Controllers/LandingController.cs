@@ -25,12 +25,21 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.projectRepository = projectRepository;
             this.userRepository = userRepository;
         }
-
+        [Authorize]
         public ActionResult Index()
         {
             var model = new LandingIndexModel();
             var user = userRepository.GetByName(User.Identity.Name);
             model.Projects = projectRepository.GetAllProjectsForUser(user.Id);
+            var project = projectRepository.GetById(9);
+            project.Tasks = new List<HumanTask> { new HumanTask
+                {
+                    Name = "asdasd"
+                },
+            new HumanTask
+                {
+                    Name = "lkja"
+                }};
             return View(model);
         }
 

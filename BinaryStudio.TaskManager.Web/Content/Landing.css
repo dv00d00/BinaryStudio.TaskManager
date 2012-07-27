@@ -1,13 +1,17 @@
-﻿/***************** Left panel ***********************/
+﻿.main-row {
+    margin-top: 50px;
+}
+/***************** Left panel ***********************/
 
-#project_groups {
-    border-bottom: 5px ridge #7199B7;
+#task_groups {
+    border-bottom: 1px solid #46593F;
 }
 #projects 
 {
     position: relative;
+    padding-top: 20px;
 }
-.project_list {
+.project_list, .task_group_list {
     list-style: none;
     padding: 0px;
     padding-top: 10px;
@@ -25,9 +29,9 @@
     position: absolute;
     width: 75%;
     left: 20px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
 
 .project_list li .project_name:hover{
@@ -35,6 +39,13 @@
     background: #64AAD0;
 }
 
+.task_group_list {
+    padding-bottom: 20px;
+}
+
+.task_group_list li {
+    margin: 10px 0;
+}
 .delete_btn 
 {
     height: 14px;
@@ -54,21 +65,18 @@
 .new_project_btn {
     height: 16px;
     position: absolute;
-    right: 20px;
-    padding: 10px;
+    right: 0px;
+    padding: 2px;
     padding-right: 20px;
     background: url("images/plus_icon.gif") no-repeat;
     background-position: right;
+    margin-top: 5px;
     cursor: pointer;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
 }
 
-.new_project_btn:hover {
-    background: #A0F06C url("images/plus_icon.gif") no-repeat;
-    background-position: right;
-    
+.new_project_btn:hover 
+{
+    border-bottom: #249400 1px dashed; 
 }
 
 .dashboard_btn 
@@ -109,3 +117,5 @@
     display: none;
     top: 0;
 }
+
+/************ Interactive input *********/

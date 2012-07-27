@@ -13,6 +13,8 @@ namespace BinaryStudio.TaskManager.Web.Models
         /// The projects.
         /// </value>
         public IEnumerable<Project> Projects { get; set; }
+
+        public HumanTask ProjectHumanTask { get; set; }
     }
 
     public class LandingProjectsModel
@@ -25,5 +27,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         public int Id { get; set; }
         
         public string Name { get; set; }
+
+        public IEnumerable<HumanTask> Tasks { get; set; }
     }
 }
