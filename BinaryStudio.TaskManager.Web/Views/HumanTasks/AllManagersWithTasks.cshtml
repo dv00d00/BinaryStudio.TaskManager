@@ -1,8 +1,12 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.ProjectViewModel
- <style>
-	.column { width: 270px; float: left;min-height: 300px;}
+<style>
+    .column
+    {
+        width: 270px;
+        float: left;
+        min-height: 300px;
+    }
 </style>
-
 <script type="text/javascript">
     $(document).ready(function () {
         var senderId, taskId, receiverId;
@@ -57,8 +61,6 @@
     });
 </script>
 <!-- Caption of the table "Managers-Tasks"-->
-
-
 <fieldset>
     <legend class="well-large">Users with their tasks in current project</legend>
     <table align="center" class="container-fluid">
@@ -82,7 +84,6 @@
                         <p>@Html.ActionLink("Create task", "Create", new { managerId = user.User.Id }, new { @class = "btn" })</p>
                     </td> 
                 }
-                
             </tr>
             
             <tr>
@@ -95,13 +96,12 @@
                                 @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
                             </div>
                         }
-                        <div data-managerid = "0" style="display: none">olo</div>
-                    </div>
+                      <div data-managerid = "0" style="display: none">olo</div>
+
                 </td>
                 @foreach (var user in Model.UsersTasks)
                 {   
                     <td>
-                        
                         <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
                             @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
                             {
@@ -109,20 +109,16 @@
                                     @Html.Partial("ManagerTasksTablePartialView", task)
                                 </div>
                             }
-                            <div data-managerid = @user.User.Id.ToString()></div>
+                            <div data-managerid = @user.User.Id.ToString()>
+                            </div>
+                            <div class="task" style="display: none">olo</div>
                         </div>
                     </td> 
                 }
-                
             </tr>
         }
         <!-- Create a column with tasks-->
-       
-        
     </table>
 </fieldset>
 <p align="center" class="well-large">
 </p>
-
-
-

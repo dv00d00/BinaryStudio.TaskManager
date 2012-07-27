@@ -1,6 +1,4 @@
-﻿using System.Web.Routing;
-
-namespace BinaryStudio.TaskManager.Web.Controllers
+﻿namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -52,9 +50,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.userProcessor = userProcessor;
         }
 
-
-
-
         [Authorize]
         public ActionResult Project(int id)
         {
@@ -74,11 +69,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             }
             return this.View(model);
         }
-
-
-
-
-
 
         /// <summary>
         /// The create task.
@@ -101,9 +91,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             };
             return this.View(createModel);
         }
-
-
-      
 
         /// <summary>
         /// The create task.
@@ -197,7 +184,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [Authorize]
         public void MoveTask(int taskId, int senderId, int receiverId)
         {
-            // move to real manager
+            // move to real user
             if (receiverId != -1)
             {
                 this.taskProcessor.MoveTask(taskId, receiverId);
@@ -323,8 +310,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             int projectId = 1;
             var tasks = this.taskProcessor.GetAllTasksInProject(projectId).ToList();
             foreach (var task in tasks)
-            {
-                // TODO: fix usrRepo for userProcessor
+            {                
                 creatorName = task.CreatorId.HasValue ? this.userProcessor.GetUser((int)task.CreatorId).UserName : "none";
                 assigneeName = task.AssigneeId.HasValue ? this.userProcessor.GetUser((int)task.AssigneeId).UserName : "none";
                 model.Add(new SingleTaskViewModel
@@ -365,8 +351,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        [HttpPost]
-        [Authorize]
+        [HttpPost]        
         public ActionResult Edit(HumanTask humanTask)
         {
             if (this.ModelState.IsValid)
@@ -399,8 +384,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
-        /// </returns>
-        [Authorize]
+        /// </returns>        
         public ActionResult Details(int id)
         {
             var model = this.CreateSingleTaskViewModelById(id);
@@ -416,7 +400,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        [Authorize]
         public ActionResult Delete(int id)
         {
             var model = this.CreateSingleTaskViewModelById(id);
@@ -433,8 +416,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         [HttpPost]
-        [ActionName("Delete")]
-        [Authorize]
+        [ActionName("Delete")]        
         public ActionResult DeleteConfirmed(int id)
         {
             this.taskProcessor.DeleteTask(id);
@@ -486,6 +468,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     }).ToList();
 
             return this.View(model);
+        }
+
+        public ActionResult RefuseFromParticipateProject(int invitationId)
+        {
+            this.projectProcessor.RefuseFromParticipateProject(invitationId);
+            return RedirectToAction("Invitations");
         }
     }
 }

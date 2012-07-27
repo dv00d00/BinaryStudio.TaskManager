@@ -111,5 +111,13 @@
         /// The BinaryStudio.TaskManager.Logic.Domain.Invitation.
         /// </returns>
         Invitation GetInvitationById(int invitationId);
+
+        /// <summary>
+        /// The delete invitation.
+        /// </summary>
+        /// <param name="invitation">
+        /// The invitation.
+        /// </param>
+        void DeleteInvitation(Invitation invitation);
     }
 }

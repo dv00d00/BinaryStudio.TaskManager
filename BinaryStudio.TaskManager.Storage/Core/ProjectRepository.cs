@@ -134,15 +134,18 @@
 
         public IEnumerable<Invitation> GetAllInvitationsForUser(int userId)
         {
-
-
             return this.dataBaseContext.Invitations.Where(x => x.ReceiverId == userId && x.IsInvitationConfirmed == false).ToList();
-            
         }
 
         public Invitation GetInvitationById(int invitationId)
         {
             return this.dataBaseContext.Invitations.FirstOrDefault(x => x.Id == invitationId);
+        }
+
+        public void DeleteInvitation(Invitation invitation)
+        {
+            this.dataBaseContext.Entry(invitation).State = EntityState.Deleted;
+            this.dataBaseContext.SaveChanges();
         }
     }
 }
