@@ -43,7 +43,6 @@
         /// The project processor.
         /// </param>
         public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor)
-
         {
             this.projectProcessor = projectProcessor;
             this.taskProcessor = taskProcessor;
@@ -62,8 +61,7 @@
             var users = this.projectProcessor.GetAllUsersInProject(id).Reverse();
             foreach (var user in users)
             {
-                var managerModel = new ManagerTasksViewModel
-                    { User = user, Tasks = this.taskProcessor.GetAllTasksForUserInProject(id, user.Id).ToList() };
+                var managerModel = new ManagerTasksViewModel { User = user, Tasks = this.taskProcessor.GetAllTasksForUserInProject(id, user.Id).ToList() };
                 model.UsersTasks.Add(managerModel);
             }
             return this.View(model);
@@ -130,7 +128,7 @@
                     Task = task,
                     NewPriority = task.Priority,
                 });
-                return this.RedirectToAction("Project",new {id = createModel.ProjectId});
+                return this.RedirectToAction("Project", new { id = createModel.ProjectId });
             }
             createModel.Priorities = taskProcessor.GetPrioritiesList();
             // TODO: refactor this "PossibleCreators" and "PossibleAssignees"
@@ -201,11 +199,19 @@
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         public ActionResult InviteOrDeleteUser()
-        {           
+        {
+            // to default project
+            const int ProjectId = 1;
             var currentUser = this.userProcessor.GetUserByName(User.Identity.Name);
             var users = this.userProcessor.GetAllUsers();
+
             var listWithCurrentUser = new List<User> { currentUser };
-            var model = new ProjectCollaboratorsViewModel { Collaborators = users.Except(listWithCurrentUser) };
+
+            var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(1);
+            var listInvited = (from user in users from invitation in invitationsToProject where invitation.ProjectId == ProjectId && user.Id == invitation.ReceiverId select user).ToList();
+
+            var model = new ProjectCollaboratorsViewModel
+                { Collaborators = users.Except(listWithCurrentUser).Except(listInvited), Invited = listInvited };
             return this.View(model);
         }
 
@@ -225,7 +231,7 @@
         {
             var senderId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
             this.projectProcessor.InviteUserInProject(senderId, projectId, receiverId);
-            return this.RedirectToAction("PersonalProject");
+            return this.RedirectToAction("InviteOrDeleteUser");
         }
 
         /// <summary>
@@ -272,8 +278,8 @@
         /// </returns>
         [HttpPost]
         public void SubmitInvitationInProject(int invitationId)
-        {            
-            this.projectProcessor.ConfirmInvitationInProject(invitationId);            
+        {
+            this.projectProcessor.ConfirmInvitationInProject(invitationId);
         }
 
         /// <summary>
@@ -309,7 +315,7 @@
             int projectId = 1;
             var tasks = this.taskProcessor.GetAllTasksInProject(projectId).ToList();
             foreach (var task in tasks)
-            {                
+            {
                 creatorName = task.CreatorId.HasValue ? this.userProcessor.GetUser((int)task.CreatorId).UserName : "none";
                 assigneeName = task.AssigneeId.HasValue ? this.userProcessor.GetUser((int)task.AssigneeId).UserName : "none";
                 model.Add(new SingleTaskViewModel
@@ -350,7 +356,7 @@
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        [HttpPost]        
+        [HttpPost]
         public ActionResult Edit(HumanTask humanTask)
         {
             if (this.ModelState.IsValid)
@@ -415,7 +421,7 @@
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         [HttpPost]
-        [ActionName("Delete")]        
+        [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
             this.taskProcessor.DeleteTask(id);
@@ -487,7 +493,7 @@
         [HttpPost]
         public void RefuseFromParticipateProject(int invitationId)
         {
-            this.projectProcessor.RefuseFromParticipateProject(invitationId);            
+            this.projectProcessor.RefuseFromParticipateProject(invitationId);
         }
     }
 }

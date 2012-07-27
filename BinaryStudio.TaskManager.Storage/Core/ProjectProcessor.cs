@@ -144,6 +144,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.projectRepository.DeleteInvitation(invitation);
         }
 
+        public IEnumerable<Invitation> GetAllInvitationsToProject(int projectId)
+        {
+            this.projectRepository.GetAllInvitationsToProject(projectId);
+        }
+
         /// <summary>
         /// The create custom project with project name and description.
         /// </summary>

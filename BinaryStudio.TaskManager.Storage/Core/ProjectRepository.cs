@@ -147,5 +147,10 @@
             this.dataBaseContext.Entry(invitation).State = EntityState.Deleted;
             this.dataBaseContext.SaveChanges();
         }
+
+        public IEnumerable<Invitation> GetAllInvitationsToProject(int projectId)
+        {
+            return this.dataBaseContext.Invitations.Where(x => x.ProjectId == projectId);
+        }
     }
 }

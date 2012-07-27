@@ -7,5 +7,7 @@ namespace BinaryStudio.TaskManager.Web.Models
     public class ProjectCollaboratorsViewModel
     {
         public IEnumerable<User> Collaborators { get; set; }
+
+        public IEnumerable<User> Invited { get; set; }        
     }
 }

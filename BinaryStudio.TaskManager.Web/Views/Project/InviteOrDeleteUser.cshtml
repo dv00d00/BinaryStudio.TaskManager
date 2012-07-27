@@ -46,3 +46,42 @@
 <p>
     @Html.ActionLink("Back to tasks list", "PersonalProject")
 </p>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".invitation .btn").click(function () {
+            $(this).parents(".invitation").animate({ opacity: "hide" }, "slow");
+        });
+
+        var onError = function () {
+            alert("Error while AJAX request");
+        };
+        var onSuccess = function (text) {
+            $(this).parents(".invitation").hide('slow', function () {
+                alert(text);
+            });
+        };
+
+        $(".submitInvitation").click(function () {
+            var id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url: "/Project/SubmitInvitationInProject/",
+                data: { invitationId: id },
+                dataType: "json",
+                traditional: true
+            }).success(onSuccess).error(onError);
+        });
+
+        $(".refuseInvitation").click(function () {
+            var id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url: "/Project/RefuseFromParticipateProject/",
+                data: { invitationId: id },
+                dataType: "json",
+                traditional: true
+            }).success(onSuccess).error(onError);
+        });
+    });
+</script>
