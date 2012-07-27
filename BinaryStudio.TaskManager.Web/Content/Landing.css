@@ -89,6 +89,9 @@
     position: absolute;
     right: 0px;
 }
+.dashboard_btn:hover {
+    background: url("images/to_dashboard_hover.png") no-repeat;
+}
 /****************** Boxes ********************/
 
 #delete_box {

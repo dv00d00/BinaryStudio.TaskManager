@@ -30,7 +30,7 @@
                 <li data-id="@project.Id">
                     <a href="#" class="delete_link"><div class="delete_btn"></div></a>
                     <div class="project_name">@project.Name</div>
-                    <a href="/Project/Project/@project.Id"><div class="dashboard_btn"></div></a>
+                    <a href="/Project/Project/@project.Id"><div title="@project.Name dashboard" class="dashboard_btn"></div></a>
                 </li>
             }
         </ul>
@@ -63,6 +63,12 @@
 </div>
 <script type="text/javascript">
     $(function () {
+        $('.dashboard_btn').tooltip({
+            position: 'left',
+            title: 'asasaf',
+            delay: { show: 1000 }
+        });
+
         $("#left_panel>input").val("Filter tasks");
 
         $("#left_panel>input").on("blur", function () {
@@ -71,7 +77,7 @@
         });
 
         $("#left_panel>input").on("click", function () {
-            if ($(this).val() =="Filter tasks")
+            if ($(this).val() == "Filter tasks")
                 $(this).val("");
         });
 
