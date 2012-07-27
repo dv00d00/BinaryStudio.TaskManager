@@ -138,6 +138,12 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.projectRepository.GetById(projectId);
         }
 
+        public void RefuseFromParticipateProject(int invitationId)
+        {
+            var invitation = this.projectRepository.GetInvitationById(invitationId);
+            this.projectRepository.DeleteInvitation(invitation);
+        }
+
         /// <summary>
         /// The create custom project with project name and description.
         /// </summary>

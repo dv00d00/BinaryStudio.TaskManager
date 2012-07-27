@@ -17,14 +17,18 @@
     <ul>
         @foreach (var item in Model)
         {
-            <li class="" id=@item.Invitation.Id>
+            <li>
                 <div>
-                    @item.Sender.UserName invite you to project @item.Project.Name
+                    @item.Sender.UserName invite you to project @Html.ActionLink(@item.Project.Name, "Project", "Project", new { id = @item.Project.Id }, null)
                 </div>
                 <div>
                     @Html.ActionLink("Agree", "SubmitInvitationInProject", "Project", new { invitationId = item.Invitation.Id }, new { @class = "btn btn-primary" })
+                    <span class="divider-vertical"></span>
+                    @Html.ActionLink("No, thanks!", "RefuseFromParticipateProject", "Project", new { invitationId = item.Invitation.Id }, new { @class = "btn" })
                 </div>
-                <span class="divider"></span></li>
+                <div class="divider">
+                </div>
+            </li>
         }
     </ul>
     }

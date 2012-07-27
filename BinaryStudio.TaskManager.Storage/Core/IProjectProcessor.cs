@@ -80,5 +80,13 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The BinaryStudio.TaskManager.Logic.Domain.Project.
         /// </returns>
         Project GetProjectById(int projectId);
+
+        /// <summary>
+        /// The refuse from participate project.
+        /// </summary>
+        /// <param name="invitationId">
+        /// The invitation id.
+        /// </param>
+        void RefuseFromParticipateProject(int invitationId);
     }
 }
