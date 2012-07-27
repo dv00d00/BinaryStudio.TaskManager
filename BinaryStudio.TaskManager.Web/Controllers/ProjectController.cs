@@ -43,7 +43,6 @@
         /// The project processor.
         /// </param>
         public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor)
-
         {
             this.projectProcessor = projectProcessor;
             this.taskProcessor = taskProcessor;
@@ -424,6 +423,51 @@
         }
 
         /// <summary>
+        /// The user details.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        [Authorize]
+        public ActionResult UserDetails(int userId)
+        {
+            this.ViewBag.ManagerName = this.userProcessor.GetUser(userId).UserName;
+            this.ViewBag.ManagerId = userId;
+            IList<HumanTask> humanTasks = this.taskProcessor.GetTasksList(userId).ToList();
+            IList<TaskViewModel> model =
+                humanTasks.Select(
+                    task =>
+                    new TaskViewModel
+                    {
+                        Task = task,
+                        CreatorName =
+                            task.CreatorId.HasValue
+                                ? this.userProcessor.GetUser(task.CreatorId.Value).UserName
+                                : string.Empty
+                    }).ToList();
+
+            return this.View(model);
+        }
+
+        /// <summary>
+        /// The refuse from participate project.
+        /// </summary>
+        /// <param name="invitationId">
+        /// The invitation id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        public ActionResult RefuseFromParticipateProject(int invitationId)
+        {
+            this.projectProcessor.RefuseFromParticipateProject(invitationId);
+            return RedirectToAction("Invitations");
+        }
+        
+        /// <summary>
         /// The create single task view model by id.
         /// </summary>
         /// <param name="id">
@@ -447,33 +491,6 @@
             model.AssigneeName = assigneeName;
             model.TaskHistories = this.taskProcessor.GetAllHistoryForTask(id).OrderByDescending(x => x.ChangeDateTime).ToList();
             return model;
-        }
-
-        [Authorize]
-        public ActionResult UserDetails(int userId)
-        {
-            this.ViewBag.ManagerName = this.userProcessor.GetUser(userId).UserName;
-            this.ViewBag.ManagerId = userId;
-            IList<HumanTask> humanTasks = this.taskProcessor.GetTasksList(userId).ToList();
-            IList<TaskViewModel> model =
-                humanTasks.Select(
-                    task =>
-                    new TaskViewModel
-                    {
-                        Task = task,
-                        CreatorName =
-                            task.CreatorId.HasValue
-                                ? this.userProcessor.GetUser(task.CreatorId.Value).UserName
-                                : string.Empty
-                    }).ToList();
-
-            return this.View(model);
-        }
-
-        public ActionResult RefuseFromParticipateProject(int invitationId)
-        {
-            this.projectProcessor.RefuseFromParticipateProject(invitationId);
-            return RedirectToAction("Invitations");
         }
     }
 }
