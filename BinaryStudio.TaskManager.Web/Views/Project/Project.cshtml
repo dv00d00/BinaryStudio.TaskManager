@@ -23,6 +23,7 @@
         $(".column").sortable({
             connectWith: ".column",
             cancel: ".ui-state-disabled",
+            items: ".task-holder",
             start: function (event, ui) {
                 senderId = $(this).closest(".column").attr("id");
             },
@@ -87,7 +88,7 @@
                     <div class="column" align="center" valign="top" width="250" id="-1">
                         @foreach (var unAssignedTask in Model.UnAssignedTasks)
                         {
-                            <div data-taskid= @unAssignedTask.Id.ToString() id = @unAssignedTask.Id.ToString()>
+                            <div class="task-holder" data-taskid= @unAssignedTask.Id.ToString() id = @unAssignedTask.Id.ToString()>
                                 @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
                             </div>
                         }
@@ -102,7 +103,7 @@
                         <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
                             @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
                             {
-                                <div data-taskid= @task.Id.ToString() id=@task.Id.ToString()>
+                                <div class="task-holder" data-taskid= @task.Id.ToString() id=@task.Id.ToString()>
                                     @Html.Partial("ManagerTasksTablePartialView", task)
                                 </div>
                             }

@@ -18,37 +18,38 @@
                 setTimeout(function () {
                     jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
                     jQuery("[data-taskid=" + movedtaskId + "]").fadeIn();
-                },500);
+                }, 500);
             };
         };
 
         $(".column").sortable({
             connectWith: ".column",
             cancel: ".ui-state-disabled",
-            start: function (event, ui) {
-                senderId = $(this).closest(".column").attr("id");
-            },
-            receive: function (event, ui) {
-                receiverId = $(this).closest(".column").attr("id");
-                taskId = $(ui.item).attr("id");
+            items: ".task-holder",
+                        start: function (event, ui) {
+                            senderId = $(this).closest(".column").attr("id");
+                        },
+                        receive: function (event, ui) {
+                            receiverId = $(this).closest(".column").attr("id");
+                            taskId = $(ui.item).attr("id");
 
-                var stringArray = new Array();
-                stringArray[0] = taskId;
-                //check, mb sender or receiver are unassigned 
-                stringArray[1] = (typeof senderId == "undefined") ? -1 : senderId;
-                stringArray[2] = (typeof receiverId == "undefined") ? -1 : receiverId;
+                            var stringArray = new Array();
+                            stringArray[0] = taskId;
+                            //check, mb sender or receiver are unassigned 
+                            stringArray[1] = (typeof senderId == "undefined") ? -1 : senderId;
+                            stringArray[2] = (typeof receiverId == "undefined") ? -1 : receiverId;
 
-                $.ajax({
-                    type: "POST",
-                    url: "/HumanTasks/MoveTask",
-                    data: { taskId: stringArray[0], senderId: stringArray[1], receiverId: stringArray[2] },
-                    dataType: "json",
-                    traditional: true
-                });
+                            $.ajax({
+                                type: "POST",
+                                url: "/HumanTasks/MoveTask",
+                                data: { taskId: stringArray[0], senderId: stringArray[1], receiverId: stringArray[2] },
+                                dataType: "json",
+                                traditional: true
+                            });
 
-                // signalr
-                taskHub.moveTask(taskId, receiverId, $.connection.hub.id);
-            },
+                            // signalr
+                            taskHub.moveTask(taskId, receiverId, $.connection.hub.id);
+                        },
             placeholder: "placeholderTask",
             cursor: 'move'
         });
@@ -87,14 +88,14 @@
             <tr>
                 <td>
                     <div class="column" align="center" valign="top" width="250" id="-1">
+                        <div class="task" style="display: none">olo</div>
                         @foreach (var unAssignedTask in Model.UnAssignedTasks)
                         {
-                            <div data-taskid= @unAssignedTask.Id.ToString() id = @unAssignedTask.Id.ToString()>
+                            <div class="task-holder" data-taskid= @unAssignedTask.Id.ToString() id = @unAssignedTask.Id.ToString()>
                                 @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
                             </div>
                         }
                         <div data-managerid = "0" style="display: none">olo</div>
-                        <div class="task" style="display: none">olo</div>
                     </div>
                 </td>
                 @foreach (var user in Model.UsersTasks)
@@ -104,7 +105,7 @@
                         <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
                             @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
                             {
-                                <div data-taskid= @task.Id.ToString() id=@task.Id.ToString()>
+                                <div class="task-holder" data-taskid= @task.Id.ToString() id=@task.Id.ToString()>
                                     @Html.Partial("ManagerTasksTablePartialView", task)
                                 </div>
                             }
