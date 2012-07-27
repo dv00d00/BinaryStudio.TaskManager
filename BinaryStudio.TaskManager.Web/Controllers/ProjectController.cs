@@ -49,7 +49,15 @@
             this.userProcessor = userProcessor;
         }
 
-        [Authorize]
+        /// <summary>
+        /// The project.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         public ActionResult Project(int id)
         {
             var model = new ProjectViewModel
@@ -203,14 +211,14 @@
             // to default project
             const int ProjectId = 1;
             var currentUser = this.userProcessor.GetUserByName(User.Identity.Name);
-            var listWithCurrentUser = new List<User> { currentUser };  
+            var listWithCurrentUser = new List<User> { currentUser }; 
             var users = this.userProcessor.GetAllUsers();
             users = users.Except(listWithCurrentUser);
             
             //to default project
-            var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false && x.Receiver == currentUser).Distinct();            
+            var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false && x.Sender == currentUser);            
             
-            // var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false).Distinct();            
+            // var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false);
             
             var listAlreadyInvited = invitationsToProject.Select(invitation => invitation.Receiver).ToList();
 
