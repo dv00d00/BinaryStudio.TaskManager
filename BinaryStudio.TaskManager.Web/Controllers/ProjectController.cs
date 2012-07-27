@@ -62,9 +62,8 @@
             var users = this.projectProcessor.GetAllUsersInProject(id).Reverse();
             foreach (var user in users)
             {
-                var managerModel = new ManagerTasksViewModel();
-                managerModel.User = user;
-                managerModel.Tasks = this.taskProcessor.GetAllTasksForUserInProject(id, user.Id).ToList();
+                var managerModel = new ManagerTasksViewModel
+                    { User = user, Tasks = this.taskProcessor.GetAllTasksForUserInProject(id, user.Id).ToList() };
                 model.UsersTasks.Add(managerModel);
             }
             return this.View(model);
@@ -271,10 +270,10 @@
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult SubmitInvitationInProject(int invitationId)
+        [HttpPost]
+        public void SubmitInvitationInProject(int invitationId)
         {            
-            this.projectProcessor.ConfirmInvitationInProject(invitationId);
-            return this.RedirectToAction("Invitations");
+            this.projectProcessor.ConfirmInvitationInProject(invitationId);            
         }
 
         /// <summary>
@@ -449,6 +448,15 @@
             return model;
         }
 
+        /// <summary>
+        /// The user details.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         [Authorize]
         public ActionResult UserDetails(int userId)
         {
@@ -470,10 +478,16 @@
             return this.View(model);
         }
 
-        public ActionResult RefuseFromParticipateProject(int invitationId)
+        /// <summary>
+        /// The refuse from participate project.
+        /// </summary>
+        /// <param name="invitationId">
+        /// The invitation id.
+        /// </param>
+        [HttpPost]
+        public void RefuseFromParticipateProject(int invitationId)
         {
-            this.projectProcessor.RefuseFromParticipateProject(invitationId);
-            return RedirectToAction("Invitations");
+            this.projectProcessor.RefuseFromParticipateProject(invitationId);            
         }
     }
 }

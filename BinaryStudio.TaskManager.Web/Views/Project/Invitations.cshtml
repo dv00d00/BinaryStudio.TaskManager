@@ -17,24 +17,62 @@
     <ul>
         @foreach (var item in Model)
         {
-            <li>
+            <div class="well invitation">
                 <div>
                     @item.Sender.UserName invite you to project @Html.ActionLink(@item.Project.Name, "Project", "Project", new { id = @item.Project.Id }, null)
                 </div>
                 <div>
-                    @Html.ActionLink("Agree", "SubmitInvitationInProject", "Project", new { invitationId = item.Invitation.Id }, new { @class = "btn btn-primary" })
+                    <button title="Agree" class="submitInvitation btn btn-primary" id=@item.Invitation.Id>
+                        Agree
+                    </button>
                     <span class="divider-vertical"></span>
-                    @Html.ActionLink("No, thanks!", "RefuseFromParticipateProject", "Project", new { invitationId = item.Invitation.Id }, new { @class = "btn" })
+                    <button title="No, thanks!" class="refuseInvitation btn" id=@item.Invitation.Id>
+                        No, thanks!
+                    </button>
                 </div>
                 <div class="divider">
                 </div>
-            </li>
+            </div>
         }
     </ul>
     }
 }
+
 <script type="text/javascript">
     $(document).ready(function () {
+        $(".invitation .btn").click(function () {
+            $(this).parents(".invitation").animate({ opacity: "hide" }, "slow");
+        });
 
+        var onError = function () {
+            alert("Error while AJAX request");
+        };
+        var onSuccess = function (text) {
+            $(this).parents(".invitation").hide('slow', function () {
+                alert(text);
+            });
+        };
+        
+        $(".submitInvitation").click(function () {
+            var id = $(this).attr('id');         
+            $.ajax({
+                type: "POST",
+                url: "/Project/SubmitInvitationInProject/",
+                data: { invitationId: id },
+                dataType: "json",
+                traditional: true
+            }).success(onSuccess).error(onError);
+        });
+
+        $(".refuseInvitation").click(function () {
+            var id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url: "/Project/RefuseFromParticipateProject/",
+                data: { invitationId: id },
+                dataType: "json",
+                traditional: true
+            }).success(onSuccess).error(onError);
+        });
     });
 </script>
