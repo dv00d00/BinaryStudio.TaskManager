@@ -1,0 +1,48 @@
+﻿﻿@model BinaryStudio.TaskManager.Web.Models.ProfileModel
+<div class="page-header">
+    <h2>
+        Profile</h2>
+</div>
+@*<div class="container-fluid"> 
+@Html.ActionLink("Your invitations", "Invitations", "Project", null, new { @class = "btn" })
+</div>*@
+@using (Html.BeginForm("ProfileChanges", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="row-fluid well">
+        <div class="span5">
+            <div>
+                <div>
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <img width="80" height="80" src="@Url.Action("GetImageInProfile", "Profile", new { UserName = User.Identity.Name })" />
+                        </div>
+                        <div class="span8 primary-info">
+                            <span class="name">@User.Identity.Name</span><br />
+                        </div>
+                        <div class="editor-label">
+                            Image
+                        </div>
+                        <div class="editor-field">
+                            Load your image:
+                            <input type="file" name="Image" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<div class="row-fluid">
+    <div >
+        @Html.ActionLink("Your invitations", "Invitations", "Project", null, new {@class="btn"})
+        @if (@Model.InvitationsCount == 0)
+        {
+            <span>There are no new invitation</span>
+        } else
+        {
+            <span> + @Model.InvitationsCount new invitation</span>
+        }
+    </div>
+</div>

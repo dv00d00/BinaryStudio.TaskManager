@@ -280,9 +280,6 @@
         /// <param name="invitationId">
         /// The invitation id.
         /// </param>
-        /// <returns>
-        /// The System.Web.Mvc.ActionResult.
-        /// </returns>
         [HttpPost]
         public void SubmitInvitationInProject(int invitationId)
         {
@@ -319,8 +316,8 @@
         {
             var model = new List<SingleTaskViewModel>();
             string creatorName, assigneeName;
-            int projectId = 1;
-            var tasks = this.taskProcessor.GetAllTasksInProject(projectId).ToList();
+            const int ProjectId = 1;
+            var tasks = this.taskProcessor.GetAllTasksInProject(ProjectId).ToList();
             foreach (var task in tasks)
             {
                 creatorName = task.CreatorId.HasValue ? this.userProcessor.GetUser((int)task.CreatorId).UserName : "none";
@@ -333,7 +330,7 @@
                 });
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         /// <summary>
@@ -417,48 +414,13 @@
             var model = this.CreateSingleTaskViewModelById(id);
             return this.View(model);
         }
-
-        /// <summary>
-        /// The delete confirmed.
-        /// </summary>
-        /// <param name="id">
-        /// The id.
-        /// </param>
-        /// <returns>
-        /// The System.Web.Mvc.ActionResult.
-        /// </returns>
+       
         [HttpPost]
         [ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int projectId)
         {
-            this.taskProcessor.DeleteTask(id);
+            this.taskProcessor.DeleteTask(projectId);
             return this.RedirectToAction("AllTasks");
-        }
-
-        /// <summary>
-        /// The create single task view model by id.
-        /// </summary>
-        /// <param name="id">
-        /// The id.
-        /// </param>
-        /// <returns>
-        /// The BinaryStudio.TaskManager.Web.Models.SingleTaskViewModel.
-        /// </returns>
-        private SingleTaskViewModel CreateSingleTaskViewModelById(int id)
-        {
-            var model = new SingleTaskViewModel();
-            var task = this.taskProcessor.GetTaskById(id);
-            var creatorName = task.CreatorId.HasValue
-                                  ? this.userProcessor.GetUser((int)task.CreatorId).UserName
-                                  : "none";
-            var assigneeName = task.AssigneeId.HasValue
-                                   ? this.userProcessor.GetUser((int)task.AssigneeId).UserName
-                                   : "none";
-            model.HumanTask = task;
-            model.CreatorName = creatorName;
-            model.AssigneeName = assigneeName;
-            model.TaskHistories = this.taskProcessor.GetAllHistoryForTask(id).OrderByDescending(x => x.ChangeDateTime).ToList();
-            return model;
         }
 
         /// <summary>
@@ -501,6 +463,32 @@
         public void RefuseFromParticipateProject(int invitationId)
         {
             this.projectProcessor.RefuseFromParticipateProject(invitationId);
+        }
+
+        /// <summary>
+        /// The create single task view model by id.
+        /// </summary>
+        /// <param name="taskId">
+        /// The task id.
+        /// </param>
+        /// <returns>
+        /// The BinaryStudio.TaskManager.Web.Models.SingleTaskViewModel.
+        /// </returns>
+        private SingleTaskViewModel CreateSingleTaskViewModelById(int taskId)
+        {
+            var model = new SingleTaskViewModel();
+            var task = this.taskProcessor.GetTaskById(taskId);
+            var creatorName = task.CreatorId.HasValue
+                                  ? this.userProcessor.GetUser((int)task.CreatorId).UserName
+                                  : "none";
+            var assigneeName = task.AssigneeId.HasValue
+                                   ? this.userProcessor.GetUser((int)task.AssigneeId).UserName
+                                   : "none";
+            model.HumanTask = task;
+            model.CreatorName = creatorName;
+            model.AssigneeName = assigneeName;
+            model.TaskHistories = this.taskProcessor.GetAllHistoryForTask(taskId).OrderByDescending(x => x.ChangeDateTime).ToList();
+            return model;
         }
     }
 }

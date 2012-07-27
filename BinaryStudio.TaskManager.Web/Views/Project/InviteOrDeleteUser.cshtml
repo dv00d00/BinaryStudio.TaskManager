@@ -82,7 +82,7 @@
                 @user.UserName
             </td>
             <td>
-                <div class="button">
+                <div class="button ">
                     <button title="Delete" class="remove btn btn-danger" id=@user.Id>
                         Remove
                     </button>
@@ -91,6 +91,7 @@
         </tr>
     }
 </table>
+
 <div>
     @Html.ActionLink("Back to tasks list", "PersonalProject", null, new {@class = "btn"})
 </div>
@@ -119,7 +120,7 @@
         $(".remove").click(function () {
             var self = this;
             var onSuccess = function () {
-                $(self).parents(".button").html("<div class=\"label-danger\">Just removed</div>");
+                $(self).parents(".button").html("<div class=\"label label-important\">Just removed</div>");
             };
 
             var id = $(this).attr('id');

@@ -133,6 +133,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\LandingController.cs" />
     <Compile Include="Controllers\LinkedInController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ReminderController.cs" />
     <Compile Include="Controllers\SignalRController.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Models\InMemoryTokenManager.cs" />
     <Compile Include="Models\InvitationsViewModel.cs" />
     <Compile Include="Models\LandingModels.cs" />
+    <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\ProjectCollaboratorsViewModel.cs" />
     <Compile Include="Models\RegisterLinkedInModel.cs" />
     <Compile Include="Models\SingleTaskViewModel.cs" />
@@ -334,7 +336,7 @@
     <Content Include="Views\Project\AllTasks.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
-    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Profile\Profile.cshtml" />
     <Content Include="Views\Project\Invitations.cshtml" />
     <Content Include="Views\HumanTasks\AllManagersWithTasks.cshtml" />
     <Content Include="Views\HumanTasks\ManagerTasksTablePartialView.cshtml" />
