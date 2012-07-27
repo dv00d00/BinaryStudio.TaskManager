@@ -17,6 +17,8 @@ namespace BinaryStudio.TaskManager.Web.Models
     {
         public List<ManagerTasksViewModel> UsersTasks { get; set; }
 
-        public List<HumanTask> UnAssignedTasks { get; set; } 
+        public List<HumanTask> UnAssignedTasks { get; set; }
+
+        public int ProjectId { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace BinaryStudio.TaskManager.Web.Controllers
+﻿using System.Web.Routing;
+
+namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -50,6 +52,34 @@
             this.userProcessor = userProcessor;
         }
 
+
+
+
+        [Authorize]
+        public ActionResult Project(int id)
+        {
+            var model = new ProjectViewModel
+            {
+                UsersTasks = new List<ManagerTasksViewModel>(),
+                UnAssignedTasks = this.taskProcessor.GetUnAssignedTasksForProject(id).ToList(),
+                ProjectId = id
+            };
+            var users = this.projectProcessor.GetAllUsersInProject(id).Reverse();
+            foreach (var user in users)
+            {
+                var managerModel = new ManagerTasksViewModel();
+                managerModel.User = user;
+                managerModel.Tasks = this.taskProcessor.GetAllTasksForUserInProject(id, user.Id).ToList();
+                model.UsersTasks.Add(managerModel);
+            }
+            return this.View(model);
+        }
+
+
+
+
+
+
         /// <summary>
         /// The create task.
         /// </summary>
@@ -59,40 +89,69 @@
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult CreateTask(int userId)
+        public ActionResult CreateTask(int userId, int projectId)
         {
-            var humanTask = new HumanTask
-                {
-                    AssigneeId = (userId != -1) ? userId : (int?)null,
-                    CreatorId = this.userProcessor.GetUserByName(this.User.Identity.Name).Id,
-                    Created = DateTime.Now
-                };
-
-            return this.View(humanTask);
+            var createModel = new CreateTaskViewModel
+            {
+                Priorities = this.taskProcessor.GetPrioritiesList().OrderBy(x => x.Value),
+                AssigneeId = (userId != -1) ? userId : (int?)null,
+                CreatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id,
+                Created = DateTime.Now,
+                ProjectId = projectId
+            };
+            return this.View(createModel);
         }
+
+
+      
 
         /// <summary>
         /// The create task.
         /// </summary>
-        /// <param name="humanTask">
+        /// <param name="createModel">
         /// The human task.
         /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        [HttpPost]        
-        public ActionResult CreateTask(HumanTask humanTask)
+        [HttpPost]
+        public ActionResult CreateTask(CreateTaskViewModel createModel)
         {
-            int projectId = 1;
+            createModel.Assigned = createModel.AssigneeId == (int?)null ? createModel.Created : (DateTime?)null;
             if (this.ModelState.IsValid)
             {
-                humanTask.Assigned = humanTask.AssigneeId == (int?)null ? humanTask.Created : (DateTime?)null;
-                humanTask.Project = this.projectProcessor.GetProjectById(projectId); 
-                this.taskProcessor.CreateTask(humanTask);
-                return this.RedirectToAction("PersonalProject");
+                var task = new HumanTask
+                {
+                    Assigned = createModel.Assigned,
+                    AssigneeId = createModel.AssigneeId,
+                    Closed = createModel.Closed,
+                    Finished = createModel.Finished,
+                    Created = createModel.Created,
+                    CreatorId = createModel.CreatorId,
+                    Description = createModel.Description,
+                    Id = createModel.Id,
+                    Name = createModel.Name,
+                    Priority = createModel.Priority,
+                    ProjectId = createModel.ProjectId,
+                };
+                this.taskProcessor.CreateTask(task);
+                this.taskProcessor.AddHistory(new HumanTaskHistory
+                {
+                    NewDescription = task.Description,
+                    ChangeDateTime = DateTime.Now,
+                    NewAssigneeId = task.AssigneeId,
+                    NewName = task.Name,
+                    Task = task,
+                    NewPriority = task.Priority,
+                });
+                return this.RedirectToAction("Project",new {id = createModel.ProjectId});
             }
+            createModel.Priorities = taskProcessor.GetPrioritiesList();
+            // TODO: refactor this "PossibleCreators" and "PossibleAssignees"
+            this.ViewBag.PossibleCreators = new List<User>();
+            this.ViewBag.PossibleAssignees = new List<User>();
 
-            return this.View(humanTask);
+            return this.View(createModel);
         }
 
         /// <summary>
@@ -406,6 +465,27 @@
             model.AssigneeName = assigneeName;
             model.TaskHistories = this.taskProcessor.GetAllHistoryForTask(id).OrderByDescending(x => x.ChangeDateTime).ToList();
             return model;
+        }
+
+        [Authorize]
+        public ActionResult UserDetails(int userId)
+        {
+            this.ViewBag.ManagerName = this.userProcessor.GetUser(userId).UserName;
+            this.ViewBag.ManagerId = userId;
+            IList<HumanTask> humanTasks = this.taskProcessor.GetTasksList(userId).ToList();
+            IList<TaskViewModel> model =
+                humanTasks.Select(
+                    task =>
+                    new TaskViewModel
+                    {
+                        Task = task,
+                        CreatorName =
+                            task.CreatorId.HasValue
+                                ? this.userProcessor.GetUser(task.CreatorId.Value).UserName
+                                : string.Empty
+                    }).ToList();
+
+            return this.View(model);
         }
     }
 }

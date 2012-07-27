@@ -166,7 +166,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Custom.css" />
     <Content Include="Content\datepicker.css" />
-    <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\delete-icon.gif" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
@@ -326,11 +325,11 @@
     <Content Include="Views\HumanTasks\TaskDetailsPartial.cshtml" />
     <Content Include="Views\LinkedIn\RegisterLinkedIn.cshtml" />
     <Content Include="Views\Project\CreateTask.cshtml" />
-    <Content Include="Views\Project\ManagerTasksTablePartialView.cshtml" />
     <Content Include="Views\Project\PersonalProject.cshtml" />
     <Content Include="Views\Account\RegisterNewUser.cshtml" />
     <Content Include="Views\Project\InviteOrDeleteUser.cshtml" />
     <Content Include="Views\SignalR\Index.cshtml" />
+    <Content Include="Views\Landing\Index.cshtml" />
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\Project\TaskDetailsPartial.cshtml" />
     <Content Include="Views\Project\AllTasks.cshtml" />
@@ -341,6 +340,9 @@
     <Content Include="Views\HumanTasks\AllManagersWithTasks.cshtml" />
     <Content Include="Views\HumanTasks\ManagerTasksTablePartialView.cshtml" />
     <Content Include="Views\Landing\Index.cshtml" />
+    <Content Include="Views\Project\Project.cshtml" />
+    <Content Include="Views\Project\UserDetails.cshtml" />
+    <Content Include="Views\Project\ManagerTasksTablePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />

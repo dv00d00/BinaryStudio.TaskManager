@@ -2,14 +2,13 @@
 @* This partial view draw a task block in table *@
 @{ string divClass = "pr" + Model.Priority.ToString();
     
-    <div class="task @divClass" id = @Model.Id.ToString() style="height: 100px">
+    <div class="task @divClass" id = @Model.Id.ToString()>
+        <div></div>
         <br />
         <b>@Model.Name</b>
         <br />
         @Model.Description
         <br />
-        <u><i>
-            @Html.ActionLink("Details", "Details", new { id = Model.Id }, new { @class = "label label-info" })
-        </i></u>
+        @Html.ActionLink("Details", "Details", new { id = Model.Id }, new { @class = "label label-info ui-state-disabled" })
     </div>
 }

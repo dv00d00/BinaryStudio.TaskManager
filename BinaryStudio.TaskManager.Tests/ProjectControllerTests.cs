@@ -1,4 +1,6 @@
-﻿namespace BinaryStudio.TaskManager.Web.Tests
+﻿using BinaryStudio.TaskManager.Web.Models;
+
+namespace BinaryStudio.TaskManager.Web.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -51,7 +53,7 @@
         public void Should_CreateTask_WhenMethodCreateTaskWasCalledWithAssignedId3()
         {
             // act
-            this.controller.CreateTask(new HumanTask { AssigneeId = 3 });
+            this.controller.CreateTask(new CreateTaskViewModel { AssigneeId = 3 });
 
             // assert
             this.taskProcessorMock.Verify(x => x.CreateTask(It.Is<HumanTask>(it => it.AssigneeId == 3)), Times.Once());

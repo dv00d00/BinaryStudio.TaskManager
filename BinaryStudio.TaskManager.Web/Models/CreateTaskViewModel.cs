@@ -27,5 +27,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         public int? CreatorId { get; set; }
 
         public int? AssigneeId { get; set; }
+
+        public int ProjectId { get; set; }
     }
 }
