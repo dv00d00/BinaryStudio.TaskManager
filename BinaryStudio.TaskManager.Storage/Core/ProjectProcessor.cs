@@ -146,7 +146,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public IEnumerable<Invitation> GetAllInvitationsToProject(int projectId)
         {
-            this.projectRepository.GetAllInvitationsToProject(projectId);
+            return this.projectRepository.GetAllInvitationsToProject(projectId);
         }
 
         /// <summary>

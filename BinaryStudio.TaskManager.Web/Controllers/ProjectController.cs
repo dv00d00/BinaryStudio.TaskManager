@@ -207,11 +207,11 @@
 
             var listWithCurrentUser = new List<User> { currentUser };
 
-            var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(1);
-            var listInvited = (from user in users from invitation in invitationsToProject where invitation.ProjectId == ProjectId && user.Id == invitation.ReceiverId select user).ToList();
-
-            var model = new ProjectCollaboratorsViewModel
-                { Collaborators = users.Except(listWithCurrentUser).Except(listInvited), Invited = listInvited };
+            //var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(1);
+            //var listInvited = (from user in users from invitation in invitationsToProject where invitation.ProjectId == ProjectId && user.Id == invitation.ReceiverId select user).ToList();
+            //var collaborators = users.Except(listWithCurrentUser).Except(listInvited);
+            //var model = new ProjectCollaboratorsViewModel { Collaborators = collaborators, Invited = listInvited };
+            var model = new ProjectCollaboratorsViewModel { Collaborators = users.Except(listWithCurrentUser)};
             return this.View(model);
         }
 
@@ -224,14 +224,11 @@
         /// <param name="projectId">
         /// The project id.
         /// </param>
-        /// <returns>
-        /// The System.Web.Mvc.ActionResult.
-        /// </returns>
-        public ActionResult InviteUserInProject(int receiverId, int projectId)
+        [HttpPost]
+        public void InviteUserInProject(int receiverId, int projectId)
         {
             var senderId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
-            this.projectProcessor.InviteUserInProject(senderId, projectId, receiverId);
-            return this.RedirectToAction("InviteOrDeleteUser");
+            this.projectProcessor.InviteUserInProject(senderId, projectId, receiverId);            
         }
 
         /// <summary>

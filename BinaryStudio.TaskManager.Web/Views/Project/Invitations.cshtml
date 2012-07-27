@@ -22,11 +22,11 @@
                     @item.Sender.UserName invite you to project @Html.ActionLink(@item.Project.Name, "Project", "Project", new { id = @item.Project.Id }, null)
                 </div>
                 <div>
-                    <button title="Agree" class="submitInvitation btn btn-primary" id=@item.Invitation.Id>
+                    <button class="submitInvitation btn btn-primary" id=@item.Invitation.Id>
                         Agree
                     </button>
                     <span class="divider-vertical"></span>
-                    <button title="No, thanks!" class="refuseInvitation btn" id=@item.Invitation.Id>
+                    <button class="refuseInvitation btn" id=@item.Invitation.Id>
                         No, thanks!
                     </button>
                 </div>
@@ -37,24 +37,19 @@
     </ul>
     }
 }
-
 <script type="text/javascript">
     $(document).ready(function () {
-        $(".invitation .btn").click(function () {
-            $(this).parents(".invitation").animate({ opacity: "hide" }, "slow");
-        });
-
         var onError = function () {
             alert("Error while AJAX request");
         };
-        var onSuccess = function (text) {
-            $(this).parents(".invitation").hide('slow', function () {
-                alert(text);
-            });
-        };
-        
+
         $(".submitInvitation").click(function () {
-            var id = $(this).attr('id');         
+            var self = this;            
+            var onSuccess = function () {
+                $(self).parents(".invitation").animate({ opacity: "hide" }, "slow");
+            };
+
+            var id = $(this).attr('id');
             $.ajax({
                 type: "POST",
                 url: "/Project/SubmitInvitationInProject/",
@@ -65,6 +60,11 @@
         });
 
         $(".refuseInvitation").click(function () {
+            var self = this;
+            var onSuccess = function () {
+                $(self).parents(".invitation").animate({ opacity: "hide" }, "slow");
+            };
+
             var id = $(this).attr('id');
             $.ajax({
                 type: "POST",
@@ -72,7 +72,7 @@
                 data: { invitationId: id },
                 dataType: "json",
                 traditional: true
-            }).success(onSuccess).error(onError);
+            }).success(onSuccess("You refuse")).error(onError);
         });
     });
 </script>
