@@ -9,20 +9,23 @@
 
         var taskHub = $.connection.taskHub;
         $.connection.hub.start(function () {
-            taskHub.join("@User.Identity.Name.ToString()");
         });
 
         taskHub.TaskMoved = function (movedtaskId, moveToId, senderConnectionId) {
-            if (senderConnectionId != $.connection.hub.id) {
-                jQuery("[data-taskid=" + movedtaskId + "]").fadeOut();
-                jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
-                jQuery("[data-taskid=" + movedtaskId + "]").fadeIn();
-            };
+            //if (senderConnectionId != $.connection.hub.id) {
+            jQuery("[data-taskid=" + movedtaskId + "]").fadeOut();
+            setTimeout(function() {
+                            jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
+                            jQuery("[data-taskid=" + movedtaskId + "]").fadeIn();
+                        },
+                300);
+            //};
         };
 
         $(".column").sortable({
             connectWith: ".column",
             cancel: ".ui-state-disabled",
+            items: ".task-holder",
             start: function (event, ui) {
                 senderId = $(this).closest(".column").attr("id");
             },
@@ -38,14 +41,14 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/HumanTasks/MoveTask",
+                    url: "/Project/MoveTask",
                     data: { taskId: stringArray[0], senderId: stringArray[1], receiverId: stringArray[2] },
                     dataType: "json",
                     traditional: true
                 });
 
                 // signalr
-                taskHub.moveTask(taskId, receiverId, $.connection.hub.id);
+                //taskHub.moveTask(taskId, receiverId, $.connection.hub.id);
             },
             placeholder: "placeholderTask",
             cursor: 'move'
@@ -70,12 +73,12 @@
             <!-- Header of the table (Managers names)-->
             <tr>
                 <td align="center">
-                    <p>@Html.ActionLink("Create unassigned task", "CreateTask", new { userId = -1, projectId= Model.ProjectId }, new { @class = "btn" })</p>
+                    <p>@Html.ActionLink("Create unassigned task", "CreateTask", new { userId = -1, projectId= Model.ProjectId}, new { @class = "btn" })</p>
                 </td>
                 @foreach (var user in Model.UsersTasks)
                 {   
                     <td align="center">
-                        <p>@Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })</p>
+                        <p>@Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id}, new { @class = "btn btn-info" })</p>
                         <p>@Html.ActionLink("Create task", "CreateTask", new { userId = user.User.Id, projectId=Model.ProjectId }, new { @class = "btn" })</p>
                     </td> 
                 }
@@ -87,7 +90,7 @@
                     <div class="column" align="center" valign="top" width="250" id="-1">
                         @foreach (var unAssignedTask in Model.UnAssignedTasks)
                         {
-                            <div data-taskid= @unAssignedTask.Id.ToString() id = @unAssignedTask.Id.ToString()>
+                            <div class="task-holder" data-taskid= @unAssignedTask.Id.ToString() id = @unAssignedTask.Id.ToString()>
                                 @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
                             </div>
                         }
@@ -102,7 +105,7 @@
                         <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
                             @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
                             {
-                                <div data-taskid= @task.Id.ToString() id=@task.Id.ToString()>
+                                <div class="task-holder" data-taskid= @task.Id.ToString() id=@task.Id.ToString()>
                                     @Html.Partial("ManagerTasksTablePartialView", task)
                                 </div>
                             }

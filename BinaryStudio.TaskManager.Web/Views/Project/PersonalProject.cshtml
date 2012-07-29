@@ -1,4 +1,7 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.ProjectViewModel
+@{
+    ViewBag.Title = "Personal project";
+}
 <script type="text/javascript">
     $(document).ready(function () {
         var senderId, taskId, receiverId;
@@ -36,7 +39,6 @@
 <p align="center">
     <b>All Tasks in My Personal Project </b>
 </p>
-
 <table align="left">
     @if (Model.UsersTasks.Count == 0)
     {
@@ -57,23 +59,23 @@
                 </div>
             </td>
             @foreach (var user in Model.UsersTasks)
-                {
-                    <td align="center" width="250">
-                        <div>
-                            @Html.ActionLink(user.User.UserName, null, new { managerId = user.User.Id }, new { @class = "btn btn-info" })
-                        </div>
-                    </td>
-                }
+            {
+                <td align="center" width="250">
+                    <div>
+                        @Html.ActionLink(user.User.UserName, null, new { managerId = user.User.Id }, new { @class = "btn btn-info" })
+                    </div>
+                </td>
+            }
         </tr>
     }
     <td align="center" valign="top" width="250">
         <div>
-            @Html.ActionLink("Create a new task", "CreateTask", new { userId = -1 }, new { @class = "btn" })
+            @Html.ActionLink("Create a new task", "CreateTask", new { userId = -1, projectId = 1 }, new { @class = "btn" })
         </div>
         <div class="editor-field">
             @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", null, new { @class = "btn" })
         </div>
-    </td>  
+    </td>
     <!-- Create a column with tasks-->
     <td align="center" valign="top" width="250">
         @foreach (var unAssignedTask in Model.UnAssignedTasks)

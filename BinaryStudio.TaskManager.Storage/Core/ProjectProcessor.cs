@@ -2,6 +2,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using BinaryStudio.TaskManager.Logic.Domain;
 
@@ -59,7 +60,13 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The receiver id.
         /// </param>
         public void InviteUserInProject(int senderId, int projectId, int receiverId)
-        {                        
+        {            
+            var invitations = this.GetAllInvitationsToProject(projectId);
+            if (invitations.Any(oneInvitation => oneInvitation.ReceiverId == receiverId && oneInvitation.ProjectId == projectId))
+            {
+                //return;
+            }
+
             var invitation = new Invitation
                 {
                     ReceiverId = receiverId,
@@ -100,7 +107,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.User].
         /// </returns>
         public IEnumerable<User> GetAllUsersInProject(int projectId)
-        {            
+        {
             return this.projectRepository.GetAllUsersInProject(projectId);
         }
 
@@ -136,6 +143,17 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public Project GetProjectById(int projectId)
         {
             return this.projectRepository.GetById(projectId);
+        }
+
+        public void RefuseFromParticipateProject(int invitationId)
+        {
+            var invitation = this.projectRepository.GetInvitationById(invitationId);
+            this.projectRepository.DeleteInvitation(invitation);
+        }
+
+        public IEnumerable<Invitation> GetAllInvitationsToProject(int projectId)
+        {
+            return this.projectRepository.GetAllInvitationsToProject(projectId);
         }
 
         /// <summary>

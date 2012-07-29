@@ -60,8 +60,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                                Credentials = new Credentials{IsVerify = true},
                                RoleId = 2
                            };
-            context.Users.Add(user);
-            context.SaveChanges();
+            context.Users.Add(user);            
             context.Projects.Add(new Project
                                      {
                                          Id = 1,

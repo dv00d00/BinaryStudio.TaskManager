@@ -147,11 +147,5 @@
 
             return this.RedirectToAction("LogOn", "Account");
         }
-
-        [Authorize]
-        public ActionResult Profile()
-        {
-            return this.View();
-        }
     }
 }

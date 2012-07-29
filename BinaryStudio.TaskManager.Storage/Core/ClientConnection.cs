@@ -4,8 +4,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
 {
     public class ClientConnection
     {
-        public Guid ClientId { get; set; }
+        public String ConnectionId { get; set; }
 
-        public int? EmployeeId { get; set; }
+        public int UserId { get; set; }
     }
 }

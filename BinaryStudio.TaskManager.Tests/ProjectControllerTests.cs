@@ -2,10 +2,8 @@
 
 namespace BinaryStudio.TaskManager.Web.Tests
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
     using BinaryStudio.TaskManager.Web.Controllers;
@@ -31,7 +29,8 @@ namespace BinaryStudio.TaskManager.Web.Tests
 
         private Mock<IProjectProcessor> projectProcessorMock;
 
-        /// <summary>
+        private Mock<INotifier> notifierMock;
+            /// <summary>
         /// The init.
         /// </summary>
         [SetUp]
@@ -41,8 +40,11 @@ namespace BinaryStudio.TaskManager.Web.Tests
 
             this.userProcessorMock = new Mock<IUserProcessor>();
             this.projectProcessorMock = new Mock<IProjectProcessor>();
+            this.notifierMock = new Mock<INotifier>();
+
             this.controller = new ProjectController(
-                this.taskProcessorMock.Object, this.userProcessorMock.Object, this.projectProcessorMock.Object);
+                this.taskProcessorMock.Object, this.userProcessorMock.Object, this.projectProcessorMock.Object
+                ,this.notifierMock.Object);
 
         }
 
@@ -174,22 +176,11 @@ namespace BinaryStudio.TaskManager.Web.Tests
         [Test]
         public void Should_DeleteTaskWithId5FromTaskProcessor()
         {
-            //act
+            // act
             this.controller.DeleteConfirmed(5);
 
-            //assert
-            this.taskProcessorMock.Verify(x => x.DeleteTask(5), Times.Once());
-        }
-
-        [Test]
-        public void Should_InviteUserInProject()
-        {
-            // act
-            this.controller.InviteUserInProject(1, 1);
-
             // assert
-
-            this.projectProcessorMock.Verify(x => x.InviteUserInProject(1, 1, 1));
+            this.taskProcessorMock.Verify(x => x.DeleteTask(5), Times.Once());
         }
     }
 }
