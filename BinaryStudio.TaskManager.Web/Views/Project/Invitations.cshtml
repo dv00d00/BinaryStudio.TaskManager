@@ -2,6 +2,48 @@
 @{
     ViewBag.Title = "Your invitations";    
 }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var onError = function () {
+            alert("Error while AJAX request");
+        };
+
+        $(".submitInvitation").click(function () {
+            var self = this;
+            var onSuccess = function () {
+                $(self).parents(".invitation").animate({ opacity: "hide" }, "slow");
+            };
+
+            var id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url: "/Project/SubmitInvitationInProject/",
+                data: { invitationId: id },
+                dataType: "json",
+                traditional: true
+            }).success(onSuccess).error(onError);
+        });
+
+        $(".refuseInvitation").click(function () {
+            var self = this;
+            var onSuccess = function () {
+                $(self).parents(".invitation").animate({ opacity: "hide" }, "slow");
+            };
+
+            var id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url: "/Project/RefuseFromParticipateProject/",
+                data: { invitationId: id },
+                dataType: "json",
+                traditional: true
+            }).success(onSuccess("You refuse")).error(onError);
+        });
+    });
+</script>
+
+
 <div class="well-large">
     Invitations
 </div>
@@ -17,20 +59,26 @@
     <ul>
         @foreach (var item in Model)
         {
-            <li class="" id=@item.Invitation.Id>
+            <div class="well invitation">
                 <div>
-                    @item.Sender.UserName invite you to project @item.Project.Name
+                    @item.Sender.UserName invite you to project @Html.ActionLink(@item.Project.Name, "Project", "Project", new { id = @item.Project.Id }, null)
                 </div>
                 <div>
-                    @Html.ActionLink("Agree", "SubmitInvitationInProject", "Project", new { invitationId = item.Invitation.Id }, new { @class = "btn btn-primary" })
+                    <button class="submitInvitation btn btn-primary" id=@item.Invitation.Id>
+                        Agree
+                    </button>
+                    <span class="divider-vertical"></span>
+                    <button class="refuseInvitation btn" id=@item.Invitation.Id>
+                        No, thanks!
+                    </button>
                 </div>
-                <span class="divider"></span></li>
+                <div class="divider">
+                </div>
+            </div>
         }
     </ul>
     }
 }
-<script type="text/javascript">
-    $(document).ready(function () {
+@Html.ActionLink("Back to profile", "Profile", "Profile", null, new {@class="btn"})
 
-    });
-</script>
+

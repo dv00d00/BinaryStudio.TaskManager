@@ -1,6 +1,6 @@
-﻿using SignalR.Hubs;
-
-namespace BinaryStudio.TaskManager.Web.SignalR
+using BinaryStudio.TaskManager.Logic.Core;
+using SignalR.Hubs;
+namespace BinaryStudio.TaskManager.Logic.SignalR
 {
     [HubName("taskHub")]
     public class TaskHub : Hub
@@ -16,9 +16,10 @@ namespace BinaryStudio.TaskManager.Web.SignalR
             Distribute(id);
         }
 
-        public void MoveTask(int taskId, int moveToId, string senderConnectionId)
+        public void MoveTask(int taskId, int moveToId, ClientConnection clientConnection)
         {
-            if (moveToId == -1) moveToId = 0;
+            moveToId = moveToId == -1 ? 0 : moveToId;
+            string senderConnectionId = clientConnection.ClientId;
             Clients.TaskMoved(taskId, moveToId,senderConnectionId);
         }
     }

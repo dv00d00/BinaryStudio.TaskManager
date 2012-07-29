@@ -7,27 +7,28 @@ namespace BinaryStudio.TaskManager.Web.Models
     public class LandingIndexModel
     {
         /// <summary>
-        /// Gets or sets the projects.
+        /// Gets or sets the user's projects.
         /// </summary>
         /// <value>
-        /// The projects.
+        /// The user's projects.
         /// </value>
-        public IEnumerable<Project> Projects { get; set; }
+        public IEnumerable<Project> UserProjects { get; set; }
+
+        /// <summary>
+        /// Gets or sets the creator's projects.
+        /// </summary>
+        /// <value>
+        /// The creator's projects.
+        /// </value>
+        public IEnumerable<Project> CreatorProjects { get; set; }
 
         public HumanTask ProjectHumanTask { get; set; }
     }
 
     public class LandingProjectsModel
     {
-        public IEnumerable<ProjectView> Projects { get; set; }
-    }
+        public IEnumerable<ProjectView> UserProjects { get; set; }
 
-    public class ProjectView
-    {
-        public int Id { get; set; }
-        
-        public string Name { get; set; }
-
-        public IEnumerable<HumanTask> Tasks { get; set; }
+        public IEnumerable<ProjectView> CreatorProjects { get; set; }
     }
 }

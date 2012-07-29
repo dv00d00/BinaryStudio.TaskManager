@@ -65,7 +65,6 @@
         {
             var project = this.dataBaseContext.Projects.First(x => x.Id == projectId);
             ICollection<User> users = project.ProjectUsers;
-            users.Add(project.Creator);
             return users;
         }
 
@@ -81,6 +80,11 @@
         public IEnumerable<Project> GetAllProjectsForUser(int userId)
         {
             return this.dataBaseContext.Users.First(x => x.Id == userId).UserProjects;
+        }
+
+        public IEnumerable<Project> GetAllProjectsForTheirCreator(int userId)
+        {
+            return this.dataBaseContext.Projects.Where(x => x.CreatorId == userId).ToList();
         }
 
         /// <summary>
@@ -134,15 +138,23 @@
 
         public IEnumerable<Invitation> GetAllInvitationsForUser(int userId)
         {
-
-
             return this.dataBaseContext.Invitations.Where(x => x.ReceiverId == userId && x.IsInvitationConfirmed == false).ToList();
-            
         }
 
         public Invitation GetInvitationById(int invitationId)
         {
             return this.dataBaseContext.Invitations.FirstOrDefault(x => x.Id == invitationId);
+        }
+
+        public void DeleteInvitation(Invitation invitation)
+        {
+            this.dataBaseContext.Entry(invitation).State = EntityState.Deleted;
+            this.dataBaseContext.SaveChanges();
+        }
+
+        public IEnumerable<Invitation> GetAllInvitationsToProject(int projectId)
+        {
+            return this.dataBaseContext.Invitations.Where(x => x.ProjectId == projectId);
         }
     }
 }
