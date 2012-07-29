@@ -1,6 +1,7 @@
 using System.Runtime.Remoting.Contexts;
 using BinaryStudio.TaskManager.Web.SignalR;
 using SignalR;
+using SignalR.Hubs;
 
 namespace BinaryStudio.TaskManager.Logic.Core
 {

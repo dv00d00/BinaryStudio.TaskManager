@@ -9,14 +9,16 @@
 
         var taskHub = $.connection.taskHub;
         $.connection.hub.start(function () {
-            taskHub.join("@User.Identity.Name.ToString()");
         });
 
         taskHub.TaskMoved = function (movedtaskId, moveToId, senderConnectionId) {
             //if (senderConnectionId != $.connection.hub.id) {
-                jQuery("[data-taskid=" + movedtaskId + "]").fadeOut();
-                jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
-                jQuery("[data-taskid=" + movedtaskId + "]").fadeIn();
+            jQuery("[data-taskid=" + movedtaskId + "]").fadeOut();
+            setTimeout(function() {
+                            jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
+                            jQuery("[data-taskid=" + movedtaskId + "]").fadeIn();
+                        },
+                300);
             //};
         };
 

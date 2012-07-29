@@ -1,4 +1,5 @@
 ﻿
+using BinaryStudio.TaskManager.Logic.Core.SignalR;
 using SignalR.Hubs;
 
 namespace BinaryStudio.TaskManager.Web.SignalR
@@ -13,8 +14,7 @@ namespace BinaryStudio.TaskManager.Web.SignalR
 
         public void Join(string id)
         {
-            Groups.Add(id, "simpleGroup");
-            Distribute(id);
+            SignalRCliets.AddConnection(id);
         }
 
         public void MoveTask(int taskId, int moveToId, string senderConnectionId)
