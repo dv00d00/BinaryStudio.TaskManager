@@ -9,10 +9,11 @@
 <link href="@Url.Content("~/Content/jquery.fancybox.css")" rel="stylesheet" type="text/css" /> 
 
 <script src="@Url.Content("~/Scripts/jquery.fancybox.pack.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/landing.js")" type="text/javascript"></script>
 <div class="row main-row">
     <div id="left_panel" class="span3">
         @Html.TypeaheadFor(model => model.ProjectHumanTask, 
-             Model.Projects.Select(x => x.Tasks).SelectMany(tasks => tasks).Distinct().Select(x => x.Name))
+             Model.UserProjects.Select(x => x.Tasks).SelectMany(tasks => tasks).Distinct().Select(x => x.Name))
         <div id="task_groups">
             <h3>Task Groups</h3>
             <ul class="task_group_list">
@@ -21,25 +22,36 @@
                 <li>Unassigned</li>
             </ul>
         </div>
-    <div id="projects">
-        <div class="new_project_btn">Add Project</div>
-        <h3>Projects</h3>
-        <ul class="project_list">
-            @foreach (var project in Model.Projects)
-            {
-                <li data-id="@project.Id">
-                    <a href="#" class="delete_link"><div class="delete_btn"></div></a>
-                    <div class="project_name">@project.Name</div>
-                    <a href="/Project/Project/@project.Id"><div title="@project.Name dashboard" class="dashboard_btn"></div></a>
-                </li>
-            }
-        </ul>
-        <div id="loader">
-                
-        </div>
-    </div>
-        <div id="content" class="span6">
+        <div id="projects">
+            <div class="projects_top"> 
+                <div class="new_project_btn">Add Project</div>
+                <h3>Projects</h3>
+             </div>
+             <div class="project_list">   
+                 @foreach (var project in Model.UserProjects)
+                 {
+                     <div class="project_name">@project.Name</div>
+                 }
+             
+             
+                 @foreach (var project in Model.CreatorProjects)
+                 {
+                     <div class="proj_row" data-id="@project.Id">
+                         <div class="delete_btn"></div>
+                         <div class="created_projs project_name">@project.Name</div>
+                         <a href="/Project/Project/@project.Id"><div title="@project.Name dashboard" class="dashboard_btn"></div></a>
+                     </div>
+                 }
               </div>
+            <div id="loader">
+                
+            </div>
+        </div>
+    <div id="content" class="span6">
+        <h2></h2>
+         <ul class="tasks">
+         </ul>
+    </div>
         <div id="right_panel" class="span3">
         </div>
         <div class="modal hide" id="delete_box">
@@ -60,140 +72,4 @@
             <span class="add_cancel">Cancel</span>
         </div>
     </div>
-</div>
-<script type="text/javascript">
-    $(function () {
-        $('.dashboard_btn').tooltip({
-            position: 'left',
-            title: 'asasaf',
-            delay: { show: 1000 }
-        });
-
-        $("#left_panel>input").val("Filter tasks");
-
-        $("#left_panel>input").on("blur", function () {
-            if ($(this).val() == "")
-                $(this).val("Filter tasks");
-        });
-
-        $("#left_panel>input").on("click", function () {
-            if ($(this).val() == "Filter tasks")
-                $(this).val("");
-        });
-
-        $("#delete_box").on('hidden', function () {
-            $(".yes").off();
-        });
-
-        $(".project_name").each(function () {
-            var text = $(this).html();
-            if (text.length > 20) {
-                $(this).attr("title", text);
-                $(this).html(text.substr(0, 20) + "...");
-            }
-        });
-        if ($(".project_name").length == 0)
-            $(".project_list").html("<li>There are no projects yet</li>");
-
-        $(document).on("click", ".delete_link", function () {
-            var proj = $(this).parent("li").attr("data-id");
-            $(".modal-body").html("<p>Are you sure, that you want to delete project</p>\
-            <span> <b>" + $(this).parent("li").children(".project_name").html() + "</b>?</span>");
-            $("#delete_box").modal('show');
-            $(".yes").on("click", function () {
-                deleteProjectQuery(proj);
-                $(".yes").off();
-            });
-            $(window).on("keydown", function (e) {
-                var code = null;
-                code = (e.keyCode ? e.keyCode : e.which);
-                if (code == 13) {
-                    deleteProjectQuery(proj);
-                    $("#delete_box").modal('hide');
-                }
-                $(window).off("keydown");
-            });
-        });
-        $(".new_project_btn").click(function () {
-            if ($(".newBox").length == 0) {
-                $(".project_list").prepend($("#add_proj_box").clone());
-                $("#add_proj_box").addClass("newBox");
-                $(".newBox").css("display", "block");
-            } else {
-                $(".newBox").children("input").focus();
-            }
-            $(".add_cancel").click(function () {
-                $(".newBox").remove();
-            });
-            $(".add_proj_btn").click(function () {
-                sendNewProject();
-            });
-            $(".newBox").children("input").keyup(function (e) {
-                var code = null;
-                code = (e.keyCode ? e.keyCode : e.which);
-                if (code == 27) {
-                    $(".newBox").remove();
-                } else if (code == 13) {
-                    sendNewProject();
-                }
-            });
-        });
-    });
-
-    function sendNewProject() {
-        var val = $(".newBox").children("input").val();
-        $(".newBox").remove();
-        $.ajax({
-            data: { projectName: val },
-            dataType: "JSON",
-            type: "POST",
-            url: "/Landing/AddProject",
-            beforeSend: function () {
-                $("#loader").show();
-            },
-            success: function (response) {
-                $("#loader").hide();
-                listProjects(response);
-            }
-        });
-    }
-
-
-    function deleteProjectQuery(proj) {
-        $.ajax({
-            data: { projectId: proj },
-            dataType: 'JSON',
-            type: 'POST',
-            url: '/Landing/DeleteProject',
-            beforeSend: function () {
-                $("#loader").show();
-            },
-            success: function (response) {
-                $("#loader").hide();
-                listProjects(response);
-            }
-        });
-    }
-
-    function listProjects(response) {
-        var list = $(".project_list");
-        list.html("");
-        var name = null;
-        for (var i = 0; i < response.Projects.length; i++) {
-            if (response.Projects[i].Name.length < 20)
-                name = response.Projects[i].Name;
-            else
-                name = response.Projects[i].Name.substr(0, 20) + '...';
-            list.append("\
-                                <li data-id='" + response.Projects[i].Id + "'> \
-                                <a href='#delete_box' class='delete_link'><div class='delete_btn'></div></a>\
-                                <div class='project_name'>" + name + "</div>\
-                       <a href='/Project/Project/"+response.Projects[i].Id+"'><div class='dashboard_btn'></div></a></li>");
-            if (response.Projects[i].Name.length >= 20)
-                $("li[data-id=" + response.Projects[i].Id + "]").attr("title", response.Projects[i].Name);
-        }
-        if (i == 0) {
-            $(".project_list").html("<li>There are no projects yet</li>");
-        }
-    }
-</script>
+    </div>
