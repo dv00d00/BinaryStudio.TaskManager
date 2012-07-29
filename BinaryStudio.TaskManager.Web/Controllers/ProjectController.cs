@@ -30,6 +30,7 @@
         /// </summary>
         private readonly IProjectProcessor projectProcessor;
 
+        private readonly INotifier notifier;
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectController"/> class.
         /// </summary>
@@ -42,9 +43,10 @@
         /// <param name="projectProcessor">
         /// The project processor.
         /// </param>
-        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor)
+        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, INotifier notifier)
         {
             this.projectProcessor = projectProcessor;
+            this.notifier = notifier;
             this.taskProcessor = taskProcessor;
             this.userProcessor = userProcessor;
         }
@@ -198,6 +200,7 @@
 
             // make task unassigned
             this.taskProcessor.MoveTaskToUnassigned(taskId);
+            
         }
 
         /// <summary>

@@ -2,7 +2,8 @@ using BinaryStudio.TaskManager.Web.SignalR;
 
 namespace BinaryStudio.TaskManager.Logic.Core
 {
-    class Notifier : INotifier
+
+    public class Notifier : INotifier
     {
         private readonly TaskHub _taskHub;
 
@@ -23,7 +24,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public void MoveTask(int taskId, int moveToId, string senderConnectionId)
         {
-            throw new System.NotImplementedException();
+            
+            this._taskHub.MoveTask(taskId,moveToId,senderConnectionId);
         }
     }
 }

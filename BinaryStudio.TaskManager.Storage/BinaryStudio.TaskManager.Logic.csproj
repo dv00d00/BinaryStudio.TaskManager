@@ -66,6 +66,22 @@
     <Reference Include="LinkedIn.OAuth">
       <HintPath>..\packages\LinkedIn.OAuth.0.6.1\lib\LinkedIn.OAuth.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.7\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SignalR">
+      <HintPath>..\packages\SignalR.Server.0.5.2\lib\net40\SignalR.dll</HintPath>
+    </Reference>
+    <Reference Include="SignalR.Hosting.AspNet">
+      <HintPath>..\packages\SignalR.Hosting.AspNet.0.5.2\lib\net40\SignalR.Hosting.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="SignalR.Hosting.Common">
+      <HintPath>..\packages\SignalR.Hosting.Common.0.5.2\lib\net40\SignalR.Hosting.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -95,10 +111,12 @@
     <Compile Include="Core\HumanTaskRepository.cs" />
     <Compile Include="Core\IUserProcessor.cs" />
     <Compile Include="Core\IUserRepository.cs" />
+    <Compile Include="Core\Notifier.cs" />
     <Compile Include="Core\ProjectProcessor.cs" />
     <Compile Include="Core\ProjectRepository.cs" />
     <Compile Include="Core\ReminderRepository.cs" />
     <Compile Include="Core\ReminderSender.cs" />
+    <Compile Include="Core\SignalR\TaskHub.cs" />
     <Compile Include="Core\TaskProcessor.cs" />
     <Compile Include="Core\UserProcessor.cs" />
     <Compile Include="Domain\HumanTaskHistory.cs" />

@@ -13,11 +13,11 @@
         });
 
         taskHub.TaskMoved = function (movedtaskId, moveToId, senderConnectionId) {
-            if (senderConnectionId != $.connection.hub.id) {
+            //if (senderConnectionId != $.connection.hub.id) {
                 jQuery("[data-taskid=" + movedtaskId + "]").fadeOut();
                 jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
                 jQuery("[data-taskid=" + movedtaskId + "]").fadeIn();
-            };
+            //};
         };
 
         $(".column").sortable({
@@ -39,14 +39,14 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/HumanTasks/MoveTask",
+                    url: "/Project/MoveTask",
                     data: { taskId: stringArray[0], senderId: stringArray[1], receiverId: stringArray[2] },
                     dataType: "json",
                     traditional: true
                 });
 
                 // signalr
-                taskHub.moveTask(taskId, receiverId, $.connection.hub.id);
+                //taskHub.moveTask(taskId, receiverId, $.connection.hub.id);
             },
             placeholder: "placeholderTask",
             cursor: 'move'
@@ -71,12 +71,12 @@
             <!-- Header of the table (Managers names)-->
             <tr>
                 <td align="center">
-                    <p>@Html.ActionLink("Create unassigned task", "CreateTask", new { userId = -1, projectId= Model.ProjectId }, new { @class = "btn" })</p>
+                    <p>@Html.ActionLink("Create unassigned task", "CreateTask", new { userId = -1, projectId= Model.ProjectId}, new { @class = "btn" })</p>
                 </td>
                 @foreach (var user in Model.UsersTasks)
                 {   
                     <td align="center">
-                        <p>@Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })</p>
+                        <p>@Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id}, new { @class = "btn btn-info" })</p>
                         <p>@Html.ActionLink("Create task", "CreateTask", new { userId = user.User.Id, projectId=Model.ProjectId }, new { @class = "btn" })</p>
                     </td> 
                 }

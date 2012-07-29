@@ -29,7 +29,8 @@ namespace BinaryStudio.TaskManager.Web.Tests
 
         private Mock<IProjectProcessor> projectProcessorMock;
 
-        /// <summary>
+        private Mock<INotifier> notifierMock;
+            /// <summary>
         /// The init.
         /// </summary>
         [SetUp]
@@ -39,8 +40,11 @@ namespace BinaryStudio.TaskManager.Web.Tests
 
             this.userProcessorMock = new Mock<IUserProcessor>();
             this.projectProcessorMock = new Mock<IProjectProcessor>();
+            this.notifierMock = new Mock<INotifier>();
+
             this.controller = new ProjectController(
-                this.taskProcessorMock.Object, this.userProcessorMock.Object, this.projectProcessorMock.Object);
+                this.taskProcessorMock.Object, this.userProcessorMock.Object, this.projectProcessorMock.Object
+                ,this.notifierMock.Object);
 
         }
 

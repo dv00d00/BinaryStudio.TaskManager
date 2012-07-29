@@ -1,4 +1,3 @@
-using BinaryStudio.TaskManager.Web.SignalR;
 
 namespace BinaryStudio.TaskManager.Logic.Core
 {
@@ -7,7 +6,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void Broadcast(string message);
 
         void Send(ClientConnection connectionId, string message);
-
+        
         void MoveTask(int taskId, int moveToId, string senderConnectionId);
     }
 }
