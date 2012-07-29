@@ -7,7 +7,11 @@
 }
 /***************** Left panel ***********************/
 
-
+#left_panel {
+    width: 270px;
+    margin-left: 50px;
+    float: left;
+}
 #task_groups {
     border-bottom: 1px solid #46593F;
 }
@@ -36,9 +40,15 @@
     cursor: pointer;
     background: #EEF0F0;
 }
+
 .created_projs {
     font-weight: bolder;
 }
+
+.user_projs {
+    margin-left: 25px;
+}
+
 .task_group_list {
     padding-bottom: 20px;
 }

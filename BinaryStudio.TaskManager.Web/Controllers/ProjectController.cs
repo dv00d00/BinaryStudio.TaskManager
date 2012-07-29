@@ -75,7 +75,9 @@
                 UnAssignedTasks = this.taskProcessor.GetUnAssignedTasksForProject(id).ToList(),
                 ProjectId = id
             };
-            var users = this.projectProcessor.GetAllUsersInProject(id).Reverse();
+            var users = new List<User>();
+            users = this.projectProcessor.GetAllUsersInProject(id).Reverse().ToList();
+            users.Add(this.projectProcessor.GetProjectById(id).Creator);
             foreach (var user in users)
             {
                 var managerModel = new ManagerTasksViewModel { User = user, Tasks = this.taskProcessor.GetAllTasksForUserInProject(id, user.Id).ToList() };

@@ -34,6 +34,7 @@
 
     $("#delete_box").on('hidden', function () {
         $(".yes").off();
+        $(window).off("keydown");
     });
 
     $(document).on("click", ".delete_btn", function () {
@@ -85,7 +86,7 @@
     /********* Project Tasks View  *******/
     $(document).on("click", ".project_name", function () {
         var proj = $(this).parent(".proj_row").attr("data-id");
-        $("#content").children("h2").html("<h2>" + $(this).html() + "</h2>");
+        $("#content").children("h2").html("<h2>" + $(this).html() + " Project</h2>");
         $.ajax({
             data: { projectId: proj },
             dataType: "JSON",
@@ -142,8 +143,8 @@ function listProjects(response) {
     var list = $(".project_list");
     list.html("");
     var name = null;
-    var userProjectsCount = projectsOutput(response.UserProjects, "user_pojs");
     var creatorProjectsCount = projectsOutput(response.CreatorProjects, "created_projs");
+    var userProjectsCount = projectsOutput(response.UserProjects, "user_projs");
     if (userProjectsCount + creatorProjectsCount == 0) {
         $(".project_list").html("<span>There are no projects yet</span>");
     }
@@ -155,10 +156,11 @@ function projectsOutput(projects,li_class) {
             name = projects[i].Name;
         else
             name = projects[i].Name.substr(0, 20) + '...';
+        var ownProjDelete = (li_class == 'user_projs') ? "" : "<div class='delete_btn'></div>";
         $(".project_list").append("\
-        <div class='proj_row' data-id='" + projects[i].Id + "' class='"+li_class+"'>\
-                         <div class='delete_btn'></div>\
-                         <div class='created_projs project_name'>" + name + "</div>\
+        <div class='proj_row' data-id='" + projects[i].Id + "'>\
+                         " + ownProjDelete + "\
+                         <div  class='" + li_class + " project_name'>" + name + "</div>\
                          <a href='/Project/Project/" + projects[i].Id + "'><div class='dashboard_btn' title='" + projects[i].Name + " dashboard'></div></a>\
                      </div>");
          if (projects[i].Name.length >= 20)

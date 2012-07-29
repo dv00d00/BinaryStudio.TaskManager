@@ -279,7 +279,12 @@ div#title {
     color: white;
     text-decoration: none;
 }
+
+
 */
+.log_name.label-info {
+    background-color: transparent; 
+}
 /* Styles for validation helpers
 -----------------------------------------------------------*/
 .field-validation-error {
