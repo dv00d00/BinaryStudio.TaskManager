@@ -33,15 +33,17 @@
         /// </summary>
         public virtual ICollection<HumanTask> Tasks { get; set; }
 
-        /// <summary>
-        /// Gets or sets the creator id.
-        /// </summary>
-        public int CreatorId { get; set; }
 
         /// <summary>
         /// Gets or sets the creator.
         /// </summary>
         public virtual User Creator { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the creator id.
+        /// </summary>
+        public int CreatorId { get; set; }
 
         /// <summary>
         /// Gets or sets the project users.
