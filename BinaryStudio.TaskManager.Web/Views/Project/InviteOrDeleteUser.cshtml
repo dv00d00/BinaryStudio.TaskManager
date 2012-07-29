@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-﻿@model BinaryStudio.TaskManager.Web.Models.ProjectCollaboratorsViewModel
+@model BinaryStudio.TaskManager.Web.Models.ProjectCollaboratorsViewModel
 @{
     ViewBag.Title = "Manage collaborators";
 }
@@ -94,7 +93,7 @@
 </table>
 
 <div>
-    @Html.ActionLink("Back to tasks list", "PersonalProject", null, new {@class = "btn"})
+    @Html.ActionLink("Back to tasks list", "PersonalProject", null, new { @class = "btn" })
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -134,141 +133,4 @@
             }).success(onSuccess).error(onError);
         });
     });
-=======
-﻿@model BinaryStudio.TaskManager.Web.Models.ProjectCollaboratorsViewModel
-@{
-    ViewBag.Title = "Manage collaborators";
-}
-<h2 class="well-large">
-    Manage collaborators
-</h2>
-<table class="tabbable">
-    <tr>
-        <th colspan="3">
-            Invite friends...
-        </th>
-    </tr>
-    @foreach (var user in Model.PossibleCollaborators)
-    {
-        <tr class="user">
-            <td>
-                @if (@user.ImageData == null)
-                {
-                    @:None
-                }
-                else
-                {
-                    <img width="80" height="80" src="@Url.Action("GetImage", "Project", new { UserId = user.Id })" />
-                }
-            </td>
-            <td>
-                @user.UserName
-            </td>
-            <td>
-                <div class="button">
-                    <button title="Invite" class="invite btn btn-primary" id=@user.Id>
-                        Invite
-                    </button>
-                </div>
-            </td>
-        </tr>
-    }
-    @foreach (var user in Model.AlreadyInvited)
-        {
-        <tr class="user">
-            <td>
-                @if (@user.ImageData == null)
-                {
-                    @:None
-                }
-                else
-                {
-                    <img width="80" height="80" src="@Url.Action("GetImage", "Project", new { UserId = user.Id })" />
-                }
-            </td>
-            <td>
-                @user.UserName
-            </td>
-            <td>
-                <div class="label label-info">
-                  Already invited
-                </div>
-            </td>
-        </tr>
-        }
-    <tr>
-        <th colspan="3">
-            ...or manage you collaborators:
-        </th>
-    </tr>
-    @foreach (var user in Model.Collaborators)
-    {
-        
-        <tr class="user">
-            <td>
-                @if (@user.ImageData == null)
-                {
-                    @:None
-                }
-                else
-                {
-                    <img width="80" height="80" src="@Url.Action("GetImage", "Project", new { UserId = user.Id })" />
-                }
-            </td>
-            <td>
-                @user.UserName
-            </td>
-            <td>
-                <div class="button ">
-                    <button title="Delete" class="remove btn btn-danger" id=@user.Id>
-                        Remove
-                    </button>
-                </div>
-            </td>
-        </tr>
-    }
-</table>
-
-<div>
-    @Html.ActionLink("Back to tasks list", "PersonalProject", null, new {@class = "btn"})
-</div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        var onError = function () {
-            alert("Error while AJAX request");
-        };
-
-        $(".invite").click(function () {
-            var self = this;
-            var onSuccess = function () {
-                $(self).parents(".button").html("<div class=\"label label-info\">Just invited</div>");
-            };
-
-            var id = $(this).attr('id');
-            $.ajax({
-                type: "POST",
-                url: "/Project/InviteUserInProject/",
-                data: { receiverId: id, projectId: 1 },
-                dataType: "json",
-                traditional: true
-            }).success(onSuccess).error(onError);
-        });
-
-        $(".remove").click(function () {
-            var self = this;
-            var onSuccess = function () {
-                $(self).parents(".button").html("<div class=\"label label-important\">Just removed</div>");
-            };
-
-            var id = $(this).attr('id');
-            $.ajax({
-                type: "POST",
-                url: "/Project/RemoveUserFromProject/",
-                data: { userId: id, projectId: 1 },
-                dataType: "json",
-                traditional: true
-            }).success(onSuccess).error(onError);
-        });
-    });
->>>>>>> 3be595d6356143f594f5df5382171d010d012ba6
 </script>

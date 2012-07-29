@@ -92,6 +92,9 @@
         {
             <!-- Header of the table (Managers names)-->
             <tr>
+                <td align="center" width="250">
+                    Actions
+                </td>
                 <td align="center">
                     <p>@Html.ActionLink("Create unassigned task", "CreateTask", new { userId = -1, projectId = Model.ProjectId }, new { @class = "btn" })</p>
                 </td>
@@ -105,6 +108,11 @@
             </tr>
             
             <tr>
+                <td align="center" valign="top" width="250">
+                    <div class="editor-field">
+                        @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", null, new { @class = "btn" })
+                    </div>
+                </td>
                 <td>
                     <div class="column" align="center" valign="top" width="250" id="-1">
                         @foreach (var unAssignedTask in Model.UnAssignedTasks)
