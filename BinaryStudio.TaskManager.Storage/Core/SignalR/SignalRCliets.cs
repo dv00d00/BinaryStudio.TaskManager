@@ -7,7 +7,7 @@ namespace BinaryStudio.TaskManager.Logic.Core.SignalR
 {
     public static class SignalRCliets
     {
-        public static IList<ClientConnection> Connections { get; set; }
+        public static IList<ClientConnection> Connections = new List<ClientConnection>();
 
         public static void AddConnection (string connectionId)
         {

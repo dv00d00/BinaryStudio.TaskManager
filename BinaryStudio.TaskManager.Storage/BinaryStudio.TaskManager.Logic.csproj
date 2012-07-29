@@ -116,6 +116,7 @@
     <Compile Include="Core\ProjectRepository.cs" />
     <Compile Include="Core\ReminderRepository.cs" />
     <Compile Include="Core\ReminderSender.cs" />
+    <Compile Include="Core\SignalR\SignalRCliets.cs" />
     <Compile Include="Core\SignalR\TaskHub.cs" />
     <Compile Include="Core\TaskProcessor.cs" />
     <Compile Include="Core\UserProcessor.cs" />

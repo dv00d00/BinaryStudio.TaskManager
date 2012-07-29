@@ -1,9 +1,9 @@
-﻿
-using BinaryStudio.TaskManager.Logic.Core.SignalR;
-using SignalR.Hubs;
+﻿using SignalR.Hubs;
 
 namespace BinaryStudio.TaskManager.Web.SignalR
 {
+    using BinaryStudio.TaskManager.Logic.Core.SignalR;
+
     [HubName("taskHub")]
     public class TaskHub : Hub
     {
