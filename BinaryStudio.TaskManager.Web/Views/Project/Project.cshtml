@@ -26,19 +26,18 @@
         };
 
         taskHub.TaskCreated = function (taskId, managerId) {
-            alert(taskId +" "+ managerId);
             var request = $.ajax({
                 type: "POST",
                 url: "/Project/TaskView",
                 data: { taskId: taskId },
                 dataType: 'html',
                 success: function (response1) {
-                    alert("asd");
                     var task = "<div class=\"task-holder\" data-taskid=" + taskId + " id =" + taskId + ">";
                     task += response1;
                     task += "</div>";
-                    alert(task);
                     jQuery("[data-managerid=" + managerId + "]").html(task);
+                    jQuery("[data-taskid=" + taskId + "]").insertBefore(jQuery("[data-managerid=" + managerId + "]"));
+                    jQuery("[data-taskid=" + taskId + "]").effect("shake", { times: 3 }, 300);
                 }
             });
 
