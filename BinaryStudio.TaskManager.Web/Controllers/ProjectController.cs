@@ -30,7 +30,11 @@
         /// </summary>
         private readonly IProjectProcessor projectProcessor;
 
+        /// <summary>
+        /// The notifier.
+        /// </summary>
         private readonly INotifier notifier;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectController"/> class.
         /// </summary>
@@ -42,6 +46,9 @@
         /// </param>
         /// <param name="projectProcessor">
         /// The project processor.
+        /// </param>
+        /// <param name="notifier">
+        /// The notifier.
         /// </param>
         public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, INotifier notifier)
         {
@@ -82,6 +89,9 @@
         /// </summary>
         /// <param name="userId">
         /// The user id.
+        /// </param>
+        /// <param name="projectId">
+        /// The project id.
         /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
@@ -204,7 +214,6 @@
 
             // make task unassigned
             this.taskProcessor.MoveTaskToUnassigned(taskId);
-            
         }
 
         /// <summary>
@@ -222,10 +231,9 @@
             var users = this.userProcessor.GetAllUsers();
             users = users.Except(listWithCurrentUser);
             
-            //to default project
             var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false && x.Sender == currentUser);            
             
-            // var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false);
+            //var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false);
             
             var listAlreadyInvited = invitationsToProject.Select(invitation => invitation.Receiver).ToList();
 
@@ -248,7 +256,7 @@
         public void InviteUserInProject(int receiverId, int projectId)
         {
             var senderId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
-            this.projectProcessor.InviteUserInProject(senderId, projectId, receiverId);            
+            this.projectProcessor.InviteUserInProject(senderId, projectId, receiverId);   
         }
 
         /// <summary>

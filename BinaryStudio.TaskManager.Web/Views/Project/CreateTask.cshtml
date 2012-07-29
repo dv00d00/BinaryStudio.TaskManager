@@ -49,7 +49,7 @@
         </div>
         </div>
             <input type="submit" value="Save" class="btn btn-primary" />
-            @Html.ActionLink("Return to tasks list", "PersonalProject", null, new { @class = "btn" })
+            @Html.ActionLink("Return to tasks list", "Project", new { id = Model.ProjectId }, new { @class = "btn" })
         </p>
     </fieldset>
 }
