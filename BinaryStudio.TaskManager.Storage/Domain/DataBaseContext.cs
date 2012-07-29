@@ -25,15 +25,22 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Project>().HasRequired(x => x.Creator) //or HasOptional
+            modelBuilder.Entity<Project>()
+                              .HasRequired(x => x.Creator) //or HasOptional
                               .WithMany() //Unidirectional
-                              .Map(x => x.MapKey("Creator")) //FK column Name
+                              .HasForeignKey(x => x.CreatorId) //FK column Name
                               .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Invitation>()
                     .HasRequired(e => e.Sender)
                     .WithMany()
                     .HasForeignKey(e => e.SenderId)
+                    .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Invitation>()
+                    .HasRequired(e => e.Receiver)
+                    .WithMany()
+                    .HasForeignKey(e => e.ReceiverId)
                     .WillCascadeOnDelete(false);
 
 
