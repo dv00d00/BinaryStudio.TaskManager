@@ -65,7 +65,6 @@
         {
             var project = this.dataBaseContext.Projects.First(x => x.Id == projectId);
             ICollection<User> users = project.ProjectUsers;
-            users.Add(project.Creator);
             return users;
         }
 
@@ -81,6 +80,11 @@
         public IEnumerable<Project> GetAllProjectsForUser(int userId)
         {
             return this.dataBaseContext.Users.First(x => x.Id == userId).UserProjects;
+        }
+
+        public IEnumerable<Project> GetAllProjectsForTheirCreator(int userId)
+        {
+            return this.dataBaseContext.Projects.Where(x => x.CreatorId == userId).ToList();
         }
 
         /// <summary>

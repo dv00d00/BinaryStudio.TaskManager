@@ -50,6 +50,14 @@
         /// </returns>
         IEnumerable<Project> GetAllProjectsForUser(int userId);
 
+
+        /// <summary>
+        /// Gets all projects for their creator.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns>IEmunerable list of Projects, created by the user.</returns>
+        IEnumerable<Project> GetAllProjectsForTheirCreator(int userId);
+
         /// <summary>
         /// The add.
         /// </summary>

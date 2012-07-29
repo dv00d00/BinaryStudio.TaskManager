@@ -30,7 +30,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             var model = new LandingIndexModel();
             var user = userRepository.GetByName(User.Identity.Name);
-            model.Projects = projectRepository.GetAllProjectsForUser(user.Id);
+            model.UserProjects    = projectRepository.GetAllProjectsForUser(user.Id);
+            model.CreatorProjects = projectRepository.GetAllProjectsForTheirCreator(user.Id);
             return View(model);
         }
 
@@ -44,12 +45,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     Creator = user,
                     Name = projectName,
                     CreatorId = user.Id,
-                    ProjectUsers = new Collection<User>{user}
+                   // ProjectUsers = new Collection<User>{user}
                 };
             this.projectRepository.Add(project);
             var projectList = projectRepository.GetAllProjectsForUser(user.Id);
             var projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name }).ToList();
-            var model = new LandingProjectsModel { Projects = projectsToModel };
+            var model = new LandingProjectsModel { UserProjects = projectsToModel };
+            projectList = projectRepository.GetAllProjectsForTheirCreator(user.Id);
+            projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name }).ToList();
+            model.CreatorProjects = projectsToModel;
             return Json(model);
         }
 
@@ -60,9 +64,21 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var user = userRepository.GetByName(User.Identity.Name);
             var projectList = projectRepository.GetAllProjectsForUser(user.Id);
             var projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name }).ToList();
-            var model = new LandingProjectsModel { Projects = projectsToModel };
+            var model = new LandingProjectsModel { UserProjects = projectsToModel };
+            projectList = projectRepository.GetAllProjectsForTheirCreator(user.Id);
+            projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name }).ToList();
+            model.CreatorProjects = projectsToModel;
             return Json(model);
         }
 
+        [HttpPost]
+        public ActionResult GetTasks(int projectId)
+        {
+            var user = userRepository.GetByName(User.Identity.Name);
+            var projectList = projectRepository.GetAllProjectsForUser(user.Id);
+            var projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name, Tasks = proj.Tasks}).ToList();
+            var model = new LandingProjectsModel { UserProjects = projectsToModel };
+            return Json(model);
+        }
 }
 }
