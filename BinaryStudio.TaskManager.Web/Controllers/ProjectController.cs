@@ -138,6 +138,9 @@
                     Task = task,
                     NewPriority = task.Priority,
                 });
+
+                notifier.CreateTask(task.Id);
+
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId });
             }
             createModel.Priorities = taskProcessor.GetPrioritiesList();
@@ -493,6 +496,13 @@
             model.AssigneeName = assigneeName;
             model.TaskHistories = this.taskProcessor.GetAllHistoryForTask(taskId).OrderByDescending(x => x.ChangeDateTime).ToList();
             return model;
+        }
+
+        [HttpPost]
+        public ActionResult TaskView(int taskId)
+        {
+            var task = taskProcessor.GetTaskById(taskId);
+            return PartialView("ManagerTasksTablePartialView", task);
         }
     }
 }

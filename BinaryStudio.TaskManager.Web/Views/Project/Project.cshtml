@@ -1,25 +1,47 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.ProjectViewModel
- <style>
-	.column { width: 270px; float: left;min-height: 300px;}
+<style>
+    .column
+    {
+        width: 270px;
+        float: left;
+        min-height: 300px;
+    }
 </style>
-
 <script type="text/javascript">
     $(document).ready(function () {
         var senderId, taskId, receiverId;
 
         var taskHub = $.connection.taskHub;
         $.connection.hub.start(function () {
+            taskHub.join($.connection.hub.id, "@Model.ProjectId");
         });
 
-        taskHub.TaskMoved = function (movedtaskId, moveToId, senderConnectionId) {
-            //if (senderConnectionId != $.connection.hub.id) {
+        taskHub.TaskMoved = function (movedtaskId, moveToId) {
             jQuery("[data-taskid=" + movedtaskId + "]").fadeOut();
-            setTimeout(function() {
-                            jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
-                            jQuery("[data-taskid=" + movedtaskId + "]").fadeIn();
-                        },
+            setTimeout(function () {
+                jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
+                jQuery("[data-taskid=" + movedtaskId + "]").fadeIn();
+            },
                 300);
-            //};
+        };
+
+        taskHub.TaskCreated = function (taskId, managerId) {
+            alert(taskId +" "+ managerId);
+            var request = $.ajax({
+                type: "POST",
+                url: "/Project/TaskView",
+                data: { taskId: taskId },
+                dataType: 'html',
+                success: function (response1) {
+                    alert("asd");
+                    var task = "<div class=\"task-holder\" data-taskid=" + taskId + " id =" + taskId + ">";
+                    task += response1;
+                    task += "</div>";
+                    alert(task);
+                    jQuery("[data-managerid=" + managerId + "]").html(task);
+                }
+            });
+
         };
 
         $(".column").sortable({
@@ -57,8 +79,6 @@
     });
 </script>
 <!-- Caption of the table "Managers-Tasks"-->
-
-
 <fieldset>
     <legend class="well-large">Users with their tasks in current project</legend>
     <table align="center" class="container-fluid">
@@ -73,16 +93,15 @@
             <!-- Header of the table (Managers names)-->
             <tr>
                 <td align="center">
-                    <p>@Html.ActionLink("Create unassigned task", "CreateTask", new { userId = -1, projectId= Model.ProjectId}, new { @class = "btn" })</p>
+                    <p>@Html.ActionLink("Create unassigned task", "CreateTask", new { userId = -1, projectId = Model.ProjectId }, new { @class = "btn" })</p>
                 </td>
                 @foreach (var user in Model.UsersTasks)
                 {   
                     <td align="center">
-                        <p>@Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id}, new { @class = "btn btn-info" })</p>
-                        <p>@Html.ActionLink("Create task", "CreateTask", new { userId = user.User.Id, projectId=Model.ProjectId }, new { @class = "btn" })</p>
+                        <p>@Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })</p>
+                        <p>@Html.ActionLink("Create task", "CreateTask", new { userId = user.User.Id, projectId = Model.ProjectId }, new { @class = "btn" })</p>
                     </td> 
                 }
-                
             </tr>
             
             <tr>
@@ -94,14 +113,15 @@
                                 @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
                             </div>
                         }
-                        <div data-managerid = "0" style="display: none">olo</div>
-                        <div class="task" style="display: none">olo</div>
+                        <div data-managerid="0" style="display: none">
+                            olo</div>
+                        <div class="task" style="display: none">
+                            olo</div>
                     </div>
                 </td>
                 @foreach (var user in Model.UsersTasks)
                 {   
                     <td>
-                        
                         <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
                             @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
                             {
@@ -109,20 +129,15 @@
                                     @Html.Partial("ManagerTasksTablePartialView", task)
                                 </div>
                             }
-                            <div data-managerid = @user.User.Id.ToString()></div>
+                            <div data-managerid = @user.User.Id.ToString()>
+                            </div>
                         </div>
                     </td> 
                 }
-                
             </tr>
         }
         <!-- Create a column with tasks-->
-       
-        
     </table>
 </fieldset>
 <p align="center" class="well-large">
 </p>
-
-
-

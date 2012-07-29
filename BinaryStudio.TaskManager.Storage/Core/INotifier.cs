@@ -8,5 +8,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void Send(ClientConnection connectionId, string message);
         
         void MoveTask(int taskId, int moveToId);
+
+        void CreateTask(int taskId);
     }
 }
