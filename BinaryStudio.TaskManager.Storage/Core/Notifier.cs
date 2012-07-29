@@ -41,11 +41,12 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             var task = humanTaskRepository.GetById(taskId);
             int projectId = task.ProjectId;
+            int assignedId = task.AssigneeId ?? 0; 
             var clients = SignalRClients.Connections.Where(it => it.ProjectId == projectId);
             var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
             foreach (var clientConnection in clients)
             {
-                context.Clients[clientConnection.ConnectionId].TaskCreated(taskId,task.AssigneeId);
+                context.Clients[clientConnection.ConnectionId].TaskCreated(taskId,assignedId);
             }
         }
     }

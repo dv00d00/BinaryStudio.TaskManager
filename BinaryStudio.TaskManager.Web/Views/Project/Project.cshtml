@@ -36,6 +36,7 @@
                     task += response1;
                     task += "</div>";
                     jQuery("[data-managerid=" + managerId + "]").html(task);
+                    jQuery("[data-taskid=" + taskId + "]").insertBefore(jQuery("[data-managerid=" + managerId + "]"));
                     jQuery("[data-taskid=" + taskId + "]").effect("shake", { times: 3 }, 300);
                 }
             });
