@@ -191,6 +191,7 @@
         [Authorize]
         public void MoveTask(int taskId, int senderId, int receiverId)
         {
+            this.notifier.MoveTask(taskId , receiverId); 
             // move to real user
             if (receiverId != -1)
             {

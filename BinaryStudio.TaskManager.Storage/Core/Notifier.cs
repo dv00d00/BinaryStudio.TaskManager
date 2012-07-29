@@ -1,4 +1,6 @@
+using System.Runtime.Remoting.Contexts;
 using BinaryStudio.TaskManager.Web.SignalR;
+using SignalR;
 
 namespace BinaryStudio.TaskManager.Logic.Core
 {
@@ -22,10 +24,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
             throw new System.NotImplementedException();
         }
 
-        public void MoveTask(int taskId, int moveToId, string senderConnectionId)
+        public void MoveTask(int taskId, int moveToId)
         {
-            
-            this._taskHub.MoveTask(taskId,moveToId,senderConnectionId);
+            moveToId = moveToId == -1 ? 0 : moveToId;
+            var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
+            context.Clients.TaskMoved(taskId, moveToId);
         }
     }
 }
