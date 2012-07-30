@@ -190,5 +190,21 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             return this.dataBaseContext.HumanTasks.Where(x => x.ProjectId == projectId && x.AssigneeId == userId);
         }
+
+        public IList<HumanTaskHistory> GetAllHistoryForUser(int userId)
+        {
+            var projects = this.dataBaseContext.Users.First(x => x.Id == userId).UserProjects;
+            var taskHistories = new List<HumanTaskHistory>();
+            foreach (var project in projects )
+            {
+                foreach (var task in project.Tasks)
+                {
+                    taskHistories.AddRange(GetAllHistoryForTask(task.Id));
+                }
+            }
+            return taskHistories;
+        }
+
+
     }
 }

@@ -24,6 +24,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
         User GetUserByLinkedInId(string linkedinId);
 
         IEnumerable<User> GetAllUsers();
+
+        void AddNews(News news);
+
+        IEnumerable<News> GetAllNewsForUser(int userId);
     }
 
 }
