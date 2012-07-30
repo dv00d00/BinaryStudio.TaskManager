@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<BinaryStudio.TaskManager.Logic.Domain.Project>
+@{ViewBag.Title = "Projects List";}
 <div class="page-header">
     <h1>
         All projects
@@ -37,9 +38,9 @@
                 @Html.DisplayFor(modelItem => item.CreatorId)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditProject", new { id = item.Id }, new {@class="btn"}) |
-                @Html.ActionLink("Details", "DetailsProject", new { id = item.Id }, new { @class = "btn" }) |
-                @Html.ActionLink("Delete", "DeleteProject", new { id = item.Id }, new { @class = "btn btn-invуrse" })
+                @Html.ActionLink("Edit", "EditProject", new { projectId = item.Id }, new { @class = "btn" })
+                @Html.ActionLink("Details", "DetailsProject", new { projectId = item.Id }, new { @class = "btn" })
+                @Html.ActionLink("Delete", "DeleteProject", new { projectId = item.Id }, new { @class = "btn btn-inverse" })
             </td>
         </tr>
     }

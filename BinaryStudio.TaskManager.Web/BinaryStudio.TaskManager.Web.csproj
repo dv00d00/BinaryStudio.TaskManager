@@ -354,6 +354,8 @@
     <Content Include="Views\Admin\UsersList.cshtml" />
     <Content Include="Views\Admin\EditProject.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\DetailsProject.cshtml" />
+    <Content Include="Views\Admin\DeleteProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\DetailsUser.cshtml" />

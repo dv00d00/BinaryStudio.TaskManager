@@ -41,10 +41,8 @@
         </p>
     </fieldset>
 }
-<div>
-    @Html.ActionLink("Back to List", "ProjectsList", null, new { @class = "btn" })
-</div>
-
-<div>
+<p>
+    @Html.ActionLink("Back to projects list", "ProjectsList", null, new { @class = "btn" })
+    <span class="divider-vertical"></span>
     @Html.ActionLink(" Back to AdminPanel", "AdminPanel", "Admin", null, new { @class = "btn" })
-</div>
+</p>

@@ -1,0 +1,30 @@
+﻿@model BinaryStudio.TaskManager.Logic.Domain.Project
+
+<fieldset>
+    <legend class="page-header">Project</legend>
+
+    <div class="display-label">Created</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Created)
+    </div>
+
+    <div class="display-label">Name</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">Description</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">CreatorId</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatorId)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "EditProject", new { projectId=Model.Id }, new {@class="btn"})     
+    <span class="divider-vertical"></span>
+    @Html.ActionLink(" Back to AdminPanel", "AdminPanel", "Admin", null, new { @class = "btn" })
+</p>
