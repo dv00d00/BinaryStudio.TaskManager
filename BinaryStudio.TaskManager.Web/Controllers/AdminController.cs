@@ -26,7 +26,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult EditUser(int userId)
         {
-            User user = this.userRepository.GetById(userId);
+            var user = this.userRepository.GetById(userId);
             return this.View(user);
         }
 
@@ -45,8 +45,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             if (this.ModelState.IsValid)
             {
                 this.userRepository.UpdateUser(user);
-                this.RedirectToAction("AdminPanel");
+                return this.RedirectToAction("UsersList");
             }
+
             ModelState.AddModelError(string.Empty, "Wrong data!");
             return this.View(user);
         }
