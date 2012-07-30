@@ -100,7 +100,10 @@
                 @foreach (var user in Model.UsersTasks)
                 {   
                     <td valign="top" align="center">
-                        <p>@Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })</p>
+                        <p >
+                            <img width="40" height="40" src="@Url.Action("GetImage", "Project", new { UserId = user.User.Id })" />
+                            @Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })
+                        </p>
                         <p>@Html.ActionLink("Create task", "CreateTask", new { userId = user.User.Id, projectId = Model.ProjectId }, new { @class = "btn" })</p>
                     </td> 
                 }
