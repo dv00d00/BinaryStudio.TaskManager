@@ -1,29 +1,16 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DatabaseInitializer.cs" company="">
-//   
-// </copyright>
-// <summary>
-//   The database initializer.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace BinaryStudio.TaskManager.Logic.Domain
 {
+    using System;
     using System.Data.Entity;
 
     using BinaryStudio.TaskManager.Logic.Core;
 
-    using System;
-
-    using FizzWare.NBuilder.Dates;
-
     /// <summary>
     /// The database initializer.
     /// </summary>
-    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<DataBaseContext>
+    public class DatabaseInitializer : DropCreateDatabaseAlways<DataBaseContext>
     {
         /// <summary>
         /// The seed is initial database function.
@@ -32,7 +19,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         protected override void Seed(DataBaseContext context)
         {
             context.Roles.Add(new UserRoles { Id = 1, RoleName = "admin" });
-            context.Roles.Add(new UserRoles { Id = 2, RoleName = "simpleEmployee" });            
+            context.Roles.Add(new UserRoles { Id = 2, RoleName = "simpleUser" });            
 
             context.Priorities.Add(new Priority
                                        {
@@ -60,7 +47,27 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                                Credentials = new Credentials{IsVerify = true},
                                RoleId = 2
                            };
-            context.Users.Add(user);            
+            context.Users.Add(user);
+
+
+
+            var cryptoProvider = new CryptoProvider();
+            var salt = cryptoProvider.CreateSalt();
+            var admin = new User
+            {
+                UserName = "admin",
+                RoleId = 1,
+                Credentials = new Credentials
+                {
+                    Passwordhash = cryptoProvider.CreateCryptoPassword("password", salt),
+                    Salt = salt,
+                    IsVerify = true
+                },
+                Email = "admin@admin.com",
+                LinkedInId = string.Empty,                                
+            };
+            context.Users.Add(admin);  
+
             context.Projects.Add(new Project
                                      {
                                          Id = 1,

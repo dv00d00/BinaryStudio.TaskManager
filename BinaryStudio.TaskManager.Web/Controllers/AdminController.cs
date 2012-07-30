@@ -92,19 +92,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.RedirectToRoute("Default", null);
         }
 
-        /// <summary>
-        /// The send user info.
-        /// </summary>
-        /// <param name="userId">
-        /// The user id.
-        /// </param>
-        /// <returns>
-        /// The System.Web.Mvc.ActionResult.
-        /// </returns>
-        [HttpPost]
-        public ActionResult SendUserInfo(int userId)
+        public ActionResult AdminPanel()
         {
-            return this.Json(this.userRepository.GetById(userId));
+            throw new System.NotImplementedException();
         }
     }
 }
