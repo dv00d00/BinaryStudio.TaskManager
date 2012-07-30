@@ -153,6 +153,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\TaskView.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Models\TokenHelper.cs" />
     <Compile Include="Models\UserModels.cs" />
@@ -347,6 +348,7 @@
     <Content Include="Views\Project\UserDetails.cshtml" />
     <Content Include="Views\Project\ManagerTasksTablePartialView.cshtml" />
     <Content Include="Views\Landing\Index.cshtml" />
+    <Content Include="Views\Landing\Tasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\UsersList.cshtml" />

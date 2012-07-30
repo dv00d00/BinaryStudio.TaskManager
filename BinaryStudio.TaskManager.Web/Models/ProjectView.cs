@@ -10,6 +10,6 @@ namespace BinaryStudio.TaskManager.Web.Models
         
         public string Name { get; set; }
 
-        public IEnumerable<HumanTask> Tasks { get; set; }
+        public IEnumerable<TaskView> Tasks { get; set; }
     }
 }

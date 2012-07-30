@@ -96,5 +96,5 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 };
             return Json(model);
         }
-}
+    }
 }
