@@ -40,7 +40,9 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         /// </summary>
         public Credentials Credentials { get; set; }
 
-        //TODO CLEAN ROLES FROM USERS
+        /// <summary>
+        /// Gets or sets the role id.
+        /// </summary>
         public int RoleId { get; set; }
 
         /// <summary>
@@ -63,6 +65,11 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         /// </summary>
         [HiddenInput(DisplayValue = false)]
         public string ImageMimeType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether is deleted.
+        /// </summary>
+        public bool IsDeleted { get; set; }
     }
 
     /// <summary>

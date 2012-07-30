@@ -35,9 +35,9 @@
                 @Html.DisplayFor(modelItem => item.LinkedInId)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn" })
-                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn" })
+                @Html.ActionLink("Edit", "EditUser", new { userId = item.Id }, new { @class = "btn" })
+                @Html.ActionLink("Details", "DetailsUser", new { userId = item.Id }, new { @class = "btn" })
+                @Html.ActionLink("Delete", "DeleteUser", new { userId = item.Id }, new { @class = "btn" })
             </td>
         </tr>
     }

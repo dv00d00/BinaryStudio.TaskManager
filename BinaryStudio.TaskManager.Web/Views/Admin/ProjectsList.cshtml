@@ -37,10 +37,13 @@
                 @Html.DisplayFor(modelItem => item.CreatorId)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Edit", "EditProject", new { id = item.Id }, new {@class="btn"}) |
+                @Html.ActionLink("Details", "DetailsProject", new { id = item.Id }, new { @class = "btn" }) |
+                @Html.ActionLink("Delete", "DeleteProject", new { id = item.Id }, new { @class = "btn btn-invуrse" })
             </td>
         </tr>
     }
 </table>
+<div>
+    @Html.ActionLink(" Back to AdminPanel", "AdminPanel", "Admin", null, new { @class = "btn" })
+</div>

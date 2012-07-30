@@ -4,6 +4,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
 
+    using System.Linq;
+
     [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
@@ -19,12 +21,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult UsersList()
         {
-            return this.View(this.userRepository.GetAll());
+            return this.View(this.userRepository.GetAll().Where(x=>x.IsDeleted == false));
         }
 
-        public ActionResult EditUser(int id)
+        public ActionResult EditUser(int userId)
         {
-            User user = this.userRepository.GetById(id);
+            User user = this.userRepository.GetById(userId);
             return this.View(user);
         }
 
@@ -43,8 +45,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             if (this.ModelState.IsValid)
             {
                 this.userRepository.UpdateUser(user);
-                return this.RedirectToRoute("Default", null);
+                this.RedirectToAction("AdminPanel");
             }
+            ModelState.AddModelError(string.Empty, "Wrong data!");
             return this.View(user);
         }
 
@@ -59,7 +62,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>
         public ActionResult DetailsUser(int userId)
         {
-            User user = this.userRepository.GetById(userId);
+            var user = this.userRepository.GetById(userId);
             return this.View(user);
         }
 
@@ -91,8 +94,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [ActionName("DeleteUser")]
         public ActionResult DeleteUserConfirmed(int userId)
         {
-            this.userRepository.DeleteUser(userId);
-            return this.RedirectToRoute("Default", null);
+            var user = this.userRepository.GetById(userId);
+            user.IsDeleted = true;
+            return this.RedirectToAction("AdminPanel");
         }
 
         public ActionResult AdminPanel()
@@ -103,6 +107,23 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult ProjectsList()
         {
             return this.View(this.projectRepository.GetAll());
+        }
+
+        public ActionResult EditProject(int projectId)
+        {
+            var project = this.projectRepository.GetById(projectId);
+            return this.View(project);
+        }
+
+        [HttpPost]
+        public ActionResult EditProject(Project project)
+        {
+            if (this.ModelState.IsValid)
+            {
+                this.projectRepository.Update(project);
+                return this.RedirectToAction("AdminPanel");
+            }
+            return this.View(project);
         }
     }
 }

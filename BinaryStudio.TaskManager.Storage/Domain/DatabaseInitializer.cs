@@ -19,7 +19,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         protected override void Seed(DataBaseContext context)
         {
             context.Roles.Add(new UserRoles { Id = 1, RoleName = "admin" });
-            context.Roles.Add(new UserRoles { Id = 2, RoleName = "simpleUser" });            
+            context.Roles.Add(new UserRoles { Id = 2, RoleName = "simpleUser" });
 
             context.Priorities.Add(new Priority
                                        {
@@ -44,7 +44,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
             var salt = cryptoProvider.CreateSalt();
             var testUser = new User
                            {
-                               Id = 1, 
+                               Id = 1,
                                UserName = "test",
                                Credentials = new Credentials
                                {
@@ -52,7 +52,8 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                                    Salt = salt,
                                    IsVerify = true
                                },
-                               RoleId = 2
+                               RoleId = 2,
+                               IsDeleted = false
                            };
             context.Users.Add(testUser);
 
@@ -68,9 +69,10 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                     IsVerify = true
                 },
                 Email = "admin@admin.com",
-                LinkedInId = string.Empty,                                
+                LinkedInId = string.Empty,
+                IsDeleted = false
             };
-            context.Users.Add(admin);  
+            context.Users.Add(admin);
 
             context.Projects.Add(new Project
                                      {
@@ -84,7 +86,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                                          Created = DateTime.Now,
                                          CreatorId = testUser.Id
                                      });
-           
+
             context.SaveChanges();
         }
     }
