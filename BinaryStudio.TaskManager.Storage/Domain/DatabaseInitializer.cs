@@ -40,19 +40,23 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                 Value = 2
             });
 
-            var user = new User
-                           {
-                               Id = 1, 
-                               UserName = "Test User", 
-                               Credentials = new Credentials{IsVerify = true},
-                               RoleId = 2
-                           };
-            context.Users.Add(user);
-
-
-
             var cryptoProvider = new CryptoProvider();
             var salt = cryptoProvider.CreateSalt();
+            var testUser = new User
+                           {
+                               Id = 1, 
+                               UserName = "test",
+                               Credentials = new Credentials
+                               {
+                                   Passwordhash = cryptoProvider.CreateCryptoPassword("test", salt),
+                                   Salt = salt,
+                                   IsVerify = true
+                               },
+                               RoleId = 2
+                           };
+            context.Users.Add(testUser);
+
+            salt = cryptoProvider.CreateSalt();
             var admin = new User
             {
                 UserName = "admin",
@@ -74,11 +78,11 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                                          Name = "Test Project",
                                          ProjectUsers = new Collection<User>
                                                             {
-                                                                user
+                                                                testUser
                                                             },
-                                         Creator = user,
+                                         Creator = testUser,
                                          Created = DateTime.Now,
-                                         CreatorId = user.Id
+                                         CreatorId = testUser.Id
                                      });
            
             context.SaveChanges();

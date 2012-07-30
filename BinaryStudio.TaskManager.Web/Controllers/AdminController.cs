@@ -9,9 +9,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     {
         private readonly IUserRepository userRepository;
 
-        public AdminController(IUserRepository userRepository)
+        private readonly IProjectRepository projectRepository;
+
+        public AdminController(IUserRepository userRepository, IProjectRepository projectRepository)
         {
             this.userRepository = userRepository;
+            this.projectRepository = projectRepository;
         }
 
         public ActionResult UsersList()
@@ -94,7 +97,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult AdminPanel()
         {
-            throw new System.NotImplementedException();
+            return this.View();
+        }
+
+        public ActionResult ProjectsList()
+        {
+            return this.View(this.projectRepository.GetAll());
         }
     }
 }

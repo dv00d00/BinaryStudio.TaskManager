@@ -43,7 +43,8 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.controller = new ProjectController(
                 this.taskProcessorMock.Object,
                 this.userProcessorMock.Object,
-                this.projectProcessorMock.Object, this.notifierMock.Object);
+                this.projectProcessorMock.Object, 
+                this.notifierMock.Object);
 
         }
 

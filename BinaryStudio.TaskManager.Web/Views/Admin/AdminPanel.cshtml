@@ -1,0 +1,23 @@
+﻿@{ViewBag.Title = "Admin panel";}
+
+<div class="page-header">
+    <h1>
+    Manage application data
+    </h1>    
+</div>
+<div>
+    <ul class="well">
+        <li>
+            @Html.ActionLink("List of all users", "UsersList", "Admin", null, new { @class = "btn" })
+        </li>
+        <span class="divider"></span>
+        <li>
+            @Html.ActionLink("List of all projects", "ProjectsList", null, new {@class = "btn"})
+        </li>
+        <span class="divider"></span>
+        <li>
+            
+        </li>
+        <li class="divider"></li>
+    </ul>
+</div>
