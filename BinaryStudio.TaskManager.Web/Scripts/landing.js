@@ -84,37 +84,41 @@
     });
 
     /********* Project Tasks View  *******/
+    var homeProj = $("#projects .proj_row:first-child").attr("data-id");
+    getTaskList(homeProj);
+    
     $(document).on("click", ".project_name", function () {
         $(".project_name").removeClass("active_proj");
         $(this).addClass("active_proj");
-        var content = $("#content");
         var proj = $(this).parent(".proj_row").attr("data-id");
-        content.html("");
-        content.append("<h2>" + $(this).html() + " Project</h2>");
-        $.ajax({
-            data: { projectId: proj },
-            dataType: "JSON",
-            type: "POST",
-            url: "/Landing/GetTasks",
-            beforeSend: function () {
-                //$("#loader").show();
-            },
-            success: function (response) {
-                //$("#loader").hide();
-                content.append("<ul>");
-                for (var i = 0; i < response.Tasks.length; i++) {
-                    content.append("<li>" + response.Tasks[i].Name + "</li>");
-                }
-                if (i == 0)
-                    content.children("ul").html("<li>There are no tasks in the Project yet.</li>");
-                content.append("</ul>");
-
-            }
-        });
+        getTaskList(proj);
     });
-
 });
+function getTaskList(proj) {
+    var content = $("#content");
+    content.html("");
+    $.ajax({
+        data: { projectId: proj },
+        dataType: "JSON",
+        type: "POST",
+        url: "/Landing/GetTasks",
+        beforeSend: function () {
+            //$("#loader").show();
+        },
+        success: function (response) {
+            //$("#loader").hide();
+            content.append("<h2>" + response.Project.Name + " Project</h2>");
+            content.append("<ul>");
+            for (var i = 0; i < response.Project.Tasks.length; i++) {
+                content.append("<li>" + response.Project.Tasks[i].Name + "</li>");
+            }
+            if (i == 0)
+                content.children("ul").html("<li>There are no tasks in the Project yet.</li>");
+            content.append("</ul>");
 
+        }
+    });
+}
 function sendNewProject() {
     var val = $(".newBox").children("input").val();
     $(".newBox").remove();
