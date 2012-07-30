@@ -251,7 +251,8 @@
         /// <param name="receiverId">
         /// The receiver id.
         /// </param>
-        /// <param name="projectId">
+        /// <param name="projectId">e
+        /// 
         /// The project id.
         /// </param>
         [HttpPost]
@@ -319,6 +320,7 @@
             {
                 return this.File(user.ImageData, user.ImageMimeType);
             }
+
             return null;
         }
 

@@ -15,9 +15,9 @@
     {
         <tr class="user">
             <td>
-                @if (@user.ImageData == null)
+               @if (@user.ImageData == null)
                 {
-                    @:None
+                    <img class="pull-left" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="70" height="70"/>
                 }
                 else
                 {
@@ -42,7 +42,7 @@
             <td>
                 @if (@user.ImageData == null)
                 {
-                    @:None
+                    <img class="pull-left" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="70" height="70"/>
                 }
                 else
                 {
@@ -71,7 +71,7 @@
             <td>
                 @if (@user.ImageData == null)
                 {
-                    @:None
+                    <img class="pull-left" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="70" height="70"/>
                 }
                 else
                 {
