@@ -43,8 +43,7 @@
         protected override void OnApplicationStarted()
         {
             base.OnApplicationStarted();
-
-            FormsAuthentication.SignOut();
+            
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
