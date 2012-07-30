@@ -9,3 +9,4 @@ packages
 *.user
 *.dotCover
 2012-07-*
+*.ncrunchsolution
