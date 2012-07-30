@@ -254,5 +254,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             return userRepository.GetAllNewsForUser(userId);
         }
+
+        public News GetNewsById(int newsId)
+        {
+            
+        }
     }
 }

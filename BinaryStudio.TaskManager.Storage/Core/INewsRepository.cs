@@ -12,5 +12,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         IEnumerable<News> GetAllNewsForUser(int userId);
 
         News GetNewsById(int newsId);
+
+        int GetCountOfUnreadedNewses(int userId);
     }
 }
