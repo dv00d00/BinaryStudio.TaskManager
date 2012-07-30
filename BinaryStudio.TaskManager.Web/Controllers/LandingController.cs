@@ -75,9 +75,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult GetTasks(int projectId)
         {
             var user = userRepository.GetByName(User.Identity.Name);
-            var projectList = projectRepository.GetAllProjectsForUser(user.Id);
-            var projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name, Tasks = proj.Tasks}).ToList();
-            var model = new LandingProjectsModel { UserProjects = projectsToModel };
+            var taskList = projectRepository.GetById(projectId).Tasks;
+            var tasksToModel = taskList.Select(task => new TaskView
+                            {
+                                Id = task.Id,
+                                Description = task.Description,
+                                Name = task.Name,
+                                Priority = task.Priority
+                            });
+            var model = new LandingTasksModel
+                {
+                    Tasks = tasksToModel
+                };
             return Json(model);
         }
 }

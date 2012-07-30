@@ -85,8 +85,12 @@
 
     /********* Project Tasks View  *******/
     $(document).on("click", ".project_name", function () {
+        $(".project_name").removeClass("active_proj");
+        $(this).addClass("active_proj");
+        var content = $("#content");
         var proj = $(this).parent(".proj_row").attr("data-id");
-        $("#content").children("h2").html("<h2>" + $(this).html() + " Project</h2>");
+        content.html("");
+        content.append("<h2>" + $(this).html() + " Project</h2>");
         $.ajax({
             data: { projectId: proj },
             dataType: "JSON",
@@ -97,6 +101,13 @@
             },
             success: function (response) {
                 //$("#loader").hide();
+                content.append("<ul>");
+                for (var i = 0; i < response.Tasks.length; i++) {
+                    content.append("<li>" + response.Tasks[i].Name + "</li>");
+                }
+                if (i == 0)
+                    content.children("ul").html("<li>There are no tasks in the Project yet.</li>");
+                content.append("</ul>");
 
             }
         });

@@ -49,6 +49,10 @@
     margin-left: 25px;
 }
 
+.active_proj {
+    background: #BAD3A7;
+}
+
 .task_group_list {
     padding-bottom: 20px;
 }
