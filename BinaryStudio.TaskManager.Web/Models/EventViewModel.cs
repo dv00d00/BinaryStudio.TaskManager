@@ -2,6 +2,8 @@
 {
     public class EventViewModel
     {
+        public int EventId { get; set; }
+
         public string ProjectName { get; set; }
 
         public int ProjectId { get; set; }

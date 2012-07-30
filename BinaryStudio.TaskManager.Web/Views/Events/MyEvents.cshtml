@@ -1,3 +1,10 @@
 ﻿@model List<BinaryStudio.TaskManager.Web.Models.EventViewModel>
 
 <h2>title</h2>
+
+@{
+    foreach (var event_ in Model)
+    {
+        Html.Partial("EventPartialView", event_);
+    }
+}

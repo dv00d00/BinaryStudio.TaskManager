@@ -1,1 +1,5 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.EventViewModel
+
+<div class = "event" id = @Model.EventId.ToString()>
+    <strong>@Html.ActionLink(Model.WhoChangeUserName, "UserDetails", "Project", new {id = Model.WhoChangeUserId},null)</strong>
+</div>
