@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace BinaryStudio.TaskManager.Logic.Domain
+﻿namespace BinaryStudio.TaskManager.Logic.Domain
 {
     public static class ChangeHistoryTypes
     {
@@ -14,6 +9,5 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         public const  string Close = " Closed ";
 
         public const  string Change = " Changed ";
-
     }
 }

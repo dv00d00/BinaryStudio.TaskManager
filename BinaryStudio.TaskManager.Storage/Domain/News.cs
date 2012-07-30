@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace BinaryStudio.TaskManager.Logic.Domain
+﻿namespace BinaryStudio.TaskManager.Logic.Domain
 {
     public class News : IEntity
     {
