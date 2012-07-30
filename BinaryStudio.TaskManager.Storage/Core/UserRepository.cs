@@ -133,5 +133,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             return this.dataBaseContext.Roles.ToList().Where(it => it.Id == this.GetByName(userName).RoleId).Select(x => x.RoleName).First();
         }
+
+        public void AddNews(News news)
+        {
+            this.dataBaseContext.Entry(news).State = EntityState.Added;
+            this.dataBaseContext.SaveChanges();
+        }
+
+        public IEnumerable<News> GetAllNewsForUser(int userId)
+        {
+            return this.dataBaseContext.News.Where(x => x.UserId == userId);
+        }
     }
 }

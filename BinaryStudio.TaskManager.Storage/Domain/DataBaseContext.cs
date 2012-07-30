@@ -22,6 +22,8 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
         public DbSet<Invitation> Invitations { get; set; }
 
+        public DbSet<News> News { get; set; } 
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 

@@ -243,5 +243,15 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             return this.userRepository.GetAll();
         }
+
+        public void AddNews (News news)
+        {
+            userRepository.AddNews(news);
+        }
+
+        public IEnumerable<News> GetAllNewsForUser(int userId)
+        {
+            return userRepository.GetAllNewsForUser(userId);
+        }
     }
 }

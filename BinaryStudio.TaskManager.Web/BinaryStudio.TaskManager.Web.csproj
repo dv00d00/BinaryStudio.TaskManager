@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HumanTasksController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\LandingController.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="Helpers\TextaheadHelper.cs" />
     <Compile Include="Models\CreateTaskViewModel.cs" />
+    <Compile Include="Models\EventsViewModel.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
     <Compile Include="Models\InvitationsViewModel.cs" />
     <Compile Include="Models\LandingModels.cs" />

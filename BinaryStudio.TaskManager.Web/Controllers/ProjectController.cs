@@ -141,15 +141,22 @@
                     ProjectId = createModel.ProjectId,
                 };
                 this.taskProcessor.CreateTask(task);
-                this.taskProcessor.AddHistory(new HumanTaskHistory
-                {
-                    NewDescription = task.Description,
-                    ChangeDateTime = DateTime.Now,
-                    NewAssigneeId = task.AssigneeId,
-                    NewName = task.Name,
-                    Task = task,
-                    NewPriority = task.Priority,
-                });
+                var taskHistory = new HumanTaskHistory
+                                      {
+                                          NewDescription = task.Description,
+                                          ChangeDateTime = DateTime.Now,
+                                          NewAssigneeId = task.AssigneeId,
+                                          NewName = task.Name,
+                                          Task = task,
+                                          NewPriority = task.Priority,
+                                          Action = ChangeHistoryTypes.Create
+                                      };
+                this.taskProcessor.AddHistory(taskHistory);
+
+                List<User> projectUsers = new List<User>(projectProcessor.GetAllUsersInProject(createModel.ProjectId));
+                projectUsers.Add(this.projectProcessor.GetProjectById(createModel.ProjectId).Creator);
+               
+                CreateNewsForUsers(taskHistory, projectUsers);
 
                 notifier.CreateTask(task.Id);
 
@@ -161,6 +168,22 @@
             this.ViewBag.PossibleAssignees = new List<User>();
 
             return this.View(createModel);
+        }
+
+        private void CreateNewsForUsers(HumanTaskHistory taskHistory, IEnumerable<User> projectUsers)
+        {
+            foreach (var projectUser in projectUsers)
+            {
+                var news = new News
+                               {
+                                   HumanTaskHistory = taskHistory,
+                                   IsRead = false,
+                                   User = projectUser,
+                                   UserId = projectUser.Id,
+                                   HumanTaskHistoryId = taskHistory.Id
+                               };
+                userProcessor.AddNews(news);
+            }
         }
 
         /// <summary>
@@ -203,13 +226,33 @@
         /// <param name="receiverId">
         /// The receiver id.
         /// </param>
+        /// <param name="projectId"> </param>
         [Authorize]
-        public void MoveTask(int taskId, int senderId, int receiverId)
+        public void MoveTask(int taskId, int senderId, int receiverId,int projectId)
         {
-            this.notifier.MoveTask(taskId , receiverId); 
+            this.notifier.MoveTask(taskId , receiverId);
+            HumanTask humanTask = taskProcessor.GetTaskById(taskId);
+            HumanTaskHistory humanTaskHistory = new HumanTaskHistory
+            {
+                Action = ChangeHistoryTypes.Move,
+                ChangeDateTime = DateTime.Now,
+                NewAssigneeId = receiverId == -1 ? (int?)null : receiverId,
+                UserId = senderId,
+                NewDescription = humanTask.Description,
+                NewPriority = humanTask.Priority,
+                NewName = humanTask.Name,
+                Task = humanTask,
+                TaskId = taskId
+            };
+            taskProcessor.AddHistory(humanTaskHistory);
+            List<User> users = new List<User>(projectProcessor.GetAllUsersInProject(projectId));
+            users.Add(projectProcessor.GetProjectById(projectId).Creator);
+            CreateNewsForUsers(humanTaskHistory,users);
+
             // move to real user
             if (receiverId != -1)
             {
+                
                 this.taskProcessor.MoveTask(taskId, receiverId);
                 return;
             }
@@ -392,6 +435,7 @@
                     NewName = humanTask.Name,
                     Task = humanTask,
                     NewPriority = humanTask.Priority,
+                    Action = ChangeHistoryTypes.Change
                 });
 
                 return this.RedirectToAction("PersonalProject");
