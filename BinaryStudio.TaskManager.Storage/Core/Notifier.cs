@@ -36,7 +36,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             moveToId = moveToId == -1 ? 0 : moveToId;
 
-            var context = this.globalHost.GetContext<TaskHub>();
+            //var context = this.globalHost.GetContext<TaskHub>();
+            var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
             context.Clients.TaskMoved(taskId, moveToId);
         }
 
@@ -48,7 +49,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
             int assignedId = task.AssigneeId ?? 0; 
 
             var clients = this.connectionProvider.GetProjectConnections(projectId);
-            var context = this.globalHost.GetContext<TaskHub>();
+            //var context = this.globalHost.GetContext<TaskHub>();
+            var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
 
             foreach (var clientConnection in clients)
             {
