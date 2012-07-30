@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using BinaryStudio.TaskManager.Logic.Core.SignalR;
@@ -59,6 +60,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
             {
                 context.Clients[clientConnection.ConnectionId].TaskCreated(taskId, assignedId);
             }
+        }
+
+        public void SendNewse(int newseId)
+        {
+            throw new NotImplementedException();
         }
     }
 
