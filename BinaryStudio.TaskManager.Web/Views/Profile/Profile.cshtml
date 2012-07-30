@@ -6,9 +6,7 @@
     <h2>
         Profile</h2>
 </div>
-@*<div class="container-fluid"> 
-@Html.ActionLink("Your invitations", "Invitations", "Project", null, new { @class = "btn" })
-</div>*@
+
 @using (Html.BeginForm("ProfileChanges", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     var user = Model;
@@ -37,8 +35,9 @@
                                 <span class="icon-envelope"></span> @Model.Email
                             </div>
                             <div class="editor-field">
-                                Load your image:
+                                Load your new image:
                                 <input type="file" name="Image" />
+                                <input class="btn" type="submit" value="Load new photo" />
                             </div>
                         </div>
                     </div>

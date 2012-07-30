@@ -100,6 +100,26 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
+        /// The update users photo.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <param name="imageData">
+        /// The image data.
+        /// </param>
+        /// <param name="imageMimeType">
+        /// The image mime type.
+        /// </param>
+        public void UpdateUsersPhoto(int userId, byte[] imageData, string imageMimeType)
+        {
+            var user = this.userRepository.GetById(userId);
+            user.ImageData = imageData;
+            user.ImageMimeType = imageMimeType;
+            this.userRepository.UpdateUser(user);
+        }
+
+        /// <summary>
         /// The set role to user.
         /// </summary>
         /// <param name="userName">
@@ -238,6 +258,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
                 return null;
             }
         }
+
+
 
         /// <summary>
         /// The get all users.

@@ -9,6 +9,7 @@
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
+    using System;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
@@ -101,6 +102,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     model.ImageData = new byte[image.ContentLength];
                     image.InputStream.Read(model.ImageData, 0, image.ContentLength);
                 }
+                var userId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
+
+                this.userProcessor.UpdateUsersPhoto(userId, model.ImageData, model.ImageMimeType);
             }
 
             return this.RedirectToAction("Profile");
