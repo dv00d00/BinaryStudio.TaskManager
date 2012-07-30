@@ -77,7 +77,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             {
                 return false;
             }
-
+            
             var salt = this.cryptoProvider.CreateSalt();
             var newUser = new User
             {
@@ -92,7 +92,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
                 Email = email,
                 LinkedInId = linkedInId,
                 ImageData = imageData,
-                ImageMimeType = imageMimeType
+                ImageMimeType = imageMimeType,
+                IsDeleted = false
             };
 
             this.userRepository.CreateUser(newUser);
@@ -169,7 +170,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public bool LogOnUser(string userName, string password)
         {
             var user = this.userRepository.GetByName(userName);
-            if (user == null)
+            if (user == null || user.IsDeleted)
             {
                 return false;
             }

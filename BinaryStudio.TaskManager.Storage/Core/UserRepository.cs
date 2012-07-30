@@ -45,8 +45,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// </param>
         public void DeleteUser(int userId)
         {
-            User user = this.dataBaseContext.Users.Single(x => x.Id == userId);
-            this.dataBaseContext.Users.Remove(user);
+            var user = this.dataBaseContext.Users.Single(x => x.Id == userId);
+            user.IsDeleted = true;
             this.dataBaseContext.SaveChanges();
         }
 
@@ -96,7 +96,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// </returns>
         public IEnumerable<User> GetAll()
         {
-            return this.dataBaseContext.Users.ToList();
+            return this.dataBaseContext.Users.Where(x=>x.IsDeleted == false).ToList();
         }
 
         /// <summary>

@@ -1,19 +1,10 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="User.cs" company="">
-//   
-// </copyright>
-// <summary>
-//   Defines the User type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace BinaryStudio.TaskManager.Logic.Domain
+﻿namespace BinaryStudio.TaskManager.Logic.Domain
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
 
     /// <summary>
-    /// The user.
+    /// The user entity.
     /// </summary>
     public class User : IEntity
     {

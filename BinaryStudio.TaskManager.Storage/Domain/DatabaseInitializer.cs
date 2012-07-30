@@ -1,8 +1,7 @@
-using System.Collections.ObjectModel;
-
 namespace BinaryStudio.TaskManager.Logic.Domain
 {
     using System;
+    using System.Collections.ObjectModel;
     using System.Data.Entity;
 
     using BinaryStudio.TaskManager.Logic.Core;
@@ -42,22 +41,6 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
             var cryptoProvider = new CryptoProvider();
             var salt = cryptoProvider.CreateSalt();
-            var testUser = new User
-                           {
-                               Id = 1,
-                               UserName = "test",
-                               Credentials = new Credentials
-                               {
-                                   Passwordhash = cryptoProvider.CreateCryptoPassword("test", salt),
-                                   Salt = salt,
-                                   IsVerify = true
-                               },
-                               RoleId = 2,
-                               IsDeleted = false
-                           };
-            context.Users.Add(testUser);
-
-            salt = cryptoProvider.CreateSalt();
             var admin = new User
             {
                 UserName = "admin",
@@ -73,6 +56,42 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                 IsDeleted = false
             };
             context.Users.Add(admin);
+
+            salt = cryptoProvider.CreateSalt();
+            var testUser = new User
+                           {
+                               Id = 2,
+                               UserName = "test",
+                               Credentials = new Credentials
+                               {
+                                   Passwordhash = cryptoProvider.CreateCryptoPassword("test", salt),
+                                   Salt = salt,
+                                   IsVerify = true
+                               },
+                               RoleId = 2,
+                               Email = "q@q.com",
+                               LinkedInId = string.Empty,
+                               IsDeleted = false
+                           };
+            context.Users.Add(testUser);
+
+            salt = cryptoProvider.CreateSalt();
+            testUser = new User
+            {
+                Id = 3,
+                UserName = "user",
+                Credentials = new Credentials
+                {
+                    Passwordhash = cryptoProvider.CreateCryptoPassword("user", salt),
+                    Salt = salt,
+                    IsVerify = true
+                },
+                RoleId = 2,
+                Email = "q@w.com",
+                LinkedInId = string.Empty,
+                IsDeleted = false
+            };
+            context.Users.Add(testUser);
 
             context.Projects.Add(new Project
                                      {

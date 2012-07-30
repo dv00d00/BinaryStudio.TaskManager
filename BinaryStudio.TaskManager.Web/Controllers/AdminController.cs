@@ -21,7 +21,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult UsersList()
         {
-            return this.View(this.userRepository.GetAll().Where(x=>x.IsDeleted == false));
+            return this.View(this.userRepository.GetAll());
         }
 
         public ActionResult EditUser(int userId)
@@ -77,7 +77,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>
         public ActionResult DeleteUser(int userId)
         {
-            User user = this.userRepository.GetById(userId);
+            var user = this.userRepository.GetById(userId);
             return this.View(user);
         }
 
@@ -93,9 +93,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [HttpPost]
         [ActionName("DeleteUser")]
         public ActionResult DeleteUserConfirmed(int userId)
-        {
-            var user = this.userRepository.GetById(userId);
-            user.IsDeleted = true;
+        {                   
+            this.userRepository.DeleteUser(userId);            
             return this.RedirectToAction("AdminPanel");
         }
 
