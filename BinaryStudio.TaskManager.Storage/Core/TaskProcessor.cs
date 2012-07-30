@@ -305,5 +305,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             return this.humanTaskRepository.GetAllTasksForUserInProject(projectId, userId);
         }
+
+        public IList<HumanTaskHistory> GetAllHistoryForUser(int userId)
+        {
+            return humanTaskRepository.GetAllHistoryForUser(userId);
+        }
     }
 }

@@ -20,25 +20,26 @@
 {
     foreach (var task in Model.TaskHistories)
     {        
-    <div class="accordion-group">
-        <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#@task.Id">
-                Date of change : @task.ChangeDateTime
-            </a>
-        </div>
-        <div id="@task.Id" class="accordion-body collapse">
-            <div class="accordion-inner">
-                <p>
-                    New Task Name : @task.NewName
-                </p>
-                <p>
-                    New Task Description : @task.NewDescription</p>
-                <p>
-                    New Task Priority : @task.NewPriority
-                </p>
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#@task.Id">
+                    Date of change : @task.ChangeDateTime
+                </a>
+            </div>
+            <div id="@task.Id" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    <p>
+                        New Task Name : @task.NewName
+                    </p>
+                    <p>
+                        New Task Description : @task.NewDescription</p>
+                    <p>
+                        New Task Priority : @task.NewPriority
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
+    
 
     }
 

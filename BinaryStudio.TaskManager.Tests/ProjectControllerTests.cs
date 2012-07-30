@@ -94,9 +94,10 @@ namespace BinaryStudio.TaskManager.Web.Tests
             const int TaskId = 5;
             const int SenderId = 1;
             const int ReceiverId = 3;
+            const int projectId = 2;
 
             // act
-            this.controller.MoveTask(TaskId, SenderId, ReceiverId);
+            this.controller.MoveTask(TaskId, SenderId, ReceiverId,projectId);
 
             // assert
             this.taskProcessorMock.Verify(x => x.MoveTask(TaskId, ReceiverId), Times.AtLeastOnce());
@@ -112,9 +113,10 @@ namespace BinaryStudio.TaskManager.Web.Tests
             const int TaskId = 5;
             const int SenderId = 1;
             const int ReceiverId = -1;
+            const int projectId = 2;
 
             // act
-            this.controller.MoveTask(TaskId, SenderId, ReceiverId);
+            this.controller.MoveTask(TaskId, SenderId, ReceiverId,projectId);
 
             // assert
             this.taskProcessorMock.Verify(x => x.MoveTaskToUnassigned(TaskId), Times.AtLeastOnce());

@@ -34,6 +34,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         IList<HumanTask> GetUnassingnedTasks(int projectId);
 
-        IEnumerable<HumanTask> GetAllTasksForUserInProject(int projectId, int userId); 
+        IEnumerable<HumanTask> GetAllTasksForUserInProject(int projectId, int userId);
+
+        IList<HumanTaskHistory> GetAllHistoryForUser(int userId);
     }
 }

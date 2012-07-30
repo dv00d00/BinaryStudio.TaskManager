@@ -17,10 +17,14 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
         public int? NewAssigneeId { get; set; }
 
+        public int UserId { get; set; }
+
         public int TaskId { get; set; }
 
         public virtual HumanTask Task { get; set; }
 
         public int NewPriority { get; set; }
+
+        public string Action { get; set; }
     }
 }
