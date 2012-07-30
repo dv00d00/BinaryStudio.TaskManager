@@ -1,24 +1,10 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DatabaseInitializer.cs" company="">
-//   
-// </copyright>
-// <summary>
-//   The database initializer.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
 namespace BinaryStudio.TaskManager.Logic.Domain
 {
+    using System;
+    using System.Collections.ObjectModel;
     using System.Data.Entity;
 
     using BinaryStudio.TaskManager.Logic.Core;
-
-    using System;
-
-    using FizzWare.NBuilder.Dates;
 
     /// <summary>
     /// The database initializer.
@@ -32,7 +18,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
         protected override void Seed(DataBaseContext context)
         {
             context.Roles.Add(new UserRoles { Id = 1, RoleName = "admin" });
-            context.Roles.Add(new UserRoles { Id = 2, RoleName = "simpleEmployee" });            
+            context.Roles.Add(new UserRoles { Id = 2, RoleName = "simpleUser" });
 
             context.Priorities.Add(new Priority
                                        {
@@ -53,27 +39,73 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                 Value = 2
             });
 
-            var user = new User
+            var cryptoProvider = new CryptoProvider();
+            var salt = cryptoProvider.CreateSalt();
+            var admin = new User
+            {
+                UserName = "admin",
+                RoleId = 1,
+                Credentials = new Credentials
+                {
+                    Passwordhash = cryptoProvider.CreateCryptoPassword("password", salt),
+                    Salt = salt,
+                    IsVerify = true
+                },
+                Email = "admin@admin.com",
+                LinkedInId = string.Empty,
+                IsDeleted = false
+            };
+            context.Users.Add(admin);
+
+            salt = cryptoProvider.CreateSalt();
+            var testUser = new User
                            {
-                               Id = 1, 
-                               UserName = "Test User", 
-                               Credentials = new Credentials{IsVerify = true},
-                               RoleId = 2
+                               Id = 2,
+                               UserName = "test",
+                               Credentials = new Credentials
+                               {
+                                   Passwordhash = cryptoProvider.CreateCryptoPassword("test", salt),
+                                   Salt = salt,
+                                   IsVerify = true
+                               },
+                               RoleId = 2,
+                               Email = "q@q.com",
+                               LinkedInId = string.Empty,
+                               IsDeleted = false
                            };
-            context.Users.Add(user);            
+            context.Users.Add(testUser);
+
+            salt = cryptoProvider.CreateSalt();
+            testUser = new User
+            {
+                Id = 3,
+                UserName = "user",
+                Credentials = new Credentials
+                {
+                    Passwordhash = cryptoProvider.CreateCryptoPassword("user", salt),
+                    Salt = salt,
+                    IsVerify = true
+                },
+                RoleId = 2,
+                Email = "q@w.com",
+                LinkedInId = string.Empty,
+                IsDeleted = false
+            };
+            context.Users.Add(testUser);
+
             context.Projects.Add(new Project
                                      {
                                          Id = 1,
                                          Name = "Test Project",
                                          ProjectUsers = new Collection<User>
                                                             {
-                                                                user
+                                                                testUser
                                                             },
-                                         Creator = user,
+                                         Creator = testUser,
                                          Created = DateTime.Now,
-                                         CreatorId = user.Id
+                                         CreatorId = testUser.Id
                                      });
-           
+
             context.SaveChanges();
         }
     }

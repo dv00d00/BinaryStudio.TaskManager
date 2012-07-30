@@ -1,0 +1,40 @@
+﻿@model BinaryStudio.TaskManager.Logic.Domain.Project
+@{
+    ViewBag.Title = "Deleting project";
+}
+<h3 class="page-header">
+    Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Project</legend>
+    <div class="display-label">
+        Created</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Created)
+    </div>
+    <div class="display-label">
+        Name</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+    <div class="display-label">
+        Description</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+    <div class="display-label">
+        CreatorId</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatorId)
+    </div>
+</fieldset>
+@using (Html.BeginForm())
+{
+    <p>
+        <input type="submit" value="Delete" class="btn btn-inverse" />
+        <span class="divider"></span>
+        @Html.ActionLink("Back to projects list", "ProjectsList", null, new { @class = "btn" })
+    </p>
+}
+<p>
+    @Html.ActionLink(" Back to AdminPanel", "AdminPanel", "Admin", null, new { @class = "btn" })
+</p>

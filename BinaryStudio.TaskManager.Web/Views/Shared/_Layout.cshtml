@@ -38,6 +38,10 @@
                         <li>
                             @Html.ActionLink("Landing", "Index", "Landing")
                         </li>
+                        @if (Roles.IsUserInRole("admin"))
+                        {
+                            <li>@Html.ActionLink("AdminPanel", "AdminPanel", "Admin")</li>
+                        }
                     </ul>
                 </div>
             </div>

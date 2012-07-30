@@ -1,0 +1,50 @@
+﻿@model IEnumerable<BinaryStudio.TaskManager.Logic.Domain.Project>
+@{ViewBag.Title = "Projects List";}
+<div class="page-header">
+    <h1>
+        All projects
+    </h1>
+</div>
+<table>
+    <tr>
+        <th>
+            Created
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            CreatorId
+        </th>
+        <th>
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatorId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditProject", new { projectId = item.Id }, new { @class = "btn" })
+                @Html.ActionLink("Details", "DetailsProject", new { projectId = item.Id }, new { @class = "btn" })
+                @Html.ActionLink("Delete", "DeleteProject", new { projectId = item.Id }, new { @class = "btn btn-inverse" })
+            </td>
+        </tr>
+    }
+</table>
+<div>
+    @Html.ActionLink(" Back to AdminPanel", "AdminPanel", "Admin", null, new { @class = "btn" })
+</div>
