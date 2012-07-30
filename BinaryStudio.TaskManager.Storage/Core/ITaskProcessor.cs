@@ -164,5 +164,9 @@
         IEnumerable<HumanTask> GetAllTasksForUserInProject(int projectId, int userId);
 
         IList<HumanTaskHistory> GetAllHistoryForUser(int userId);
+
+        void AddNews(News news);
+
+        IEnumerable<News> GetAllNewsForUser(int userId);
     }
 }

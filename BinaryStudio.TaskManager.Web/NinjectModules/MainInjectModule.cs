@@ -37,6 +37,7 @@ namespace BinaryStudio.TaskManager.Web.NinjectModules
             this.Bind<INotifier>().To<Notifier>().InRequestScope();
             this.Bind<IConnectionProvider>().To<ConnectionProvider>().InSingletonScope();
             this.Bind<IGlobalHost>().To<GlobalHostImpl>().InSingletonScope();
+            this.Bind<INewsRepository>().To<NewsRepository>().InRequestScope();
         }
     }
 }
