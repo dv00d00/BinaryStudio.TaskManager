@@ -239,6 +239,12 @@ namespace BinaryStudio.TaskManager.Logic.Core
             }
         }
 
+        /// <summary>
+        /// The get all users.
+        /// </summary>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.User].
+        /// </returns>
         public IEnumerable<User> GetAllUsers()
         {
             return this.userRepository.GetAll();

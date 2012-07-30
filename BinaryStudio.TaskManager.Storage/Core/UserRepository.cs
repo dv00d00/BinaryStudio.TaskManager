@@ -89,6 +89,34 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
+        /// The get user email by id.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.String.
+        /// </returns>
+        public string GetUserEmailById(int userId)
+        {
+            return this.dataBaseContext.Users.First(x => x.Id == userId).Email;
+        }
+
+        /// <summary>
+        /// The get user image by id.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Byte.
+        /// </returns>
+        public byte[] GetUserImageById(int userId)
+        {
+            return this.dataBaseContext.Users.First(x => x.Id == userId).ImageData;
+        }
+
+        /// <summary>
         /// The get all.
         /// </summary>
         /// <returns>

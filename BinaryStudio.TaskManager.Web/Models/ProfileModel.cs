@@ -1,6 +1,5 @@
 ﻿namespace BinaryStudio.TaskManager.Web.Models
 {
-    using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
 
     /// <summary>
@@ -27,19 +26,16 @@
         /// <summary>
         /// Gets or sets the user name.
         /// </summary>
-        [Required(ErrorMessage = "Username is required!")]
-        [Display(Name = "User name")]
-        [MaxLength(50, ErrorMessage = "Username maximum length is 50 symbols!")]
         public string UserName { get; set; }
 
         /// <summary>
         /// Gets or sets the email.
         /// </summary>
-        [Required(ErrorMessage = "Email is required!")]
-        [Display(Name = "Email")]
-        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        /// <summary>
+        /// Gets or sets the invitations count.
+        /// </summary>
         public int InvitationsCount { get; set; }
     }
 }

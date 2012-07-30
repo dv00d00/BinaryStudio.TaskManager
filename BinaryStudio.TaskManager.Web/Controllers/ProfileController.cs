@@ -9,14 +9,13 @@
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
+    using System.Linq;
     using System.Web;
     using System.Web.Mvc;
 
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
     using BinaryStudio.TaskManager.Web.Models;
-
-    using System.Linq;
 
     /// <summary>
     /// The profile controller.
@@ -29,7 +28,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </summary>
         private readonly IUserProcessor userProcessor;
 
+        /// <summary>
+        /// The project processor.
+        /// </summary>
         private readonly IProjectProcessor projectProcessor;
+
+        /// <summary>
+        /// The user repository.
+        /// </summary>
+        private readonly IUserRepository userRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProfileController"/> class.
@@ -37,10 +44,17 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="userProcessor">
         /// The user processor.
         /// </param>
-        public ProfileController(IUserProcessor userProcessor, IProjectProcessor projectProcessor)
+        /// <param name="projectProcessor">
+        /// The project processor.
+        /// </param>
+        /// <param name="userRepository">
+        /// The user repository.
+        /// </param>
+        public ProfileController(IUserProcessor userProcessor, IProjectProcessor projectProcessor, IUserRepository userRepository)
         {
             this.userProcessor = userProcessor;
             this.projectProcessor = projectProcessor;
+            this.userRepository = userRepository;
         }
 
         /// <summary>
@@ -88,6 +102,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     image.InputStream.Read(model.ImageData, 0, image.ContentLength);
                 }
             }
+
             return this.RedirectToAction("Profile");
         }
 
@@ -101,7 +116,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             var userId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
             var model = new ProfileModel
-                { InvitationsCount = this.projectProcessor.GetAllInvitationsToUser(userId).Count(),UserName = this.userProcessor.GetUserByName(User.Identity.Name).UserName};
+                {
+                    InvitationsCount = this.projectProcessor.GetAllInvitationsToUser(userId).Count(),
+                    UserName = this.userProcessor.GetUserByName(User.Identity.Name).UserName,
+                    Email = this.userRepository.GetUserEmailById(userId),
+                    ImageData = this.userRepository.GetUserImageById(userId)
+                };
             return this.View(model);
         }
     }

@@ -251,8 +251,7 @@
         /// <param name="receiverId">
         /// The receiver id.
         /// </param>
-        /// <param name="projectId">e
-        /// 
+        /// <param name="projectId">
         /// The project id.
         /// </param>
         [HttpPost]
