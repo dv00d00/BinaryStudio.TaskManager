@@ -21,6 +21,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         void UpdateUsersPhoto(int userId, byte[] imageData, string imageMimeType);
 
+        bool ChangePassword(int userId, string oldPassword, string newPassword);
+
         User GetUser(int userId);
 
         User GetUserByLinkedInId(string linkedinId);

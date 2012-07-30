@@ -102,6 +102,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     model.ImageData = new byte[image.ContentLength];
                     image.InputStream.Read(model.ImageData, 0, image.ContentLength);
                 }
+
                 var userId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
 
                 this.userProcessor.UpdateUsersPhoto(userId, model.ImageData, model.ImageMimeType);
@@ -127,6 +128,71 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     ImageData = this.userRepository.GetUserImageById(userId)
                 };
             return this.View(model);
+        }
+
+        /// <summary>
+        /// The change password.
+        /// </summary>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        [Authorize]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// The change password.
+        /// </summary>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        [Authorize]
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // ChangePassword will throw an exception rather
+                // than return false in certain failure scenarios.
+                bool changePasswordSucceeded;
+                try
+                {
+                    var userId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
+                    changePasswordSucceeded = this.userProcessor.ChangePassword(userId, model.OldPassword, model.NewPassword);
+                }
+                catch (Exception)
+                {
+                    changePasswordSucceeded = false;
+                }
+
+                if (changePasswordSucceeded)
+                {
+                    return RedirectToAction("ChangePasswordSuccess");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        /// <summary>
+        /// The change password success.
+        /// </summary>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        public ActionResult ChangePasswordSuccess()
+        {
+            return this.RedirectToAction("Profile");
         }
     }
 }

@@ -120,6 +120,35 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
+        /// The change password.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <param name="oldPassword">
+        /// The old password.
+        /// </param>
+        /// <param name="newPassword">
+        /// The new password.
+        /// </param>
+        /// <returns>
+        /// The System.Boolean.
+        /// </returns>
+        public bool ChangePassword(int userId, string oldPassword, string newPassword)
+        {
+            var user = this.userRepository.GetById(userId);
+            if (this.cryptoProvider.ComparePassword(user.Credentials.Passwordhash, user.Credentials.Salt, oldPassword))
+            {
+                user.Credentials.Passwordhash = this.cryptoProvider.CreateCryptoPassword(
+                    newPassword, user.Credentials.Salt);
+                this.userRepository.UpdateUser(user);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// The set role to user.
         /// </summary>
         /// <param name="userName">
