@@ -9,6 +9,7 @@ using BinaryStudio.TaskManager.Logic.Core;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
+    [Authorize]
     public class EventsController : Controller
     {
         private readonly IUserProcessor userProcessor;
@@ -22,11 +23,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public ActionResult MyEvents()
         {
-            var eventsViewModels = new List<EventsViewModel>();
+            var eventsViewModels = new List<EventViewModel>();
             List<News> news =new List<News>( userProcessor.GetAllNewsForUser(userProcessor.GetUserByName(User.Identity.Name).Id));
             foreach (var newse in news)
             {
-                eventsViewModels.Add(new EventsViewModel
+                eventsViewModels.Add(new EventViewModel
                                          {
                                              ProjectId = newse.HumanTaskHistory.Task.ProjectId,
                                              ProjectName = newse.HumanTaskHistory.Task.Project.Name,
@@ -37,15 +38,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                              Action = newse.HumanTaskHistory.Action,
                                              
                                          });
-                switch (newse.HumanTaskHistory.Action)
-                {
-                    case ChangeHistoryTypes.Create :
-
-                    break;
-                        
-                }
             }
-            return View();
+            return View(eventsViewModels);
         }
 
     }

@@ -358,6 +358,7 @@
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\DetailsProject.cshtml" />
     <Content Include="Views\Admin\DeleteProject.cshtml" />
+    <Content Include="Views\Events\MyEvents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\DetailsUser.cshtml" />
