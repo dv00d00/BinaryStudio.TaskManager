@@ -149,7 +149,8 @@
                                           NewName = task.Name,
                                           Task = task,
                                           NewPriority = task.Priority,
-                                          Action = ChangeHistoryTypes.Create
+                                          Action = ChangeHistoryTypes.Create,
+                                          UserId = userProcessor.GetUserByName(User.Identity.Name).Id
                                       };
                 this.taskProcessor.AddHistory(taskHistory);
 
