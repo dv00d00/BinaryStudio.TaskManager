@@ -32,26 +32,35 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             foreach (var newse in news)
             {
                 var dateTimeDifference = DateTime.Now.Subtract(newse.HumanTaskHistory.ChangeDateTime);
-                eventsViewModels.Add(new EventViewModel
-                                         {
-                                             ProjectId = newse.HumanTaskHistory.Task.ProjectId,
-                                             ProjectName = newse.HumanTaskHistory.Task.Project.Name,
-                                             TaskId = newse.HumanTaskHistory.TaskId,
-                                             TaskName = newse.HumanTaskHistory.NewName,
-                                             WhoChangeUserName = userProcessor.GetUser(newse.HumanTaskHistory.UserId).UserName,
-                                             WhoChangeUserId = newse.HumanTaskHistory.UserId,
-                                             Action = newse.HumanTaskHistory.Action,
-                                             NewsId = newse.Id,
-                                             TimeAgo = dateTimeDifference.Hours > 24
-                                             ? dateTimeDifference.Days.ToString() + " days ago "
-                                             :"about " + dateTimeDifference.Hours.ToString() + " hours ago ",
-                                             Details = newse.HumanTaskHistory.NewDescription == null ? "" : newse.HumanTaskHistory.NewDescription.Substring(0, 3) + "..."
- 
-                                         });
+                eventsViewModels.Add(CreateEventViewModel(newse));
             }
             
             return View(eventsViewModels);
         }
 
+
+        public EventViewModel CreateEventViewModel(News news)
+        {
+            var dateTimeDifference = DateTime.Now.Subtract(news.HumanTaskHistory.ChangeDateTime);
+            return new EventViewModel
+                       {
+                           ProjectId = news.HumanTaskHistory.Task.ProjectId,
+                           ProjectName = news.HumanTaskHistory.Task.Project.Name,
+                           TaskId = news.HumanTaskHistory.TaskId,
+                           TaskName = news.HumanTaskHistory.NewName,
+                           WhoChangeUserName = userProcessor.GetUser(news.HumanTaskHistory.UserId).UserName,
+                           WhoChangeUserId = news.HumanTaskHistory.UserId,
+                           Action = news.HumanTaskHistory.Action,
+                           NewsId = news.Id,
+                           TimeAgo = dateTimeDifference.Hours > 24
+                                         ? dateTimeDifference.Days.ToString() + " days ago "
+                                         : "about " + dateTimeDifference.Hours.ToString() + " hours ago ",
+                           Details =
+                               news.HumanTaskHistory.NewDescription == null
+                                   ? ""
+                                   : news.HumanTaskHistory.NewDescription.Substring(0, 3) + "..."
+
+                       };
+        }
     }
 }
