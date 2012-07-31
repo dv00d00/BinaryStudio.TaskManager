@@ -30,7 +30,7 @@
             </td>
             <td>
                 <div class="button">
-                    <button title="Invite" class="invite btn btn-primary" id=@user.Id>
+                    <button title="Invite" class="invite btn btn-primary" id=@user.Id >
                         Invite
                     </button>
                 </div>
@@ -109,7 +109,7 @@
             };
 
             var id = $(this).attr('id');
-            var projId = $(this).attr('projId');
+            var projId = @Model.ProjectId;
             $.ajax({
                 type: "POST",
                 url: "/Project/InviteUserInProject/",
@@ -126,7 +126,7 @@
             };
 
             var id = $(this).attr('id');
-            var projId = $(this).attr('projId');
+            var projId = @Model.ProjectId;
             $.ajax({
                 type: "POST",
                 url: "/Project/RemoveUserFromProject/",
