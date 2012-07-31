@@ -14,7 +14,7 @@
     <span class="divider-vertical"></span>
     @Html.ActionLink("Back to all tasks view", "AllTasks", new { projectId = Model.HumanTask.ProjectId }, new { @class = "btn" })
     <span class="divider-vertical"></span>
-    @Html.ActionLink("Back to project dashboard", "PersonalProject", new { id = Model.HumanTask.ProjectId }, new { @class = "btn" })
+    @Html.ActionLink("Back to project dashboard", "Project", new { id = Model.HumanTask.ProjectId }, new { @class = "btn" })
 </p>
 <legend>Change history</legend>@* <div class="accordion" id="accordion2"> *@
 @if (Model.TaskHistories != null)
@@ -44,6 +44,4 @@
 
     }
 
-
->>>>>>> fc4c8d1e885a7e35709b67aebd868f7df9f315f5
 } else { <legend>There is no history for this task</legend>} 

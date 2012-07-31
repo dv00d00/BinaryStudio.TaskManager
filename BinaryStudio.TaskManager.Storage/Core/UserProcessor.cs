@@ -92,8 +92,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
                 Email = email,
                 LinkedInId = linkedInId,
                 ImageData = imageData,
-                ImageMimeType = imageMimeType,
-                IsDeleted = false
+                ImageMimeType = imageMimeType
             };
 
             this.userRepository.CreateUser(newUser);
@@ -219,7 +218,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public bool LogOnUser(string userName, string password)
         {
             var user = this.userRepository.GetByName(userName);
-            if (user == null || user.IsDeleted)
+            if (user == null)
             {
                 return false;
             }

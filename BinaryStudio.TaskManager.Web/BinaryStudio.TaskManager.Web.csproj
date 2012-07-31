@@ -352,18 +352,15 @@
     <Content Include="Views\Project\UserDetails.cshtml" />
     <Content Include="Views\Project\ManagerTasksTablePartialView.cshtml" />
     <Content Include="Views\Landing\Index.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Landing\Tasks.cshtml" />
-<<<<<<< HEAD
+
     <Content Include="Views\Profile\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
-=======
-=======
->>>>>>> 27878424aca8e5445c460d1543cd717ea1afb8d6
+
     <Content Include="Views\Admin\AdminPanel.cshtml" />
     <Content Include="Views\Admin\ProjectsList.cshtml" />
->>>>>>> fc4c8d1e885a7e35709b67aebd868f7df9f315f5
+
     <Content Include="Views\Admin\UsersList.cshtml" />
     <Content Include="Views\Admin\EditProject.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
