@@ -274,27 +274,28 @@
         /// <summary>
         /// The invite or delete user.
         /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult InviteOrDeleteUser()
+        public ActionResult InviteOrDeleteUser(int projectId)
         {
-            // to default project
-            const int ProjectId = 1;
             var currentUser = this.userProcessor.GetUserByName(User.Identity.Name);
             var listWithCurrentUser = new List<User> { currentUser }; 
             var users = this.userProcessor.GetAllUsers();
             users = users.Except(listWithCurrentUser);
             
-            var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false && x.Sender == currentUser);            
+            var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(projectId).Where(x => x.IsInvitationConfirmed == false && x.Sender == currentUser);            
             
             //var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false);
             
             var listAlreadyInvited = invitationsToProject.Select(invitation => invitation.Receiver).ToList();
 
-            var collaborators = this.projectProcessor.GetAllUsersInProject(ProjectId);
+            var collaborators = this.projectProcessor.GetAllUsersInProject(projectId);
             var listToInvite = users.Except(collaborators).Except(listAlreadyInvited);
-            var model = new ProjectCollaboratorsViewModel { Collaborators = collaborators, PossibleCollaborators = listToInvite, AlreadyInvited = listAlreadyInvited };
+            var model = new ProjectCollaboratorsViewModel { Collaborators = collaborators, PossibleCollaborators = listToInvite, AlreadyInvited = listAlreadyInvited, ProjectId = projectId};
             return this.View(model);
         }
 

@@ -102,8 +102,15 @@
                 {   
                     <td valign="top" align="center">
                         <p >
-                            <img width="40" height="40" src="@Url.Action("GetImage", "Project", new { UserId = user.User.Id })" />
-                            @Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })
+                             @if (@user.User.ImageData == null)
+                             {
+                                 <img class="pull-left" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="70" height="70"/>
+                             }
+                             else
+                             {
+                                 <img width="80" height="80" src="@Url.Action("GetImage", "Project", new { UserId = user.User.Id })" />
+                             }
+                             @Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })
                         </p>
                         <p>@Html.ActionLink("Create task", "CreateTask", new { userId = user.User.Id, projectId = Model.ProjectId }, new { @class = "btn" })</p>
                     </td> 
@@ -113,7 +120,7 @@
             <tr>
                 <td align="center" width="250" valign="top">
                     <div class="editor-field">
-                        @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", null, new { @class = "btn" })
+                        @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new {projectId = Model.ProjectId}, new { @class = "btn" })
                     </div>
                 </td>
                 <td valign="top">

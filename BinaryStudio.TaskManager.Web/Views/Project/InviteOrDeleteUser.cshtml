@@ -5,6 +5,7 @@
 <h2 class="well-large">
     Manage collaborators
 </h2>
+
 <table class="tabbable">
     <tr>
         <th colspan="3">
@@ -83,7 +84,7 @@
             </td>
             <td>
                 <div class="button ">
-                    <button title="Delete" class="remove btn btn-danger" id=@user.Id>
+                    <button title="Delete" class="remove btn btn-danger" id=@user.Id >
                         Remove
                     </button>
                 </div>
@@ -93,7 +94,7 @@
 </table>
 
 <div>
-    @Html.ActionLink("Back to tasks list", "PersonalProject", null, new { @class = "btn" })
+    @Html.ActionLink("Back to tasks list", "Project", new { id = Model.ProjectId }, new { @class = "btn" })
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -108,10 +109,11 @@
             };
 
             var id = $(this).attr('id');
+            var projId = $(this).attr('projId');
             $.ajax({
                 type: "POST",
                 url: "/Project/InviteUserInProject/",
-                data: { receiverId: id, projectId: 1 },
+                data: { receiverId: id, projectId: projId },
                 dataType: "json",
                 traditional: true
             }).success(onSuccess).error(onError);
@@ -124,10 +126,11 @@
             };
 
             var id = $(this).attr('id');
+            var projId = $(this).attr('projId');
             $.ajax({
                 type: "POST",
                 url: "/Project/RemoveUserFromProject/",
-                data: { userId: id, projectId: 1 },
+                data: { userId: id, projectId: projId },
                 dataType: "json",
                 traditional: true
             }).success(onSuccess).error(onError);
