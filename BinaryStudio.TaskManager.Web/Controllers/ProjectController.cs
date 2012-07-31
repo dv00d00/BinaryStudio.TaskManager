@@ -457,7 +457,7 @@
                     TaskId = humanTask.Id,
                     NewPriority = humanTask.Priority,
                     Action = ChangeHistoryTypes.Change,
-                    UserId = userProcessor.GetUserByName(User.Identity.Name).Id
+                    UserId = this.userProcessor.GetUserByName(User.Identity.Name).Id
                 });
 
                 return this.RedirectToAction("Project", new { id = humanTask.ProjectId });
@@ -493,15 +493,18 @@
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int idTask)
         {
-            var model = this.CreateSingleTaskViewModelById(id);
+            var model = this.CreateSingleTaskViewModelById(idTask);
             return this.View(model);
         }
 
         /// <summary>
         /// The delete confirmed.
         /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <param name="projectId">
         /// The project id.
         /// </param>
@@ -510,9 +513,9 @@
         /// </returns>
         [HttpPost]
         [ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int projectId)
+        public ActionResult DeleteConfirmed(int idTask, int projectId)
         {
-            this.taskProcessor.DeleteTask(projectId);
+            this.taskProcessor.DeleteTask(idTask);
             return this.RedirectToAction("Project", new { id = projectId });
         }
 

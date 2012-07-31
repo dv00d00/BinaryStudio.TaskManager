@@ -15,3 +15,11 @@
         <input type="submit" value="Delete" class="btn btn-primary" /><br />
     </div>
 }
+<p>
+    <p>
+    </p>
+    <span class="divider-vertical"></span>
+    @Html.ActionLink("Back to all tasks view", "AllTasks", new { projectId = Model.HumanTask.ProjectId }, new { @class = "btn" })
+    <span class="divider-vertical"></span>
+    @Html.ActionLink("Back to project dashboard", "Project", new { id = Model.HumanTask.ProjectId }, new { @class = "btn" })
+</p>
