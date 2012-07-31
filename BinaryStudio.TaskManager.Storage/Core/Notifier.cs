@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using BinaryStudio.TaskManager.Logic.Core.SignalR;
+using BinaryStudio.TaskManager.Logic.Domain;
 using BinaryStudio.TaskManager.Web.SignalR;
 using SignalR;
 using SignalR.Hubs;
@@ -13,14 +14,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
     public class Notifier : INotifier
     {
         private readonly IHumanTaskRepository humanTaskRepository;
+        private readonly INewsRepository newsRepository;
         private readonly IGlobalHost globalHost;
         private readonly IConnectionProvider connectionProvider;
 
-        public Notifier(IHumanTaskRepository humanTaskRepository, IGlobalHost globalHost, IConnectionProvider connectionProvider)
+        public Notifier(IHumanTaskRepository humanTaskRepository, IGlobalHost globalHost, IConnectionProvider connectionProvider, INewsRepository newsRepository)
         {
             this.humanTaskRepository = humanTaskRepository;
             this.globalHost = globalHost;
             this.connectionProvider = connectionProvider;
+            this.newsRepository = newsRepository;
         }
 
         public void Broadcast(string message)
@@ -62,9 +65,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
             }
         }
 
-        public void SendNewse(int newseId)
+        public void SendNews(int newsId)
         {
-            throw new NotImplementedException();
+            News news = newsRepository.GetNewsById(newsId);
+            var clients = this.connectionProvider.GetNewsConnectionsForUser(news.UserId);
+            var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
+
+            foreach (var clientConnection in clients)
+            {
+                context.Clients[clientConnection.ConnectionId].NewsRecived(newsId);
+            }
         }
     }
 
@@ -73,6 +83,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
         IEnumerable<ClientConnection> ActiveConnections { get; }
 
         IEnumerable<ClientConnection> GetProjectConnections(int projectId);
+
+        IEnumerable<ClientConnection> GetNewsConnectionsForUser(int userId);
     }
 
     public class ConnectionProvider : IConnectionProvider
@@ -88,6 +100,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public IEnumerable<ClientConnection> GetProjectConnections(int projectId)
         {
             return SignalRClients.Connections.Where(it => it.ProjectId == projectId);
+        }
+
+        public IEnumerable<ClientConnection> GetNewsConnectionsForUser(int userId)
+        {
+            return SignalRClients.Connections.Where(it => it.UserId == userId && it.IsNewsConnection);
         }
     }
 
