@@ -27,7 +27,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             var eventsViewModels = new List<EventViewModel>();
             var user = userProcessor.GetUserByName(User.Identity.Name).Id; 
-            List<News> news = new List<News>(newsRepository.GetAllNewsForUser(user));
+            List<News> news = new List<News>(newsRepository.GetAllNewsForUser(user).OrderByDescending(x=> x.HumanTaskHistory.ChangeDateTime));
            
             foreach (var newse in news)
             {
