@@ -438,13 +438,22 @@
             var model = this.CreateSingleTaskViewModelById(id);
             return this.View(model);
         }
-       
+
+        /// <summary>
+        /// The delete confirmed.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         [HttpPost]
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int projectId)
         {
             this.taskProcessor.DeleteTask(projectId);
-            return this.RedirectToAction("AllTasks");
+            return this.RedirectToAction("Project", new { id = projectId });
         }
 
         /// <summary>
