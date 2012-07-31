@@ -55,7 +55,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                            Details =
                                news.HumanTaskHistory.NewDescription == null
                                    ? ""
-                                   : news.HumanTaskHistory.NewDescription.Substring(0, 3) + "...",
+                                   : news.HumanTaskHistory.NewDescription.Length>26 ? news.HumanTaskHistory.NewDescription.Substring(0, 25) + "..."
+                                   :"",
                           IsRead = news.IsRead
                        };
         }
@@ -74,6 +75,14 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             if (dateTimeDifference.TotalHours < 24)
             {
                 return dateTimeDifference.Hours.ToString() + " hours ago";
+            }
+            if (dateTimeDifference.TotalHours > 24 && dateTimeDifference.TotalHours < 48)
+            {
+                return "1 day ago";
+            }
+            if (dateTimeDifference.TotalHours > 48)
+            {
+                return dateTimeDifference.TotalDays.ToString() + " days ago";
             }
             return time.ToString();
         }
