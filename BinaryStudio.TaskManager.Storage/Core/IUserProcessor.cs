@@ -25,9 +25,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         IEnumerable<User> GetAllUsers();
 
-        void AddNews(News news);
-
-        IEnumerable<News> GetAllNewsForUser(int userId);
     }
 
 }

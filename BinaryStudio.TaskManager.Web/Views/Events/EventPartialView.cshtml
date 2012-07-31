@@ -1,5 +1,16 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.EventViewModel
 
-<div class = "dvsd" id = @Model.EventId.ToString()>
-    <strong>@Html.ActionLink(Model.WhoChangeUserName, "UserDetails", "Project", new {id = Model.WhoChangeUserId},null)</strong>
+<div class = "container" id = "@Model.NewsId.ToString()">
+    <strong>
+        @Html.ActionLink(Model.ProjectName, "Project", "Project", new { id = Model.ProjectId }, null)
+        <br/>
+        <br/>
+        @Html.ActionLink(@Model.WhoChangeUserName + " ", "UserDetails", "Project", new { userId = Model.WhoChangeUserId }, null)
+        @Model.Action task @Html.ActionLink(@Model.TaskName+" ","Details","Project",new { id = Model.TaskId }, null) 
+        @Model.TimeAgo
+        <br/>
+        @Model.Details
+        
+    </strong>
 </div>
+ 

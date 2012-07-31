@@ -1,10 +1,21 @@
-﻿@model List<BinaryStudio.TaskManager.Web.Models.EventViewModel>
+﻿@using BinaryStudio.TaskManager.Web.Models;
+@model List<EventViewModel>
+<div class="container-fluid" style="margin-top: 30px">
+    <h2>My news</h2>
+    <div class="row-fluid">
+        <div class="span2">
+            <!--Sidebar content-->
+        </div>
+        <div class="span8">
+            @{
+                foreach (EventViewModel event_ in Model)
+                {
+                        
+                    @Html.Partial("EventPartialView", event_);
+                    <hr/>
+                }
+            }
 
-<h2>title</h2>
-
-@{
-    foreach (var event_ in Model)
-    {
-        Html.Partial("EventPartialView", event_);
-    }
-}
+        </div>
+    </div>
+</div>

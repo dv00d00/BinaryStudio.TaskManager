@@ -85,9 +85,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// </returns>
         string GetRoleByName(string userName);
 
-        void AddNews(News news);
-
-        IEnumerable<News> GetAllNewsForUser(int userId);
 
 
     }

@@ -36,6 +36,11 @@
         private readonly INotifier notifier;
 
         /// <summary>
+        /// The news repository
+        /// </summary>
+        private readonly INewsRepository newsRepository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ProjectController"/> class.
         /// </summary>
         /// <param name="taskProcessor">
@@ -50,12 +55,13 @@
         /// <param name="notifier">
         /// The notifier.
         /// </param>
-        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, INotifier notifier)
+        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, INotifier notifier, INewsRepository newsRepository)
         {
             this.projectProcessor = projectProcessor;
             this.notifier = notifier;
             this.taskProcessor = taskProcessor;
             this.userProcessor = userProcessor;
+            this.newsRepository = newsRepository;
         }
 
         /// <summary>
@@ -181,9 +187,10 @@
                                    IsRead = false,
                                    User = projectUser,
                                    UserId = projectUser.Id,
-                                   HumanTaskHistoryId = taskHistory.Id
+                                   HumanTaskHistoryId = taskHistory.Id,
+                                   
                                };
-                userProcessor.AddNews(news);
+                newsRepository.AddNews(news);
             }
         }
 

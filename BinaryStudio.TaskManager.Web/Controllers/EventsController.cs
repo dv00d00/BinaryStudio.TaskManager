@@ -13,9 +13,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     public class EventsController : Controller
     {
         private readonly IUserProcessor userProcessor;
-        public EventsController(IUserProcessor userProcessor )
+        private readonly INewsRepository newsRepository;
+        public EventsController(IUserProcessor userProcessor, INewsRepository newsRepository )
         {
             this.userProcessor = userProcessor;
+            this.newsRepository = newsRepository;
         }
 
         //
@@ -24,9 +26,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult MyEvents()
         {
             var eventsViewModels = new List<EventViewModel>();
-            List<News> news =new List<News>( userProcessor.GetAllNewsForUser(userProcessor.GetUserByName(User.Identity.Name).Id));
+            var user = userProcessor.GetUserByName(User.Identity.Name).Id; 
+            List<News> news = new List<News>(newsRepository.GetAllNewsForUser(user));
+           
             foreach (var newse in news)
             {
+                var dateTimeDifference = DateTime.Now.Subtract(newse.HumanTaskHistory.ChangeDateTime);
                 eventsViewModels.Add(new EventViewModel
                                          {
                                              ProjectId = newse.HumanTaskHistory.Task.ProjectId,
@@ -36,9 +41,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                              WhoChangeUserName = userProcessor.GetUser(newse.HumanTaskHistory.UserId).UserName,
                                              WhoChangeUserId = newse.HumanTaskHistory.UserId,
                                              Action = newse.HumanTaskHistory.Action,
-                                             
+                                             NewsId = newse.Id,
+                                             TimeAgo = dateTimeDifference.Hours > 24
+                                             ? dateTimeDifference.Days.ToString() + " days ago "
+                                             :"about " + dateTimeDifference.Hours.ToString() + " hours ago ",
+                                             Details = newse.HumanTaskHistory.NewDescription == null ? "" : newse.HumanTaskHistory.NewDescription.Substring(0, 3) + "..."
+ 
                                          });
             }
+            
             return View(eventsViewModels);
         }
 

@@ -2,7 +2,7 @@
 {
     public class EventViewModel
     {
-        public int EventId { get; set; }
+        public int NewsId { get; set; }
 
         public string ProjectName { get; set; }
 
@@ -23,6 +23,8 @@
         public int? WhoAssigneUserId { get; set; }
 
         public string Details { get; set; }
+
+        public string TimeAgo { get; set; }
 
     }
 }

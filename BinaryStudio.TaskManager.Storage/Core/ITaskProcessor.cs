@@ -165,8 +165,5 @@
 
         IList<HumanTaskHistory> GetAllHistoryForUser(int userId);
 
-        void AddNews(News news);
-
-        IEnumerable<News> GetAllNewsForUser(int userId);
     }
 }
