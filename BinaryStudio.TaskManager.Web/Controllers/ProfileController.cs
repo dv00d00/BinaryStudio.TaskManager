@@ -9,14 +9,14 @@
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Web;
     using System.Web.Mvc;
 
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
     using BinaryStudio.TaskManager.Web.Models;
-
-    using System.Linq;
 
     /// <summary>
     /// The profile controller.
@@ -29,7 +29,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </summary>
         private readonly IUserProcessor userProcessor;
 
+        /// <summary>
+        /// The project processor.
+        /// </summary>
         private readonly IProjectProcessor projectProcessor;
+
+        /// <summary>
+        /// The user repository.
+        /// </summary>
+        private readonly IUserRepository userRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProfileController"/> class.
@@ -37,10 +45,17 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="userProcessor">
         /// The user processor.
         /// </param>
-        public ProfileController(IUserProcessor userProcessor, IProjectProcessor projectProcessor)
+        /// <param name="projectProcessor">
+        /// The project processor.
+        /// </param>
+        /// <param name="userRepository">
+        /// The user repository.
+        /// </param>
+        public ProfileController(IUserProcessor userProcessor, IProjectProcessor projectProcessor, IUserRepository userRepository)
         {
             this.userProcessor = userProcessor;
             this.projectProcessor = projectProcessor;
+            this.userRepository = userRepository;
         }
 
         /// <summary>
@@ -87,7 +102,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     model.ImageData = new byte[image.ContentLength];
                     image.InputStream.Read(model.ImageData, 0, image.ContentLength);
                 }
+
+                var userId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
+
+                this.userProcessor.UpdateUsersPhoto(userId, model.ImageData, model.ImageMimeType);
             }
+
             return this.RedirectToAction("Profile");
         }
 
@@ -101,8 +121,78 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             var userId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
             var model = new ProfileModel
-                { InvitationsCount = this.projectProcessor.GetAllInvitationsToUser(userId).Count(),UserName = this.userProcessor.GetUserByName(User.Identity.Name).UserName};
+                {
+                    InvitationsCount = this.projectProcessor.GetAllInvitationsToUser(userId).Count(),
+                    UserName = this.userProcessor.GetUserByName(User.Identity.Name).UserName,
+                    Email = this.userRepository.GetUserEmailById(userId),
+                    ImageData = this.userRepository.GetUserImageById(userId)
+                };
             return this.View(model);
+        }
+
+        /// <summary>
+        /// The change password.
+        /// </summary>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        [Authorize]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// The change password.
+        /// </summary>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        [Authorize]
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // ChangePassword will throw an exception rather
+                // than return false in certain failure scenarios.
+                bool changePasswordSucceeded;
+                try
+                {
+                    var userId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
+                    changePasswordSucceeded = this.userProcessor.ChangePassword(userId, model.OldPassword, model.NewPassword);
+                }
+                catch (Exception)
+                {
+                    changePasswordSucceeded = false;
+                }
+
+                if (changePasswordSucceeded)
+                {
+                    return RedirectToAction("ChangePasswordSuccess");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        /// <summary>
+        /// The change password success.
+        /// </summary>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        public ActionResult ChangePasswordSuccess()
+        {
+            return this.RedirectToAction("Profile");
         }
     }
 }

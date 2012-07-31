@@ -105,18 +105,22 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="managerId">
         /// The manager id.
         /// </param>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         [Authorize]
-        public ActionResult Create(int managerId)
+        public ActionResult Create(int managerId, int projectId)
         {
             var createModel = new CreateTaskViewModel
                 {
                     Priorities = this.taskProcessor.GetPrioritiesList().OrderBy(x => x.Value),
                     AssigneeId = (managerId != -1) ? managerId : (int?)null,
                     CreatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id,
-                    Created = DateTime.Now
+                    Created = DateTime.Now,
+                    ProjectId = projectId,
                 };
             return this.View(createModel);
         }

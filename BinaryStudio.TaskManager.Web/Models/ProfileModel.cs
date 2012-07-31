@@ -27,19 +27,46 @@
         /// <summary>
         /// Gets or sets the user name.
         /// </summary>
-        [Required(ErrorMessage = "Username is required!")]
-        [Display(Name = "User name")]
-        [MaxLength(50, ErrorMessage = "Username maximum length is 50 symbols!")]
         public string UserName { get; set; }
 
         /// <summary>
         /// Gets or sets the email.
         /// </summary>
-        [Required(ErrorMessage = "Email is required!")]
-        [Display(Name = "Email")]
-        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        /// <summary>
+        /// Gets or sets the invitations count.
+        /// </summary>
         public int InvitationsCount { get; set; }
+    }
+
+    /// <summary>
+    /// The change password model.
+    /// </summary>
+    public class ChangePasswordModel
+    {
+        /// <summary>
+        /// Gets or sets the old password.
+        /// </summary>
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Current password")]
+        public string OldPassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets the new password.
+        /// </summary>
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
+        public string NewPassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets the confirm password.
+        /// </summary>
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm new password")]
+        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
     }
 }

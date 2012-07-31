@@ -92,12 +92,60 @@ namespace BinaryStudio.TaskManager.Logic.Core
                 Email = email,
                 LinkedInId = linkedInId,
                 ImageData = imageData,
-                ImageMimeType = imageMimeType,
-                IsDeleted = false
+                ImageMimeType = imageMimeType
             };
 
             this.userRepository.CreateUser(newUser);
             return true;
+        }
+
+        /// <summary>
+        /// The update users photo.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <param name="imageData">
+        /// The image data.
+        /// </param>
+        /// <param name="imageMimeType">
+        /// The image mime type.
+        /// </param>
+        public void UpdateUsersPhoto(int userId, byte[] imageData, string imageMimeType)
+        {
+            var user = this.userRepository.GetById(userId);
+            user.ImageData = imageData;
+            user.ImageMimeType = imageMimeType;
+            this.userRepository.UpdateUser(user);
+        }
+
+        /// <summary>
+        /// The change password.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <param name="oldPassword">
+        /// The old password.
+        /// </param>
+        /// <param name="newPassword">
+        /// The new password.
+        /// </param>
+        /// <returns>
+        /// The System.Boolean.
+        /// </returns>
+        public bool ChangePassword(int userId, string oldPassword, string newPassword)
+        {
+            var user = this.userRepository.GetById(userId);
+            if (this.cryptoProvider.ComparePassword(user.Credentials.Passwordhash, user.Credentials.Salt, oldPassword))
+            {
+                user.Credentials.Passwordhash = this.cryptoProvider.CreateCryptoPassword(
+                    newPassword, user.Credentials.Salt);
+                this.userRepository.UpdateUser(user);
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -170,7 +218,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public bool LogOnUser(string userName, string password)
         {
             var user = this.userRepository.GetByName(userName);
-            if (user == null || user.IsDeleted)
+            if (user == null)
             {
                 return false;
             }
@@ -240,6 +288,14 @@ namespace BinaryStudio.TaskManager.Logic.Core
             }
         }
 
+
+
+        /// <summary>
+        /// The get all users.
+        /// </summary>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.User].
+        /// </returns>
         public IEnumerable<User> GetAllUsers()
         {
             return this.userRepository.GetAll();

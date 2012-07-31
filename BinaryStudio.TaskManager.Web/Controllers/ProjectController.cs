@@ -89,6 +89,7 @@
                 var managerModel = new ManagerTasksViewModel { User = user, Tasks = this.taskProcessor.GetAllTasksForUserInProject(id, user.Id).ToList() };
                 model.UsersTasks.Add(managerModel);
             }
+
             return this.View(model);
         }
 
@@ -371,22 +372,25 @@
             {
                 return this.File(user.ImageData, user.ImageMimeType);
             }
+
             return null;
         }
 
         /// <summary>
         /// The all tasks.
         /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ViewResult.
         /// </returns>
         [Authorize]
-        public ViewResult AllTasks()
+        public ViewResult AllTasks(int projectId)
         {
             var model = new List<SingleTaskViewModel>();
             string creatorName, assigneeName;
-            const int ProjectId = 1;
-            var tasks = this.taskProcessor.GetAllTasksInProject(ProjectId).ToList();
+            var tasks = this.taskProcessor.GetAllTasksInProject(projectId).ToList();
             foreach (var task in tasks)
             {
                 creatorName = task.CreatorId.HasValue ? this.userProcessor.GetUser((int)task.CreatorId).UserName : "none";
@@ -408,15 +412,19 @@
         /// <param name="id">
         /// The id.
         /// </param>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         [Authorize]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, int projectId)
         {
             var humantask = this.taskProcessor.GetTaskById(id);
             this.ViewBag.PossibleCreators = new List<User>();
             this.ViewBag.PossibleAssignees = new List<User>();
+            humantask.ProjectId = projectId;
             return this.View(humantask);
         }
 
@@ -434,7 +442,9 @@
         {
             if (this.ModelState.IsValid)
             {
+
                 humanTask.Project = projectProcessor.GetProjectById(humanTask.ProjectId);
+                
                 this.taskProcessor.UpdateTask(humanTask);
                 this.taskProcessor.AddHistory(new HumanTaskHistory
                 {
@@ -449,7 +459,8 @@
                     UserId = userProcessor.GetUserByName(User.Identity.Name).Id
                 });
 
-                return this.RedirectToAction("Project",new {id = humanTask.ProjectId});
+                return this.RedirectToAction("Project", new { id = humanTask.ProjectId });
+
             }
 
             this.ViewBag.PossibleCreators = new List<User>();
@@ -486,13 +497,22 @@
             var model = this.CreateSingleTaskViewModelById(id);
             return this.View(model);
         }
-       
+
+        /// <summary>
+        /// The delete confirmed.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         [HttpPost]
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int projectId)
         {
             this.taskProcessor.DeleteTask(projectId);
-            return this.RedirectToAction("AllTasks");
+            return this.RedirectToAction("Project", new { id = projectId });
         }
 
         /// <summary>

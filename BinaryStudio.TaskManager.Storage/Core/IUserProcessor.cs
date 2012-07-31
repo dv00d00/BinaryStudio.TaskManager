@@ -19,12 +19,15 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         bool CreateUser(string userName, string password, string email, string linkedInId, byte[] imageData, string imageMimeType);
 
+        void UpdateUsersPhoto(int userId, byte[] imageData, string imageMimeType);
+
+        bool ChangePassword(int userId, string oldPassword, string newPassword);
+
         User GetUser(int userId);
 
         User GetUserByLinkedInId(string linkedinId);
 
         IEnumerable<User> GetAllUsers();
-
     }
 
 }

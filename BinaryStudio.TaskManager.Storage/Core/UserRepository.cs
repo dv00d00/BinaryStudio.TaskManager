@@ -45,8 +45,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// </param>
         public void DeleteUser(int userId)
         {
-            var user = this.dataBaseContext.Users.Single(x => x.Id == userId);
-            user.IsDeleted = true;
+            User user = this.dataBaseContext.Users.Single(x => x.Id == userId);
+            this.dataBaseContext.Users.Remove(user);
             this.dataBaseContext.SaveChanges();
         }
 
@@ -89,6 +89,34 @@ namespace BinaryStudio.TaskManager.Logic.Core
         }
 
         /// <summary>
+        /// The get user email by id.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.String.
+        /// </returns>
+        public string GetUserEmailById(int userId)
+        {
+            return this.dataBaseContext.Users.First(x => x.Id == userId).Email;
+        }
+
+        /// <summary>
+        /// The get user image by id.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Byte.
+        /// </returns>
+        public byte[] GetUserImageById(int userId)
+        {
+            return this.dataBaseContext.Users.First(x => x.Id == userId).ImageData;
+        }
+
+        /// <summary>
         /// The get all.
         /// </summary>
         /// <returns>
@@ -96,7 +124,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// </returns>
         public IEnumerable<User> GetAll()
         {
-            return this.dataBaseContext.Users.Where(x=>x.IsDeleted == false).ToList();
+            return this.dataBaseContext.Users.ToList();
         }
 
         /// <summary>

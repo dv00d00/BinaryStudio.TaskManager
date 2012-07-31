@@ -56,26 +56,4 @@ namespace BinaryStudio.TaskManager.Web.Models
         [Compare("Password", ErrorMessage = "The passwords do not match!")]
         public string ConfirmPassword { get; set; }
     }
-
-    /// <summary>
-    /// The change password model.
-    /// </summary>
-    public class ChangePasswordModel
-    {
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Текущий пароль")]
-        public string OldPassword { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "{0} должени иметь минимальную длину {2} символов.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Новый пароль")]
-        public string NewPassword { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Повторный ввод пароля")]
-        [Compare("Новый пароль", ErrorMessage = "Значения не совпадают.")]
-        public string ConfirmPassword { get; set; }
-    }
 }

@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Delete task";
 }
-<h2>
+<h2 class="well-large">
     Delete task
 </h2>
 <h3>
@@ -12,10 +12,6 @@
 @using (Html.BeginForm())
 {
     <div>
-        <input type="submit" value="Delete" /><br />
+        <input type="submit" value="Delete" class="btn btn-primary" /><br />
     </div>
-    <p>
-        @Html.ActionLink("Back to all tasks in project", "AllTasks") |
-        @Html.ActionLink("Back to project dashboard", "PersonalProject")
-    </p>
 }

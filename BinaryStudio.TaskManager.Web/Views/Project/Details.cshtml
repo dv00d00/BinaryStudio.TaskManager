@@ -1,3 +1,4 @@
+﻿
 ﻿@model BinaryStudio.TaskManager.Web.Models.SingleTaskViewModel
 @{
     ViewBag.Title = "Task details";
@@ -9,11 +10,11 @@
 <p>
     <p>
     </p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.HumanTask.Id }, new { @class = "btn" })
+    @Html.ActionLink("Edit", "Edit", new { id = Model.HumanTask.Id, projectId = Model.HumanTask.ProjectId }, new { @class = "btn" })
     <span class="divider-vertical"></span>
-    @Html.ActionLink("Back to all tasks view", "AllTasks", null, new { @class = "btn" })
+    @Html.ActionLink("Back to all tasks view", "AllTasks", new { projectId = Model.HumanTask.ProjectId }, new { @class = "btn" })
     <span class="divider-vertical"></span>
-    @Html.ActionLink("Back to project dashboard", "PersonalProject", null, new { @class = "btn" })
+    @Html.ActionLink("Back to project dashboard", "Project", new { id = Model.HumanTask.ProjectId }, new { @class = "btn" })
 </p>
 <legend>Change history</legend>@* <div class="accordion" id="accordion2"> *@
 @if (Model.TaskHistories != null)
@@ -42,6 +43,5 @@
     
 
     }
-
 
 } else { <legend>There is no history for this task</legend>} 

@@ -65,12 +65,12 @@
             @Html.ValidationMessageFor(model => model.Closed)
         </div>
         <p>
-            <input type="submit" value="Save changes" class="btn btn-primary" />
+          <input type="submit" value="Save changes" class="btn btn-primary" />
         </p>
     </fieldset>
 }
 <div>
-    @Html.ActionLink("Back to all tasks view", "AllTasks", null, new { @class = "btn" })
+    @Html.ActionLink("Back to all tasks view", "AllTasks", new { projectId = Model.ProjectId }, new { @class = "btn" })
     <span class="divider-vertical"></span>
     @Html.ActionLink("Back to project dashboard", "Project", new { id = Model.ProjectId }, new { @class = "btn" })
 </div>

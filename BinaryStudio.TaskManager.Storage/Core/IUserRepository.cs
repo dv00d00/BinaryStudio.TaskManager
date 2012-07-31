@@ -56,6 +56,28 @@ namespace BinaryStudio.TaskManager.Logic.Core
         User GetById(int userId);
 
         /// <summary>
+        /// The get user email by id.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.String.
+        /// </returns>
+        string GetUserEmailById(int userId);
+
+        /// <summary>
+        /// The get user image by id.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Byte[].
+        /// </returns>
+        byte[] GetUserImageById(int userId);
+
+        /// <summary>
         /// The get all.
         /// </summary>
         /// <returns>
@@ -85,7 +107,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// </returns>
         string GetRoleByName(string userName);
 
-
-
+        
     }
 }

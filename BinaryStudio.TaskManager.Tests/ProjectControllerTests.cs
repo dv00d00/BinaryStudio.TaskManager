@@ -65,16 +65,6 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.taskProcessorMock.Verify(x => x.CreateTask(It.Is<HumanTask>(it => it.AssigneeId == 3)), Times.Once());
         }
 
-        [Test]
-        public void Should_GetTaskWithId5FromTaskProcessor_WhenTaskWasEdited()
-        {
-            // act
-            this.controller.Edit(5);
-
-            // assert
-            this.taskProcessorMock.Verify(x => x.GetTaskById(5), Times.Once());
-        }
-
         /// <summary>
         /// The should_ update task from task processor_ when task with id 5 was edited.
         /// </summary>
@@ -136,7 +126,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
             const int ProjectId = 1;
 
             // act
-            this.controller.AllTasks();
+            this.controller.AllTasks(ProjectId);
 
             // assert
             this.taskProcessorMock.Verify(x => x.GetAllTasksInProject(ProjectId), Times.Once());
