@@ -41,7 +41,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         public EventViewModel CreateEventViewModel(News news)
         {
-            var dateTimeDifference = DateTime.Now.Subtract(news.HumanTaskHistory.ChangeDateTime);
             return new EventViewModel
                        {
                            ProjectId = news.HumanTaskHistory.Task.ProjectId,
@@ -52,15 +51,31 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                            WhoChangeUserId = news.HumanTaskHistory.UserId,
                            Action = news.HumanTaskHistory.Action,
                            NewsId = news.Id,
-                           TimeAgo = dateTimeDifference.Hours > 24
-                                         ? dateTimeDifference.Days.ToString() + " days ago "
-                                         : "about " + dateTimeDifference.Hours.ToString() + " hours ago ",
+                           TimeAgo = TakeTimeAgo(news.HumanTaskHistory.ChangeDateTime),
                            Details =
                                news.HumanTaskHistory.NewDescription == null
                                    ? ""
                                    : news.HumanTaskHistory.NewDescription.Substring(0, 3) + "..."
 
                        };
+        }
+
+        public string TakeTimeAgo(DateTime time)
+        {
+            var dateTimeDifference = DateTime.Now.Subtract(time);
+            if(dateTimeDifference.TotalMinutes < 1)
+            {
+                return "just now";
+            }
+            if (dateTimeDifference.TotalHours < 1)
+            {
+                return dateTimeDifference.Minutes.ToString() + " minutes ago";
+            }
+            if (dateTimeDifference.TotalHours < 24)
+            {
+                return dateTimeDifference.Hours.ToString() + " hours ago";
+            }
+            return time.ToString();
         }
     }
 }
