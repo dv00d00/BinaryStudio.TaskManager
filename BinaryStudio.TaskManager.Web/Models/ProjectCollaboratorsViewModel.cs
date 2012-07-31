@@ -10,6 +10,8 @@ namespace BinaryStudio.TaskManager.Web.Models
 
         public IEnumerable<User> Collaborators { get; set; }
 
-        public IEnumerable<User> AlreadyInvited { get; set; }        
+        public IEnumerable<User> AlreadyInvited { get; set; }
+
+        public int ProjectId { get; set; }
     }
 }

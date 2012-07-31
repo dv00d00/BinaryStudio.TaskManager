@@ -113,7 +113,7 @@
             <tr>
                 <td align="center" width="250" valign="top">
                     <div class="editor-field">
-                        @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", null, new { @class = "btn" })
+                        @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser","Project",new {id = Model.ProjectId}, new { @class = "btn" })
                     </div>
                 </td>
                 <td valign="top">

@@ -111,7 +111,7 @@
             $.ajax({
                 type: "POST",
                 url: "/Project/InviteUserInProject/",
-                data: { receiverId: id, projectId: 1 },
+                data: { receiverId: id, projectId:  @Model.ProjectId },
                 dataType: "json",
                 traditional: true
             }).success(onSuccess).error(onError);
@@ -127,7 +127,7 @@
             $.ajax({
                 type: "POST",
                 url: "/Project/RemoveUserFromProject/",
-                data: { userId: id, projectId: 1 },
+                data: { userId: id, projectId: @Model.ProjectId },
                 dataType: "json",
                 traditional: true
             }).success(onSuccess).error(onError);

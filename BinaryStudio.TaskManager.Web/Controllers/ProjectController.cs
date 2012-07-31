@@ -277,10 +277,10 @@
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult InviteOrDeleteUser()
+        public ActionResult InviteOrDeleteUser(int id )
         {
             // to default project
-            const int ProjectId = 1;
+            int ProjectId = id;
             var currentUser = this.userProcessor.GetUserByName(User.Identity.Name);
             var listWithCurrentUser = new List<User> { currentUser }; 
             var users = this.userProcessor.GetAllUsers();
@@ -294,7 +294,12 @@
 
             var collaborators = this.projectProcessor.GetAllUsersInProject(ProjectId);
             var listToInvite = users.Except(collaborators).Except(listAlreadyInvited);
-            var model = new ProjectCollaboratorsViewModel { Collaborators = collaborators, PossibleCollaborators = listToInvite, AlreadyInvited = listAlreadyInvited };
+            var model = new ProjectCollaboratorsViewModel { 
+                                    Collaborators = collaborators, 
+                                    PossibleCollaborators = listToInvite,
+                                    AlreadyInvited = listAlreadyInvited,
+                                    ProjectId = id
+                                };
             return this.View(model);
         }
 
