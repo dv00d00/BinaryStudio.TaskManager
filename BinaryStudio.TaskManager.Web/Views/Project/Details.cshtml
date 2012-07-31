@@ -9,7 +9,7 @@
 <p>
     <p>
     </p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.HumanTask.Id }, new { @class = "btn" })
+    @Html.ActionLink("Edit", "Edit", new { id = Model.HumanTask.Id, projectId = Model.HumanTask.ProjectId }, new { @class = "btn" })
     <span class="divider-vertical"></span>
     @Html.ActionLink("Back to all tasks view", "AllTasks", null, new { @class = "btn" })
     <span class="divider-vertical"></span>

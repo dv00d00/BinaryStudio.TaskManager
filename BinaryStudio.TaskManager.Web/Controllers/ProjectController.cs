@@ -357,15 +357,19 @@
         /// <param name="id">
         /// The id.
         /// </param>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         [Authorize]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, int projectId)
         {
             var humantask = this.taskProcessor.GetTaskById(id);
             this.ViewBag.PossibleCreators = new List<User>();
             this.ViewBag.PossibleAssignees = new List<User>();
+            humantask.ProjectId = projectId;
             return this.View(humantask);
         }
 
@@ -383,7 +387,6 @@
         {
             if (this.ModelState.IsValid)
             {
-
                 this.taskProcessor.UpdateTask(humanTask);
                 this.taskProcessor.AddHistory(new HumanTaskHistory
                 {
@@ -395,7 +398,7 @@
                     NewPriority = humanTask.Priority,
                 });
 
-                return this.RedirectToAction("PersonalProject");
+                return this.RedirectToAction("Project", new { id = humanTask.ProjectId });
             }
 
             this.ViewBag.PossibleCreators = new List<User>();

@@ -62,10 +62,10 @@ namespace BinaryStudio.TaskManager.Web.Tests
         }
 
         [Test]
-        public void Should_GetTaskWithId5FromTaskProcessor_WhenTaskWasEdited()
+        public void Should_GetTaskWithId5ForProjectWithId1FromTaskProcessor_WhenTaskWasEdited()
         {
             // act
-            this.controller.Edit(5);
+            this.controller.Edit(5, 1);
 
             // assert
             this.taskProcessorMock.Verify(x => x.GetTaskById(5), Times.Once());
