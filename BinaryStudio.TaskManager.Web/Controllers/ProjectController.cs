@@ -449,7 +449,7 @@
                     UserId = userProcessor.GetUserByName(User.Identity.Name).Id
                 });
 
-                return this.RedirectToAction("PersonalProject");
+                return this.RedirectToAction("Project",new {id = humanTask.ProjectId});
             }
 
             this.ViewBag.PossibleCreators = new List<User>();
