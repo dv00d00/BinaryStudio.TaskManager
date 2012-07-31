@@ -26,5 +26,6 @@
 
         public string TimeAgo { get; set; }
 
+        public bool IsRead;
     }
 }

@@ -40,3 +40,8 @@ div.task.priority {
     background-color: #AACDFF;
     color: white; 
 }
+
+.evnt_unread {
+    background-color: darkgray;
+    border-radius:  5px 5px 5px 5px; 
+}

@@ -55,8 +55,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                            Details =
                                news.HumanTaskHistory.NewDescription == null
                                    ? ""
-                                   : news.HumanTaskHistory.NewDescription.Substring(0, 3) + "..."
-
+                                   : news.HumanTaskHistory.NewDescription.Substring(0, 3) + "...",
+                          IsRead = news.IsRead
                        };
         }
 
