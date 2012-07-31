@@ -140,7 +140,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// </param>
         public void Update(HumanTask humanTask)
         {
-            this.dataBaseContext.Entry(humanTask).State = EntityState.Modified;
+            var task = dataBaseContext.Entry(humanTask).State = EntityState.Modified;
+
+            //this.dataBaseContext.Entry(humanTask).State = EntityState.Modified;
             this.dataBaseContext.SaveChanges();
         }
 

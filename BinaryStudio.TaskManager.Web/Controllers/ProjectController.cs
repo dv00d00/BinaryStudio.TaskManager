@@ -245,7 +245,8 @@
                 Action = ChangeHistoryTypes.Move,
                 ChangeDateTime = DateTime.Now,
                 NewAssigneeId = receiverId == -1 ? (int?)null : receiverId,
-                UserId = senderId,
+                //???????????????????
+                UserId = userProcessor.GetUserByName(User.Identity.Name).Id,
                 NewDescription = humanTask.Description,
                 NewPriority = humanTask.Priority,
                 NewName = humanTask.Name,
@@ -433,7 +434,7 @@
         {
             if (this.ModelState.IsValid)
             {
-
+                humanTask.Project = projectProcessor.GetProjectById(humanTask.ProjectId);
                 this.taskProcessor.UpdateTask(humanTask);
                 this.taskProcessor.AddHistory(new HumanTaskHistory
                 {
@@ -442,8 +443,10 @@
                     NewAssigneeId = humanTask.AssigneeId,
                     NewName = humanTask.Name,
                     Task = humanTask,
+                    TaskId = humanTask.Id,
                     NewPriority = humanTask.Priority,
-                    Action = ChangeHistoryTypes.Change
+                    Action = ChangeHistoryTypes.Change,
+                    UserId = userProcessor.GetUserByName(User.Identity.Name).Id
                 });
 
                 return this.RedirectToAction("PersonalProject");
