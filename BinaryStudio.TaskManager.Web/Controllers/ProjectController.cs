@@ -83,6 +83,7 @@
                 var managerModel = new ManagerTasksViewModel { User = user, Tasks = this.taskProcessor.GetAllTasksForUserInProject(id, user.Id).ToList() };
                 model.UsersTasks.Add(managerModel);
             }
+
             return this.View(model);
         }
 
@@ -326,16 +327,18 @@
         /// <summary>
         /// The all tasks.
         /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ViewResult.
         /// </returns>
         [Authorize]
-        public ViewResult AllTasks()
+        public ViewResult AllTasks(int projectId)
         {
             var model = new List<SingleTaskViewModel>();
             string creatorName, assigneeName;
-            const int ProjectId = 1;
-            var tasks = this.taskProcessor.GetAllTasksInProject(ProjectId).ToList();
+            var tasks = this.taskProcessor.GetAllTasksInProject(projectId).ToList();
             foreach (var task in tasks)
             {
                 creatorName = task.CreatorId.HasValue ? this.userProcessor.GetUser((int)task.CreatorId).UserName : "none";
