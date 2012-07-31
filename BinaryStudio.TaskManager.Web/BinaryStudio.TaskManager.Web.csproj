@@ -360,6 +360,7 @@
     <Content Include="Views\Admin\DeleteProject.cshtml" />
     <Content Include="Views\Events\MyEvents.cshtml" />
     <Content Include="Views\Events\EventPartialView.cshtml" />
+    <Content Include="Views\Shared\NewsesLinkPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\DetailsUser.cshtml" />
