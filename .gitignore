@@ -10,3 +10,4 @@ packages
 *.dotCover
 2012-07-*
 *.ncrunchsolution
+*.MDF

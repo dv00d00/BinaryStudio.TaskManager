@@ -27,8 +27,8 @@
                 "{controller}/{action}/{id}", // URL with parameters
                 new
                 {
-                    controller = "HumanTasks",
-                    action = "AllManagersWithTasks",
+                    controller = "Landing",
+                    action = "Index",
                     id = UrlParameter.Optional
                 });
         }

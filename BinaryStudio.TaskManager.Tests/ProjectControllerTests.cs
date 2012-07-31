@@ -30,9 +30,9 @@ namespace BinaryStudio.TaskManager.Web.Tests
         private Mock<IProjectProcessor> projectProcessorMock;
 
         private Mock<INotifier> notifierMock;
-            /// <summary>
-        /// The init.
-        /// </summary>
+
+        private Mock<INewsRepository> newsRepositoryMock;
+
         [SetUp]
         public void Init()
         {
@@ -41,10 +41,14 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.userProcessorMock = new Mock<IUserProcessor>();
             this.projectProcessorMock = new Mock<IProjectProcessor>();
             this.notifierMock = new Mock<INotifier>();
+            this.newsRepositoryMock = new Mock<INewsRepository>();
 
             this.controller = new ProjectController(
-                this.taskProcessorMock.Object, this.userProcessorMock.Object, this.projectProcessorMock.Object
-                ,this.notifierMock.Object);
+                this.taskProcessorMock.Object,
+                this.userProcessorMock.Object,
+                this.projectProcessorMock.Object, 
+                this.notifierMock.Object,
+                this.newsRepositoryMock.Object);
 
         }
 
@@ -84,9 +88,10 @@ namespace BinaryStudio.TaskManager.Web.Tests
             const int TaskId = 5;
             const int SenderId = 1;
             const int ReceiverId = 3;
+            const int projectId = 2;
 
             // act
-            this.controller.MoveTask(TaskId, SenderId, ReceiverId);
+            this.controller.MoveTask(TaskId, SenderId, ReceiverId,projectId);
 
             // assert
             this.taskProcessorMock.Verify(x => x.MoveTask(TaskId, ReceiverId), Times.AtLeastOnce());
@@ -102,9 +107,10 @@ namespace BinaryStudio.TaskManager.Web.Tests
             const int TaskId = 5;
             const int SenderId = 1;
             const int ReceiverId = -1;
+            const int projectId = 2;
 
             // act
-            this.controller.MoveTask(TaskId, SenderId, ReceiverId);
+            this.controller.MoveTask(TaskId, SenderId, ReceiverId,projectId);
 
             // assert
             this.taskProcessorMock.Verify(x => x.MoveTaskToUnassigned(TaskId), Times.AtLeastOnce());

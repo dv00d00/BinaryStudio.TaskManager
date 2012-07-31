@@ -1,0 +1,59 @@
+﻿@model BinaryStudio.TaskManager.Logic.Domain.Project
+@{ViewBag.Title = "Edit project";}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Project</legend>
+        @Html.HiddenFor(model => model.Id)
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Created)
+        </div>
+        <div class="editor-field">
+            <input  class="text-box single-line setDate" id="Created" name="Created" type="text" value='@(Model.Created.ToShortDateString().Replace('.', '-'))' />
+            @Html.ValidationMessageFor(model => model.Created)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreatorId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreatorId)
+            @Html.ValidationMessageFor(model => model.CreatorId)
+        </div>
+        <p>
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </p>
+    </fieldset>
+}
+<p>
+    @Html.ActionLink("Back to projects list", "ProjectsList", null, new { @class = "btn" })
+    <span class="divider-vertical"></span>
+    @Html.ActionLink(" Back to AdminPanel", "AdminPanel", "Admin", null, new { @class = "btn" })
+</p>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var min = @Model.Created.ToShortDateString().Replace('.', '-');
+        $('.setDate').datepicker({
+            defaultDate: min,
+            format: 'dd-mm-yyyy', 
+            firstDay:1,
+            minDate: min
+        });
+    });
+</script>

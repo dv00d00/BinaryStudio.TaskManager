@@ -36,6 +36,11 @@
         private readonly INotifier notifier;
 
         /// <summary>
+        /// The news repository
+        /// </summary>
+        private readonly INewsRepository newsRepository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ProjectController"/> class.
         /// </summary>
         /// <param name="taskProcessor">
@@ -50,12 +55,13 @@
         /// <param name="notifier">
         /// The notifier.
         /// </param>
-        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, INotifier notifier)
+        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, INotifier notifier, INewsRepository newsRepository)
         {
             this.projectProcessor = projectProcessor;
             this.notifier = notifier;
             this.taskProcessor = taskProcessor;
             this.userProcessor = userProcessor;
+            this.newsRepository = newsRepository;
         }
 
         /// <summary>
@@ -142,15 +148,23 @@
                     ProjectId = createModel.ProjectId,
                 };
                 this.taskProcessor.CreateTask(task);
-                this.taskProcessor.AddHistory(new HumanTaskHistory
-                {
-                    NewDescription = task.Description,
-                    ChangeDateTime = DateTime.Now,
-                    NewAssigneeId = task.AssigneeId,
-                    NewName = task.Name,
-                    Task = task,
-                    NewPriority = task.Priority,
-                });
+                var taskHistory = new HumanTaskHistory
+                                      {
+                                          NewDescription = task.Description,
+                                          ChangeDateTime = DateTime.Now,
+                                          NewAssigneeId = task.AssigneeId,
+                                          NewName = task.Name,
+                                          Task = task,
+                                          NewPriority = task.Priority,
+                                          Action = ChangeHistoryTypes.Create,
+                                          UserId = userProcessor.GetUserByName(User.Identity.Name).Id
+                                      };
+                this.taskProcessor.AddHistory(taskHistory);
+
+                List<User> projectUsers = new List<User>(projectProcessor.GetAllUsersInProject(createModel.ProjectId));
+                projectUsers.Add(this.projectProcessor.GetProjectById(createModel.ProjectId).Creator);
+               
+                CreateNewsForUsers(taskHistory, projectUsers);
 
                 notifier.CreateTask(task.Id);
 
@@ -162,6 +176,23 @@
             this.ViewBag.PossibleAssignees = new List<User>();
 
             return this.View(createModel);
+        }
+
+        private void CreateNewsForUsers(HumanTaskHistory taskHistory, IEnumerable<User> projectUsers)
+        {
+            foreach (var projectUser in projectUsers)
+            {
+                var news = new News
+                               {
+                                   HumanTaskHistory = taskHistory,
+                                   IsRead = false,
+                                   User = projectUser,
+                                   UserId = projectUser.Id,
+                                   HumanTaskHistoryId = taskHistory.Id,
+                                   
+                               };
+                newsRepository.AddNews(news);
+            }
         }
 
         /// <summary>
@@ -204,13 +235,34 @@
         /// <param name="receiverId">
         /// The receiver id.
         /// </param>
+        /// <param name="projectId"> </param>
         [Authorize]
-        public void MoveTask(int taskId, int senderId, int receiverId)
+        public void MoveTask(int taskId, int senderId, int receiverId,int projectId)
         {
-            this.notifier.MoveTask(taskId , receiverId); 
+            this.notifier.MoveTask(taskId , receiverId);
+            HumanTask humanTask = taskProcessor.GetTaskById(taskId);
+            HumanTaskHistory humanTaskHistory = new HumanTaskHistory
+            {
+                Action = ChangeHistoryTypes.Move,
+                ChangeDateTime = DateTime.Now,
+                NewAssigneeId = receiverId == -1 ? (int?)null : receiverId,
+                //???????????????????
+                UserId = userProcessor.GetUserByName(User.Identity.Name).Id,
+                NewDescription = humanTask.Description,
+                NewPriority = humanTask.Priority,
+                NewName = humanTask.Name,
+                Task = humanTask,
+                TaskId = taskId
+            };
+            taskProcessor.AddHistory(humanTaskHistory);
+            List<User> users = new List<User>(projectProcessor.GetAllUsersInProject(projectId));
+            users.Add(projectProcessor.GetProjectById(projectId).Creator);
+            CreateNewsForUsers(humanTaskHistory,users);
+
             // move to real user
             if (receiverId != -1)
             {
+                
                 this.taskProcessor.MoveTask(taskId, receiverId);
                 return;
             }
@@ -390,6 +442,9 @@
         {
             if (this.ModelState.IsValid)
             {
+
+                humanTask.Project = projectProcessor.GetProjectById(humanTask.ProjectId);
+                
                 this.taskProcessor.UpdateTask(humanTask);
                 this.taskProcessor.AddHistory(new HumanTaskHistory
                 {
@@ -398,10 +453,14 @@
                     NewAssigneeId = humanTask.AssigneeId,
                     NewName = humanTask.Name,
                     Task = humanTask,
+                    TaskId = humanTask.Id,
                     NewPriority = humanTask.Priority,
+                    Action = ChangeHistoryTypes.Change,
+                    UserId = userProcessor.GetUserByName(User.Identity.Name).Id
                 });
 
                 return this.RedirectToAction("Project", new { id = humanTask.ProjectId });
+
             }
 
             this.ViewBag.PossibleCreators = new List<User>();

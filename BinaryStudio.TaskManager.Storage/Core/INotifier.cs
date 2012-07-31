@@ -10,5 +10,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void MoveTask(int taskId, int moveToId);
 
         void CreateTask(int taskId);
+
+        void SendNews(int newseId);
     }
 }

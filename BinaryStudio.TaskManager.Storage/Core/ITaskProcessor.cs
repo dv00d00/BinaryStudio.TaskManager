@@ -162,5 +162,8 @@
         IEnumerable<HumanTask> GetUnAssignedTasksForProject(int projectId);
 
         IEnumerable<HumanTask> GetAllTasksForUserInProject(int projectId, int userId);
+
+        IList<HumanTaskHistory> GetAllHistoryForUser(int userId);
+
     }
 }

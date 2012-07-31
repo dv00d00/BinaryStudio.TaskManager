@@ -9,8 +9,8 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
-        var senderId, taskId, receiverId;
-
+        var senderId, taskId, receiverId,projectId;
+        projectId = @Model.ProjectId;
         var taskHub = $.connection.taskHub;
         $.connection.hub.start(function () {
             taskHub.join($.connection.hub.id, "@Model.ProjectId");
@@ -59,11 +59,12 @@
                 //check, mb sender or receiver are unassigned 
                 stringArray[1] = (typeof senderId == "undefined") ? -1 : senderId;
                 stringArray[2] = (typeof receiverId == "undefined") ? -1 : receiverId;
+                stringArray[3] = projectId;
 
                 $.ajax({
                     type: "POST",
                     url: "/Project/MoveTask",
-                    data: { taskId: stringArray[0], senderId: stringArray[1], receiverId: stringArray[2] },
+                    data: { taskId: stringArray[0], senderId: stringArray[1], receiverId: stringArray[2], projectId: stringArray[3] },
                     dataType: "json",
                     traditional: true
                 });

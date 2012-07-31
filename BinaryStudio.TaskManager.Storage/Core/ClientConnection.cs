@@ -9,5 +9,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public int? UserId { get; set; }
 
         public int? ProjectId { get; set; }
+
+        public bool IsNewsConnection { get; set; }
     }
 }
