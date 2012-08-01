@@ -13,11 +13,12 @@ using SignalR.Client.Hubs;
 
 namespace MessengR.Client.ViewModel
 {
+    using System.Windows.Threading;
+
     public class MainViewModel : ViewModelBase
     {
         #region SignalR Objects
         private HubConnection _connection;
-        private Chat _chat;
         private readonly SynchronizationContext _syncContext;
         private TaskHub taskHub;
         #endregion
@@ -82,13 +83,23 @@ namespace MessengR.Client.ViewModel
 
         private void InitializeConnection(string url)
         {
-            var authCookie = new Cookie("hello", "world");
-
             _connection = new HubConnection(url) { CookieContainer = new CookieContainer() };
-            // _connection.CookieContainer.Add(authCookie);
 
             // Get a reference to the chat proxy
-             taskHub = new TaskHub(_connection);
+            taskHub = new TaskHub(_connection);
+
+            this.Conversations = new ObservableCollection<Message>();
+            
+            taskHub.Message += message =>
+                {
+                    this._syncContext.Post(
+                        state =>
+                            {
+                                this.Conversations.Add(new Message { Value = message.TaskId.ToString() });
+                            },
+                        null);
+                };
+
             // Start the connection
             _connection.Start().ContinueWith(task =>
             {
@@ -98,32 +109,12 @@ namespace MessengR.Client.ViewModel
                 }
                 else
                 {
-                    // Get a list of users and add it to the view model
-                    _chat.GetUsers().ContinueWith(getUserTask =>
-                    {
-                        if (getUserTask.IsFaulted)
-                        {
-                            // Show a connection error here
-                        }
-                        else
-                        {
-                            Me = new ContactViewModel(getUserTask.Result.Single(u => u.Name == Name));
-                            Me.OpenChatEvent += OnOpenChat;
-                            //Me.SendMessageEvent +=
-
-                            // Exclude current user from Contact list
-                            Contacts = new ObservableCollection<ContactViewModel>(
-                                getUserTask.Result.Where(u => !u.Name.Equals(Me.User.Name, StringComparison.OrdinalIgnoreCase)).Select(u => new ContactViewModel(u, Me))
-                            );
-                        }
-                    });
+                    taskHub.Join(2, "test");
                 }
+
             });
 
             // Fire events on the ui thread
-            _chat.UserOffline += user => _syncContext.Post(_ => OnUserStatusChange(user), null);
-            _chat.UserOnline += user => _syncContext.Post(_ => OnUserStatusChange(user), null);
-            _chat.Message += message => _syncContext.Post(_ => OnMessage(message), null);
         }
 
         private void OnMessage(Message message)
@@ -160,16 +151,6 @@ namespace MessengR.Client.ViewModel
             if (sender is ChatSessionViewModel)
             {
                 var chat = sender as ChatSessionViewModel;
-                _chat.SendMessage(chat.User.Name, chat.Message).ContinueWith(sendMessage =>
-                {
-                    if (sendMessage.IsFaulted)
-                    {
-                        //display error
-                    }
-                    else
-                    {
-                    }
-                });
             }
         }
     }

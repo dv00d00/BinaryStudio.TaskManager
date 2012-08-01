@@ -68,23 +68,38 @@ namespace MessengR.Client.Hubs
         }
     }
 
+    public class TaskMessage
+    {
+        public int TaskId { get; set; }
+
+        public int MoveToId { get; set; }
+    }
+
     public class TaskHub
     {
-         private readonly IHubProxy _chat;
+        private readonly HubConnection connection;
 
-        public event Action<Message> Message;
+        private readonly IHubProxy _chat;
+
+        public event Action<TaskMessage> Message;
 
         public TaskHub(HubConnection connection)
         {
+            this.connection = connection;
             _chat = connection.CreateProxy("taskHub");
 
-            _chat.On<Message>("receive", message =>
+            _chat.On<int, int>("taskMoved", (taskId, destinationId) =>
             {
                 if (Message != null)
                 {
-                    Message(message);
+                    Message( new TaskMessage{MoveToId = destinationId, TaskId = taskId});
                 }
             });
+        }
+
+        public void Join(int projectId, string userNamer)
+        {
+            _chat.Invoke("join", connection.ConnectionId, projectId, userNamer, false);
         }
     }
 }
