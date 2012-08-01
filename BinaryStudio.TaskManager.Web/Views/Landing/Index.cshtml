@@ -2,6 +2,13 @@
 @using BinaryStudio.TaskManager.Logic.Domain
 @model BinaryStudio.TaskManager.Web.Models.LandingIndexModel
 
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        startSignalRConnection(-1, "@User.Identity.Name", true);
+    });
+</script>
+
 @{
     ViewBag.Title = "Task Manager";
     var taskList = new List<HumanTask>();
