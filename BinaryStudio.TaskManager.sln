@@ -27,6 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{EA8820
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessengR.Client", "BinaryStudio.TaskManager.Client\MessengR.Client.csproj", "{ACA55A69-81CA-4124-873D-B72850A76222}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFTaskbarNotifier", "BinaryStudio.TaskManager.WPFTaskbarNotifier\WPFTaskbarNotifier.csproj", "{C807F74B-9C21-4A9F-8A60-C7D7AF7BCBBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFTaskbarNotifierExample", "BinaryStudio.TaskManager.WPFTaskbarNotifierExample\WPFTaskbarNotifierExample.csproj", "{2CAAE824-BB9A-4D4E-80CC-79DED1BE5642}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +101,26 @@ Global
 		{ACA55A69-81CA-4124-873D-B72850A76222}.Release|Mixed Platforms.Build.0 = Release|x86
 		{ACA55A69-81CA-4124-873D-B72850A76222}.Release|x86.ActiveCfg = Release|x86
 		{ACA55A69-81CA-4124-873D-B72850A76222}.Release|x86.Build.0 = Release|x86
+		{C807F74B-9C21-4A9F-8A60-C7D7AF7BCBBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C807F74B-9C21-4A9F-8A60-C7D7AF7BCBBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C807F74B-9C21-4A9F-8A60-C7D7AF7BCBBA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C807F74B-9C21-4A9F-8A60-C7D7AF7BCBBA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C807F74B-9C21-4A9F-8A60-C7D7AF7BCBBA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C807F74B-9C21-4A9F-8A60-C7D7AF7BCBBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C807F74B-9C21-4A9F-8A60-C7D7AF7BCBBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C807F74B-9C21-4A9F-8A60-C7D7AF7BCBBA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C807F74B-9C21-4A9F-8A60-C7D7AF7BCBBA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C807F74B-9C21-4A9F-8A60-C7D7AF7BCBBA}.Release|x86.ActiveCfg = Release|Any CPU
+		{2CAAE824-BB9A-4D4E-80CC-79DED1BE5642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CAAE824-BB9A-4D4E-80CC-79DED1BE5642}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CAAE824-BB9A-4D4E-80CC-79DED1BE5642}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2CAAE824-BB9A-4D4E-80CC-79DED1BE5642}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2CAAE824-BB9A-4D4E-80CC-79DED1BE5642}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2CAAE824-BB9A-4D4E-80CC-79DED1BE5642}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CAAE824-BB9A-4D4E-80CC-79DED1BE5642}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CAAE824-BB9A-4D4E-80CC-79DED1BE5642}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2CAAE824-BB9A-4D4E-80CC-79DED1BE5642}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2CAAE824-BB9A-4D4E-80CC-79DED1BE5642}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +131,8 @@ Global
 		{B21CBDF6-D319-460D-8C19-0C3F9B50727A} = {A5BE4142-336B-4E2E-99AC-9E62C3B8311E}
 		{4DC217EF-BF33-459C-A5FA-47381CE159D5} = {A5BE4142-336B-4E2E-99AC-9E62C3B8311E}
 		{ACA55A69-81CA-4124-873D-B72850A76222} = {5E6D1076-C1E1-4B50-9A94-8B1529A656E1}
+		{C807F74B-9C21-4A9F-8A60-C7D7AF7BCBBA} = {5E6D1076-C1E1-4B50-9A94-8B1529A656E1}
+		{2CAAE824-BB9A-4D4E-80CC-79DED1BE5642} = {5E6D1076-C1E1-4B50-9A94-8B1529A656E1}
 		{79C2FD3E-65F1-46F7-B570-94CDB668BAF8} = {B6E9E7C2-AEDE-4C90-94CC-1BE65B9CEECA}
 	EndGlobalSection
 EndGlobal
