@@ -28,12 +28,14 @@ taskHub.TaskMoved = function (movedtaskId, moveToId) {
     setTimeout(function () {
         jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
         jQuery("[data-taskid=" + movedtaskId + "]").fadeIn();
-    },
-                300);
+    },300);
 };
 
 
-taskHub.SetUnreadNewsesCount = function (count) {;
+taskHub.SetUnreadNewsesCount = function (count) {
     jQuery("[data-id = newses_count]").html(count);
     jQuery("[data-id = newses_count]").effect("highlight");
+    if(count == 0) {
+        jQuery("[data-id = newses_count]").fadeOut();
+    }
 };
