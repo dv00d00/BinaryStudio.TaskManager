@@ -1,4 +1,5 @@
-﻿$(function () {
+﻿var modelData = new TaskModel();
+$(function () {
 
     /**** Tooltip  ******/
     $('.dashboard_btn').tooltip({
@@ -81,22 +82,28 @@
                 sendNewProject();
             }
         });
-    });
+    })
+        ;
 
     /********* Project Tasks View  *******/
     var homeProj = $("#projects .proj_row:first-child").attr("data-id");
     getTaskList(homeProj);
+    ko.applyBindings(modelData);
     
+    $('body').popover({
+        selector: '.task_popover',
+        delay: { show: 300 }
+    });
+
     $(document).on("click", ".project_name", function () {
         $(".project_name").removeClass("active_proj");
         $(this).addClass("active_proj");
         var proj = $(this).parent(".proj_row").attr("data-id");
         getTaskList(proj);
     });
+
 });
 function getTaskList(proj) {
-    var content = $("#content");
-    content.html("");
     $.ajax({
         data: { projectId: proj },
         dataType: "JSON",
@@ -105,20 +112,26 @@ function getTaskList(proj) {
         beforeSend: function () {
             //$("#loader").show();
         },
-        success: function (response) {
-            //$("#loader").hide();
-            content.append("<h2>" + response.Project.Name + " Project</h2>");
-            content.append("<ul>");
-            for (var i = 0; i < response.Project.Tasks.length; i++) {
-                content.append("<li>" + response.Project.Tasks[i].Name + "</li>");
+        success: function (data) {
+            var task = null;
+            $("#content").children("h2").html(data.Project.Name);
+            $("#content").children(".proj_title").html("[project]");
+            var dante = new Date();
+            dateFormat(dante, "longTime");
+            dante.setDate(parseInt(data.Project.Tasks[0].Created.substr(6)));
+            alert(dante);
+            modelData.tasks.removeAll();
+            for (var i = 0; i < data.Project.Tasks.length; i++) {
+                task = data.Project.Tasks[i];
+                var date = new Date(parseInt(task.Created.substr(6)));
+                dateFormat(date, "longTime");
+                var thisTask = new Task(task.Id, task.Name, task.Description, date, task.Creator);
+                modelData.tasks.push(thisTask);
             }
-            if (i == 0)
-                content.children("ul").html("<li>There are no tasks in the Project yet.</li>");
-            content.append("</ul>");
-
         }
     });
 }
+
 function sendNewProject() {
     var val = $(".newBox").children("input").val();
     $(".newBox").remove();
@@ -165,7 +178,8 @@ function listProjects(response) {
     }
 }
 
-function projectsOutput(projects,li_class) {
+function projectsOutput(projects, li_class) {
+    var name = null;
     for (var i = 0; i < projects.length; i++) {
         if (projects[i].Name.length < 20)
             name = projects[i].Name;

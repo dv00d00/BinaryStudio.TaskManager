@@ -19,5 +19,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         public DateTime? Finished { get; set; }
 
         public DateTime? Closed { get; set; }
+        
+        public string Creator { get; set; }
     }
 }

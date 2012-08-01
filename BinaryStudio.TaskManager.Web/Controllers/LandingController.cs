@@ -82,7 +82,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                 Id = task.Id,
                                 Description = task.Description,
                                 Name = task.Name,
-                                Priority = task.Priority
+                                Priority = task.Priority,
+                                Created = task.Created,
+                                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString()
                             });
             var projectModel = new ProjectView
                 {
