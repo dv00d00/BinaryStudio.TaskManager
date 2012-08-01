@@ -1,7 +1,5 @@
 using System;
-using System.Linq;
 using System.Runtime.Remoting.Contexts;
-using BinaryStudio.TaskManager.Logic.Core.SignalR;
 using BinaryStudio.TaskManager.Logic.Domain;
 using BinaryStudio.TaskManager.Web.SignalR;
 using SignalR;
@@ -9,11 +7,10 @@ using SignalR.Hubs;
 
 namespace BinaryStudio.TaskManager.Logic.Core
 {
-    using System.Collections.Generic;
-
     public class Notifier : INotifier
     {
         private readonly IHumanTaskRepository humanTaskRepository;
+        private readonly IUserRepository userRepository;
         private readonly INewsRepository newsRepository;
         private readonly IGlobalHost globalHost;
         private readonly IConnectionProvider connectionProvider;
@@ -24,16 +21,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.globalHost = globalHost;
             this.connectionProvider = connectionProvider;
             this.newsRepository = newsRepository;
-        }
-
-        public void Broadcast(string message)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Send(ClientConnection connectionId, string message)
-        {
-            throw new System.NotImplementedException();
         }
 
         public void MoveTask(int taskId, int moveToId)
@@ -76,37 +63,22 @@ namespace BinaryStudio.TaskManager.Logic.Core
                 context.Clients[clientConnection.ConnectionId].NewsRecived(newsId);
             }
         }
-    }
 
-    public interface IConnectionProvider
-    {
-        IEnumerable<ClientConnection> ActiveConnections { get; }
-
-        IEnumerable<ClientConnection> GetProjectConnections(int projectId);
-
-        IEnumerable<ClientConnection> GetNewsConnectionsForUser(int userId);
-    }
-
-    public class ConnectionProvider : IConnectionProvider
-    {
-        public IEnumerable<ClientConnection> ActiveConnections
+        public void SetCountOfNewses(string userName)
         {
-            get
+            int count = newsRepository.GetUnreadNewsCountForUserByName(userName);
+            var clients = this.connectionProvider.GetConnetionsForUser(userName);
+            var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
+
+            foreach (var clientConnection in clients)
             {
-                return SignalRClients.Connections;
+                context.Clients[clientConnection.ConnectionId].SetUnreadNewsesCount(count);
             }
         }
 
-        public IEnumerable<ClientConnection> GetProjectConnections(int projectId)
-        {
-            return SignalRClients.Connections.Where(it => it.ProjectId == projectId);
-        }
-
-        public IEnumerable<ClientConnection> GetNewsConnectionsForUser(int userId)
-        {
-            return SignalRClients.Connections.Where(it => it.UserId == userId && it.IsNewsConnection);
-        }
     }
+
+
 
     public interface IGlobalHost
     {

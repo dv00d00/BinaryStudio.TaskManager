@@ -12,9 +12,9 @@ namespace BinaryStudio.TaskManager.Web.SignalR
             Clients.Receive(message);
         }
 
-        public void Join(string id,int projectId)
+        public void Join(string id, int projectId, string userName, bool isNewsConnection)
         {
-            SignalRClients.AddConnection(id,projectId);
+            SignalRClients.AddConnection(id, projectId, userName, isNewsConnection);
         }
     }
 }

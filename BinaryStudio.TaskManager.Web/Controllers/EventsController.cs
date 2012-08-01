@@ -14,10 +14,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     {
         private readonly IUserProcessor userProcessor;
         private readonly INewsRepository newsRepository;
-        public EventsController(IUserProcessor userProcessor, INewsRepository newsRepository )
+        private readonly INotifier notifier;
+        public EventsController(IUserProcessor userProcessor, INewsRepository newsRepository, INotifier notifier)
         {
             this.userProcessor = userProcessor;
             this.newsRepository = newsRepository;
+            this.notifier = notifier;
         }
 
         //
@@ -55,8 +57,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                            Details =
                                news.HumanTaskHistory.NewDescription == null
                                    ? ""
-                                   : news.HumanTaskHistory.NewDescription.Substring(0, 3) + "...",
-                          IsRead = news.IsRead
+                                   : news.HumanTaskHistory.NewDescription.Length>26 ? news.HumanTaskHistory.NewDescription.Substring(0, 25) + "..."
+                                   :"",
+                          IsRead = news.IsRead,
+                          WhoAssigneUserId = news.HumanTaskHistory.NewAssigneeId,
+                          WhoAssigneUserName = news.HumanTaskHistory.NewAssigneeId.HasValue ? userProcessor.GetUser(news.HumanTaskHistory.NewAssigneeId.Value).UserName : ""
                        };
         }
 
@@ -75,7 +80,29 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             {
                 return dateTimeDifference.Hours.ToString() + " hours ago";
             }
+            if (dateTimeDifference.TotalHours > 24 && dateTimeDifference.TotalHours < 48)
+            {
+                return "1 day ago";
+            }
+            if (dateTimeDifference.TotalHours > 48)
+            {
+                return dateTimeDifference.TotalDays.ToString() + " days ago";
+            }
             return time.ToString();
+        }
+
+        public void MarkAsRead(int newsId)
+        {
+            newsRepository.MarkAsRead(newsId);
+            News news = this.newsRepository.GetNewsById(newsId);
+            this.notifier.SetCountOfNewses(news.User.UserName);
+        }
+
+        [HttpPost]
+        public ActionResult GetNewsCount()
+        {
+            int count = newsRepository.GetNewsCount(userProcessor.GetUserByName(User.Identity.Name).Id);
+            return Json(count);
         }
     }
 }

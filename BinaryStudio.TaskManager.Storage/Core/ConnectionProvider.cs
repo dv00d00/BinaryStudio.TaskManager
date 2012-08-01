@@ -7,9 +7,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
     public class ConnectionProvider : IConnectionProvider
     {
-        /// <summary>
-        /// Gets the active connections.
-        /// </summary>
         public IEnumerable<ClientConnection> ActiveConnections
         {
             get
@@ -18,14 +15,19 @@ namespace BinaryStudio.TaskManager.Logic.Core
             }
         }
 
-        /// <summary>
-        /// Gets the project connections.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
         public IEnumerable<ClientConnection> GetProjectConnections(int projectId)
         {
             return SignalRClients.Connections.Where(it => it.ProjectId == projectId);
+        }
+
+        public IEnumerable<ClientConnection> GetNewsConnectionsForUser(int userId)
+        {
+            return SignalRClients.Connections.Where(it => it.UserId == userId && it.IsNewsConnection);
+        }
+
+        public IEnumerable<ClientConnection> GetConnetionsForUser(string userName)
+        {
+            return SignalRClients.Connections.Where(it => it.UserName == userName);
         }
     }
 }

@@ -20,8 +20,7 @@
                             <div class="span4">
                                  @if (user.ImageData == null)
                                  {
-                                     @user.InvitationsCount
-                                     <img class="pull-left" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="70" height="70"/>
+                                     <img class="pull-left" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="80" height="80"/>
                                  }
                                  else
                                  {
@@ -37,7 +36,7 @@
                             <div class="editor-field">
                                 Load your new image:
                                 <input type="file" name="Image" />
-                                <input class="btn" type="submit" value="Load new photo" />
+                                <input class="btn btn-primary" type="submit" value="Load new photo" />
                             </div>
                         </div>
                     </div>

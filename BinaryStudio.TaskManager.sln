@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{EA8820
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessengR.Client", "BinaryStudio.TaskManager.Client\MessengR.Client.csproj", "{ACA55A69-81CA-4124-873D-B72850A76222}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,16 @@ Global
 		{4DC217EF-BF33-459C-A5FA-47381CE159D5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4DC217EF-BF33-459C-A5FA-47381CE159D5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4DC217EF-BF33-459C-A5FA-47381CE159D5}.Release|x86.ActiveCfg = Release|Any CPU
+		{ACA55A69-81CA-4124-873D-B72850A76222}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{ACA55A69-81CA-4124-873D-B72850A76222}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{ACA55A69-81CA-4124-873D-B72850A76222}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{ACA55A69-81CA-4124-873D-B72850A76222}.Debug|x86.ActiveCfg = Debug|x86
+		{ACA55A69-81CA-4124-873D-B72850A76222}.Debug|x86.Build.0 = Debug|x86
+		{ACA55A69-81CA-4124-873D-B72850A76222}.Release|Any CPU.ActiveCfg = Release|x86
+		{ACA55A69-81CA-4124-873D-B72850A76222}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{ACA55A69-81CA-4124-873D-B72850A76222}.Release|Mixed Platforms.Build.0 = Release|x86
+		{ACA55A69-81CA-4124-873D-B72850A76222}.Release|x86.ActiveCfg = Release|x86
+		{ACA55A69-81CA-4124-873D-B72850A76222}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +106,7 @@ Global
 		{DE73B11E-EE91-4774-A355-D0F49651160E} = {A5BE4142-336B-4E2E-99AC-9E62C3B8311E}
 		{B21CBDF6-D319-460D-8C19-0C3F9B50727A} = {A5BE4142-336B-4E2E-99AC-9E62C3B8311E}
 		{4DC217EF-BF33-459C-A5FA-47381CE159D5} = {A5BE4142-336B-4E2E-99AC-9E62C3B8311E}
+		{ACA55A69-81CA-4124-873D-B72850A76222} = {5E6D1076-C1E1-4B50-9A94-8B1529A656E1}
 		{79C2FD3E-65F1-46F7-B570-94CDB668BAF8} = {B6E9E7C2-AEDE-4C90-94CC-1BE65B9CEECA}
 	EndGlobalSection
 EndGlobal

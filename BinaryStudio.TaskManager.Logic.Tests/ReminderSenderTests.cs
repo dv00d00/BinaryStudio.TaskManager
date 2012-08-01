@@ -49,24 +49,24 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         //    notifier.Verify(it => it.Send(It.IsAny<ClientConnection>(), content), Times.AtLeastOnce());
         //}
 
-        [Test]
-        public void ShouldNot_SendNotification_WhenUserIsNotAssigned()
-        {
-            // arrange
-            var reminderDate = new DateTime(2010, 11, 10, 10, 0, 0);
-            const string Content = "asdkjasdnajkn";
-            this.reminderRepository.Setup(it => it.GetReminderList(reminderDate)).Returns(
-                new List<Reminder> { new Reminder() { Content = Content, UserId = 1 } });
-            this.clientConnectionManager.Setup(it => it.GetClientByEmployeeId(1));
+        //[Test]
+        //public void ShouldNot_SendNotification_WhenUserIsNotAssigned()
+        //{
+        //    // arrange
+        //    var reminderDate = new DateTime(2010, 11, 10, 10, 0, 0);
+        //    const string Content = "asdkjasdnajkn";
+        //    this.reminderRepository.Setup(it => it.GetReminderList(reminderDate)).Returns(
+        //        new List<Reminder> { new Reminder() { Content = Content, UserId = 1 } });
+        //    this.clientConnectionManager.Setup(it => it.GetClientByEmployeeId(1));
 
-            new ReminderSender(this.timeManager, this.notifier.Object, this.reminderRepository.Object, this.clientConnectionManager.Object);
+        //    new ReminderSender(this.timeManager, this.notifier.Object, this.reminderRepository.Object, this.clientConnectionManager.Object);
 
-            // act
-            this.timeManager.SendTime(reminderDate);
+        //    // act
+        //    this.timeManager.SendTime(reminderDate);
 
-            // assert
-            this.notifier.Verify(it => it.Send(It.IsAny<ClientConnection>(), Content), Times.Never());
-        }
+        //    // assert
+        //    this.notifier.Verify(it => it.Send(It.IsAny<ClientConnection>(), Content), Times.Never());
+        //}
 
         //[Test]
         //public void Reminder_ShouldBeSend_ToSingleUser()

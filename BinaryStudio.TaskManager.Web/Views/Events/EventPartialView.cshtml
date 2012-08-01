@@ -1,13 +1,27 @@
-﻿@model BinaryStudio.TaskManager.Web.Models.EventViewModel
+﻿@using BinaryStudio.TaskManager.Logic.Domain;
+@model BinaryStudio.TaskManager.Web.Models.EventViewModel
 @{ string unread= Model.IsRead ? "evnt_read" : "evnt_unread"; }
 
 <div class = "container @unread"   id = "@Model.NewsId.ToString()">
     <strong>
         @Html.ActionLink(Model.ProjectName, "Project", "Project", new { id = Model.ProjectId }, null)
         <br/>
-        <br/>
         @Html.ActionLink(@Model.WhoChangeUserName + " ", "UserDetails", "Project", new { userId = Model.WhoChangeUserId }, null)
         @Model.Action task @Html.ActionLink(@Model.TaskName+" ","Details","Project",new { id = Model.TaskId }, null) 
+        
+            @if(Model.Action== ChangeHistoryTypes.Move)
+            {
+                @:to  
+                    if (Model.WhoAssigneUserId == (int?)null)
+                    {
+                        @:unassigned
+                    }
+                    else
+                    {
+                        @Html.ActionLink( Model.WhoAssigneUserName + " ", "UserDetails", "Project", new {userId = Model.WhoAssigneUserId}, null);
+                    }
+            }
+        
         @Model.TimeAgo
         <br/>
         @Model.Details

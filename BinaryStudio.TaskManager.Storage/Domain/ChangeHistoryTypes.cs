@@ -2,12 +2,12 @@
 {
     public static class ChangeHistoryTypes
     {
-        public  const string Create = " Created ";
+        public  const string Create = " created ";
 
-        public const  string Move = " Moved ";
+        public const  string Move = " assigned ";
 
-        public const  string Close = " Closed ";
+        public const  string Close = " closed ";
 
-        public const  string Change = " Changed ";
+        public const  string Change = " changed ";
     }
 }

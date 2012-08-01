@@ -189,9 +189,10 @@
                                    User = projectUser,
                                    UserId = projectUser.Id,
                                    HumanTaskHistoryId = taskHistory.Id,
-                                   
                                };
+
                 newsRepository.AddNews(news);
+                notifier.SetCountOfNewses(projectUser.UserName);
             }
         }
 
@@ -274,27 +275,28 @@
         /// <summary>
         /// The invite or delete user.
         /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult InviteOrDeleteUser()
+        public ActionResult InviteOrDeleteUser(int projectId)
         {
-            // to default project
-            const int ProjectId = 1;
             var currentUser = this.userProcessor.GetUserByName(User.Identity.Name);
             var listWithCurrentUser = new List<User> { currentUser }; 
             var users = this.userProcessor.GetAllUsers();
             users = users.Except(listWithCurrentUser);
             
-            var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false && x.Sender == currentUser);            
+            var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(projectId).Where(x => x.IsInvitationConfirmed == false && x.Sender == currentUser);            
             
             //var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false);
             
             var listAlreadyInvited = invitationsToProject.Select(invitation => invitation.Receiver).ToList();
 
-            var collaborators = this.projectProcessor.GetAllUsersInProject(ProjectId);
+            var collaborators = this.projectProcessor.GetAllUsersInProject(projectId);
             var listToInvite = users.Except(collaborators).Except(listAlreadyInvited);
-            var model = new ProjectCollaboratorsViewModel { Collaborators = collaborators, PossibleCollaborators = listToInvite, AlreadyInvited = listAlreadyInvited };
+            var model = new ProjectCollaboratorsViewModel { Collaborators = collaborators, PossibleCollaborators = listToInvite, AlreadyInvited = listAlreadyInvited, ProjectId = projectId};
             return this.View(model);
         }
 
@@ -409,7 +411,7 @@
         /// <summary>
         /// The edit.
         /// </summary>
-        /// <param name="id">
+        /// <param name="taskId">
         /// The id.
         /// </param>
         /// <param name="projectId">
@@ -419,53 +421,67 @@
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         [Authorize]
-        public ActionResult Edit(int id, int projectId)
+        public ActionResult Edit(int taskId, int projectId)
         {
-            var humantask = this.taskProcessor.GetTaskById(id);
-            this.ViewBag.PossibleCreators = new List<User>();
-            this.ViewBag.PossibleAssignees = new List<User>();
-            humantask.ProjectId = projectId;
-            return this.View(humantask);
+            var task = this.taskProcessor.GetTaskById(taskId);
+            var createModel = new CreateTaskViewModel
+            {
+                Priorities = this.taskProcessor.GetPrioritiesList().OrderBy(x => x.Value),
+                Assigned = task.Assigned,
+                AssigneeId = task.AssigneeId,
+                Created = task.Created,
+                Priority = task.Priority,
+                CreatorId = task.CreatorId,
+                Description = task.Description,
+                Name = task.Name,
+                Finished = task.Finished,
+                ProjectId = projectId,
+                Id = taskId
+            };
+            return this.View(createModel);
         }
 
         /// <summary>
         /// The edit.
         /// </summary>
-        /// <param name="humanTask">
+        /// <param name="createModel">
         /// The human task.
         /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         [HttpPost]
-        public ActionResult Edit(HumanTask humanTask)
+        public ActionResult Edit(CreateTaskViewModel createModel)
         {
             if (this.ModelState.IsValid)
             {
+                var humanTask = this.taskProcessor.GetTaskById(createModel.Id);
 
-                humanTask.Project = projectProcessor.GetProjectById(humanTask.ProjectId);
-                
+                humanTask.Name = createModel.Name;
+                humanTask.Priority = createModel.Priority;
+                humanTask.Finished = createModel.Finished;
+                humanTask.Description = createModel.Description;
                 this.taskProcessor.UpdateTask(humanTask);
-                this.taskProcessor.AddHistory(new HumanTaskHistory
-                {
-                    NewDescription = humanTask.Description,
-                    ChangeDateTime = DateTime.Now,
-                    NewAssigneeId = humanTask.AssigneeId,
-                    NewName = humanTask.Name,
-                    Task = humanTask,
-                    TaskId = humanTask.Id,
-                    NewPriority = humanTask.Priority,
-                    Action = ChangeHistoryTypes.Change,
-                    UserId = userProcessor.GetUserByName(User.Identity.Name).Id
-                });
-
-                return this.RedirectToAction("Project", new { id = humanTask.ProjectId });
-
+                var taskHistory = new HumanTaskHistory
+                                      {
+                                          NewDescription = createModel.Description,
+                                          ChangeDateTime = DateTime.Now,
+                                          NewAssigneeId = createModel.AssigneeId,
+                                          NewName = createModel.Name,
+                                          Task = humanTask,
+                                          TaskId = humanTask.Id,
+                                          NewPriority = createModel.Priority,
+                                          Action = ChangeHistoryTypes.Change,
+                                          UserId = userProcessor.GetUserByName(User.Identity.Name).Id
+                                      };
+                var usersInProject = new List<User>(projectProcessor.GetAllUsersInProject(createModel.ProjectId));
+                usersInProject.Add(humanTask.Project.Creator);
+                this.taskProcessor.AddHistory(taskHistory);
+                CreateNewsForUsers(taskHistory,usersInProject);
+                return this.RedirectToAction("Project", new { id = createModel.ProjectId });
             }
 
-            this.ViewBag.PossibleCreators = new List<User>();
-            this.ViewBag.PossibleAssignees = new List<User>();
-            return this.View(humanTask);
+            return this.View(createModel);
         }
 
         /// <summary>
@@ -492,15 +508,18 @@
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int idTask)
         {
-            var model = this.CreateSingleTaskViewModelById(id);
+            var model = this.CreateSingleTaskViewModelById(idTask);
             return this.View(model);
         }
 
         /// <summary>
         /// The delete confirmed.
         /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <param name="projectId">
         /// The project id.
         /// </param>
@@ -509,9 +528,9 @@
         /// </returns>
         [HttpPost]
         [ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int projectId)
+        public ActionResult DeleteConfirmed(int idTask, int projectId)
         {
-            this.taskProcessor.DeleteTask(projectId);
+            this.taskProcessor.DeleteTask(idTask);
             return this.RedirectToAction("Project", new { id = projectId });
         }
 

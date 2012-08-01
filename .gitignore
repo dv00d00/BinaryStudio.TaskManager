@@ -12,3 +12,4 @@ packages
 *.ncrunchsolution
 *.MDF
 *.ldf
+*.stylecop

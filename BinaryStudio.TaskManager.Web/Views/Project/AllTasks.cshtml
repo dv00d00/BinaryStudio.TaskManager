@@ -73,7 +73,7 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.HumanTask.Id, projectId = item.HumanTask.ProjectId})<br/>
             @Html.ActionLink("Details", "Details", new { id = item.HumanTask.Id })<br/>
-            @Html.ActionLink("Delete", "Delete", new { id = item.HumanTask.Id })
+            @Html.ActionLink("Delete", "Delete", new { idTask = item.HumanTask.Id, projectId = item.HumanTask.ProjectId })
         </td>
     </tr>
     }

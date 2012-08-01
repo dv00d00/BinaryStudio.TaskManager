@@ -72,7 +72,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
         public void Should_UpdateTaskFromTaskProcessor_WhenTaskWithId5WasEdited()
         {
             // act
-            this.controller.Edit(new HumanTask() { Id = 5 });
+            this.controller.Edit(new CreateTaskViewModel { Id = 5 });
 
             // assert
             this.taskProcessorMock.Verify(x => x.UpdateTask(It.Is<HumanTask>(it => it.Id == 5)), Times.Once());
@@ -88,10 +88,10 @@ namespace BinaryStudio.TaskManager.Web.Tests
             const int TaskId = 5;
             const int SenderId = 1;
             const int ReceiverId = 3;
-            const int projectId = 2;
+            const int ProjectId = 2;
 
             // act
-            this.controller.MoveTask(TaskId, SenderId, ReceiverId,projectId);
+            this.controller.MoveTask(TaskId, SenderId, ReceiverId,ProjectId);
 
             // assert
             this.taskProcessorMock.Verify(x => x.MoveTask(TaskId, ReceiverId), Times.AtLeastOnce());
@@ -170,10 +170,10 @@ namespace BinaryStudio.TaskManager.Web.Tests
         /// The should_ delete task with id 5 from task processor.
         /// </summary>
         [Test]
-        public void Should_DeleteTaskWithId5FromTaskProcessor()
+        public void Should_DeleteTaskWithId5FromProjectWithId1TaskProcessor()
         {
             // act
-            this.controller.DeleteConfirmed(5);
+            this.controller.DeleteConfirmed(5, 1);
 
             // assert
             this.taskProcessorMock.Verify(x => x.DeleteTask(5), Times.Once());
