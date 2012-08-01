@@ -33,8 +33,7 @@ taskHub.TaskMoved = function (movedtaskId, moveToId) {
 };
 
 
-taskHub.SetUnreadNewsesCount = function (count) {
-    alert(count);
+taskHub.SetUnreadNewsesCount = function (count) {;
     jQuery("[data-id = newses_count]").html(count);
     jQuery("[data-id = newses_count]").effect("highlight");
 };
