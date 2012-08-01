@@ -14,10 +14,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     {
         private readonly IUserProcessor userProcessor;
         private readonly INewsRepository newsRepository;
-        public EventsController(IUserProcessor userProcessor, INewsRepository newsRepository )
+        private readonly INotifier notifier;
+        public EventsController(IUserProcessor userProcessor, INewsRepository newsRepository, INotifier notifier)
         {
             this.userProcessor = userProcessor;
             this.newsRepository = newsRepository;
+            this.notifier = notifier;
         }
 
         //
@@ -92,6 +94,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public void MarkAsRead(int newsId)
         {
             newsRepository.MarkAsRead(newsId);
+            News news = this.newsRepository.GetNewsById(newsId);
+            this.notifier.SetCountOfNewses(news.User.UserName);
         }
 
         [HttpPost]

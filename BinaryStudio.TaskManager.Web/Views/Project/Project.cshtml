@@ -13,7 +13,7 @@
         projectId = @Model.ProjectId;
         var taskHub = $.connection.taskHub;
         $.connection.hub.start(function () {
-            taskHub.join($.connection.hub.id, "@Model.ProjectId");
+        taskHub.join($.connection.hub.id, "@Model.ProjectId","@User.Identity.Name",false );
         });
 
         taskHub.TaskMoved = function (movedtaskId, moveToId) {
@@ -35,12 +35,18 @@
                     var task = "<div class=\"task-holder\" data-taskid=" + taskId + " id =" + taskId + ">";
                     task += response1;
                     task += "</div>";
-                    jQuery("[data-managerid=" + managerId + "]").html(task);
+                    jQuery("[data-managerid=" + managerId + "]")    .html(task);
                     jQuery("[data-taskid=" + taskId + "]").insertBefore(jQuery("[data-managerid=" + managerId + "]"));
                     jQuery("[data-taskid=" + taskId + "]").effect("shake", { times: 3 }, 300);
                 }
             });
 
+        };
+
+        taskHub.SetUnreadNewsesCount = function(count) {
+            alert(count);
+            jQuery("[data-id = newses_count]").html(count);
+            jQuery("[data-id = newses_count]").effect("highlight");
         };
 
         $(".column").sortable({
@@ -101,16 +107,16 @@
                 @foreach (var user in Model.UsersTasks)
                 {   
                     <td valign="top" align="center">
-                        <p >
-                             @if (@user.User.ImageData == null)
-                             {
-                                 <img class="pull-left" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="70" height="70"/>
-                             }
-                             else
-                             {
-                                 <img width="80" height="80" src="@Url.Action("GetImage", "Project", new { UserId = user.User.Id })" />
-                             }
-                             @Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })
+                        <p>
+                            @if (@user.User.ImageData == null)
+                            {
+                                <img class="pull-left" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="70" height="70"/>
+                            }
+                            else
+                            {
+                                <img width="80" height="80" src="@Url.Action("GetImage", "Project", new { UserId = user.User.Id })" />
+                            }
+                            @Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })
                         </p>
                         <p>@Html.ActionLink("Create task", "CreateTask", new { userId = user.User.Id, projectId = Model.ProjectId }, new { @class = "btn" })</p>
                     </td> 
@@ -120,7 +126,7 @@
             <tr>
                 <td align="center" width="250" valign="top">
                     <div class="editor-field">
-                        @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new {projectId = Model.ProjectId}, new { @class = "btn" })
+                        @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new { projectId = Model.ProjectId }, new { @class = "btn" })
                     </div>
                 </td>
                 <td valign="top">

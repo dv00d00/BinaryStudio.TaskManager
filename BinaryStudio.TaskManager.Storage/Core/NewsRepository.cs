@@ -50,5 +50,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
             int count = news.Count;
             return count;
         }
+
+        public int GetUnreadNewsCountForUserByName(string userName)
+        {
+            return  this.dataBaseContext.News.Count(x => x.User.UserName == userName && x.IsRead == false);
+        }
     }
 }

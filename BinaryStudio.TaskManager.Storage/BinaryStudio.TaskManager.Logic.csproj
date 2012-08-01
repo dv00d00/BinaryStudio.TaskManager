@@ -101,8 +101,10 @@
     <Compile Include="Authorize\ILinkedInService.cs" />
     <Compile Include="Authorize\LinkedInService.cs" />
     <Compile Include="Core\ClientConnection.cs" />
+    <Compile Include="Core\ConnectionProvider.cs" />
     <Compile Include="Core\CryptoProvider.cs" />
     <Compile Include="Core\IClientConnectionManager.cs" />
+    <Compile Include="Core\IConnectionProvider.cs" />
     <Compile Include="Core\ICryptoProvider.cs" />
     <Compile Include="Core\INewsRepository.cs" />
     <Compile Include="Core\IProjectProcessor.cs" />

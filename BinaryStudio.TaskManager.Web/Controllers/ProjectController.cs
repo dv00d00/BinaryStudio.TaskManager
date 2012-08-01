@@ -189,9 +189,10 @@
                                    User = projectUser,
                                    UserId = projectUser.Id,
                                    HumanTaskHistoryId = taskHistory.Id,
-                                   
                                };
+
                 newsRepository.AddNews(news);
+                notifier.SetCountOfNewses(projectUser.UserName);
             }
         }
 

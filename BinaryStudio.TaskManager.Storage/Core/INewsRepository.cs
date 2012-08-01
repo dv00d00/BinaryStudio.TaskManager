@@ -18,5 +18,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void MarkAsRead(int newsId);
 
         int GetNewsCount(int userId);
+
+        int GetUnreadNewsCountForUserByName(string userName);
     }
 }

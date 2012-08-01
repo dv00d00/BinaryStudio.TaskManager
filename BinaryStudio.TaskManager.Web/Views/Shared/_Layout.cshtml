@@ -74,11 +74,9 @@
                 success: function(response) {
                     //$("#loader").hide();
                     if(response>0) {
-                        content.html('Events <span class="badge badge-important">' + response + '</span>');
+                        content.html('Events <span class="badge badge-important" data-id="newses_count">' + response + '</span>');
                     }
                 }
             });
-
-//        }
     });
 </script> 

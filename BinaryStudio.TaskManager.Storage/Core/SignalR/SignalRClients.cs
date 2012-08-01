@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace BinaryStudio.TaskManager.Logic.Core.SignalR
 {
@@ -9,12 +6,14 @@ namespace BinaryStudio.TaskManager.Logic.Core.SignalR
     {
         public static IList<ClientConnection> Connections = new List<ClientConnection>();
 
-        public static void AddConnection (string connectionId,int projectId)
+        public static void AddConnection (string connectionId,int projectId, string userName,bool isNewsConnetion)
         {
             Connections.Add(new ClientConnection
                                 {
                                     ConnectionId = connectionId,
-                                    ProjectId = projectId
+                                    ProjectId = projectId,
+                                    UserName = userName,
+                                    IsNewsConnection = isNewsConnetion
                                 });
         }
     }
