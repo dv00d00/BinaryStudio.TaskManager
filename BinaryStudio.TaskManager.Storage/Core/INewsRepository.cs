@@ -14,5 +14,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
         News GetNewsById(int newsId);
 
         int GetCountOfUnreadedNewses(int userId);
+
+        void MarkAsRead(int newsId);
+
+        int GetNewsCount(int userId);
     }
 }

@@ -57,7 +57,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                    ? ""
                                    : news.HumanTaskHistory.NewDescription.Length>26 ? news.HumanTaskHistory.NewDescription.Substring(0, 25) + "..."
                                    :"",
-                          IsRead = news.IsRead
+                          IsRead = news.IsRead,
+                          WhoAssigneUserId = news.HumanTaskHistory.NewAssigneeId,
+                          WhoAssigneUserName = news.HumanTaskHistory.NewAssigneeId.HasValue ? userProcessor.GetUser(news.HumanTaskHistory.NewAssigneeId.Value).UserName : ""
                        };
         }
 
@@ -85,6 +87,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 return dateTimeDifference.TotalDays.ToString() + " days ago";
             }
             return time.ToString();
+        }
+
+        public void MarkAsRead(int newsId)
+        {
+            newsRepository.MarkAsRead(newsId);
+        }
+
+        [HttpPost]
+        public ActionResult GetNewsCount()
+        {
+            int count = newsRepository.GetNewsCount(userProcessor.GetUserByName(User.Identity.Name).Id);
+            return Json(count);
         }
     }
 }

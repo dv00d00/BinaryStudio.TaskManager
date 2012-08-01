@@ -20,26 +20,31 @@
 <body>
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
-            <div class="container-fluid">
+            <div class="container">
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                </a><span class="brand">Task Manager </span>
+                                                                                                 class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </a >
+                <a class="brand" href="/Events/MyEvents">Task Manager</a>
                 <div id="logindisplay">
                     @Html.Partial("_LogOnPartial")
-                </div>
-                <div class="nav-collapse">
-                    <ul class="nav">
-                        <li>
-                            @Html.ActionLink("Events", "MyEvents", "Events")
-                        </li>
-                        <li>
-                            @Html.ActionLink("My project", "PersonalProject", "Project")
-                        </li>
-                        <li>
-                            @Html.ActionLink("Landing", "Index", "Landing")
-                        </li>
-                    </ul>
-                </div>
+                 </div>
+                @{if(User.Identity.IsAuthenticated)
+                  {
+                      <div class="nav-collapse">
+                          <ul class="nav">
+                              <li >
+                                  <a href="/Events/MyEvents" id = "spec">Events </a>
+                              </li>
+                             <li>
+                                  @Html.ActionLink("My project", "PersonalProject", "Project")
+                              </li>
+                              <li>
+                                  @Html.ActionLink("Landing", "Index", "Landing")
+                              </li>
+                          </ul>
+                      </div>
+                  }
+                }
             </div>
         </div>
     </div>
@@ -52,3 +57,28 @@
     </div>
 </body>
 </html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var content = $('#spec');
+        
+        //if(@User.Identity.IsAuthenticated == 'true') {
+            
+            $.ajax({
+                dataType: "JSON",
+                type: "POST",
+                url: "/Events/GetNewsCount",
+                beforeSend: function() {
+                    //$("#loader").show();
+                },
+                success: function(response) {
+                    //$("#loader").hide();
+                    if(response>0) {
+                        content.html('Events <span class="badge badge-important">' + response + '</span>');
+                    }
+                }
+            });
+
+//        }
+    });
+</script> 

@@ -47,3 +47,10 @@ div.task.priority {
     padding: 10px;
     width: auto;
 }
+
+.container.evnt_read {
+    background-color: whitesmoke;
+    border-radius:  5px 5px 5px 5px;
+    padding: 10px;
+    width: auto;
+}
