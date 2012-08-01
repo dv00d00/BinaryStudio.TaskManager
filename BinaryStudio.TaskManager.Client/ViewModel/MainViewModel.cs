@@ -19,6 +19,7 @@ namespace MessengR.Client.ViewModel
         private HubConnection _connection;
         private Chat _chat;
         private readonly SynchronizationContext _syncContext;
+        private TaskHub taskHub;
         #endregion
 
         private string _name;
@@ -87,8 +88,7 @@ namespace MessengR.Client.ViewModel
             // _connection.CookieContainer.Add(authCookie);
 
             // Get a reference to the chat proxy
-            _chat = new Chat(_connection);
-
+             taskHub = new TaskHub(_connection);
             // Start the connection
             _connection.Start().ContinueWith(task =>
             {

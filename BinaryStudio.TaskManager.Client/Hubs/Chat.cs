@@ -67,4 +67,24 @@ namespace MessengR.Client.Hubs
             return _chat.Invoke<Message>("Send", userName, message);
         }
     }
+
+    public class TaskHub
+    {
+         private readonly IHubProxy _chat;
+
+        public event Action<Message> Message;
+
+        public TaskHub(HubConnection connection)
+        {
+            _chat = connection.CreateProxy("taskHub");
+
+            _chat.On<Message>("receive", message =>
+            {
+                if (Message != null)
+                {
+                    Message(message);
+                }
+            });
+        }
+    }
 }
