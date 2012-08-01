@@ -116,10 +116,6 @@ function getTaskList(proj) {
             var task = null;
             $("#content").children("h2").html(data.Project.Name);
             $("#content").children(".proj_title").html("[project]");
-            var dante = new Date();
-            dateFormat(dante, "longTime");
-            dante.setDate(parseInt(data.Project.Tasks[0].Created.substr(6)));
-            alert(dante);
             modelData.tasks.removeAll();
             for (var i = 0; i < data.Project.Tasks.length; i++) {
                 task = data.Project.Tasks[i];

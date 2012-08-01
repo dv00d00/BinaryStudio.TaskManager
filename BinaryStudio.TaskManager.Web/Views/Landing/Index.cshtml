@@ -64,7 +64,7 @@
         <span class='proj_title'></span>
         <div class="task_list" data-bind="foreach: tasks">
             <div class="task_in_list">
-                <a data-bind="text:Name, attr: { 'data-content': 'Created: '+CreatedDate+'<br>By '+Creator,'data-original-title':Name}" rel="popover" href="#" class="task_popover"></a>
+                <a data-bind="text:Name, attr: { 'data-content': 'Created: '+CreatedDate+'<br>'+CreatedTime+'<br>By '+Creator,'data-original-title':Name}" rel="popover" href="#" class="task_popover"></a>
                 <div data-bind="text: Description"></div>
             </div>
         </div>
