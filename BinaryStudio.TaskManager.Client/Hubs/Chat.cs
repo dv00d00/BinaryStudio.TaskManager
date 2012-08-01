@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 using MessengR.Models;
 using SignalR.Client.Hubs;
 
+namespace MessengR.Models
+{
+}
+
 namespace MessengR.Client.Hubs
 {
     /// <summary>

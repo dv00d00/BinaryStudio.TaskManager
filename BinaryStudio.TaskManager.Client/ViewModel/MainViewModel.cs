@@ -69,20 +69,22 @@ namespace MessengR.Client.ViewModel
 
         public MainViewModel() { }
 
-        public MainViewModel(string name, Cookie authCookie)
+        public MainViewModel(string name)
         {
             Name = name;
             _chatSessions.SendMessage += OnSendMessage;
             // Store the sync context from the ui thread so we can post to it
             _syncContext = SynchronizationContext.Current;
-            InitializeConnection(ConfigurationManager.AppSettings["HostUrl"], authCookie);
+            InitializeConnection(ConfigurationManager.AppSettings["HostUrl"]);
 
         }
 
-        private void InitializeConnection(string url, Cookie authCookie)
+        private void InitializeConnection(string url)
         {
+            var authCookie = new Cookie("hello", "world");
+
             _connection = new HubConnection(url) { CookieContainer = new CookieContainer() };
-            _connection.CookieContainer.Add(authCookie);
+            // _connection.CookieContainer.Add(authCookie);
 
             // Get a reference to the chat proxy
             _chat = new Chat(_connection);

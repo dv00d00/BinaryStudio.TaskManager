@@ -87,6 +87,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="ViewModel\ChatSessionsViewModel.cs" />
     <Compile Include="Common\CommandBase.cs" />
     <Compile Include="Common\PasswordHelper.cs" />

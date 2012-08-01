@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MessengR.Client.Interface;
+﻿using MessengR.Client.Interface;
 using MessengR.Client.Service;
 using MessengR.Client.View;
 
