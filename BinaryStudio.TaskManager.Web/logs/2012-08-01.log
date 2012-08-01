@@ -26,3 +26,109 @@
    в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
    в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
    в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-08-01 18:02:12.0692 DEBUG EXCEPTION|System.InvalidOperationException: The operation cannot be completed because the DbContext has been disposed.
+   в System.Data.Entity.Internal.InternalContext.CheckContextNotDisposed()
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.First[TSource](IQueryable`1 source, Expression`1 predicate)
+   в BinaryStudio.TaskManager.Logic.Core.ProjectRepository.GetAllUsersInProject(Int32 projectId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\ProjectRepository.cs:строка 66
+   в BinaryStudio.TaskManager.Logic.Core.ConnectionProvider.GetWPFConnectionsForProject(Int32 projectId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\ConnectionProvider.cs:строка 37
+   в BinaryStudio.TaskManager.Logic.Core.Notifier.CreateTask(Int32 taskId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\Notifier.cs:строка 53
+   в BinaryStudio.TaskManager.Web.Controllers.ProjectController.CreateTask(CreateTaskViewModel createModel) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\ProjectController.cs:строка 169
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-08-01 18:12:05.1461 DEBUG EXCEPTION|System.InvalidOperationException: The operation cannot be completed because the DbContext has been disposed.
+   в System.Data.Entity.Internal.InternalContext.CheckContextNotDisposed()
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.First[TSource](IQueryable`1 source, Expression`1 predicate)
+   в BinaryStudio.TaskManager.Logic.Core.ProjectRepository.GetAllUsersInProject(Int32 projectId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\ProjectRepository.cs:строка 66
+   в BinaryStudio.TaskManager.Logic.Core.ConnectionProvider.GetWPFConnectionsForProject(Int32 projectId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\ConnectionProvider.cs:строка 37
+   в BinaryStudio.TaskManager.Logic.Core.Notifier.CreateTask(Int32 taskId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\Notifier.cs:строка 53
+   в BinaryStudio.TaskManager.Web.Controllers.ProjectController.CreateTask(CreateTaskViewModel createModel) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\ProjectController.cs:строка 169
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-08-01 18:14:20.6769 DEBUG EXCEPTION|System.InvalidOperationException: The operation cannot be completed because the DbContext has been disposed.
+   в System.Data.Entity.Internal.InternalContext.CheckContextNotDisposed()
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.First[TSource](IQueryable`1 source, Expression`1 predicate)
+   в BinaryStudio.TaskManager.Logic.Core.ProjectRepository.GetAllUsersInProject(Int32 projectId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\ProjectRepository.cs:строка 66
+   в BinaryStudio.TaskManager.Logic.Core.ConnectionProvider.GetWPFConnectionsForProject(Int32 projectId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\ConnectionProvider.cs:строка 37
+   в BinaryStudio.TaskManager.Logic.Core.Notifier.CreateTask(Int32 taskId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\Notifier.cs:строка 53
+   в BinaryStudio.TaskManager.Web.Controllers.ProjectController.CreateTask(CreateTaskViewModel createModel) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\ProjectController.cs:строка 169
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-08-01 18:26:00.4849 DEBUG EXCEPTION|System.InvalidOperationException: The operation cannot be completed because the DbContext has been disposed.
+   в System.Data.Entity.Internal.InternalContext.CheckContextNotDisposed()
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.Initialize()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.First[TSource](IQueryable`1 source, Expression`1 predicate)
+   в BinaryStudio.TaskManager.Logic.Core.ProjectRepository.GetAllUsersInProject(Int32 projectId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\ProjectRepository.cs:строка 66
+   в BinaryStudio.TaskManager.Logic.Core.ConnectionProvider.GetWPFConnectionsForProject(Int32 projectId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\ConnectionProvider.cs:строка 37
+   в BinaryStudio.TaskManager.Logic.Core.Notifier.CreateTask(Int32 taskId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\Notifier.cs:строка 53
+   в BinaryStudio.TaskManager.Web.Controllers.ProjectController.CreateTask(CreateTaskViewModel createModel) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\ProjectController.cs:строка 169
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+2012-08-01 18:28:18.8678 DEBUG EXCEPTION|System.InvalidOperationException: The operation cannot be completed because the DbContext has been disposed.
+   в System.Data.Entity.Internal.InternalContext.CheckContextNotDisposed()
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source, Expression`1 predicate)
+   в BinaryStudio.TaskManager.Logic.Core.ProjectRepository.GetAllUsersInProject(Int32 projectId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\ProjectRepository.cs:строка 66
+   в BinaryStudio.TaskManager.Logic.Core.ConnectionProvider.GetWPFConnectionsForProject(Int32 projectId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\ConnectionProvider.cs:строка 37
+   в BinaryStudio.TaskManager.Logic.Core.Notifier.CreateTask(Int32 taskId) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Storage\Core\Notifier.cs:строка 53
+   в BinaryStudio.TaskManager.Web.Controllers.ProjectController.CreateTask(CreateTaskViewModel createModel) в E:\Solutions\o_O\BinaryStudio.TaskManager\BinaryStudio.TaskManager.Web\Controllers\ProjectController.cs:строка 169
+   в lambda_method(Closure , ControllerBase , Object[] )
+   в System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<InvokeActionMethodWithFilters>b__12()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   в System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClass15.<>c__DisplayClass17.<InvokeActionMethodWithFilters>b__14()
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)

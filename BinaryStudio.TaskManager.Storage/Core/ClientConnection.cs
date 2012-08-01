@@ -12,6 +12,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public int? ProjectId { get; set; }
 
-        public bool IsNewsConnection { get; set; }
+        public bool IsWPFClient { get; set; }
     }
 }

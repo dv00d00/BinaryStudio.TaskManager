@@ -12,7 +12,6 @@
         var senderId, taskId, receiverId,projectId;
         projectId = @Model.ProjectId;
         startSignalRConnection(projectId, "@User.Identity.Name", false);
-
         $(".column").sortable({
             connectWith: ".column",
             cancel: ".ui-state-disabled",

@@ -95,7 +95,7 @@ namespace MessengR.Client.ViewModel
                     this._syncContext.Post(
                         state =>
                             {
-                                this.Conversations.Add(new Message { Value = message.TaskId.ToString() });
+                                this.Conversations.Add(new Message { Value = message.Description});
                             },
                         null);
                 };
@@ -109,7 +109,7 @@ namespace MessengR.Client.ViewModel
                 }
                 else
                 {
-                    taskHub.Join(2, "test");
+                    taskHub.Join(2, "admin");
                 }
 
             });

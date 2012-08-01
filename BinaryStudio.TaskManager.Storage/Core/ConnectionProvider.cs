@@ -7,6 +7,13 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
     public class ConnectionProvider : IConnectionProvider
     {
+        private readonly IProjectRepository projectRepository;
+
+        public ConnectionProvider(IProjectRepository projectRepository)
+        {
+            this.projectRepository = projectRepository;
+        }
+
         public IEnumerable<ClientConnection> ActiveConnections
         {
             get
@@ -20,14 +27,24 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return SignalRClients.Connections.Where(it => it.ProjectId == projectId);
         }
 
-        public IEnumerable<ClientConnection> GetNewsConnectionsForUser(int userId)
-        {
-            return SignalRClients.Connections.Where(it => it.UserId == userId && it.IsNewsConnection);
-        }
-
         public IEnumerable<ClientConnection> GetConnetionsForUser(string userName)
         {
             return SignalRClients.Connections.Where(it => it.UserName == userName);
         }
+        public IEnumerable<ClientConnection> GetWPFConnectionsForProject(int projectId)
+        {
+            IList<ClientConnection> connections = new List<ClientConnection>();
+            var users = projectRepository.GetAllUsersInProject(projectId);
+            foreach (var user in users)
+            {
+                connections.Concat(SignalRClients.Connections.Where(x => x.UserName == user.UserName).ToList());
+            }
+            var creator = projectRepository.GetCreatorForProject(projectId);
+            List<ClientConnection> creatorConnections =
+                SignalRClients.Connections.Where(x => x.UserName == creator.UserName && x.IsWPFClient).ToList();
+
+            return connections.Concat(creatorConnections); 
+        }
+
     }
 }

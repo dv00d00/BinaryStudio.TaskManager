@@ -138,5 +138,7 @@
         /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.Invitation].
         /// </returns>
         IEnumerable<Invitation> GetAllInvitationsToProject(int projectId);
+
+        User GetCreatorForProject(int pojectId);
     }
  }

@@ -1,8 +1,8 @@
 ﻿var taskHub = $.connection.taskHub;
 
-function startSignalRConnection(projectId, userName, isNews) {
+function startSignalRConnection(projectId, userName, isClient) {
     $.connection.hub.start(function () {
-        taskHub.join($.connection.hub.id, projectId, userName, isNews);
+        taskHub.join($.connection.hub.id, projectId, userName, isClient);
     });
 }
 

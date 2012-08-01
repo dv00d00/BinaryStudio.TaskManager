@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using BinaryStudio.TaskManager.Logic.Domain;
 using BinaryStudio.TaskManager.Web.SignalR;
@@ -10,17 +11,18 @@ namespace BinaryStudio.TaskManager.Logic.Core
     public class Notifier : INotifier
     {
         private readonly IHumanTaskRepository humanTaskRepository;
-        private readonly IUserRepository userRepository;
         private readonly INewsRepository newsRepository;
         private readonly IGlobalHost globalHost;
         private readonly IConnectionProvider connectionProvider;
+        private readonly IProjectRepository projectRepository;
 
-        public Notifier(IHumanTaskRepository humanTaskRepository, IGlobalHost globalHost, IConnectionProvider connectionProvider, INewsRepository newsRepository)
+        public Notifier(IHumanTaskRepository humanTaskRepository, IGlobalHost globalHost, IConnectionProvider connectionProvider, INewsRepository newsRepository,IProjectRepository projectRepository)
         {
             this.humanTaskRepository = humanTaskRepository;
             this.globalHost = globalHost;
             this.connectionProvider = connectionProvider;
             this.newsRepository = newsRepository;
+            this.projectRepository = projectRepository;
         }
 
         public void MoveTask(int taskId, int moveToId)
@@ -39,28 +41,23 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public void CreateTask(int taskId)
         {
             var task = humanTaskRepository.GetById(taskId);
-
             int projectId = task.ProjectId;
+            var project = projectRepository.GetById(projectId);
             int assignedId = task.AssigneeId ?? 0; 
-
             var clients = this.connectionProvider.GetProjectConnections(projectId);
             var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
 
             foreach (var clientConnection in clients)
             {
-                context.Clients[clientConnection.ConnectionId].TaskCreated(taskId, assignedId);
+                    context.Clients[clientConnection.ConnectionId].TaskCreated(taskId, assignedId);
             }
-        }
 
-        public void SendNews(int newsId)
-        {
-            News news = newsRepository.GetNewsById(newsId);
-            var clients = this.connectionProvider.GetNewsConnectionsForUser(news.UserId);
-            var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
+            string wpfMessage = task.Name + " added to project " + project.Name;
+            var wpfClients = this.connectionProvider.GetWPFConnectionsForProject(projectId);
 
-            foreach (var clientConnection in clients)
+            foreach (var clientConnection in wpfClients)
             {
-                context.Clients[clientConnection.ConnectionId].NewsRecived(newsId);
+                context.Clients[clientConnection.ConnectionId].ReciveMessageOnClient(wpfMessage);
             }
         }
 
@@ -75,7 +72,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
                 context.Clients[clientConnection.ConnectionId].SetUnreadNewsesCount(count);
             }
         }
-
     }
 
 

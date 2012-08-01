@@ -7,8 +7,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         void CreateTask(int taskId);
 
-        void SendNews(int newseId);
-
         void SetCountOfNewses(string userName);
     }
 }

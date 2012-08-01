@@ -8,8 +8,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         IEnumerable<ClientConnection> GetProjectConnections(int projectId);
 
-        IEnumerable<ClientConnection> GetNewsConnectionsForUser(int userId);
-
         IEnumerable<ClientConnection> GetConnetionsForUser(string userName);
+
+        IEnumerable<ClientConnection> GetWPFConnectionsForProject(int projectId);
     }
 }
