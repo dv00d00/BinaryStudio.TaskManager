@@ -42,7 +42,7 @@
             <RowDefinition Height="5" />
           </Grid.RowDefinitions>
           
-          <Label Grid.Row="0" Margin="8,0,8,0" FontSize="25" FontWeight="Bold" Content="EXAMPLE">
+          <Label Grid.Row="0" Margin="8,0,8,0" FontSize="25" FontWeight="Bold" Content="Event">
             <Label.Foreground>
               <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="Blue" Offset="0"/>

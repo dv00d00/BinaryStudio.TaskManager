@@ -10,6 +10,7 @@ using MessengR.Client.Hubs;
 using MessengR.Models;
 using Microsoft.Practices.Prism.Events;
 using SignalR.Client.Hubs;
+using WPFTaskbarNotifierExample;
 
 namespace MessengR.Client.ViewModel
 {
@@ -21,6 +22,7 @@ namespace MessengR.Client.ViewModel
         private HubConnection _connection;
         private readonly SynchronizationContext _syncContext;
         private TaskHub taskHub;
+        private ExampleTaskbarNotifier taskbarNotifier = new ExampleTaskbarNotifier();
         #endregion
 
         private string _name;
@@ -75,6 +77,7 @@ namespace MessengR.Client.ViewModel
         {
             Name = name;
             _chatSessions.SendMessage += OnSendMessage;
+            
             // Store the sync context from the ui thread so we can post to it
             _syncContext = SynchronizationContext.Current;
             InitializeConnection(ConfigurationManager.AppSettings["HostUrl"]);
@@ -90,6 +93,8 @@ namespace MessengR.Client.ViewModel
 
             this.Conversations = new ObservableCollection<Message>();
             
+            
+
             taskHub.Message += message =>
                 {
                     this._syncContext.Post(
@@ -98,6 +103,7 @@ namespace MessengR.Client.ViewModel
                                 this.Conversations.Add(new Message { Value = message.Description});
                             },
                         null);
+                    
                 };
 
             // Start the connection
@@ -115,13 +121,24 @@ namespace MessengR.Client.ViewModel
             });
 
             // Fire events on the ui thread
+            taskHub.Message += message => _syncContext.Post(x => OnMessage(message), null);
         }
 
-        private void OnMessage(Message message)
+        private void OnMessage(TaskMessage message)
         {
+            taskbarNotifier.Show();
+            taskbarNotifier.ShowInTaskbar = true;
+            taskbarNotifier.OpeningMilliseconds = 1000;
+            taskbarNotifier.StayOpenMilliseconds = 3000;
+            taskbarNotifier.HidingMilliseconds = 1000;
             // Starts a new conversation with message.From if not started,
             // otherwise, it will add a message to the conversation window with message.From.
-            _chatSessions.AddMessage(message, Me.User);
+            this.taskbarNotifier.NotifyContent.Add(new NotifyObject(message.Description, "sdf"));
+
+            // Tell the TaskbarNotifier to open.
+            this.taskbarNotifier.Notify();
+
+            taskbarNotifier.ShowInTaskbar = true;
         }
 
         private void OnUserStatusChange(User user)

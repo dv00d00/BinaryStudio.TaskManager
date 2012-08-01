@@ -203,6 +203,14 @@
     <Resource Include="Resources\Images\chat.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BinaryStudio.TaskManager.WPFTaskbarNotifierExample\WPFTaskbarNotifierExample.csproj">
+      <Project>{2CAAE824-BB9A-4D4E-80CC-79DED1BE5642}</Project>
+      <Name>WPFTaskbarNotifierExample</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BinaryStudio.TaskManager.WPFTaskbarNotifier\WPFTaskbarNotifier.csproj">
+      <Project>{C807F74B-9C21-4A9F-8A60-C7D7AF7BCBBA}</Project>
+      <Name>WPFTaskbarNotifier</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MessengR.Models\MessengR.Models.csproj">
       <Project>{FD8D602C-7FF6-4E18-B359-87D482848524}</Project>
       <Name>MessengR.Models</Name>
