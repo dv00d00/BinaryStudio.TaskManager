@@ -8,11 +8,12 @@ div.sortableTasks a
     
 div.task  
 {
-    border-radius: 15px 0 0 0; 
+    border-radius: 15px 15px 15px 15px; 
     border:2px solid black;
     width:200px;
     height:100px;
     margin: 5px;
+    background: -webkit-linear-gradient(top, #f2f9fe 0%,#d6f0fd 100%);
        
 }
 
@@ -33,12 +34,15 @@ div.task.priority {
     color: white; 
 }
 .pr1 {
-    background-color: #7390E6;
-    color: white; 
+    background: -webkit-linear-gradient(top, #ff3019 0%,#cf0404 100%);
 }
 .pr0 {
     background-color: #AACDFF;
     color: white; 
+}
+
+.task.content {
+    background: -webkit-linear-gradient(top, #f2f9fe 0%,#d6f0fd 100%);
 }
 
 .container.evnt_unread {
