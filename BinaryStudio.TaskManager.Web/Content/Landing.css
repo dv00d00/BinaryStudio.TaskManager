@@ -135,4 +135,29 @@
     top: 0;
 }
 
-/************ Interactive input *********/
+/************ Central part  *************/
+.proj_title {
+    color: green;
+    float: right;
+}
+#content h2 {
+    display: inline-block;
+}
+.task_in_list {
+    border-bottom: 1px solid #EEE;
+}
+.task_in_list:first-child{
+    border-top: 2px solid #EEE;
+}
+
+.priority_1 {
+    background: #C1E9B1;
+}
+
+.priority_2 {
+    background: #D6F8F1;
+}
+
+.priority_2 {
+    background: #F08C8C;
+}

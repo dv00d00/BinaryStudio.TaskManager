@@ -1,11 +1,13 @@
-﻿var TaskModel = function (tasks) {
+﻿var TaskModel = function () {
     var self = this;
-    self.contacts = ko.observableArray(ko.utils.arrayMap(tasks, function (task) {
-        return {
-            id: task.Id,
-            name: task.Name,
-            description: task.Description,
-            priority: task.Priority
-        };
-    }));
+    self.tasks = ko.observableArray([]);
+};
+
+var Task = function (id, name, description, createdDate, creator) {
+    this.Id = id;
+    this.Name = name;
+    this.Description = description;
+    this.CreatedDate = createdDate.toLocaleDateString();
+    this.CreatedTime = createdDate.toLocaleTimeString();
+    this.Creator = creator;
 }
