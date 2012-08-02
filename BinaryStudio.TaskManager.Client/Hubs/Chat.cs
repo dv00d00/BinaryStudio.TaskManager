@@ -16,6 +16,11 @@ namespace MessengR.Client.Hubs
         public string Description;
     }
 
+    public class LogonStatusMessage
+    {
+        public bool Status;
+    }
+
     public class TaskHub
     {
         private readonly HubConnection connection;
@@ -23,6 +28,8 @@ namespace MessengR.Client.Hubs
         private readonly IHubProxy hubProxy;
 
         public event Action<TaskMessage> Message;
+
+        public event Action<LogonStatusMessage> LogonStatus;
 
         public TaskHub(HubConnection connection)
         {
@@ -36,11 +43,24 @@ namespace MessengR.Client.Hubs
                     Message( new TaskMessage{Description = description});
                 }
             });
+
+            hubProxy.On<bool>("reciveClientLogonStatus", (status) =>
+            {
+                if (LogonStatus != null)
+                {
+                    LogonStatus(new LogonStatusMessage { Status = status });
+                }
+            });
         }
 
         public void Join(int projectId, string userNamer)
         {
             hubProxy.Invoke("join", connection.ConnectionId, 0 , userNamer, true);
+        }
+
+        public Task Logon(string userName, string password)
+        {
+           return hubProxy.Invoke("loginWithClient", connection.ConnectionId, userName, password);
         }
     }
 }

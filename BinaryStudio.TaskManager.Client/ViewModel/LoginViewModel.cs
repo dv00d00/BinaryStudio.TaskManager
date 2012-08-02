@@ -68,20 +68,12 @@ namespace MessengR.Client.ViewModel
 
         private void Login()
         {
-            {
-                Error = String.Empty;
-                var viewModel = new MainViewModel(Name);
-                var main = new MainWindow { DataContext = viewModel };
-                main.Show();
-                LoginSuccess(this, null);
-            }
-            return;
 
             var uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             LoginHelper.LoginAsync(HostUrl, Name, Password).ContinueWith(task =>
                 {
                     AuthenticationResult authResult = task.Result;
-                    if (authResult.StatusCode == HttpStatusCode.OK)
+                    if (authResult.Status)
                     {
                         Error = String.Empty;
 
@@ -89,10 +81,6 @@ namespace MessengR.Client.ViewModel
                         var main = new MainWindow() { DataContext = viewModel };
                         main.Show();
                         LoginSuccess(this, null);
-                    }
-                    else
-                    {
-                        Error = authResult.Error;
                     }
                 }, uiScheduler);
         }
