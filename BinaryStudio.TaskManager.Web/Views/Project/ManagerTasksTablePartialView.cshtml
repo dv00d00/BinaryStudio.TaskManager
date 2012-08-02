@@ -20,19 +20,3 @@
    </div>
 }
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.done').click(function () {
-            var id = $(this).attr('id');
-            var str = "#" + id + " .task";
-            $(str).hide("slow");
-            $.ajax({
-                type: "POST",
-                url: "/Project/MakeTaskClose",
-                data: { taskId: id, projectId: @Model.ProjectId },
-                dataType: "json",
-                traditional: true
-            }); 
-        });
-    });
-</script> 
