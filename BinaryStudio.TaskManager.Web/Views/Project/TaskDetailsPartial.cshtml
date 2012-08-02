@@ -1,5 +1,4 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.SingleTaskViewModel
-
 <fieldset>
     <legend>Task details</legend>
     <table cellspacing="0" border="0">
@@ -35,7 +34,13 @@
             </td>
             <td>
                 <div class="display-field">
-                    @Model.HumanTask.Priority
+                    @foreach (var priority in Model.Priorities)
+                    {
+                        if (Model.HumanTask.Priority.ToString() == priority.Value)
+                        { 
+                            @priority.Text
+                        }
+                    }
                 </div>
             </td>
         </tr>

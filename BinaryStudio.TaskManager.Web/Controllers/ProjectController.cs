@@ -1,4 +1,6 @@
-﻿namespace BinaryStudio.TaskManager.Web.Controllers
+﻿using System.Globalization;
+
+namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -73,7 +75,7 @@
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult Project(int id,bool isOpenedProjects = true)
+        public ActionResult Project(int id, bool isOpenedProjects = true)
         {
             var model = new ProjectViewModel
             {
@@ -86,9 +88,13 @@
             users.Add(this.projectProcessor.GetProjectById(id).Creator);
             foreach (var user in users)
             {
-                var managerModel = new ManagerTasksViewModel { User = user, Tasks = isOpenedProjects 
-                    ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, user.Id).ToList()
-                    : this.taskProcessor.GetAllClosedTasksForUserInProject(id, user.Id).ToList() };
+                var managerModel = new ManagerTasksViewModel
+                {
+                    User = user,
+                    Tasks = isOpenedProjects
+                        ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, user.Id).ToList()
+                        : this.taskProcessor.GetAllClosedTasksForUserInProject(id, user.Id).ToList()
+                };
                 model.UsersTasks.Add(managerModel);
             }
 
@@ -117,6 +123,7 @@
                 Created = DateTime.Now,
                 ProjectId = projectId
             };
+            createModel.Priority = int.Parse(createModel.Priorities.First().Value);
             return this.View(createModel);
         }
 
@@ -165,7 +172,7 @@
 
                 List<User> projectUsers = new List<User>(projectProcessor.GetAllUsersInProject(createModel.ProjectId));
                 projectUsers.Add(this.projectProcessor.GetProjectById(createModel.ProjectId).Creator);
-               
+
                 CreateNewsForUsers(taskHistory, projectUsers);
 
                 notifier.CreateTask(task.Id);
@@ -240,9 +247,9 @@
         /// </param>
         /// <param name="projectId"> </param>
         [Authorize]
-        public void MoveTask(int taskId, int senderId, int receiverId,int projectId)
+        public void MoveTask(int taskId, int senderId, int receiverId, int projectId)
         {
-            this.notifier.MoveTask(taskId , receiverId);
+            this.notifier.MoveTask(taskId, receiverId);
             HumanTask humanTask = taskProcessor.GetTaskById(taskId);
             HumanTaskHistory humanTaskHistory = new HumanTaskHistory
             {
@@ -260,12 +267,12 @@
             taskProcessor.AddHistory(humanTaskHistory);
             List<User> users = new List<User>(projectProcessor.GetAllUsersInProject(projectId));
             users.Add(projectProcessor.GetProjectById(projectId).Creator);
-            CreateNewsForUsers(humanTaskHistory,users);
+            CreateNewsForUsers(humanTaskHistory, users);
 
             // move to real user
             if (receiverId != -1)
             {
-                
+
                 this.taskProcessor.MoveTask(taskId, receiverId);
                 return;
             }
@@ -286,19 +293,19 @@
         public ActionResult InviteOrDeleteUser(int projectId)
         {
             var currentUser = this.userProcessor.GetUserByName(User.Identity.Name);
-            var listWithCurrentUser = new List<User> { currentUser }; 
+            var listWithCurrentUser = new List<User> { currentUser };
             var users = this.userProcessor.GetAllUsers();
             users = users.Except(listWithCurrentUser);
-            
-            var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(projectId).Where(x => x.IsInvitationConfirmed == false && x.Sender == currentUser);            
-            
+
+            var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(projectId).Where(x => x.IsInvitationConfirmed == false && x.Sender == currentUser);
+
             //var invitationsToProject = this.projectProcessor.GetAllInvitationsToProject(ProjectId).Where(x => x.IsInvitationConfirmed == false);
-            
+
             var listAlreadyInvited = invitationsToProject.Select(invitation => invitation.Receiver).ToList();
 
             var collaborators = this.projectProcessor.GetAllUsersInProject(projectId);
             var listToInvite = users.Except(collaborators).Except(listAlreadyInvited);
-            var model = new ProjectCollaboratorsViewModel { Collaborators = collaborators, PossibleCollaborators = listToInvite, AlreadyInvited = listAlreadyInvited, ProjectId = projectId};
+            var model = new ProjectCollaboratorsViewModel { Collaborators = collaborators, PossibleCollaborators = listToInvite, AlreadyInvited = listAlreadyInvited, ProjectId = projectId };
             return this.View(model);
         }
 
@@ -315,7 +322,7 @@
         public void InviteUserInProject(int receiverId, int projectId)
         {
             var senderId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
-            this.projectProcessor.InviteUserInProject(senderId, projectId, receiverId);   
+            this.projectProcessor.InviteUserInProject(senderId, projectId, receiverId);
         }
 
         /// <summary>
@@ -330,7 +337,7 @@
         [HttpPost]
         public void RemoveUserFromProject(int userId, int projectId)
         {
-            this.projectProcessor.RemoveUserFromProject(userId, projectId);            
+            this.projectProcessor.RemoveUserFromProject(userId, projectId);
         }
 
         /// <summary>
@@ -479,7 +486,7 @@
                 var usersInProject = new List<User>(projectProcessor.GetAllUsersInProject(createModel.ProjectId));
                 usersInProject.Add(humanTask.Project.Creator);
                 this.taskProcessor.AddHistory(taskHistory);
-                CreateNewsForUsers(taskHistory,usersInProject);
+                CreateNewsForUsers(taskHistory, usersInProject);
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId });
             }
 
@@ -497,7 +504,7 @@
         /// </returns>        
         public ActionResult Details(int id)
         {
-            var model = this.CreateSingleTaskViewModelById(id);
+            var model = this.CreateSingleTaskViewModelById(id);            
             return this.View(model);
         }
 
@@ -589,7 +596,7 @@
         /// </returns>
         private SingleTaskViewModel CreateSingleTaskViewModelById(int taskId)
         {
-            var model = new SingleTaskViewModel();
+
             var task = this.taskProcessor.GetTaskById(taskId);
             var creatorName = task.CreatorId.HasValue
                                   ? this.userProcessor.GetUser((int)task.CreatorId).UserName
@@ -597,15 +604,22 @@
             var assigneeName = task.AssigneeId.HasValue
                                    ? this.userProcessor.GetUser((int)task.AssigneeId).UserName
                                    : "none";
-            model.HumanTask = task;
-            model.CreatorName = creatorName;
-            model.AssigneeName = assigneeName;
-            model.TaskHistories = this.taskProcessor.GetAllHistoryForTask(taskId).OrderByDescending(x => x.ChangeDateTime).ToList();
+            var model = new SingleTaskViewModel
+                            {
+                                HumanTask = task,
+                                CreatorName = creatorName,
+                                AssigneeName = assigneeName,
+                                TaskHistories =
+                                    this.taskProcessor.GetAllHistoryForTask(taskId).OrderByDescending(
+                                        x => x.ChangeDateTime)
+                                    .ToList(),
+                                Priorities = this.taskProcessor.GetPrioritiesList()
+                            };
             return model;
         }
 
 
-      
+
 
 
         [HttpPost]

@@ -104,5 +104,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             int count = newsRepository.GetNewsCount(userProcessor.GetUserByName(User.Identity.Name).Id);
             return Json(count);
         }
+
+        public void MarkAllUnreadNewsAsRead()
+        {
+            var user = userProcessor.GetUserByName(User.Identity.Name);
+            newsRepository.MarkAllUnreadNewsForUser(user.Id);
+            this.notifier.SetCountOfNewses(user.UserName);
+        }
     }
 }

@@ -9,6 +9,7 @@ packages
 *.user
 *.dotCover
 2012-07-*
+2012-08-*
 *.ncrunchsolution
 *.MDF
 *.ldf

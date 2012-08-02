@@ -18,7 +18,7 @@
         @Html.HiddenFor(model => model.Created)
         @Html.HiddenFor(model => model.ProjectId)
         @Html.HiddenFor(model => model.Assigned)
-
+        @Html.HiddenFor(model => model.Priority, new { id = "priorityValue" })
         <div class="editor-label">
             Name:
         </div>
@@ -36,34 +36,48 @@
         <div class="editor-label">
             Priority:
         </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.Priority, Model.Priorities, "Choose...");
-            @Html.ValidationMessageFor(model => model.Priority)
+        <div class="btn-group" data-toggle="buttons-radio">
+            @foreach (var priority in Model.Priorities)
+            {
+                if (@priority.Value == "0")
+                {
+                    <button class="btn priority active" type="button" value=@priority.Value>
+                        @priority.Text
+                    </button>                    
+                }
+                else
+                {
+                    <button class="btn priority" type="button" value=@priority.Value>
+                        @priority.Text
+                    </button>                    
+                }
+            }
         </div>
         <p>
-               <div class="editor-label">
-            Finish Date: 
-        </div>
-        <div class="editor-field">
-            <div class="input-append date" data-date="06-09-2011" data-date-format="dd-mm-yyyy">
-            @Html.TextBoxFor(model => model.Finished)            
-            @Html.ValidationMessageFor(model => model.Finished)
-        </div>
-        </div>
+            <div class="editor-label">
+                Finish Date:
+            </div>
+            <div class="editor-field">
+                <div class="input-append date" data-date="06-09-2011" data-date-format="dd-mm-yyyy">
+                    @Html.TextBoxFor(model => model.Finished)
+                    @Html.ValidationMessageFor(model => model.Finished)
+                </div>
+            </div>
             <input type="submit" value="Save" class="btn btn-primary" />
-            @Html.ActionLink("Return to tasks list", "Project", new { id = Model.ProjectId }, new { @class = "btn" })
+            @Html.ActionLink("Return to project", "Project", new { id = Model.ProjectId }, new { @class = "btn" })
         </p>
     </fieldset>
 }
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('#Finished').val('06-09-2011');
         $('#Finished').datepicker({
             format: 'dd-mm-yyyy'
+        });            
+
+        $(".priority").click(function () {
+            var value = $(this).val();
+            $("#priorityValue").val(value);
         });
     });
 </script>
-
-
-     

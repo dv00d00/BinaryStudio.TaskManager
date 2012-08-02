@@ -77,7 +77,7 @@
                     this.userProcessor.LogOnUser(model.UserName, model.Password);
                     var user = this.userProcessor.GetUserByName(model.UserName);
                     this.projectProcessor.CreateDefaultProject(user);
-                    return this.RedirectToAction("AllManagersWithTasks", "HumanTasks");
+                    return this.RedirectToAction("Index", "Landing");
                 }
             }
 
@@ -128,7 +128,7 @@
                     }
                     else
                     {
-                        return this.RedirectToAction("AllManagersWithTasks", "HumanTasks");
+                        return this.RedirectToAction("Index", "Landing");
                     }
                 }
                 else

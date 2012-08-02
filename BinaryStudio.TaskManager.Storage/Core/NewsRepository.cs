@@ -53,7 +53,24 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public int GetUnreadNewsCountForUserByName(string userName)
         {
-            return  this.dataBaseContext.News.Count(x => x.User.UserName == userName && x.IsRead == false);
+            return this.dataBaseContext.News.Count(x => x.User.UserName == userName && x.IsRead == false);
+        }
+
+        public IEnumerable<News> GetAllUnreadNewsForUser(int userId)
+        {
+            return this.dataBaseContext.News.Where(x => x.UserId == userId && x.IsRead == false);
+        }
+
+        public void MarkAllUnreadNewsForUser(int userId)
+        {
+            var news = this.dataBaseContext.News.Where(x => x.UserId == userId && x.IsRead == false);
+            var a = news.Count();
+            foreach (var currentNews in news)
+            {
+                currentNews.IsRead = true;
+                this.dataBaseContext.Entry(currentNews).State = EntityState.Modified;
+            }
+            this.dataBaseContext.SaveChanges();
         }
     }
 }
