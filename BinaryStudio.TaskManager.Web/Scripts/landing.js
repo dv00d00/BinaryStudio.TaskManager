@@ -87,15 +87,28 @@ $(function () {
 
     /********* Project Tasks View  *******/
     var homeProj = $("#projects .proj_row:first-child").attr("data-id");
+    $("#projects .proj_row:first-child").children(".project_name").addClass("active_proj");
     getTaskList(homeProj);
     ko.applyBindings(modelData);
-    
     $('body').popover({
         selector: '.task_popover',
         delay: { show: 300 }
     });
 
-    $(document).on("click", ".project_name", function () {
+
+    $(document).on("click", ".task_group_list .project_name", function () {
+        $(".project_name").removeClass("active_proj");
+        $(this).addClass("active_proj");
+        var url = null;
+        switch ($(this).attr("id")) {
+            case "all_tasks": url = "/Landing/GetAllTasks"; break;
+            case "my_tasks": url = "/Landing/GetMyTasks"; break;
+            case "unassigned_tasks": url = "/Landing/GetUnassignedTasks"; break;
+        }
+        var groupName = $(this).html();
+        getTaskGroup(url, groupName);
+    });
+    $(document).on("click", ".user_projs,.created_projs", function () {
         $(".project_name").removeClass("active_proj");
         $(this).addClass("active_proj");
         var proj = $(this).parent(".proj_row").attr("data-id");
@@ -107,20 +120,39 @@ function getTaskList(proj) {
     $.ajax({
         data: { projectId: proj },
         dataType: "JSON",
-        type: "POST",
+        type: "GET",
         url: "/Landing/GetTasks",
         beforeSend: function () {
             //$("#loader").show();
         },
         success: function (data) {
             var task = null;
-            $("#content").children("h2").html(data.Project.Name);
+            modelData.project(data.Project.Name);
             $("#content").children(".proj_title").html("[project]");
             modelData.tasks.removeAll();
             for (var i = 0; i < data.Project.Tasks.length; i++) {
                 task = data.Project.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));
-                dateFormat(date, "longTime");
+                var thisTask = new Task(task.Id, task.Name, task.Description, date, task.Creator);
+                modelData.tasks.push(thisTask);
+            }
+        }
+    });
+}
+
+function getTaskGroup(url, groupName) {
+    $.ajax({
+        dataType: "JSON",
+        type: "GET",
+        url: url,
+        success: function (data) {
+            var task = null;
+            modelData.project(data.Project.Name);
+            $("#content").children(".proj_title").html("[" + groupName + "]");
+            modelData.tasks.removeAll();
+            for (var i = 0; i < data.Project.Tasks.length; i++) {
+                task = data.Project.Tasks[i];
+                var date = new Date(parseInt(task.Created.substr(6)));
                 var thisTask = new Task(task.Id, task.Name, task.Description, date, task.Creator);
                 modelData.tasks.push(thisTask);
             }

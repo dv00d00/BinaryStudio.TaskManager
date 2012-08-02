@@ -71,7 +71,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return Json(model);
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult GetTasks(int projectId)
         {
             var user = userRepository.GetByName(User.Identity.Name);
@@ -96,7 +96,91 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 {
                     Project = projectModel
                 };
-            return Json(model);
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        
+        [HttpGet]
+        public ActionResult GetAllTasks()
+        {
+            var user = userRepository.GetByName(User.Identity.Name);
+            var taskList = projectRepository.GetAllProjectsForUser(user.Id).SelectMany(proj => proj.Tasks).ToList();
+            taskList.AddRange(projectRepository.GetAllProjectsForTheirCreator(user.Id).SelectMany(proj => proj.Tasks).ToList());
+            var tasksToModel = taskList.Select(task => new TaskView
+            {
+                Id = task.Id,
+                Description = task.Description,
+                Name = task.Name,
+                Priority = task.Priority,
+                Created = task.Created,
+                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString()
+            });
+            var projectModel = new ProjectView
+            {
+                Name = "All Tasks",
+                Tasks = tasksToModel
+            };
+            var model = new LandingTasksModel()
+            {
+                Project = projectModel
+            };
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetMyTasks()
+        {
+            var user = userRepository.GetByName(User.Identity.Name);
+            var taskList = projectRepository.GetAllProjectsForUser(user.Id).SelectMany(proj => proj.Tasks).Where(x => x.AssigneeId == user.Id).ToList();
+            taskList.AddRange(projectRepository.GetAllProjectsForTheirCreator(user.Id).SelectMany(proj => proj.Tasks).Where(x => x.AssigneeId == user.Id).ToList());
+            var tasksToModel = taskList.Select(task => new TaskView
+            {
+                Id = task.Id,
+                Description = task.Description,
+                Name = task.Name,
+                Priority = task.Priority,
+                Created = task.Created,
+                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString()
+            });
+            var projectModel = new ProjectView
+            {
+                Name = "My Tasks",
+                Tasks = tasksToModel
+            };
+            var model = new LandingTasksModel()
+            {
+                Project = projectModel
+            };
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetUnassignedTasks()
+        {
+            var user = userRepository.GetByName(User.Identity.Name);
+            var taskList = projectRepository.GetAllProjectsForUser(user.Id).SelectMany(proj => proj.Tasks).Where(x => x.AssigneeId == null).ToList();
+            taskList.AddRange(projectRepository.GetAllProjectsForTheirCreator(user.Id).SelectMany(proj => proj.Tasks).Where(x => x.AssigneeId == null).ToList());
+            var tasksToModel = taskList.Select(task => new TaskView
+            {
+                Id = task.Id,
+                Description = task.Description,
+                Name = task.Name,
+                Priority = task.Priority,
+                Created = task.Created,
+                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString()
+            });
+            var projectModel = new ProjectView
+            {
+                Name = "Unassigned Tasks",
+                Tasks = tasksToModel
+            };
+            var model = new LandingTasksModel()
+            {
+                Project = projectModel
+            };
+
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
     }
 }

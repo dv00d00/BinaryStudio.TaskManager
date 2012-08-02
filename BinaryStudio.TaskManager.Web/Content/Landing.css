@@ -21,9 +21,16 @@
     padding-top: 20px;
 }
 .project_list, .task_group_list {
-    list-style: none;
     padding: 0px;
     padding-top: 10px;
+    overflow: auto;
+}
+
+#task_groups h3, #projects h3{
+    margin-left: 20px;
+}
+.task_group_list {
+    padding-left: 20px;
 }
 
 
@@ -36,6 +43,9 @@
     margin-left: 5px; 
 }
 
+.task_group_list .project_name {
+    width: 230px;
+}
 .project_name:hover{
     cursor: pointer;
     background: #EEF0F0;
