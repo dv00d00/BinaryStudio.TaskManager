@@ -38,6 +38,12 @@ namespace BinaryStudio.TaskManager.Logic.Domain
                 Description = "High",
                 Value = 2
             });
+            context.Priorities.Add(new Priority
+            {
+                Id = Guid.NewGuid(),
+                Description = "Blocking",
+                Value = 3
+            });
 
             var cryptoProvider = new CryptoProvider();
             var salt = cryptoProvider.CreateSalt();
