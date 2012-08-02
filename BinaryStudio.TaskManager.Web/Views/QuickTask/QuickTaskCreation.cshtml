@@ -1,0 +1,26 @@
+﻿<div class="button">
+    <button title="Create" class="create btn">
+        Create
+    </button>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var onError = function () {
+            alert("Error while AJAX request");
+        };
+
+        $(".invite").click(function () {
+
+            var projId = 3;
+            var taskDescription = "ajshdj";
+            $.ajax({
+                type: "POST",
+                url: "/QuickTask/QuickTaskCreation/",
+                data: { projectId: projId, description: taskDescription },
+                dataType: "json",
+                traditional: true
+            }).error(onError);
+        });
+    });
+</script>
