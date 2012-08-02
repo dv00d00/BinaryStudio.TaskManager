@@ -4,7 +4,7 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:v="clr-namespace:MessengR.Client.View"
         xmlns:vm="clr-namespace:MessengR.Client.ViewModel"
-        Title="MessengR" ShowTitleBar="False" Height="325" Width="375" MinWidth="375" MinHeight="325" ShowInTaskbar="False">
+        Title="TaskMeneger" ShowTitleBar="False" Height="325" Width="375" MinWidth="375" MinHeight="325" ShowInTaskbar="False">
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
@@ -33,10 +33,10 @@
             <Label Content="{Binding Me.User.Name}"/>
         </StackPanel>
         <TabControl Grid.Row="2" HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Stretch" Grid.ColumnSpan="3">
-            <TabItem Name="tabItem1" Header="Conversations">
+            <TabItem Name="tabItem1" Header="Events">
                 <ContentControl Content="{Binding Conversations}" ContentTemplate="{StaticResource ConversationListTemplate}"/>
             </TabItem>
-            <TabItem Name="tabItem2" Header="Contacts">
+            <TabItem Name="tabItem2" Header="Settings">
                 <ContentControl Content="{Binding Contacts}" ContentTemplate="{StaticResource ContactListTemplate}"/>
             </TabItem>
         </TabControl>

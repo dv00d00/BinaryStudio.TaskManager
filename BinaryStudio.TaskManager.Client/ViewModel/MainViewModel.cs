@@ -115,7 +115,7 @@ namespace MessengR.Client.ViewModel
                 }
                 else
                 {
-                    taskHub.Join(2, "admin");
+                    taskHub.Join(2, Name);
                 }
 
             });

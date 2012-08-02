@@ -15,7 +15,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" FontSize="26.67" Margin="12,0,0,0" Padding="1" Content="MessengR" Foreground="{DynamicResource AccentColorBrush}"/>
+        <Label Grid.Row="0" FontSize="26.67" Margin="12,0,0,0" Padding="1" Content="TaskMeneger" Foreground="{DynamicResource AccentColorBrush}"/>
         <StackPanel 
             Margin="12,0,0,0" 
             Grid.Row="1" 
