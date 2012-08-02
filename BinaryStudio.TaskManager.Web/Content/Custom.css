@@ -58,3 +58,7 @@ div.task.priority {
     padding: 10px;
     width: auto;
 }
+
+button.all_read {
+    float: left;
+}
