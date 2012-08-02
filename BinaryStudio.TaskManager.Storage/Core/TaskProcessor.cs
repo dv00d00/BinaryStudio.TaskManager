@@ -310,5 +310,33 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             return humanTaskRepository.GetAllHistoryForUser(userId);
         }
+
+        public IEnumerable<HumanTask> GetAllClosedTasksForProject(int projectId)
+        {
+            var tasks = this.humanTaskRepository.GetAllTasksInProject(projectId);
+            var openTasks = tasks.Where(x => x.Closed != (DateTime?)null);
+            return openTasks;
+        }
+
+        public IEnumerable<HumanTask> GetAllClosedTasksForUserInProject(int projectId, int userId)
+        {
+            var tasks = this.humanTaskRepository.GetAllTasksForUserInProject(projectId, userId);
+            return tasks.Where(x => x.Closed != (DateTime?)null);
+        }
+
+        public IEnumerable<HumanTask> GetAllOpenTasksForProject(int projectId)
+        {
+            var tasks = this.humanTaskRepository.GetAllTasksInProject(projectId);
+            var openTasks = tasks.Where(x => x.Closed == (DateTime?) null);
+            return openTasks;
+        }
+
+        public IEnumerable<HumanTask> GetAllOpenTasksForUserInProject(int projectId,int userId)
+        {
+            var tasks = this.humanTaskRepository.GetAllTasksForUserInProject(projectId, userId);
+            return tasks.Where(x => x.Closed == (DateTime?) null);
+        }
+
+       
     }
 }

@@ -77,7 +77,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var user = userRepository.GetByName(User.Identity.Name);
             var currentProject = projectRepository.GetById(projectId);
             var taskList = currentProject.Tasks;
-            var tasksToModel = taskList.Select(task => new TaskView
+            var tasksToModel = taskList.Where(x => x.Closed == (DateTime?)null).Select(task => new TaskView
                             {
                                 Id = task.Id,
                                 Description = task.Description,

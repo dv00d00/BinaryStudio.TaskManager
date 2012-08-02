@@ -9,10 +9,10 @@ div.sortableTasks a
 div.task  
 {
     border-radius: 15px 15px 15px 15px; 
-    border:2px solid black;
+    /*border:2px solid black; */
     width:200px;
     height:100px;
-    margin: 5px;
+    margin: 10px;
     background: -webkit-linear-gradient(top, #f2f9fe 0%,#d6f0fd 100%);
        
 }

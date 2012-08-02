@@ -165,5 +165,13 @@
 
         IList<HumanTaskHistory> GetAllHistoryForUser(int userId);
 
+        IEnumerable<HumanTask> GetAllOpenTasksForProject(int projectId);
+
+        IEnumerable<HumanTask> GetAllOpenTasksForUserInProject(int projectId,int userId);
+
+        IEnumerable<HumanTask> GetAllClosedTasksForUserInProject(int projectId, int userId);
+
+        IEnumerable<HumanTask> GetAllClosedTasksForProject(int projectId);
+
     }
 }

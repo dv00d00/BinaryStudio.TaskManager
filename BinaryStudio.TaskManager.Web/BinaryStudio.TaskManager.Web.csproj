@@ -173,6 +173,8 @@
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\delete-icon.gif" />
+    <Content Include="Content\images\details.png" />
+    <Content Include="Content\images\done.png" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\plus_icon.gif" />

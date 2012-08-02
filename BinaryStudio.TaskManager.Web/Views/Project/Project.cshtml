@@ -90,6 +90,10 @@
                 <td align="center" width="250" valign="top">
                     <div class="editor-field">
                         @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new { projectId = Model.ProjectId }, new { @class = "btn" })
+                        <br/>
+                        @Html.ActionLink("Show closed projects", "Project", new { projectId = Model.ProjectId, isOpenedProjects = false }, new { @class = "btn" })
+                        <br/>
+                        @Html.ActionLink("Show opened projects", "Project", new { projectId = Model.ProjectId, isOpenedProjects = true }, new { @class = "btn" })
                     </div>
                 </td>
                 <td valign="top">

@@ -73,7 +73,7 @@
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult Project(int id)
+        public ActionResult Project(int id,bool isOpenedProjects = true)
         {
             var model = new ProjectViewModel
             {
@@ -86,7 +86,9 @@
             users.Add(this.projectProcessor.GetProjectById(id).Creator);
             foreach (var user in users)
             {
-                var managerModel = new ManagerTasksViewModel { User = user, Tasks = this.taskProcessor.GetAllTasksForUserInProject(id, user.Id).ToList() };
+                var managerModel = new ManagerTasksViewModel { User = user, Tasks = isOpenedProjects 
+                    ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, user.Id).ToList()
+                    : this.taskProcessor.GetAllClosedTasksForUserInProject(id, user.Id).ToList() };
                 model.UsersTasks.Add(managerModel);
             }
 
@@ -602,11 +604,37 @@
             return model;
         }
 
+
+      
+
+
         [HttpPost]
         public ActionResult TaskView(int taskId)
         {
             var task = taskProcessor.GetTaskById(taskId);
             return PartialView("ManagerTasksTablePartialView", task);
+        }
+
+        public void MakeTaskClose(int taskId, int projectId)
+        {
+            taskProcessor.CloseTask(taskId);
+            HumanTask humanTask = taskProcessor.GetTaskById(taskId);
+            HumanTaskHistory humanTaskHistory = new HumanTaskHistory
+            {
+                Action = ChangeHistoryTypes.Close,
+                ChangeDateTime = DateTime.Now,
+                NewAssigneeId = humanTask.AssigneeId,
+                UserId = userProcessor.GetUserByName(User.Identity.Name).Id,
+                NewDescription = humanTask.Description,
+                NewPriority = humanTask.Priority,
+                NewName = humanTask.Name,
+                Task = humanTask,
+                TaskId = taskId
+            };
+            taskProcessor.AddHistory(humanTaskHistory);
+            List<User> users = new List<User>(projectProcessor.GetAllUsersInProject(projectId));
+            users.Add(projectProcessor.GetProjectById(projectId).Creator);
+            CreateNewsForUsers(humanTaskHistory, users);
         }
     }
 }
