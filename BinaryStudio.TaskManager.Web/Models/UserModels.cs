@@ -38,7 +38,8 @@ namespace BinaryStudio.TaskManager.Web.Models
         [MaxLength(50, ErrorMessage = "Username maximum length is 50 symbols!")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Email is required!")]
+        [Required(ErrorMessage = "Please enter your email")]
+        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Please enter a valid email")]
         [Display(Name = "Email")]        
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }

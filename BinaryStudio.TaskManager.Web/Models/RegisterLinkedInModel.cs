@@ -19,7 +19,8 @@ namespace ThirdPartySignup.Models
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter your email")]
+        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Please enter a valid email")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email address")]
         public string Email { get; set; }
