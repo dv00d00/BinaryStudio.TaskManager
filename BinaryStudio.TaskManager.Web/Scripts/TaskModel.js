@@ -1,5 +1,6 @@
 ﻿var TaskModel = function () {
     var self = this;
+    self.project = ko.observable();
     self.tasks = ko.observableArray([]);
 };
 

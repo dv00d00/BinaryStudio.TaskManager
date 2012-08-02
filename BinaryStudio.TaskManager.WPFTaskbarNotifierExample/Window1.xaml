@@ -1,0 +1,80 @@
+﻿<Window x:Class="WPFTaskbarNotifierExample.Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:tn="clr-namespace:WPFTaskbarNotifier;assembly=WPFTaskbarNotifier"
+    Title="WPFTaskbarNotifierExample" Height="300" Width="400"
+    WindowStyle="ToolWindow"
+		ShowInTaskbar="False"
+    x:Name="ThisControl"
+    >
+  <Grid>
+
+  <Grid.RowDefinitions >
+    <RowDefinition  Height="*"/>
+  </Grid.RowDefinitions>
+
+    <!-- The following NotifyIcon is not really needed for the Taskbar Notifier, but compliments it nicely. 
+         The NotifyIcon wrapper was included in this project with permission from Mariano Omar Rodriguez
+         http://weblogs.asp.net/marianor/archive/2007/10/15/a-wpf-wrapper-around-windows-form-notifyicon.aspx
+      -->
+    <tn:NotifyIcon x:Name="NotifyIcon" Text="Example Notifier" Icon="Resources/UFO.ico" MouseDoubleClick="NotifyIcon_DoubleClick">
+      <tn:NotifyIcon.ContextMenu>
+        <ContextMenu>
+          <MenuItem Header="Open" Click="NotifyIconOpen_Click" />
+          <MenuItem Header="Configure..." Click="NotifyIconConfigure_Click" />
+          <Separator/>
+          <MenuItem Header="Exit" Click="NotifyIconExit_Click" />
+        </ContextMenu>
+      </tn:NotifyIcon.ContextMenu>
+    </tn:NotifyIcon>
+
+    <TabControl>
+      
+      <TabItem Header="Test">
+        <Grid Margin="5,5,5,0">
+
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+
+          <Label Grid.Row="0" Grid.Column="0" Content="Title:" Margin="5,5,5,5"/>
+          <TextBox Grid.Row="0" Grid.Column="1" Name="TitleTextBox" Margin="5,5,5,5"/>
+          <Label Grid.Row="1" Grid.Column="0" Content="Message:" Margin="5,5,5,5"/>
+          <TextBox Grid.Row="1" Grid.Column="1" Name="MessageTextBox" Margin="5,5,5,5"/>
+          <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,5,5,5">
+            <Button Content="Add" IsDefault="True" Click="Add_Click" Width="60" Margin="5,5,5,5"/>
+            <Button Content="Clear All" Click="ClearAll_Click"  Width="60" Margin="5,5,5,5"/>
+          </StackPanel>
+        </Grid>
+      </TabItem>
+      
+      <TabItem Header="Timing">
+        <Grid Margin="5,5,5,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="60" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,8,0,0" Text="Opening time (ms)"/>
+          <TextBox Grid.Column="1" Grid.Row="0" Margin="0,5,0,0" Text="{Binding ElementName=ThisControl, Path=TaskbarNotifier.OpeningMilliseconds, UpdateSourceTrigger=PropertyChanged}" />
+          <TextBlock Grid.Column="0" Grid.Row="1" Margin="0,8,0,0" Text="Stay open time (ms)"/>
+          <TextBox Grid.Column="1" Grid.Row="1" Margin="0,5,0,0" Text="{Binding ElementName=ThisControl, Path=TaskbarNotifier.StayOpenMilliseconds, UpdateSourceTrigger=PropertyChanged}" />
+          <TextBlock Grid.Column="0" Grid.Row="2" Margin="0,8,0,0" Text="Hiding time (ms)"/>
+          <TextBox Grid.Column="1" Grid.Row="2" Margin="0,5,0,0" Text="{Binding ElementName=ThisControl, Path=TaskbarNotifier.HidingMilliseconds, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+      </TabItem>
+      
+    </TabControl>
+  </Grid>
+</Window>

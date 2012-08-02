@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MessengR.Models;
 using SignalR.Client.Hubs;
+using WPFTaskbarNotifierExample;
 
 namespace MessengR.Models
 {
