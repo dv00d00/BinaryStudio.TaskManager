@@ -2,7 +2,11 @@
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
+    using System;
+    using System.Linq;
+
     using BinaryStudio.TaskManager.Logic.Core;
+    using BinaryStudio.TaskManager.Logic.Domain;
 
     public class QuickTaskController : Controller
     {
@@ -42,11 +46,35 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.PartialView("QuickTaskCreation");
         }
 
+        /// <summary>
+        /// The quick task creation.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <param name="description">
+        /// The description.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         [HttpPost]
-        public void QuickTaskCreation(int projectId, string description)
+        public ActionResult QuickTaskCreation(int projectId, string description)
         {
             var creatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
-            //this.taskProcessor.CreateTask();
+            var separetor = new[] { ' ' };
+            var taskName = description.Split(separetor, 2);
+            var task = new HumanTask
+            {
+                Created = DateTime.Now,
+                CreatorId = creatorId,
+                Description = description,
+                Name = taskName[0],
+                Priority = 0,
+                ProjectId = projectId,
+            };
+            this.taskProcessor.CreateTask(task);
+            return this.RedirectToAction("Project", "Project", new { id = projectId });
         } 
     }
 }
