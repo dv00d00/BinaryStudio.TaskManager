@@ -254,7 +254,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [Authorize]
         public void MoveTask(int taskId, int senderId, int receiverId, int projectId)
         {
-            this.notifier.MoveTask(taskId, receiverId);
+            
             HumanTask humanTask = taskProcessor.GetTaskById(taskId);
             HumanTaskHistory humanTaskHistory = new HumanTaskHistory
             {
@@ -273,17 +273,17 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             List<User> users = new List<User>(projectProcessor.GetAllUsersInProject(projectId));
             users.Add(projectProcessor.GetProjectById(projectId).Creator);
             CreateNewsForUsers(humanTaskHistory, users);
-
-            // move to real user
             if (receiverId != -1)
             {
-
                 this.taskProcessor.MoveTask(taskId, receiverId);
-                return;
             }
-
-            // make task unassigned
-            this.taskProcessor.MoveTaskToUnassigned(taskId);
+            else
+            {
+                this.taskProcessor.MoveTaskToUnassigned(taskId);
+            }
+            
+            this.notifier.MoveTask(taskId, receiverId);
+            
         }
 
         /// <summary>

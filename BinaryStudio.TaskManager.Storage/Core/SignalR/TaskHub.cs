@@ -1,4 +1,5 @@
-﻿using BinaryStudio.TaskManager.Logic.Core.SignalR;
+﻿using BinaryStudio.TaskManager.Logic.Core;
+using BinaryStudio.TaskManager.Logic.Core.SignalR;
 using SignalR.Hubs;
 
 namespace BinaryStudio.TaskManager.Web.SignalR
@@ -6,6 +7,12 @@ namespace BinaryStudio.TaskManager.Web.SignalR
     [HubName("taskHub")]
     public class TaskHub : Hub
     {
+        private readonly IUserProcessor userProcessor;
+
+        public TaskHub(IUserProcessor userProcessor)
+        {
+            this.userProcessor = userProcessor;
+        }
 
         public void Distribute(dynamic message)
         {
@@ -19,7 +26,8 @@ namespace BinaryStudio.TaskManager.Web.SignalR
 
         public void LoginWithClient(string id, string userName, string password)
         {
-            Clients[id].ReciveClientLogonStatus(true);
+            bool status = userProcessor.LogOnUser(userName, password);
+            Clients[id].ReciveClientLogonStatus(status);
         }
     }
 }
