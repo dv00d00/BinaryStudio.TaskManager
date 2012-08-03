@@ -46,8 +46,7 @@
             cursor: 'move'
         });
         $(".column").disableSelection();
-        
-    $(document).ready(function () {
+
         $('.done').click(function () {
             var id = $(this).attr('id');
             var str = "#" + id + " .task";
@@ -59,10 +58,16 @@
                 dataType: "json",
                 traditional: true
             }); 
+            
+
+        });
+        
+        $(".create").click(function () {
+            $(".quicktaskarea").val("");
         });
     });
 
-    });
+
 </script>
 <!-- Caption of the table "Managers-Tasks"-->
 <fieldset>
@@ -150,7 +155,6 @@
 </fieldset>
 <p align="center" class="well-large">
 </p>
-
 @Ajax.ActionLink(" ", "QuickTaskCreation", "QuickTask", new AjaxOptions
 
     {
