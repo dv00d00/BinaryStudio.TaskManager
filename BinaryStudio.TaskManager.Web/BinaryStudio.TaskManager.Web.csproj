@@ -143,6 +143,7 @@
     <Compile Include="Controllers\ReminderController.cs" />
     <Compile Include="Controllers\SignalRController.cs" />
     <Compile Include="ErrorHandler.cs" />
+    <Compile Include="Extentions\StringExtensions.cs" />
     <Compile Include="Helpers\TextaheadHelper.cs" />
     <Compile Include="Models\CreateTaskViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
