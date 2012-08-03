@@ -20,10 +20,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         private IUserRepository userRepository;
 
-        public LandingController(IProjectRepository projectRepository, IUserRepository userRepository)
+        private ITaskProcessor taskProcessor;
+
+        public LandingController(IProjectRepository projectRepository, IUserRepository userRepository, ITaskProcessor taskProcessor)
         {
             this.projectRepository = projectRepository;
             this.userRepository = userRepository;
+            this.taskProcessor = taskProcessor;
         }
 
         public ActionResult Index()
@@ -60,9 +63,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [HttpPost]
         public ActionResult DeleteProject(int projectId)
         {
+            var tasks = this.taskProcessor.GetAllTasksInProject(projectId);
+            foreach (var humanTask in tasks)
+            {
+                this.taskProcessor.DeleteTask(humanTask.Id);
+            }
             this.projectRepository.Delete(projectId);
             var user = userRepository.GetByName(User.Identity.Name);
             var projectList = projectRepository.GetAllProjectsForUser(user.Id);
+
             var projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name }).ToList();
             var model = new LandingProjectsModel { UserProjects = projectsToModel };
             projectList = projectRepository.GetAllProjectsForTheirCreator(user.Id);
