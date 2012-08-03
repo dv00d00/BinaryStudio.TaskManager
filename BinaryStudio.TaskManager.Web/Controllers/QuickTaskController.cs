@@ -3,6 +3,7 @@
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Text;
 
@@ -23,6 +24,21 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly ITaskProcessor taskProcessor;
 
         /// <summary>
+        /// The project processor.
+        /// </summary>
+        private readonly IProjectProcessor projectProcessor;
+
+        /// <summary>
+        /// The notifier.
+        /// </summary>
+        private readonly INotifier notifier;
+
+        /// <summary>
+        /// The news repository
+        /// </summary>
+        private readonly INewsRepository newsRepository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="QuickTaskController"/> class.
         /// </summary>
         /// <param name="userProcessor">
@@ -31,10 +47,22 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="taskProcessor">
         /// The task Processor.
         /// </param>
-        public QuickTaskController(IUserProcessor userProcessor, ITaskProcessor taskProcessor)
+        /// <param name="projectProcessor">
+        /// The project Processor.
+        /// </param>
+        /// <param name="notifier">
+        /// The notifier.
+        /// </param>
+        /// <param name="newsRepository">
+        /// The news Repository.
+        /// </param>
+        public QuickTaskController(IUserProcessor userProcessor, ITaskProcessor taskProcessor, IProjectProcessor projectProcessor, INotifier notifier, INewsRepository newsRepository)
         {
             this.userProcessor = userProcessor;
             this.taskProcessor = taskProcessor;
+            this.projectProcessor = projectProcessor;
+            this.notifier = notifier;
+            this.newsRepository = newsRepository;
         }
 
         /// <summary>
@@ -85,7 +113,46 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 ProjectId = projectId,
             };
             this.taskProcessor.CreateTask(task);
-            return this.RedirectToAction("Project", "Project", new { id = projectId });
-        } 
+
+            var taskHistory = new HumanTaskHistory
+            {
+                NewDescription = task.Description,
+                ChangeDateTime = DateTime.Now,
+                NewAssigneeId = task.AssigneeId,
+                NewName = task.Name,
+                Task = task,
+                NewPriority = task.Priority,
+                Action = ChangeHistoryTypes.Create,
+                UserId = userProcessor.GetUserByName(User.Identity.Name).Id
+            };
+            this.taskProcessor.AddHistory(taskHistory);
+
+            List<User> projectUsers = new List<User>(projectProcessor.GetAllUsersInProject(task.ProjectId));
+            projectUsers.Add(this.projectProcessor.GetProjectById(task.ProjectId).Creator);
+
+            CreateNewsForUsers(taskHistory, projectUsers);
+
+            notifier.CreateTask(task.Id);
+
+            return this.RedirectToAction("Project", "Project", new { id = task.ProjectId });
+        }
+
+        private void CreateNewsForUsers(HumanTaskHistory taskHistory, IEnumerable<User> projectUsers)
+        {
+            foreach (var projectUser in projectUsers)
+            {
+                var news = new News
+                {
+                    HumanTaskHistory = taskHistory,
+                    IsRead = false,
+                    User = projectUser,
+                    UserId = projectUser.Id,
+                    HumanTaskHistoryId = taskHistory.Id,
+                };
+
+                newsRepository.AddNews(news);
+                notifier.SetCountOfNewses(projectUser.UserName);
+            }
+        }
     }
 }
