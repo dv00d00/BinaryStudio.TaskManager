@@ -123,20 +123,29 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 Task = task,
                 NewPriority = task.Priority,
                 Action = ChangeHistoryTypes.Create,
-                UserId = userProcessor.GetUserByName(User.Identity.Name).Id
+                UserId = this.userProcessor.GetUserByName(User.Identity.Name).Id
             };
             this.taskProcessor.AddHistory(taskHistory);
 
-            List<User> projectUsers = new List<User>(projectProcessor.GetAllUsersInProject(task.ProjectId));
+            List<User> projectUsers = new List<User>(this.projectProcessor.GetAllUsersInProject(task.ProjectId));
             projectUsers.Add(this.projectProcessor.GetProjectById(task.ProjectId).Creator);
 
-            CreateNewsForUsers(taskHistory, projectUsers);
+            this.CreateNewsForUsers(taskHistory, projectUsers);
 
-            notifier.CreateTask(task.Id);
+            this.notifier.CreateTask(task.Id);
 
             return this.RedirectToAction("Project", "Project", new { id = task.ProjectId });
         }
 
+        /// <summary>
+        /// The create news for users.
+        /// </summary>
+        /// <param name="taskHistory">
+        /// The task history.
+        /// </param>
+        /// <param name="projectUsers">
+        /// The project users.
+        /// </param>
         private void CreateNewsForUsers(HumanTaskHistory taskHistory, IEnumerable<User> projectUsers)
         {
             foreach (var projectUser in projectUsers)
@@ -150,8 +159,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     HumanTaskHistoryId = taskHistory.Id,
                 };
 
-                newsRepository.AddNews(news);
-                notifier.SetCountOfNewses(projectUser.UserName);
+                this.newsRepository.AddNews(news);
+                this.notifier.SetCountOfNewses(projectUser.UserName);
             }
         }
     }

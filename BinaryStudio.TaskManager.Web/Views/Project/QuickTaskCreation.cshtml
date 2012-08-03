@@ -1,6 +1,6 @@
 ﻿@model BinaryStudio.TaskManager.Logic.Domain.HumanTask
-<div class="editor-field">
-    @Html.TextAreaFor(model => model.Description, new {@class = "quicktaskarea"})
+<div id="editor-field">
+    @Html.TextBoxFor(model => model.Description, new {@class = "quicktaskarea"})
     @Html.ValidationMessageFor(model => model.Description)
 </div>
 
@@ -12,19 +12,22 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var self = this;
+        var onSuccess = function () {
+            $(self).parents(".project/project");
+        };
         
         $(".create").click(function () {
 
             var projId = @Model.ProjectId;
-            var taskDescription = jQuery(".quicktaskarea").val();
-            $.ajax({
-                type: "POST",
-                url: "/QuickTask/QuickTaskCreation/",
-                data: { projectId: projId, description: taskDescription },
-                dataType: "json",
-                traditional: true
+                    var taskDescription = jQuery(".quicktaskarea").val();
+                    $.ajax({
+                        type: "POST",
+                        url: "/QuickTask/QuickTaskCreation/",
+                        data: { projectId: projId, description: taskDescription },
+                        dataType: "json",
+                        traditional: true
+                    }).success(onSuccess);
+                });
             });
-        });
-    });
-    
 </script>
