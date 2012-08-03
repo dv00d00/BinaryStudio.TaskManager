@@ -115,8 +115,9 @@
                 AssigneeId = (userId != -1) ? userId : (int?)null,
                 CreatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id,
                 Created = DateTime.Now,
-                ProjectId = projectId
+                ProjectId = projectId                
             };
+            createModel.Priority = int.Parse(createModel.Priorities.First().Value);
             return this.View(createModel);
         }
 

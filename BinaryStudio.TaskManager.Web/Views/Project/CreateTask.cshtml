@@ -18,7 +18,7 @@
         @Html.HiddenFor(model => model.Created)
         @Html.HiddenFor(model => model.ProjectId)
         @Html.HiddenFor(model => model.Assigned)
-        @Html.HiddenFor(model => model.Priority, new {id="priorityValue"})
+        @Html.HiddenFor(model => model.Priority, new { id = "priorityValue" })
         <div class="editor-label">
             Name:
         </div>
@@ -39,9 +39,18 @@
         <div class="btn-group" data-toggle="buttons-radio">
             @foreach (var priority in Model.Priorities)
             {
-                <button class="btn priority" type="button" value=@priority.Value>
-                    @priority.Text
-                </button>                    
+                if (@priority.Value == "0")
+                {
+                    <button class="btn priority active" type="button" value=@priority.Value>
+                        @priority.Text
+                    </button>                    
+                }
+                else
+                {
+                    <button class="btn priority" type="button" value=@priority.Value>
+                        @priority.Text
+                    </button>                    
+                }
             }
         </div>
         <p>
@@ -64,10 +73,11 @@
         $('#Finished').val('06-09-2011');
         $('#Finished').datepicker({
             format: 'dd-mm-yyyy'
-        });
+        });            
+
         $(".priority").click(function () {
             var value = $(this).attr("value");
-            $("#priorityValue").val(value);            
+            $("#priorityValue").val(value);
         });
     });
 </script>
