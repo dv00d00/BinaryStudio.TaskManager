@@ -1,5 +1,6 @@
 ﻿using System.Web.Routing;
 using SignalR;
+using SignalR.Ninject;
 
 namespace BinaryStudio.TaskManager.Web
 {
@@ -36,6 +37,8 @@ namespace BinaryStudio.TaskManager.Web
         protected override IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
+            GlobalHost.DependencyResolver = new NinjectDependencyResolver(kernel);
+            RouteTable.Routes.MapHubs();
             kernel.Load(Assembly.GetExecutingAssembly());
             return kernel;
         }
