@@ -42,7 +42,7 @@
             <RowDefinition Height="5" />
           </Grid.RowDefinitions>
           
-          <Label Grid.Row="0" Margin="8,0,8,0" FontSize="25" FontWeight="Bold" Content="TaskManager" Foreground="#FF838383"></Label>
+          <Label Margin="8,0" FontSize="25" FontWeight="Bold" Content="TaskManager" Foreground="#FF838383" Height="45" Grid.RowSpan="2"></Label>
 
           <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="15" Height="15" Click="HideButton_Click">
             <Button.ToolTip>Hide</Button.ToolTip>
@@ -67,21 +67,12 @@
             </Image>
           </Button>
 
-          <Path Grid.Row="3" Stretch="Fill" Margin="0,0,0,0" VerticalAlignment="Top" Height="1" Data="M0,64 L608,64">
-            <Path.Stroke>
-              <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5" MappingMode="RelativeToBoundingBox" SpreadMethod="Repeat">
-                <GradientStop Color="White" Offset="0"/>
-                <GradientStop Color="Blue" Offset="0.1"/>
-                <GradientStop Color="Red" Offset="0.9"/>
-                <GradientStop Color="White" Offset="1"/>
-              </LinearGradientBrush>
-            </Path.Stroke>
-          </Path>
+          <Path Grid.Row="3" Stretch="Fill" Margin="0,0,0,0" VerticalAlignment="Top" Height="1" Data="M0,64 L608,64" Stroke="#FF8888FC"></Path>
 
           <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
             <ItemsControl Name="ItemsList"  BorderThickness="0"
                        ItemsSource="{Binding ElementName=ThisControl, Path=NotifyContent}"
-                       ItemTemplate="{StaticResource ItemsTemplate}" FontSize="18">
+                       ItemTemplate="{StaticResource ItemsTemplate}" FontSize="18" Height="52">
               <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                   <StackPanel Orientation="Vertical" Width="Auto"/>
@@ -90,16 +81,7 @@
             </ItemsControl>
           </ScrollViewer>
         
-          <Path Grid.Row="1" Stretch="Fill" Margin="0,0,0,0" VerticalAlignment="Top" Height="1" Data="M0,64 L608,64">
-            <Path.Stroke>
-              <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5" MappingMode="RelativeToBoundingBox" SpreadMethod="Repeat">
-                <GradientStop Color="White" Offset="0"/>
-                <GradientStop Color="Blue" Offset="0.1"/>
-                <GradientStop Color="Red" Offset="0.9"/>
-                <GradientStop Color="White" Offset="1"/>
-              </LinearGradientBrush>
-            </Path.Stroke>
-          </Path>
+          <Path Grid.Row="1" Stretch="Fill" VerticalAlignment="Top" Height="5" Data="M0,64 L608,64" Stroke="#FF8888FC"></Path>
 
         </Grid>
 
