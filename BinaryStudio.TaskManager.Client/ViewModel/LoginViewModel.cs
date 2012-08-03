@@ -82,6 +82,7 @@ namespace MessengR.Client.ViewModel
                         main.Show();
                         LoginSuccess(this, null);
                     }
+                    Error = "Invalid login or password!";
                 }, uiScheduler);
         }
 

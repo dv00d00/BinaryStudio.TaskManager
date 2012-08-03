@@ -27,7 +27,7 @@ namespace BinaryStudio.TaskManager.Web.SignalR
         public void LoginWithClient(string id, string userName, string password)
         {
             bool status = userProcessor.LogOnUser(userName, password);
-            Clients[id].ReciveClientLogonStatus(true);
+            Clients[id].ReciveClientLogonStatus(status);
         }
     }
 }
