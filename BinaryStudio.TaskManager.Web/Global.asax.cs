@@ -6,7 +6,6 @@ namespace BinaryStudio.TaskManager.Web
     using System.Data.Entity;
     using System.Reflection;
     using System.Web.Mvc;
-
     using BinaryStudio.TaskManager.Logic.Domain;
 
     using Ninject;
@@ -37,7 +36,6 @@ namespace BinaryStudio.TaskManager.Web
         protected override IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
-           
             kernel.Load(Assembly.GetExecutingAssembly());
             return kernel;
         }
