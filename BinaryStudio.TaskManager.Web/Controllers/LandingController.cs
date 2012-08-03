@@ -80,7 +80,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var tasksToModel = taskList.Where(x => x.Closed == (DateTime?)null).Select(task => new TaskView
                             {
                                 Id = task.Id,
-                                Description = task.Description,
+                                Description = this.stringTrim(task.Description, 100),
                                 Name = task.Name,
                                 Priority = task.Priority,
                                 Created = task.Created,
@@ -98,7 +98,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 };
             return Json(model, JsonRequestBehavior.AllowGet);
         }
-        
+
         [HttpGet]
         public ActionResult GetAllTasks()
         {
@@ -108,7 +108,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var tasksToModel = taskList.Select(task => new TaskView
             {
                 Id = task.Id,
-                Description = task.Description,
+                Description = this.stringTrim(task.Description,100),
                 Name = task.Name,
                 Priority = task.Priority,
                 Created = task.Created,
@@ -136,7 +136,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var tasksToModel = taskList.Select(task => new TaskView
             {
                 Id = task.Id,
-                Description = task.Description,
+                Description = this.stringTrim(task.Description, 100),
                 Name = task.Name,
                 Priority = task.Priority,
                 Created = task.Created,
@@ -164,7 +164,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var tasksToModel = taskList.Select(task => new TaskView
             {
                 Id = task.Id,
-                Description = task.Description,
+                Description = this.stringTrim(task.Description, 100),
                 Name = task.Name,
                 Priority = task.Priority,
                 Created = task.Created,
@@ -182,5 +182,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
+
+        private string stringTrim(string description, int length)
+        {
+            var str = description.Replace(Environment.NewLine, " ");
+            return str.Length > length ? str.Substring(0, length) + "..." : str;
+        }
+
     }
 }
