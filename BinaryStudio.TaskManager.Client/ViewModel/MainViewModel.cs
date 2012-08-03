@@ -130,11 +130,11 @@ namespace MessengR.Client.ViewModel
             taskbarNotifier.Show();
             taskbarNotifier.ShowInTaskbar = true;
             taskbarNotifier.OpeningMilliseconds = 1000;
-            taskbarNotifier.StayOpenMilliseconds = 3000;
+            taskbarNotifier.StayOpenMilliseconds = 7000;
             taskbarNotifier.HidingMilliseconds = 1000;
             // Starts a new conversation with message.From if not started,
             // otherwise, it will add a message to the conversation window with message.From.
-            this.taskbarNotifier.NotifyContent.Add(new NotifyObject(message.Description, ""));
+            this.taskbarNotifier.NotifyContent.Add(new NotifyObject(message.Description, DateTime.Today.ToString()));
 
             // Tell the TaskbarNotifier to open.
             this.taskbarNotifier.Notify();
