@@ -136,6 +136,7 @@
     <Compile Include="Controllers\LinkedInController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\QuickTaskController.cs" />
     <Compile Include="Controllers\ReminderController.cs" />
     <Compile Include="Controllers\SignalRController.cs" />
     <Compile Include="ErrorHandler.cs" />
@@ -355,6 +356,8 @@
     <Content Include="Views\Project\ManagerTasksTablePartialView.cshtml" />
     <Content Include="Views\Landing\Index.cshtml" />
     <Content Include="Views\Profile\ChangePassword.cshtml" />
+    <Content Include="Views\Project\QuickTaskCreation.cshtml" />
+    <Content Include="Views\QuickTask\QuickTaskCreation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\AdminPanel.cshtml" />

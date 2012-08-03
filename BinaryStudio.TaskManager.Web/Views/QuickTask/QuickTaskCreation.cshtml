@@ -1,0 +1,23 @@
+﻿<div class="button">
+    <button title="Quick task creation" class="create btn">
+        Create
+    </button>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".create").click(function () {
+
+            var projId = 2;
+            var taskDescription = "Task1 created by me";
+            $.ajax({
+                type: "POST",
+                url: "/QuickTask/QuickTaskCreation/",
+                data: { projectId: projId, description: taskDescription },
+                dataType: "json",
+                traditional: true
+            });
+        });
+    });
+</script>
