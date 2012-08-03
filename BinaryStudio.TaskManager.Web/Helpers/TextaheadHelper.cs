@@ -33,7 +33,8 @@ namespace BinaryStudio.TaskManager.Web.Helpers
                         autocomplete = "off",
                         data_provide = "typeahead",
                         data_items = items,
-                        data_source = jsonString
+                        data_source = jsonString,
+                        @class = expression
                     }
                 );
             }

@@ -15,14 +15,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
         private readonly IGlobalHost globalHost;
         private readonly IConnectionProvider connectionProvider;
         private readonly IProjectRepository projectRepository;
+        private readonly IUserProcessor userProcessor;
 
-        public Notifier(IHumanTaskRepository humanTaskRepository, IGlobalHost globalHost, IConnectionProvider connectionProvider, INewsRepository newsRepository,IProjectRepository projectRepository)
+        public Notifier(IHumanTaskRepository humanTaskRepository, IGlobalHost globalHost, IConnectionProvider connectionProvider, INewsRepository newsRepository,IProjectRepository projectRepository, IUserProcessor userProcessor)
         {
             this.humanTaskRepository = humanTaskRepository;
             this.globalHost = globalHost;
             this.connectionProvider = connectionProvider;
             this.newsRepository = newsRepository;
             this.projectRepository = projectRepository;
+            this.userProcessor = userProcessor;
         }
 
         public void MoveTask(int taskId, int moveToId)
@@ -31,11 +33,21 @@ namespace BinaryStudio.TaskManager.Logic.Core
             moveToId = moveToId == -1 ? 0 : moveToId;
             var task = humanTaskRepository.GetById(taskId);
             var clients = this.connectionProvider.GetProjectConnections(task.ProjectId);
+
             var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
             foreach (var clientConnection in clients)
             {
                 context.Clients[clientConnection.ConnectionId].TaskMoved(taskId, moveToId);
             }
+
+            string wpfMessage = "Task " + task.Name + " assigned to " + (moveToId == 0 ? " unassigned" : this.userProcessor.GetUser(moveToId).UserName);
+            var wpfClients = this.connectionProvider.GetWPFConnectionsForProject(task.ProjectId);
+
+            foreach (var clientConnection in wpfClients)
+            {
+                context.Clients[clientConnection.ConnectionId].ReciveMessageOnClient(wpfMessage);
+            }
+
         }
 
         public void CreateTask(int taskId)
@@ -52,7 +64,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
                     context.Clients[clientConnection.ConnectionId].TaskCreated(taskId, assignedId);
             }
 
-            string wpfMessage = task.Name + " added to project " + project.Name;
+            string wpfMessage = "Task " + task.Name + " added to project " + project.Name;
             var wpfClients = this.connectionProvider.GetWPFConnectionsForProject(projectId);
 
             foreach (var clientConnection in wpfClients)

@@ -1,17 +1,13 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.ProjectViewModel
+@{
+    ViewBag.Title = "Project";
+}
 <style>
-    .column
-    {
-        width: 270px;
-        float: left;
-        min-height: 300px;
-    }
+    
 </style>
-
 <script src="../../Scripts/MicrosoftAjax.js" type="text/javascript"></script>
 <script src="../../Scripts/MicrosoftMvcAjax.js" type="text/javascript"></script>
 <script src="../../Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
-
 <script type="text/javascript">
     $(document).ready(function () {
         var senderId, taskId, receiverId,projectId;
@@ -111,14 +107,14 @@
                 <td align="center" width="250" valign="top">
                     <div class="editor-field">
                         <p />@Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new { projectId = Model.ProjectId }, new { @class = "btn" })
-                        <br/>
+                        <br />
                         <p />@Html.ActionLink("Show closed projects", "Project", new { projectId = Model.ProjectId, isOpenedProjects = false }, new { @class = "btn" })
-                        <br/>
+                        <br />
                         <p />@Html.ActionLink("Show opened projects", "Project", new { projectId = Model.ProjectId, isOpenedProjects = true }, new { @class = "btn" })
                         <div id="mydiv">@Html.Partial("QuickTaskCreation", Model.QuickTask)</div>
                     </div>
                 </td>
-                <td valign="top">
+                <td valign="top" class="well">
                     <div class="column" align="center" width="250" id="-1">
                         @foreach (var unAssignedTask in Model.UnAssignedTasks)
                         {
@@ -134,7 +130,7 @@
                 </td>
                 @foreach (var user in Model.UsersTasks)
                 {   
-                    <td valign="top">
+                    <td valign="top" class="well">
                         <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
                             @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
                             {
@@ -156,6 +152,7 @@
 </p>
 
 @Ajax.ActionLink(" ", "QuickTaskCreation", "QuickTask", new AjaxOptions
+
     {
         InsertionMode = InsertionMode.Replace,
         UpdateTargetId = "mydiv"
