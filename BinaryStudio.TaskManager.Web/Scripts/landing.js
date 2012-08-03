@@ -115,6 +115,26 @@ $(function () {
         getTaskList(proj);
     });
 
+    $('#ProjectHumanTask').change(function () {
+        for (var i = 0; i < modelData.tasks().length; i++) {
+            modelData.tasks()[i]._destroy = false;
+        }
+        modelData.tasks.destroy(function (item) {
+            return item.Name.indexOf($("#ProjectHumanTask").val()) == -1;
+        });
+        var undestroyedExists = false;
+        for (var i = 0; i < modelData.tasks().length; i++) {
+            if (modelData.tasks()[i]._destroy == false) {
+                undestroyedExists = true;
+                break;
+            }
+        }
+        if (undestroyedExists == false) {
+            for (var i = 0; i < modelData.tasks().length; i++) {
+                modelData.tasks()[i]._destroy = false;
+            }
+        }
+    });
 });
 function getTaskList(proj) {
     $.ajax({

@@ -89,7 +89,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var tasksToModel = taskList.Where(x => x.Closed == (DateTime?)null).Select(task => new TaskView
                             {
                                 Id = task.Id,
-                                Description = this.stringTrim(task.Description, 100),
+                                Description = task.Description==null?null:this.stringTrim(task.Description, 100),
                                 Name = task.Name,
                                 Priority = task.Priority,
                                 Created = task.Created,
@@ -120,7 +120,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var tasksToModel = taskList.Select(task => new TaskView
             {
                 Id = task.Id,
-                Description = this.stringTrim(task.Description,100),
+                Description = task.Description == null ? null : this.stringTrim(task.Description, 100),
                 Name = task.Name,
                 Priority = task.Priority,
                 Created = task.Created,
@@ -151,7 +151,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var tasksToModel = taskList.Select(task => new TaskView
             {
                 Id = task.Id,
-                Description = this.stringTrim(task.Description, 100),
+                Description = task.Description == null ? null : this.stringTrim(task.Description, 100),
                 Name = task.Name,
                 Priority = task.Priority,
                 Created = task.Created,
@@ -182,7 +182,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var tasksToModel = taskList.Select(task => new TaskView
             {
                 Id = task.Id,
-                Description = this.stringTrim(task.Description, 100),
+                Description = task.Description == null ? null : this.stringTrim(task.Description, 100),
                 Name = task.Name,
                 Priority = task.Priority,
                 Created = task.Created,
