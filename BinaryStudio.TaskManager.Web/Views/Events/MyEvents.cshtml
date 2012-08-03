@@ -2,8 +2,9 @@
 @model List<EventViewModel>
 <div class="container-fluid" style="margin-top: 30px">
     <h2>My news</h2>
+        <button class="btn btn-inverse all_read">Mark all news as read</button>
     <div class="row-fluid">
-        <div class="span2">
+        <div class="span1">
             <!--Sidebar content-->
         </div>
         <div class="span8">
@@ -34,6 +35,15 @@
                 traditional: true
             });
         });
+        $('.all_read').click(function () {
+            var unread_evnts = $('.evnt_unread');
+            unread_evnts.addClass('evnt_read');
+            unread_evnts.removeClass('evnt_unread');
+            $.ajax({
+               type: "POST",
+               url: "/Events/MarkAllUnreadNewsAsRead"               
+            });
     });
+});
 </script>
 
