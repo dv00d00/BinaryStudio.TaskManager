@@ -1,6 +1,6 @@
 ﻿@model BinaryStudio.TaskManager.Logic.Domain.HumanTask
 <div class="editor-field">
-    @Html.TextAreaFor(model => model.Description)
+    @Html.TextAreaFor(model => model.Description, new {@class = "quicktaskarea"})
     @Html.ValidationMessageFor(model => model.Description)
 </div>
 
@@ -16,7 +16,7 @@
         $(".create").click(function () {
 
             var projId = @Model.ProjectId;
-            var taskDescription = @Model.Description;
+            var taskDescription = jQuery(".quicktaskarea").val();
             $.ajax({
                 type: "POST",
                 url: "/QuickTask/QuickTaskCreation/",
