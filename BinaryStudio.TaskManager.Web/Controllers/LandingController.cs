@@ -93,7 +93,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                 Name = task.Name,
                                 Priority = task.Priority,
                                 Created = task.Created,
-                                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString()
+                                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString(),
+                                AssigneeId = task.AssigneeId,
+                                Assignee = task.AssigneeId== null?null:userRepository.GetById(task.AssigneeId.GetValueOrDefault()).UserName.ToString(),
+                                AssigneePhoto = task.AssigneeId==null?false:userRepository.GetById(task.AssigneeId.GetValueOrDefault()).ImageData!=null
                             });
             var projectModel = new ProjectView
                 {
@@ -121,7 +124,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 Name = task.Name,
                 Priority = task.Priority,
                 Created = task.Created,
-                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString()
+                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString(),
+                AssigneeId = task.AssigneeId,
+                Assignee = task.AssigneeId == null ? null : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).UserName.ToString(),
+                AssigneePhoto = task.AssigneeId == null ? false : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).ImageData != null
             });
             var projectModel = new ProjectView
             {
@@ -149,7 +155,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 Name = task.Name,
                 Priority = task.Priority,
                 Created = task.Created,
-                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString()
+                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString(),
+                AssigneeId = task.AssigneeId,
+                Assignee = task.AssigneeId == null ? null : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).UserName.ToString(),
+                AssigneePhoto = task.AssigneeId == null ? false : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).ImageData != null
             });
             var projectModel = new ProjectView
             {
@@ -177,7 +186,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 Name = task.Name,
                 Priority = task.Priority,
                 Created = task.Created,
-                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString()
+                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString(),
+                AssigneeId = task.AssigneeId,
+                Assignee = task.AssigneeId == null ? null : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).UserName.ToString(),
+                AssigneePhoto = task.AssigneeId == null ? false : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).ImageData != null
             });
             var projectModel = new ProjectView
             {
