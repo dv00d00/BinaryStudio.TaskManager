@@ -60,7 +60,18 @@
     <div class="span1">&nbsp;</div>
     <div id="content" class="span8">
         <h2 data-bind="text: project"></h2>
-        <span class='proj_title'></span>
+        <div class="btn-group sort_btn">
+              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                Sort
+                <span class="caret"></span>
+              </a>
+            <ul class="dropdown-menu">
+                <li><a href='#' data-bind='click: $root.sortByPriority'>Priority</a></li>
+                <li><a href='#' data-bind='click: $root.sortByName'>Name</a></li>
+                <li><a href='#' data-bind='click: $root.sortByAssignee'>Assignee</a></li>
+            </ul>
+            </div>
+        <!--<span class='proj_title'></span>-->
         <div class="no_filtered">No tasks matching filtered value</div>
         <div data-bind="visible: tasks().length==0">No tasks yet</div>
         <div class="task_list" data-bind="foreach: tasks">

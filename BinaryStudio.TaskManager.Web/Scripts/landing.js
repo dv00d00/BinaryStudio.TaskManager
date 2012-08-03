@@ -158,6 +158,9 @@ function getTaskList(proj) {
                     task.AssigneeId, task.Assignee, task.AssigneePhoto);
                 modelData.tasks.push(thisTask);
             }
+           /* modelData.tasks.sort(function (left, right) {
+                return left.Priority == right.Priority ? 0 : (left.Priority > right.Priority ? -1 : 1);
+            });*/
         }
     });
 }
