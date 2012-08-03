@@ -72,6 +72,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="id">
         /// The id.
         /// </param>
+        /// <param name="isOpenedProjects">
+        /// The is Opened Projects.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
@@ -81,8 +84,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             {
                 UsersTasks = new List<ManagerTasksViewModel>(),
                 UnAssignedTasks = this.taskProcessor.GetUnAssignedTasksForProject(id).ToList(),
+                QuickTask = new HumanTask(),
                 ProjectId = id
             };
+            model.QuickTask.ProjectId = id;
             var users = new List<User>();
             users = this.projectProcessor.GetAllUsersInProject(id).Reverse().ToList();
             users.Add(this.projectProcessor.GetProjectById(id).Creator);

@@ -1,4 +1,10 @@
-﻿<div class="button">
+﻿@model BinaryStudio.TaskManager.Logic.Domain.HumanTask
+<div class="editor-field">
+    @Html.TextAreaFor(model => model.Description)
+    @Html.ValidationMessageFor(model => model.Description)
+</div>
+
+<div class="button">
     <button title="Quick task creation" class="create btn">
         Create
     </button>
@@ -9,8 +15,8 @@
         
         $(".create").click(function () {
 
-            var projId = 2;
-            var taskDescription = "Task1 created by me";
+            var projId = @Model.ProjectId;
+            var taskDescription = @Model.Description;
             $.ajax({
                 type: "POST",
                 url: "/QuickTask/QuickTaskCreation/",

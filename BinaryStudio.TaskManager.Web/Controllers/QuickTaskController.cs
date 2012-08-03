@@ -4,9 +4,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System;
     using System.Linq;
+    using System.Text;
 
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
+    using BinaryStudio.TaskManager.Web.Models;
 
     public class QuickTaskController : Controller
     {
@@ -38,12 +40,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <summary>
         /// The quick task creation.
         /// </summary>
+        /// <param name="humanTask">
+        /// The human Task.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult QuickTaskCreation()
+        public ActionResult QuickTaskCreation(HumanTask humanTask)
         {
-            return this.PartialView("QuickTaskCreation");
+            return this.PartialView("QuickTaskCreation", humanTask);
         }
 
         /// <summary>
@@ -63,13 +68,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             var creatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
             var separetor = new[] { ' ' };
-            var taskName = description.Split(separetor, 2);
+            var taskDescription = description.Split(separetor, 3);
+            var taskName = new StringBuilder(taskDescription[0], 20);
+            taskName.Append(' ').Append(taskDescription[1]);
             var task = new HumanTask
             {
                 Created = DateTime.Now,
                 CreatorId = creatorId,
                 Description = description,
-                Name = taskName[0],
+                Name = taskName.ToString(),
                 Priority = 0,
                 ProjectId = projectId,
             };
