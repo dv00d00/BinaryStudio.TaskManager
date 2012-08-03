@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using BinaryStudio.TaskManager.Web.Extentions;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
@@ -95,20 +96,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult QuickTaskCreation(int projectId, string description)
         {
             var creatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
-            var separetor = new[] { ' ' };
-            var taskDescription = description.Split(separetor, 3);
-            var taskName = new StringBuilder(taskDescription[0], 20);
-            if (taskDescription.Length > 1)
-            {
-                taskName.Append(' ').Append(taskDescription[1]);
-            }
 
             var task = new HumanTask
             {
                 Created = DateTime.Now,
                 CreatorId = creatorId,
                 Description = description,
-                Name = taskName.ToString(),
+                Name = description.Truncate(20),
                 Priority = 0,
                 ProjectId = projectId,
             };

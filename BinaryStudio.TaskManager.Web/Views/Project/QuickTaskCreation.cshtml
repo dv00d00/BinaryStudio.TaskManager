@@ -15,22 +15,23 @@
         var self = this;
         var onSuccess = function () {
             $(self).parents(".project/project");
-            $(".quicktaskarea").val("");
+//            $(".quicktaskarea").value = "" ;
+//            .attr('value','updated value of textarea');
         };
         
         $(".create").click(function () {
 
             var projId = @Model.ProjectId;
 
-                    var taskDescription = jQuery(".quicktaskarea").val();
-                    $.ajax({
-                        type: "POST",
-                        url: "/QuickTask/QuickTaskCreation/",
-                        data: { projectId: projId, description: taskDescription },
-                        dataType: "json",
-                        traditional: true
-                    }).success(onSuccess);
-                });
-
+                var taskDescription = jQuery(".quicktaskarea").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/QuickTask/QuickTaskCreation/",
+                    data: { projectId: projId, description: taskDescription },
+                    dataType: "json",
+                    traditional: true
+                }).success(onSuccess);
             });
+
+        });
 </script>
