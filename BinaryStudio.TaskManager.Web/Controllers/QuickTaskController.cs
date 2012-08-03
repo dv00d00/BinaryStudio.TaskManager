@@ -70,7 +70,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var separetor = new[] { ' ' };
             var taskDescription = description.Split(separetor, 3);
             var taskName = new StringBuilder(taskDescription[0], 20);
-            taskName.Append(' ').Append(taskDescription[1]);
+            if (taskDescription.Length > 1)
+            {
+                taskName.Append(' ').Append(taskDescription[1]);
+            }
+
             var task = new HumanTask
             {
                 Created = DateTime.Now,
