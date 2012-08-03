@@ -42,14 +42,7 @@
             <RowDefinition Height="5" />
           </Grid.RowDefinitions>
           
-          <Label Grid.Row="0" Margin="8,0,8,0" FontSize="25" FontWeight="Bold" Content="Event">
-            <Label.Foreground>
-              <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Blue" Offset="0"/>
-                <GradientStop Color="Red" Offset="1"/>
-              </LinearGradientBrush>
-            </Label.Foreground>
-          </Label>
+          <Label Grid.Row="0" Margin="8,0,8,0" FontSize="25" FontWeight="Bold" Content="TaskManager" Foreground="#FF838383"></Label>
 
           <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="15" Height="15" Click="HideButton_Click">
             <Button.ToolTip>Hide</Button.ToolTip>
@@ -88,7 +81,7 @@
           <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
             <ItemsControl Name="ItemsList"  BorderThickness="0"
                        ItemsSource="{Binding ElementName=ThisControl, Path=NotifyContent}"
-                       ItemTemplate="{StaticResource ItemsTemplate}" >
+                       ItemTemplate="{StaticResource ItemsTemplate}" FontSize="18">
               <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                   <StackPanel Orientation="Vertical" Width="Auto"/>

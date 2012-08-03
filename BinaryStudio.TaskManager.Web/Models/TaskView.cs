@@ -19,7 +19,13 @@ namespace BinaryStudio.TaskManager.Web.Models
         public DateTime? Finished { get; set; }
 
         public DateTime? Closed { get; set; }
-        
+
         public string Creator { get; set; }
+
+        public int? AssigneeId { get; set; }
+
+        public string Assignee { get; set; }
+
+        public bool AssigneePhoto { get; set; }
     }
 }

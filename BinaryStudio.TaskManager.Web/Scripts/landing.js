@@ -91,10 +91,10 @@ $(function () {
     getTaskList(homeProj);
     ko.applyBindings(modelData);
     $('body').popover({
-        selector: '.task_popover',
-        delay: { show: 300 }
+        selector: '.assignee_popover,.task_popover',
+        delay: { show: 100 },
+        placement: 'top'
     });
-
 
     $(document).on("click", ".task_group_list .project_name", function () {
         $(".project_name").removeClass("active_proj");
@@ -133,7 +133,9 @@ function getTaskList(proj) {
             for (var i = 0; i < data.Project.Tasks.length; i++) {
                 task = data.Project.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));
-                var thisTask = new Task(task.Id, task.Name, task.Description, date, task.Creator);
+                var thisTask = new Task(task.Id, task.Name,
+                    task.Description, date, task.Creator, task.Priority,
+                    task.AssigneeId, task.Assignee, task.AssigneePhoto);
                 modelData.tasks.push(thisTask);
             }
         }
@@ -153,7 +155,9 @@ function getTaskGroup(url, groupName) {
             for (var i = 0; i < data.Project.Tasks.length; i++) {
                 task = data.Project.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));
-                var thisTask = new Task(task.Id, task.Name, task.Description, date, task.Creator);
+                var thisTask = new Task(task.Id, task.Name,
+                    task.Description, date, task.Creator, task.Priority,
+                    task.AssigneeId, task.Assignee, task.AssigneePhoto);
                 modelData.tasks.push(thisTask);
             }
         }
@@ -223,7 +227,7 @@ function projectsOutput(projects, li_class) {
          if (projects[i].Name.length >= 20)
             $("li[data-id=" + projects[i].Id + "]").attr("title", projects[i].Name);
         $('.dashboard_btn').tooltip({
-            position: 'left',
+            'placement': 'right',
             delay: { show: 1000 }
         });
     }

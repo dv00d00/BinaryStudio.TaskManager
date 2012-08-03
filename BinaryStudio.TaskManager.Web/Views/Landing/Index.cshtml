@@ -23,69 +23,79 @@
 <div class="row main-row">
     <div id="left_panel">
         @Html.TypeaheadFor(model => model.ProjectHumanTask, taskList.Select(x => x.Name) 
-             )
+            )
         <div id="task_groups">
             <h3>Task Groups</h3>
             <div class="task_group_list">
-                 <div class="project_name" id="all_tasks">All</div>
-                 <div class="project_name" id="my_tasks">My Tasks</div>
-                 <div class="project_name" id="unassigned_tasks">Unassigned</div>
+                <div class="project_name" id="all_tasks">All</div>
+                <div class="project_name" id="my_tasks">My Tasks</div>
+                <div class="project_name" id="unassigned_tasks">Unassigned</div>
             </div>
         </div>
         <div id="projects">
             <div class="projects_top"> 
                 <div class="new_project_btn">Add Project</div>
                 <h3>Projects</h3>
-             </div>
-             <div class="project_list">   
-                 @foreach (var project in Model.CreatorProjects)
-                 {
-                     <div class="proj_row" data-id="@project.Id">
-                         <div class="delete_btn"></div>
-                         <div class="created_projs project_name">@project.Name</div>
-                         <a href="/Project/Project/@project.Id"><div title="@project.Name dashboard" class="dashboard_btn"></div></a>
-                     </div>
-                 }
+            </div>
+            <div class="project_list">   
+                @foreach (var project in Model.CreatorProjects)
+                {
+                    <div class="proj_row" data-id="@project.Id">
+                        <div class="delete_btn"></div>
+                        <div class="created_projs project_name">@project.Name</div>
+                        <a href="/Project/Project/@project.Id"><div title="@project.Name dashboard" class="dashboard_btn"></div></a>
+                    </div>
+                }
 
-                 @foreach (var project in Model.UserProjects)
-                 {
-                     <div class="user_projs project_name">@project.Name</div>
-                     <a href="/Project/Project/@project.Id"><div title="@project.Name dashboard" class="dashboard_btn"></div></a>
-                 }
-              </div>
+                @foreach (var project in Model.UserProjects)
+                {
+                    <div class="user_projs project_name">@project.Name</div>
+                    <a href="/Project/Project/@project.Id"><div title="@project.Name dashboard" class="dashboard_btn"></div></a>
+                }
+            </div>
             <div id="loader">
                 
             </div>
         </div>
     </div>
-    <div id="content" class="span6">
+    <div class="span1">&nbsp;</div>
+    <div id="content" class="span8">
         <h2 data-bind="text: project"></h2>
         <span class='proj_title'></span>
         <div data-bind="visible: tasks().length==0">No tasks yet</div>
         <div class="task_list" data-bind="foreach: tasks">
             <div class="task_in_list">
+                <div data-bind="if: AssigneePhoto==true&&AssigneeId!=null" class="assignee_photo">
+                    <a href="#" rel="popover" class="assignee_popover" data-bind="attr: {'data-content':'<img class=large_photo src=/Project/GetImage?UserId='+AssigneeId+'> Assigned to '+Assignee}">
+                        <img data-bind="attr: {'src': '/Project/GetImage?UserId='+AssigneeId}" />
+                    </a>
+                </div>    
+                <div data-bind="if: AssigneePhoto==false&&AssigneeId!=null" class="assignee_photo">
+                    <a href="#" rel="popover" class="assignee_popover" data-bind="attr: {'data-content':'Assigned to '+Assignee}"><img src="/Content/images/photo.png" /></a>
+                </div>    
+                <div data-bind="attr: {'class': 'priority prior_'+Priority}"></div>
                 <a data-bind="text:Name, attr: { 'data-content': 'Created: '+CreatedDate+'<br>'+CreatedTime+'<br>By '+Creator,'data-original-title':Name, 'href':'/Project/Details/'+Id}" rel="popover" class="task_popover"></a>
                 <div data-bind="text: Description"></div>
             </div>
         </div>
     </div>
-        <div id="right_panel" class="span3">
+    <div id="right_panel" class="span3">
+    </div>
+    <div class="modal hide" id="delete_box">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>Delete Project</h3>
         </div>
-        <div class="modal hide" id="delete_box">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3>Delete Project</h3>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn no" data-dismiss="modal">Close</a>
-                <a href="#" class="btn btn-primary yes" data-dismiss="modal">Delete</a>
-            </div>
+        <div class="modal-body">
         </div>
-        <div id='add_proj_box'>
-            <input type="text" autofocus="autofocus"></input>
-            <button class="add_proj_btn">Add Project</button>
-            <span class="add_cancel">Cancel</span>
+        <div class="modal-footer">
+            <a href="#" class="btn no" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-primary yes" data-dismiss="modal">Delete</a>
         </div>
     </div>
+    <div id='add_proj_box'>
+        <input type="text" autofocus="autofocus"></input>
+        <button class="add_proj_btn btn btn-success">Add Project</button>
+        <span class="add_cancel">Cancel</span>
+    </div>
+</div>

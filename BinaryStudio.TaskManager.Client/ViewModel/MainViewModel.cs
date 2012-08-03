@@ -115,7 +115,7 @@ namespace MessengR.Client.ViewModel
                 }
                 else
                 {
-                    taskHub.Join(2, "admin");
+                    taskHub.Join(2, Name);
                 }
 
             });
@@ -126,6 +126,7 @@ namespace MessengR.Client.ViewModel
 
         private void OnMessage(TaskMessage message)
         {
+            taskbarNotifier = new ExampleTaskbarNotifier();
             taskbarNotifier.Show();
             taskbarNotifier.ShowInTaskbar = true;
             taskbarNotifier.OpeningMilliseconds = 1000;
@@ -133,7 +134,7 @@ namespace MessengR.Client.ViewModel
             taskbarNotifier.HidingMilliseconds = 1000;
             // Starts a new conversation with message.From if not started,
             // otherwise, it will add a message to the conversation window with message.From.
-            this.taskbarNotifier.NotifyContent.Add(new NotifyObject(message.Description, "sdf"));
+            this.taskbarNotifier.NotifyContent.Add(new NotifyObject(message.Description, ""));
 
             // Tell the TaskbarNotifier to open.
             this.taskbarNotifier.Notify();

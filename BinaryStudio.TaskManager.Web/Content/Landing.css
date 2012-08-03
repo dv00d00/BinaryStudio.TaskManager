@@ -1,10 +1,6 @@
 ﻿.main-row {
     margin-top: 50px;
 }
-
-#content {
-    margin-left: 50px;
-}
 /***************** Left panel ***********************/
 
 #left_panel {
@@ -125,7 +121,9 @@
 
 #add_proj_box {
     display: none;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 20px;
 }
 
 .add_cancel:hover{
@@ -155,19 +153,49 @@
 }
 .task_in_list {
     border-bottom: 1px solid #EEE;
+    margin-top: 10px;
 }
 .task_in_list:first-child{
     border-top: 2px solid #EEE;
+    padding-top: 10px;
 }
 
-.priority_1 {
-    background: #C1E9B1;
+.priority {
+    width: 5px;
+    height: 30px;
+    border-radius: 1px;
+    float: left;
+    margin-right: 10px;
+}
+.prior_1 {
+    background: #3A87AD;
 }
 
-.priority_2 {
-    background: #D6F8F1;
+.prior_2 {
+    background: #F89406;
 }
 
-.priority_2 {
-    background: #F08C8C;
+.prior_0 {
+    background: #468847;
+}
+
+.prior_3 {
+    background: #B94A48;
+}
+
+.assignee_photo {
+    display: inline-block;
+    float: right;
+}
+.assignee_photo img{
+    width: 30px;
+    height: 30px;
+}
+img {
+    border: 0px;
+}
+.large_photo {
+    width: 70px;
+    height: 70px;
+    display: inline-block;
 }

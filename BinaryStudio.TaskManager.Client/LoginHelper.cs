@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
+using MessengR.Client.Hubs;
+using SignalR.Client.Hubs;
 
 namespace MessengR.Client
 {
@@ -11,50 +14,18 @@ namespace MessengR.Client
         /// </summary>
         public static Task<AuthenticationResult> LoginAsync(string url, string userName, string password)
         {
-            // We're going to login and retrieve the auth token
-            var uri = new Uri(new Uri(url, UriKind.Absolute), "Account/Login.ashx");
-            var webRequest = (HttpWebRequest)HttpWebRequest.Create(uri);
-            webRequest.Credentials = new NetworkCredential(userName, password);
-            webRequest.CookieContainer = new CookieContainer();
-
+            HubConnection connection = new HubConnection(url) { CookieContainer = new CookieContainer() }; ;
+            TaskHub taskHub = new TaskHub(connection);
             var tcs = new TaskCompletionSource<AuthenticationResult>();
-            webRequest.BeginGetResponse(ar =>
-            {
-                var authResult = new AuthenticationResult()
-                {
-                    StatusCode = HttpStatusCode.Unused
-                };
-
-                try
-                {
-                    using (var response = (HttpWebResponse)webRequest.EndGetResponse(ar))
-                    {
-                        authResult.StatusCode = response.StatusCode;
-                        authResult.AuthCookie = response.Cookies[".ASPXAUTH"];
-                    }
-                }                
-                catch (WebException ex)
-                {
-                    var response = ex.Response as HttpWebResponse;
-                    if (response != null)
-                    {
-                        authResult.StatusCode = response.StatusCode;
-                        authResult.Error = ex.Message;
-                    }
-                    else
-                    {
-                        authResult.Error = ex.Message;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    authResult.Error = ex.Message;
-                }
-
-                tcs.SetResult(authResult);
-            },
-            null);
-
+            connection.Start().ContinueWith(task =>
+             {
+              taskHub.Logon(userName, password).ContinueWith(logon => 
+                  taskHub.LogonStatus += logonStatus => tcs.SetResult(new AuthenticationResult
+                                                                          {
+                                                                              Status = logonStatus.Status
+                                                                          }));
+             });
+            
             return tcs.Task;
         }
     }

@@ -1,10 +1,11 @@
-﻿namespace BinaryStudio.TaskManager.Web
+﻿using System.Web.Routing;
+using SignalR;
+
+namespace BinaryStudio.TaskManager.Web
 {
     using System.Data.Entity;
     using System.Reflection;
     using System.Web.Mvc;
-    using System.Web.Routing;
-    using System.Web.Security;
 
     using BinaryStudio.TaskManager.Logic.Domain;
 
@@ -36,6 +37,7 @@
         protected override IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
+           
             kernel.Load(Assembly.GetExecutingAssembly());
             return kernel;
         }
