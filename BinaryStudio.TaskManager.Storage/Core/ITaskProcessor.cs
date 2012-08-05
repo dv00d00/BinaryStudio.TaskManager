@@ -1,4 +1,13 @@
-﻿namespace BinaryStudio.TaskManager.Logic.Core
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ITaskProcessor.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The TaskProcessor interface.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace BinaryStudio.TaskManager.Logic.Core
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
@@ -159,21 +168,101 @@
         /// </returns>
         IEnumerable<SelectListItem> GetPrioritiesList();
 
+        /// <summary>
+        /// The get tasks in project list.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; System.Web.Mvc.SelectListItem].
+        /// </returns>
         IEnumerable<SelectListItem> GetTasksInProjectList(int projectId);
 
+        /// <summary>
+        /// The get un assigned tasks for project.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.HumanTask].
+        /// </returns>
         IEnumerable<HumanTask> GetUnAssignedTasksForProject(int projectId);
 
+        /// <summary>
+        /// The get all tasks for user in project.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.HumanTask].
+        /// </returns>
         IEnumerable<HumanTask> GetAllTasksForUserInProject(int projectId, int userId);
 
+        /// <summary>
+        /// The get all history for user.
+        /// </summary>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IList`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.HumanTaskHistory].
+        /// </returns>
         IList<HumanTaskHistory> GetAllHistoryForUser(int userId);
 
+        /// <summary>
+        /// The get all open tasks for project.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.HumanTask].
+        /// </returns>
         IEnumerable<HumanTask> GetAllOpenTasksForProject(int projectId);
 
-        IEnumerable<HumanTask> GetAllOpenTasksForUserInProject(int projectId,int userId);
+        /// <summary>
+        /// The get all open tasks for user in project.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.HumanTask].
+        /// </returns>
+        IEnumerable<HumanTask> GetAllOpenTasksForUserInProject(int projectId, int userId);
 
+        /// <summary>
+        /// The get all closed tasks for user in project.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.HumanTask].
+        /// </returns>
         IEnumerable<HumanTask> GetAllClosedTasksForUserInProject(int projectId, int userId);
 
+        /// <summary>
+        /// The get all closed tasks for project.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <returns>
+        /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.HumanTask].
+        /// </returns>
         IEnumerable<HumanTask> GetAllClosedTasksForProject(int projectId);
-
     }
 }

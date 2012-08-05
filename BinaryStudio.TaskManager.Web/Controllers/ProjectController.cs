@@ -1,4 +1,11 @@
-﻿using System.Globalization;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ProjectController.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The project controller.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
@@ -56,6 +63,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </param>
         /// <param name="notifier">
         /// The notifier.
+        /// </param>
+        /// <param name="newsRepository">
+        /// The news Repository.
         /// </param>
         public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, INotifier notifier, INewsRepository newsRepository)
         {
@@ -173,16 +183,16 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                           Task = task,
                                           NewPriority = task.Priority,
                                           Action = ChangeHistoryTypes.Create,
-                                          UserId = userProcessor.GetUserByName(User.Identity.Name).Id
+                                          UserId = this.userProcessor.GetUserByName(User.Identity.Name).Id
                                       };
                 this.taskProcessor.AddHistory(taskHistory);
 
-                List<User> projectUsers = new List<User>(projectProcessor.GetAllUsersInProject(createModel.ProjectId));
+                List<User> projectUsers = new List<User>(this.projectProcessor.GetAllUsersInProject(createModel.ProjectId));
                 projectUsers.Add(this.projectProcessor.GetProjectById(createModel.ProjectId).Creator);
 
-                CreateNewsForUsers(taskHistory, projectUsers);
+                this.CreateNewsForUsers(taskHistory, projectUsers);
 
-                notifier.CreateTask(task.Id);
+                this.notifier.CreateTask(task.Id);
 
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId });
             }
@@ -194,6 +204,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.View(createModel);
         }
 
+        /// <summary>
+        /// The create news for users.
+        /// </summary>
+        /// <param name="taskHistory">
+        /// The task history.
+        /// </param>
+        /// <param name="projectUsers">
+        /// The project users.
+        /// </param>
         private void CreateNewsForUsers(HumanTaskHistory taskHistory, IEnumerable<User> projectUsers)
         {
             foreach (var projectUser in projectUsers)
@@ -207,8 +226,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                    HumanTaskHistoryId = taskHistory.Id,
                                };
 
-                newsRepository.AddNews(news);
-                notifier.SetCountOfNewses(projectUser.UserName);
+                this.newsRepository.AddNews(news);
+                this.notifier.SetCountOfNewses(projectUser.UserName);
             }
         }
 
@@ -256,7 +275,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [Authorize]
         public void MoveTask(int taskId, int senderId, int receiverId, int projectId)
         {
-            
             HumanTask humanTask = taskProcessor.GetTaskById(taskId);
             HumanTaskHistory humanTaskHistory = new HumanTaskHistory
             {
@@ -264,17 +282,17 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 ChangeDateTime = DateTime.Now,
                 NewAssigneeId = receiverId == -1 ? (int?)null : receiverId,
                 //???????????????????
-                UserId = userProcessor.GetUserByName(User.Identity.Name).Id,
+                UserId = this.userProcessor.GetUserByName(User.Identity.Name).Id,
                 NewDescription = humanTask.Description,
                 NewPriority = humanTask.Priority,
                 NewName = humanTask.Name,
                 Task = humanTask,
                 TaskId = taskId
             };
-            taskProcessor.AddHistory(humanTaskHistory);
-            List<User> users = new List<User>(projectProcessor.GetAllUsersInProject(projectId));
-            users.Add(projectProcessor.GetProjectById(projectId).Creator);
-            CreateNewsForUsers(humanTaskHistory, users);
+            this.taskProcessor.AddHistory(humanTaskHistory);
+            List<User> users = new List<User>(this.projectProcessor.GetAllUsersInProject(projectId));
+            users.Add(this.projectProcessor.GetProjectById(projectId).Creator);
+            this.CreateNewsForUsers(humanTaskHistory, users);
             if (receiverId != -1)
             {
                 this.taskProcessor.MoveTask(taskId, receiverId);
@@ -285,7 +303,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             }
             
             this.notifier.MoveTask(taskId, receiverId);
-            
         }
 
         /// <summary>
@@ -488,12 +505,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                           TaskId = humanTask.Id,
                                           NewPriority = createModel.Priority,
                                           Action = ChangeHistoryTypes.Change,
-                                          UserId = userProcessor.GetUserByName(User.Identity.Name).Id
+                                          UserId = this.userProcessor.GetUserByName(User.Identity.Name).Id
                                       };
-                var usersInProject = new List<User>(projectProcessor.GetAllUsersInProject(createModel.ProjectId));
+                var usersInProject = new List<User>(this.projectProcessor.GetAllUsersInProject(createModel.ProjectId));
                 usersInProject.Add(humanTask.Project.Creator);
                 this.taskProcessor.AddHistory(taskHistory);
-                CreateNewsForUsers(taskHistory, usersInProject);
+                this.CreateNewsForUsers(taskHistory, usersInProject);
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId });
             }
 
@@ -518,8 +535,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="id">
-        /// The id.
+        /// <param name="idTask">
+        /// The id Task.
         /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
@@ -533,8 +550,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <summary>
         /// The delete confirmed.
         /// </summary>
-        /// <param name="id">
-        /// The id.
+        /// <param name="idTask">
+        /// The id Task.
         /// </param>
         /// <param name="projectId">
         /// The project id.
@@ -603,7 +620,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>
         private SingleTaskViewModel CreateSingleTaskViewModelById(int taskId)
         {
-
             var task = this.taskProcessor.GetTaskById(taskId);
             var creatorName = task.CreatorId.HasValue
                                   ? this.userProcessor.GetUser((int)task.CreatorId).UserName
@@ -625,37 +641,51 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return model;
         }
 
-
-
-
-
+        /// <summary>
+        /// The task view.
+        /// </summary>
+        /// <param name="taskId">
+        /// The task id.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
         [HttpPost]
         public ActionResult TaskView(int taskId)
         {
             var task = taskProcessor.GetTaskById(taskId);
-            return PartialView("ManagerTasksTablePartialView", task);
+            return this.PartialView("ManagerTasksTablePartialView", task);
         }
 
+        /// <summary>
+        /// The make task close.
+        /// </summary>
+        /// <param name="taskId">
+        /// The task id.
+        /// </param>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
         public void MakeTaskClose(int taskId, int projectId)
         {
-            taskProcessor.CloseTask(taskId);
-            HumanTask humanTask = taskProcessor.GetTaskById(taskId);
+            this.taskProcessor.CloseTask(taskId);
+            HumanTask humanTask = this.taskProcessor.GetTaskById(taskId);
             HumanTaskHistory humanTaskHistory = new HumanTaskHistory
             {
                 Action = ChangeHistoryTypes.Close,
                 ChangeDateTime = DateTime.Now,
                 NewAssigneeId = humanTask.AssigneeId,
-                UserId = userProcessor.GetUserByName(User.Identity.Name).Id,
+                UserId = this.userProcessor.GetUserByName(User.Identity.Name).Id,
                 NewDescription = humanTask.Description,
                 NewPriority = humanTask.Priority,
                 NewName = humanTask.Name,
                 Task = humanTask,
                 TaskId = taskId
             };
-            taskProcessor.AddHistory(humanTaskHistory);
-            List<User> users = new List<User>(projectProcessor.GetAllUsersInProject(projectId));
-            users.Add(projectProcessor.GetProjectById(projectId).Creator);
-            CreateNewsForUsers(humanTaskHistory, users);
+            this.taskProcessor.AddHistory(humanTaskHistory);
+            List<User> users = new List<User>(this.projectProcessor.GetAllUsersInProject(projectId));
+            users.Add(this.projectProcessor.GetProjectById(projectId).Creator);
+            this.CreateNewsForUsers(humanTaskHistory, users);
         }
     }
 }
