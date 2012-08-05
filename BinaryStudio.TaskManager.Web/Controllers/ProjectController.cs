@@ -172,6 +172,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     Name = createModel.Name,
                     Priority = createModel.Priority,
                     ProjectId = createModel.ProjectId,
+                    BlockingTaskId = createModel.BlockingTask
                 };
                 this.taskProcessor.CreateTask(task);
                 var taskHistory = new HumanTaskHistory

@@ -1,10 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using BinaryStudio.TaskManager.Logic.Domain;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CreateTaskViewModel.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the CreateTaskViewModel type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BinaryStudio.TaskManager.Web.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+
+    /// <summary>
+    /// The create task view model.
+    /// </summary>
     public class CreateTaskViewModel
     {
         public IEnumerable<SelectListItem> Priorities;
@@ -34,5 +45,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         public bool IsBlocking { get; set; }
 
         public IEnumerable<SelectListItem> Tasks;
+
+        public int BlockingTask { get; set; }
     }
 }

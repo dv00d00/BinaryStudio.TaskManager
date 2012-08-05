@@ -22,6 +22,7 @@
         @Html.HiddenFor(model => model.ProjectId)
         @Html.HiddenFor(model => model.Assigned)
         @Html.HiddenFor(model => model.Priority, new { id = "priorityValue" })
+        @Html.HiddenFor(model => model.BlockingTask, new { id = "blockingTask" })
         <div class="editor-label">
             Name:
         </div>
@@ -92,6 +93,11 @@
         $(".priority").click(function() {
             var value = $(this).val();
             $("#priorityValue").val(value);
+        });
+
+        $("#taskslist").click(function () {
+            var value = $(this).val();
+            $("#blockingTask").val(value);
         });
 
         $("#blocking").click(function () {
