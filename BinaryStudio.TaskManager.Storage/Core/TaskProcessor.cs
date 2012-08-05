@@ -295,7 +295,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <returns>
         /// The System.Collections.Generic.IEnumerable`1[T -&gt; System.Web.Mvc.SelectListItem].
         /// </returns>
-        public IEnumerable<SelectListItem> GetTasksInProjectList(int projectId)
+        public IEnumerable<SelectListItem> GetOpenTasksListInProject(int projectId)
         {
             IEnumerable<SelectListItem> tasks =
                 this.humanTaskRepository.GetAllTasksInProject(projectId).Where(x => x.Closed == null).ToList().Select(

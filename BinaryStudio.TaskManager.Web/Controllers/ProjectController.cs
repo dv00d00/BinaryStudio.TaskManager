@@ -137,7 +137,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 CreatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id,
                 Created = DateTime.Now,
                 IsBlocking = false,
-                Tasks = this.taskProcessor.GetTasksInProjectList(projectId),
+                Tasks = this.taskProcessor.GetOpenTasksListInProject(projectId),
                 ProjectId = projectId
             };
             createModel.Priority = int.Parse(createModel.Priorities.First().Value);

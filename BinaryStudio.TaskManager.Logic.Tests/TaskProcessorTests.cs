@@ -296,5 +296,71 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockReminderRepository.Verify(
                 it => it.Delete(It.Is<Reminder>(x => x.TaskId == TaskBeingMoved)), Times.AtLeastOnce());
         }
+
+        [Test]
+        public void Should_ReturnListOfUnassignedTasksInProjectWithId1()
+        {
+            // act
+            this.processorUnderTest.GetUnAssignedTasksForProject(1);
+
+            // assert
+            this.mockHumanTaskRepository.Verify(it => it.GetUnassingnedTasks(1), Times.Once());
+        }
+
+        [Test]
+        public void Should_ReturnHistoryForTaskWithId1InProject()
+        {
+            // act
+            this.processorUnderTest.GetAllHistoryForTask(1);
+
+            // assert
+            this.mockHumanTaskRepository.Verify(it => it.GetAllHistoryForTask(1), Times.Once());
+        }
+
+        [Test]
+        public void Should_ReturnListOfTasksForUserWithId2ProjectWithId1()
+        {
+            // act
+            this.processorUnderTest.GetAllTasksForUserInProject(1, 2);
+
+            // assert
+            this.mockHumanTaskRepository.Verify(it => it.GetAllTasksForUserInProject(1, 2), Times.Once());
+        }
+
+        [Test]
+        public void Should_ReturnTaskHistoryForUserWithId1()
+        {
+            // act
+            this.processorUnderTest.GetAllHistoryForUser(1);
+
+            // assert
+            this.mockHumanTaskRepository.Verify(it => it.GetAllHistoryForUser(1), Times.Once());
+        }
+
+        [Test]
+        public void Should_ReturnAllClosedTasksInProjectWithId1()
+        {
+            // arrange
+            this.mockHumanTaskRepository.Setup(x => x.GetAllTasksInProject(1)).Returns(new List<HumanTask>());
+
+            // act
+            this.processorUnderTest.GetAllClosedTasksForProject(1);
+
+            // assert
+            this.mockHumanTaskRepository.Verify(it => it.GetAllTasksInProject(1), Times.Once());
+        }
+
+        [Test]
+        public void Should_ReturnAllClosedTasksForUserWithId2InProjectWithId1()
+        {
+            // arrange
+            this.mockHumanTaskRepository.Setup(x => x.GetAllTasksForUserInProject(1, 2)).Returns(new List<HumanTask>());
+
+            // act
+            this.processorUnderTest.GetAllClosedTasksForUserInProject(1, 2);
+
+            // assert
+            this.mockHumanTaskRepository.Verify(it => it.GetAllTasksForUserInProject(1, 2), Times.Once());
+        }
     }
 }

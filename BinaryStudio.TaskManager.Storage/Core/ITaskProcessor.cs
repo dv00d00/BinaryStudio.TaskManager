@@ -177,7 +177,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <returns>
         /// The System.Collections.Generic.IEnumerable`1[T -&gt; System.Web.Mvc.SelectListItem].
         /// </returns>
-        IEnumerable<SelectListItem> GetTasksInProjectList(int projectId);
+        IEnumerable<SelectListItem> GetOpenTasksListInProject(int projectId);
 
         /// <summary>
         /// The get un assigned tasks for project.
