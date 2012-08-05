@@ -8,6 +8,7 @@ namespace BinaryStudio.TaskManager.Web.Models
     public class CreateTaskViewModel
     {
         public IEnumerable<SelectListItem> Priorities;
+
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -29,5 +30,9 @@ namespace BinaryStudio.TaskManager.Web.Models
         public int? AssigneeId { get; set; }
 
         public int ProjectId { get; set; }
+
+        public bool IsBlocking { get; set; }
+
+        public IEnumerable<SelectListItem> Tasks;
     }
 }

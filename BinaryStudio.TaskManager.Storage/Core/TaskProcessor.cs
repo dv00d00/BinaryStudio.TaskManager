@@ -282,6 +282,18 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return priorities;
         }
 
+        public IEnumerable<SelectListItem> GetTasksInProjectList(int projectId)
+        {
+            IEnumerable<SelectListItem> tasks =
+                this.humanTaskRepository.GetAllTasksInProject(projectId).Where(x => x.Closed == null).ToList().Select(
+                    it => new SelectListItem
+                        {
+                    Text = it.Name,
+                    Value = it.Id.ToString(CultureInfo.InvariantCulture)
+                });
+            return tasks;
+        }
+
         public IEnumerable<HumanTask> GetUnAssignedTasksForProject(int projectId)
         {
            return humanTaskRepository.GetUnassingnedTasks(projectId);

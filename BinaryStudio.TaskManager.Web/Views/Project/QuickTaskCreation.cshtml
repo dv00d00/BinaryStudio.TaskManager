@@ -1,7 +1,7 @@
 ﻿@model BinaryStudio.TaskManager.Logic.Domain.HumanTask
 
 <div id="editor-field">
-    @Html.TextBoxFor(model => model.Description, new {@class = "quicktaskarea"})
+    @Html.TextAreaFor(model => model.Description, new {@class = "quicktaskarea", @style = "resize: none"})
 </div>
 
 <div class="button">
@@ -15,6 +15,7 @@
         var self = this;
         var onSuccess = function () {
             $(self).parents(".project/project");
+            $(".quicktaskarea").val("");
         };
         
         $(".create").click(function () {
