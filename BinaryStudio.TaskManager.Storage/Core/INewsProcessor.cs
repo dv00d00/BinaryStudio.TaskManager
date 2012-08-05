@@ -6,6 +6,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
     public interface INewsProcessor
     {
         void CreateNewsForUsersInProject(HumanTaskHistory taskHistory, int projectId);
+
+        void AddNews(HumanTaskHistory humanTaskHistory, User user);
+
+        void AddNews(News news);
     }
 
     public class NewsProcessor : INewsProcessor
@@ -26,19 +30,27 @@ namespace BinaryStudio.TaskManager.Logic.Core
             var projectUsers = new List<User>(this.projectProcessor.GetUsersAndCreatorInProject(projectId));
             foreach (var projectUser in projectUsers)
             {
-                var news = new News
-                {
-                    HumanTaskHistory = taskHistory,
-                    IsRead = false,
-                    User = projectUser,
-                    UserId = projectUser.Id,
-                    HumanTaskHistoryId = taskHistory.Id,
-                };
-
-                newsRepository.AddNews(news);
-                notifier.BroadcastNewsToDesktopClient(news);
-                notifier.SetCountOfNewses(projectUser.UserName);
+                this.AddNews(taskHistory, projectUser);
             }
+        }
+
+        public void AddNews(HumanTaskHistory taskHistory, User user)
+        {
+            var news = new News
+            {
+                HumanTaskHistory = taskHistory,
+                IsRead = false,
+                User = user,
+                UserId = user.Id,
+                HumanTaskHistoryId = taskHistory.Id,
+            };
+            this.AddNews(news);
+        }
+
+        public void AddNews(News news)
+        {
+            this.newsRepository.AddNews(news);
+            this.notifier.BroadcastNews(news);
         }
     }
 }

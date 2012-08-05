@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using BinaryStudio.TaskManager.Logic.Domain;
 using BinaryStudio.TaskManager.Web.SignalR;
 using SignalR;
@@ -56,7 +53,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             }
         }
 
-        public void SetCountOfNewses(string userName)
+        public void SetCountOfNews(string userName)
         {
             int count = newsRepository.GetUnreadNewsCountForUserByName(userName);
             var clients = this.connectionProvider.GetConnetionsForUser(userName);
@@ -68,6 +65,12 @@ namespace BinaryStudio.TaskManager.Logic.Core
             }
         }
 
+        public void SetCountOfNews(int userId)
+        {
+            var user = userProcessor.GetUser(userId);
+            SetCountOfNews(user.UserName);
+        }
+
         public void BroadcastNewsToDesktopClient(News news)
         {
             var connects = this.connectionProvider.GetClientConnectionsForUser(news.UserId);
@@ -77,6 +80,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
             {
                 context.Clients[clientConnection.ConnectionId].ReciveMessageOnClient(message);
             }
+        }
+
+        public void BroadcastNews(News news)
+        {
+            BroadcastNewsToDesktopClient(news);
         }
     }
 

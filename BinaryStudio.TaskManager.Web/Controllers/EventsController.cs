@@ -95,7 +95,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             newsRepository.MarkAsRead(newsId);
             News news = this.newsRepository.GetNewsById(newsId);
-            this.notifier.SetCountOfNewses(news.User.UserName);
+            this.notifier.SetCountOfNews(news.User.UserName);
         }
 
         [HttpPost]
@@ -109,7 +109,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             var user = userProcessor.GetUserByName(User.Identity.Name);
             newsRepository.MarkAllUnreadNewsForUser(user.Id);
-            this.notifier.SetCountOfNewses(user.UserName);
+            this.notifier.SetCountOfNews(user.UserName);
         }
     }
 }
