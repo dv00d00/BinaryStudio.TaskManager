@@ -36,6 +36,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
                 };
 
                 newsRepository.AddNews(news);
+                notifier.BroadcastNewsToDesktopClient(news);
                 notifier.SetCountOfNewses(projectUser.UserName);
             }
         }

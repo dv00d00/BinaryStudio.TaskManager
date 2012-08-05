@@ -19,9 +19,11 @@ namespace BinaryStudio.TaskManager.Web.SignalR
             Clients.Receive(message);
         }
 
-        public void Join(string id, int projectId, string userName, bool isNewsConnection)
+        public void Join(string id, int projectId, string userName, bool isWPFClientConnection)
         {
-            SignalRClients.AddConnection(id, projectId, userName, isNewsConnection);
+            var user = userProcessor.GetUserByName(userName);
+            int? userId = user == null ? null : (int?)user.Id;
+            SignalRClients.AddConnection(id, projectId, userName, userId, isWPFClientConnection);
         }
 
         public void LoginWithClient(string id, string userName, string password)

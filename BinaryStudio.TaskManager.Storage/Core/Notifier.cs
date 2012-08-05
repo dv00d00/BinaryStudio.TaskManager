@@ -39,15 +39,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
             {
                 context.Clients[clientConnection.ConnectionId].TaskMoved(taskId, moveToId);
             }
-
-            string wpfMessage = "Task " + task.Name + " assigned to " + (moveToId == 0 ? " unassigned" : this.userProcessor.GetUser(moveToId).UserName);
-            var wpfClients = this.connectionProvider.GetWPFConnectionsForProject(task.ProjectId);
-
-            foreach (var clientConnection in wpfClients)
-            {
-                context.Clients[clientConnection.ConnectionId].ReciveMessageOnClient(wpfMessage);
-            }
-
         }
 
         public void CreateTask(int taskId)
@@ -63,14 +54,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
             {
                     context.Clients[clientConnection.ConnectionId].TaskCreated(taskId, assignedId);
             }
-
-            string wpfMessage = "Task " + task.Name + " added to project " + project.Name;
-            var wpfClients = this.connectionProvider.GetWPFConnectionsForProject(projectId);
-
-            foreach (var clientConnection in wpfClients)
-            {
-                context.Clients[clientConnection.ConnectionId].ReciveMessageOnClient(wpfMessage);
-            }
         }
 
         public void SetCountOfNewses(string userName)
@@ -82,6 +65,17 @@ namespace BinaryStudio.TaskManager.Logic.Core
             foreach (var clientConnection in clients)
             {
                 context.Clients[clientConnection.ConnectionId].SetUnreadNewsesCount(count);
+            }
+        }
+
+        public void BroadcastNewsToDesktopClient(News news)
+        {
+            var connects = this.connectionProvider.GetClientConnectionsForUser(news.UserId);
+            var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
+            string message = news.HumanTaskHistory.Action;
+            foreach (var clientConnection in connects)
+            {
+                context.Clients[clientConnection.ConnectionId].ReciveMessageOnClient(message);
             }
         }
     }

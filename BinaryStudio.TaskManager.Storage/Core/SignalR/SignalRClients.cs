@@ -6,14 +6,15 @@ namespace BinaryStudio.TaskManager.Logic.Core.SignalR
     {
         public static IList<ClientConnection> Connections = new List<ClientConnection>();
 
-        public static void AddConnection (string connectionId,int projectId, string userName,bool isWPFClient)
+        public static void AddConnection (string connectionId,int projectId, string userName, int? userId, bool isWPFClient)
         {
             Connections.Add(new ClientConnection
                                 {
                                     ConnectionId = connectionId,
                                     ProjectId = projectId,
                                     UserName = userName,
-                                    IsWPFClient = isWPFClient
+                                    IsWPFClient = isWPFClient,
+                                    UserId = userId
                                 });
         }
     }

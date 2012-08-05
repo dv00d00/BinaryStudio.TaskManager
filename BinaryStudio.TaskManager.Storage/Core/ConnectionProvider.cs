@@ -46,5 +46,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return connections.Concat(creatorConnections); 
         }
 
+        public IEnumerable<ClientConnection> GetClientConnectionsForUser(int userId)
+        {
+            return SignalRClients.Connections.Where(it => it.IsWPFClient && it.UserId == userId);
+        }
     }
 }

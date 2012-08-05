@@ -11,5 +11,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         IEnumerable<ClientConnection> GetConnetionsForUser(string userName);
 
         IEnumerable<ClientConnection> GetWPFConnectionsForProject(int projectId);
+
+        IEnumerable<ClientConnection> GetClientConnectionsForUser(int userId);
     }
 }

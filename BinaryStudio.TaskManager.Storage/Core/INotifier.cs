@@ -1,4 +1,6 @@
 
+using BinaryStudio.TaskManager.Logic.Domain;
+
 namespace BinaryStudio.TaskManager.Logic.Core
 {
     public interface INotifier
@@ -8,5 +10,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void CreateTask(int taskId);
 
         void SetCountOfNewses(string userName);
+
+        void BroadcastNewsToDesktopClient(News news);
     }
 }
