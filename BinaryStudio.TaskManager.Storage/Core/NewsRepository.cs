@@ -31,7 +31,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.dataBaseContext.News.ToList().SingleOrDefault(x => x.Id == newsId);
         }
 
-        public int GetCountOfUnreadedNewses(int userId)
+        public int GetCountOfUnreadNews(int userId)
         {
             return this.dataBaseContext.News.Count(x => x.UserId == userId && x.IsRead == false);
         }
