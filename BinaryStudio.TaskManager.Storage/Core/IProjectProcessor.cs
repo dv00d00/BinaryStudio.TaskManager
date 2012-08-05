@@ -99,5 +99,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// The System.Collections.Generic.IEnumerable`1[T -&gt; BinaryStudio.TaskManager.Logic.Domain.Invitation].
         /// </returns>
         IEnumerable<Invitation> GetAllInvitationsToProject(int projectId);
+
+        IEnumerable<User> GetUsersAndCreatorInProject(int projectId);
+
+        User GetCreator(int projectId);
     }
 }
