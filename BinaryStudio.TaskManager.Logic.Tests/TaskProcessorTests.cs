@@ -29,10 +29,10 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         /// The tasks.
         /// </summary>
         public IList<HumanTask> tasks = new List<HumanTask>
-                {
-                    new HumanTask{ Id = 1, Name = "First Task"},
-                    new HumanTask{Id = 2, Name = "Second Task"},
-                    new HumanTask{Id = 3, Name = "Third Task"}
+            {
+                new HumanTask { Id = 1, Name = "First Task" },
+                new HumanTask { Id = 2, Name = "Second Task" },
+                new HumanTask{ Id = 3, Name = "Third Task" }
                 };
 
         /// <summary>
@@ -95,6 +95,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.processorUnderTest = new TaskProcessor(this.mockHumanTaskRepository.Object, this.mockReminderRepository.Object, mockUserRepository.Object);
         }
 
+        /// <summary>
+        /// The should_ add task.
+        /// </summary>
         [Test]
         public void Should_AddTask()
         {
@@ -104,11 +107,13 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockHumanTaskRepository.Verify(it => it.Add(testTask), Times.Once());
         }
 
+        /// <summary>
+        /// The should_ add task with reminder.
+        /// </summary>
         [Test]
         public void Should_AddTaskWithReminder()
         {
             // arrange 
-
             const int ExpectedTaskIdAfterSave = 777;
 
             this.mockHumanTaskRepository.Setup(it => it.Add(It.IsAny<HumanTask>())).Callback<HumanTask>((task) =>
@@ -130,9 +135,11 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
             this.mockReminderRepository.Verify(it => it.Add(
                 It.Is<Reminder>(x => x.TaskId == ExpectedTaskIdAfterSave)));
-
         }
 
+        /// <summary>
+        /// The should_ assign task_ when such user exists.
+        /// </summary>
         [Test]
         public void Should_AssignTask_WhenSuchUserExists()
         {
@@ -147,20 +154,26 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockHumanTaskRepository.Verify(it => it.Update(It.Is<HumanTask>(x => x.AssigneeId == 3)), Times.Once());
         }
 
+        /// <summary>
+        /// The should not_ assign task_ when such user does not exist.
+        /// </summary>
         [Test]
         public void ShouldNot_AssignTask_WhenSuchUserDoesNotExist()
         {
-            //arrange
+            // arrange
             this.mockHumanTaskRepository.Setup(it => it.GetById(1)).Returns(new HumanTask { Id = 1 });
             this.mockUserRepository.Setup(it => it.GetById(5)).Throws<InvalidOperationException>();
 
-            //act
+            // act
             this.processorUnderTest.MoveTask(1, 5);
 
-            //assert
+            // assert
             this.mockHumanTaskRepository.Verify(it => it.Update(It.Is<HumanTask>(x => x.AssigneeId == 5)), Times.Never());
         }
 
+        /// <summary>
+        /// The should_ update task_ when task is the only argument of update.
+        /// </summary>
         [Test]
         public void Should_UpdateTask_WhenTaskIsTheOnlyArgumentOfUpdate()
         {
@@ -169,9 +182,11 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.processorUnderTest.UpdateTask(testTask);
 
             this.mockHumanTaskRepository.Verify(it => it.Update(testTask), Times.Once());
-
         }
 
+        /// <summary>
+        /// The should_ update task and reminder_ when update arguments are task and reminder.
+        /// </summary>
         [Test]
         public void Should_UpdateTaskAndReminder_WhenUpdateArgumentsAreTaskAndReminder()
         {
@@ -182,9 +197,11 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
             this.mockHumanTaskRepository.Verify(it => it.Update(testTask), Times.Once());
             this.mockReminderRepository.Verify(it => it.Update(testReminder), Times.Once());
-
         }
 
+        /// <summary>
+        /// The should_ delete task.
+        /// </summary>
         [Test]
         public void Should_DeleteTask()
         {
@@ -193,10 +210,13 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockHumanTaskRepository.Verify(it => it.Delete(1), Times.Once());
         }
 
+        /// <summary>
+        /// The should_ delete all reminders_ when they are related to deleting task.
+        /// </summary>
         [Test]
         public void Should_DeleteAllReminders_WhenTheyAreRelatedToDeletingTask()
         {
-            //arrange
+            // arrange
             const int DeletingTask = 4;
 
             this.mockReminderRepository.Setup(it => it.GetAll()).Returns(
@@ -210,14 +230,17 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             // act
             this.processorUnderTest.DeleteTask(DeletingTask);
 
-            //assert
+            // assert
             this.mockReminderRepository.Verify(it => it.Delete(It.IsAny<Reminder>()), Times.AtLeastOnce());
         }
 
+        /// <summary>
+        /// The should not_ delete any reminders_ when they are not related to deleting task.
+        /// </summary>
         [Test]
         public void ShouldNot_DeleteAnyReminders_WhenTheyAreNotRelatedToDeletingTask()
         {
-            //arrange
+            // arrange
             const int DeletingTask = 4;
 
             this.mockReminderRepository.Setup(it => it.GetAll()).Returns(
@@ -235,6 +258,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockReminderRepository.Verify(it => it.Delete(It.IsAny<Reminder>()), Times.Never());
         }
 
+        /// <summary>
+        /// The should_ return list of tasks of employee by his id.
+        /// </summary>
         [Test]
         public void Should_ReturnListOfTasksOfEmployeeByHisId()
         {
@@ -243,6 +269,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockHumanTaskRepository.Verify(it => it.GetById(1), Times.Once());
         }
 
+        /// <summary>
+        /// The should_ return list of tasks for project by its id.
+        /// </summary>
         [Test]
         public void Should_ReturnListOfTasksForProjectByItsId()
         {
@@ -253,6 +282,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockHumanTaskRepository.Verify(it => it.GetAllTasksInProject(1), Times.Once());
         }
 
+        /// <summary>
+        /// The should_ return list of all tasks_ when get tasks list is called with no arguments is called.
+        /// </summary>
         [Test]
         public void Should_ReturnListOfAllTasks_WhenGetTasksListIsCalledWithNoArgumentsIsCalled()
         {
@@ -261,6 +293,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockHumanTaskRepository.Verify(it => it.GetAll(), Times.Once());
         }
 
+        /// <summary>
+        /// The should_ update task closed field with current date_ when close is called.
+        /// </summary>
         [Test]
         public void Should_UpdateTaskClosedFieldWithCurrentDate_WhenCloseIsCalled()
         {
@@ -274,6 +309,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockHumanTaskRepository.Verify(it => it.Update(It.Is<HumanTask>(x => x.Closed != null)), Times.Once());
         }
 
+        /// <summary>
+        /// The should_ update task and delete related reminders_ when move task is called.
+        /// </summary>
         [Test]
         public void Should_UpdateTaskAndDeleteRelatedReminders_WhenMoveTaskIsCalled()
         {
@@ -297,6 +335,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
                 it => it.Delete(It.Is<Reminder>(x => x.TaskId == TaskBeingMoved)), Times.AtLeastOnce());
         }
 
+        /// <summary>
+        /// The should_ return list of unassigned tasks in project with id 1.
+        /// </summary>
         [Test]
         public void Should_ReturnListOfUnassignedTasksInProjectWithId1()
         {
@@ -307,6 +348,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockHumanTaskRepository.Verify(it => it.GetUnassingnedTasks(1), Times.Once());
         }
 
+        /// <summary>
+        /// The should_ return history for task with id 1 in project.
+        /// </summary>
         [Test]
         public void Should_ReturnHistoryForTaskWithId1InProject()
         {
@@ -317,6 +361,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockHumanTaskRepository.Verify(it => it.GetAllHistoryForTask(1), Times.Once());
         }
 
+        /// <summary>
+        /// The should_ return list of tasks for user with id 2 project with id 1.
+        /// </summary>
         [Test]
         public void Should_ReturnListOfTasksForUserWithId2ProjectWithId1()
         {
@@ -327,6 +374,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockHumanTaskRepository.Verify(it => it.GetAllTasksForUserInProject(1, 2), Times.Once());
         }
 
+        /// <summary>
+        /// The should_ return task history for user with id 1.
+        /// </summary>
         [Test]
         public void Should_ReturnTaskHistoryForUserWithId1()
         {
@@ -337,6 +387,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockHumanTaskRepository.Verify(it => it.GetAllHistoryForUser(1), Times.Once());
         }
 
+        /// <summary>
+        /// The should_ return all closed tasks in project with id 1.
+        /// </summary>
         [Test]
         public void Should_ReturnAllClosedTasksInProjectWithId1()
         {
@@ -350,6 +403,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockHumanTaskRepository.Verify(it => it.GetAllTasksInProject(1), Times.Once());
         }
 
+        /// <summary>
+        /// The should_ return all closed tasks for user with id 2 in project with id 1.
+        /// </summary>
         [Test]
         public void Should_ReturnAllClosedTasksForUserWithId2InProjectWithId1()
         {
@@ -358,6 +414,38 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
             // act
             this.processorUnderTest.GetAllClosedTasksForUserInProject(1, 2);
+
+            // assert
+            this.mockHumanTaskRepository.Verify(it => it.GetAllTasksForUserInProject(1, 2), Times.Once());
+        }
+
+        /// <summary>
+        /// The should_ return all opened tasks in project with id 1.
+        /// </summary>
+        [Test]
+        public void Should_ReturnAllOpenedTasksInProjectWithId1()
+        {
+            // arrange
+            this.mockHumanTaskRepository.Setup(x => x.GetAllTasksInProject(1)).Returns(new List<HumanTask>());
+
+            // act
+            this.processorUnderTest.GetAllOpenTasksForProject(1);
+
+            // assert
+            this.mockHumanTaskRepository.Verify(it => it.GetAllTasksInProject(1), Times.Once());
+        }
+
+        /// <summary>
+        /// The should_ return all opened tasks for user with id 2 in project with id 1.
+        /// </summary>
+        [Test]
+        public void Should_ReturnAllOpenedTasksForUserWithId2InProjectWithId1()
+        {
+            // arrange
+            this.mockHumanTaskRepository.Setup(x => x.GetAllTasksForUserInProject(1, 2)).Returns(new List<HumanTask>());
+
+            // act
+            this.processorUnderTest.GetAllOpenTasksForUserInProject(1, 2);
 
             // assert
             this.mockHumanTaskRepository.Verify(it => it.GetAllTasksForUserInProject(1, 2), Times.Once());
