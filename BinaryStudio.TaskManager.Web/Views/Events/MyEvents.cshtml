@@ -11,7 +11,7 @@
  }    
  
     
-
+@ko.Html.Hidden()
 <div class="container-fluid" style="margin-top: 30px">
     <h2>My news</h2>
     
@@ -48,66 +48,38 @@
                 @*foreach (EventViewModel event_ in ko.Model) *@
                 using (var event_ = ko.Foreach(m => m.Events))
                 {
-                    
-                   <div @event_.Bind.Attr("class",e=> e.ContainerClassName).Attr("id",e=>e.NewsId)>
-                        <strong>
+                    using (event_.If(x => x.IsVisible))
+                    {
+
+                        <div @event_.Bind.Attr("class", e => e.ContainerClassName).Attr("id", e => e.NewsId)>
+                            <strong>
                             
-                            <a @event_.Bind.Attr("id",e => e.ProjectId).Text(e => e.ProjectName )> </a>
-                            <br/>
-                            <a @event_.Bind.Attr("href",e=>e.WhoChangeLinkDetails).Text(e=>e.WhoChangeUserName)> </a>
-                            <span @event_.Bind.Text(e=>e.Action)></span>
-                            <a @event_.Bind.Attr("href",e=>e.TaskLinkDetails).Text(e=>e.TaskName)> </a>
-                            @using (event_.If(x => x.IsMove))
-                            {
-                                @:to
-                                using (event_.If(x => !x.IsAssigne))
+                                <a @event_.Bind.Attr("id", e => e.ProjectId).Text(e => e.ProjectName)> </a>
+                                <br/>
+                                <a @event_.Bind.Attr("href", e => e.WhoChangeLinkDetails).Text(e => e.WhoChangeUserName)> </a>
+                                <span @event_.Bind.Text(e => e.Action)></span>
+                                <a @event_.Bind.Attr("href", e => e.TaskLinkDetails).Text(e => e.TaskName)> </a>
+                                @using (event_.If(x => x.IsMove))
                                 {
-                                    @: unassigned
+                                    @:to
+                                    using (event_.If(x => !x.IsAssigne))
+                                    {
+                                        @: unassigned
+                                    }
+                                    using (event_.If(x => x.IsAssigne))
+                                    {
+                                        <a @event_.Bind.Attr("href", e => e.WhoAssigneLinkDetails).Text(e => e.WhoAssigneUserName)> </a>
+                                    }
                                 }
-                                using (event_.If(x => x.IsAssigne))
-                                {
-                                    <a @event_.Bind.Attr("href", e => e.WhoAssigneLinkDetails).Text(e => e.WhoAssigneUserName)> </a>
-                                }
-                            }
                                 
-                                
-                                
-                            @*
-                                
-                                using(event_.If(x=> !x.WhoAssigneUserId.HasValue))
-                                {
-                                  @: mee   
-                                }
+                            </strong>
+                        </div>
 
-                            }*@
-                            @*
-                            @Html.ActionLink(@Model.WhoChangeUserName + " ", "UserDetails", "Project", new { userId = Model.WhoChangeUserId }, null)
-                            @Model.Action task @Html.ActionLink(@Model.TaskName+" ","Details","Project",new { id = Model.TaskId }, null) 
-        
-                            @if(Model.Action== ChangeHistoryTypes.Move)
-                            {
-                                @:to  
-                                if (Model.WhoAssigneUserId == (int?)null)
-                                {
-                                    @:unassigned
-                                }
-                                else
-                                {
-                                    @Html.ActionLink( Model.WhoAssigneUserName + " ", "UserDetails", "Project", new {userId = Model.WhoAssigneUserId}, null);
-                                }
-                            }
-        
-                            @Model.TimeAgo
-                            <br/>
-                            @Model.Details
-        *@
-                        </strong>
-</div>
-
-                    <hr style="margin: 9px 0"/>
+                        <hr style="margin: 9px 0"/>
+                    }
                 }
 
-                }
+            }
 
         </div>
     </div>
