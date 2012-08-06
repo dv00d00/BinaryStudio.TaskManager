@@ -115,6 +115,7 @@
     <Compile Include="Core\HumanTaskRepository.cs" />
     <Compile Include="Core\IUserProcessor.cs" />
     <Compile Include="Core\IUserRepository.cs" />
+    <Compile Include="Core\NewsProcessor.cs" />
     <Compile Include="Core\NewsRepository.cs" />
     <Compile Include="Core\Notifier.cs" />
     <Compile Include="Core\ProjectProcessor.cs" />

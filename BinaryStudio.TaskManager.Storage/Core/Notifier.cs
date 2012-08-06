@@ -80,6 +80,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             {
                 context.Clients[clientConnection.ConnectionId].ReciveMessageOnClient(message);
             }
+            this.SetCountOfNews(news.UserId);
         }
 
         public void BroadcastNews(News news)
