@@ -156,6 +156,18 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.projectRepository.GetAllInvitationsToProject(projectId);
         }
 
+        public IEnumerable<User> GetUsersAndCreatorInProject(int projectId)
+        {
+            List<User>  users = new List<User>(this.GetAllUsersInProject(projectId));
+            users.Add(this.GetCreator(projectId));
+            return users;
+        }
+
+        public User GetCreator(int projectId)
+        {
+            return this.GetProjectById(projectId).Creator;
+        }
+
         /// <summary>
         /// The create custom project with project name and description.
         /// </summary>

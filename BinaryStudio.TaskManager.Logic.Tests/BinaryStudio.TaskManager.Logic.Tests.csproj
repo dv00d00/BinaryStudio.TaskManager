@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MockTimeManager.cs" />
+    <Compile Include="NewsProcessorTests.cs" />
     <Compile Include="ProjectProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReminderSenderTests.cs" />

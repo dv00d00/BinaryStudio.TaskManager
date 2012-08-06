@@ -33,6 +33,8 @@ namespace BinaryStudio.TaskManager.Web.Tests
 
         private Mock<INewsRepository> newsRepositoryMock;
 
+        private Mock<INewsProcessor> newsProcessorMock;
+
         [SetUp]
         public void Init()
         {
@@ -42,14 +44,15 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.projectProcessorMock = new Mock<IProjectProcessor>();
             this.notifierMock = new Mock<INotifier>();
             this.newsRepositoryMock = new Mock<INewsRepository>();
-
+            this.newsProcessorMock = new Mock<INewsProcessor>();
             this.controller = new ProjectController(
                 this.taskProcessorMock.Object,
                 this.userProcessorMock.Object,
-                this.projectProcessorMock.Object, 
+                this.projectProcessorMock.Object,
                 this.notifierMock.Object,
-                this.newsRepositoryMock.Object);
-
+                this.newsRepositoryMock.Object,
+                this.newsProcessorMock.Object
+                );
         }
 
         /// <summary>
@@ -91,7 +94,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
             const int ProjectId = 2;
 
             // act
-            this.controller.MoveTask(TaskId, SenderId, ReceiverId,ProjectId);
+            this.controller.MoveTask(TaskId, SenderId, ReceiverId, ProjectId);
 
             // assert
             this.taskProcessorMock.Verify(x => x.MoveTask(TaskId, ReceiverId), Times.AtLeastOnce());
@@ -110,7 +113,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
             const int projectId = 2;
 
             // act
-            this.controller.MoveTask(TaskId, SenderId, ReceiverId,projectId);
+            this.controller.MoveTask(TaskId, SenderId, ReceiverId, projectId);
 
             // assert
             this.taskProcessorMock.Verify(x => x.MoveTaskToUnassigned(TaskId), Times.AtLeastOnce());

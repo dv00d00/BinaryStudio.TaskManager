@@ -58,7 +58,11 @@
                 dataType: "json",
                 traditional: true
             }); 
-        });
+
+            
+
+        });       
+
     });
 
 
@@ -107,9 +111,9 @@
                     <div class="editor-field">
                         <p />@Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new { projectId = Model.ProjectId }, new { @class = "btn" })
                         <br />
-                        <p />@Html.ActionLink("Show closed projects", "Project", new { projectId = Model.ProjectId, isOpenedProjects = false }, new { @class = "btn" })
+                        <p />@Html.ActionLink("Show closed tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = false }, new { @class = "btn" })
                         <br />
-                        <p />@Html.ActionLink("Show opened projects", "Project", new { projectId = Model.ProjectId, isOpenedProjects = true }, new { @class = "btn" })
+                        <p />@Html.ActionLink("Show opened tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = true }, new { @class = "btn" })
                         <div id="mydiv">@Html.Partial("QuickTaskCreation", Model.QuickTask)</div>
                     </div>
                 </td>

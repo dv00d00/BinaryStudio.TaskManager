@@ -106,6 +106,7 @@
     <Compile Include="Core\IClientConnectionManager.cs" />
     <Compile Include="Core\IConnectionProvider.cs" />
     <Compile Include="Core\ICryptoProvider.cs" />
+    <Compile Include="Core\INewsProcessor.cs" />
     <Compile Include="Core\INewsRepository.cs" />
     <Compile Include="Core\IProjectProcessor.cs" />
     <Compile Include="Core\IProjectRepository.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Core\HumanTaskRepository.cs" />
     <Compile Include="Core\IUserProcessor.cs" />
     <Compile Include="Core\IUserRepository.cs" />
+    <Compile Include="Core\NewsProcessor.cs" />
     <Compile Include="Core\NewsRepository.cs" />
     <Compile Include="Core\Notifier.cs" />
     <Compile Include="Core\ProjectProcessor.cs" />

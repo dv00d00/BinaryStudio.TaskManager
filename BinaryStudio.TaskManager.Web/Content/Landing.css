@@ -147,6 +147,7 @@
 .proj_title {
     color: green;
     float: right;
+    margin-right: 50px;
 }
 #content h2 {
     display: inline-block;
@@ -204,4 +205,9 @@ img {
 
 .no_filtered {
     display: none;
+}
+
+.sort_btn.btn-group {
+    float: right;
+    display: block;
 }

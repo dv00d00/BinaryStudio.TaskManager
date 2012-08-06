@@ -18,7 +18,7 @@ taskHub.TaskCreated = function (taskId, managerId) {
             task += "</div>";
             jQuery("[data-managerid=" + managerId + "]").html(task);
             jQuery("[data-taskid=" + taskId + "]").insertBefore(jQuery("[data-managerid=" + managerId + "]"));
-            jQuery("[data-taskid=" + taskId + "]").effect("shake", { times: 3 }, 300);
+            jQuery("[data-taskid=" + taskId + "]").effect("shake", { times: 2 }, 200);
         }
     });
 };

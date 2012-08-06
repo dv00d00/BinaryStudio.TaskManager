@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using BinaryStudio.TaskManager.Web.Extentions;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
@@ -38,6 +39,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </summary>
         private readonly INewsRepository newsRepository;
 
+        private readonly INewsProcessor newsProcessor;
         /// <summary>
         /// Initializes a new instance of the <see cref="QuickTaskController"/> class.
         /// </summary>
@@ -56,13 +58,14 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="newsRepository">
         /// The news Repository.
         /// </param>
-        public QuickTaskController(IUserProcessor userProcessor, ITaskProcessor taskProcessor, IProjectProcessor projectProcessor, INotifier notifier, INewsRepository newsRepository)
+        public QuickTaskController(IUserProcessor userProcessor, ITaskProcessor taskProcessor, IProjectProcessor projectProcessor, INotifier notifier, INewsRepository newsRepository, INewsProcessor newsProcessor)
         {
             this.userProcessor = userProcessor;
             this.taskProcessor = taskProcessor;
             this.projectProcessor = projectProcessor;
             this.notifier = notifier;
             this.newsRepository = newsRepository;
+            this.newsProcessor = newsProcessor;
         }
 
         /// <summary>
@@ -95,20 +98,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult QuickTaskCreation(int projectId, string description)
         {
             var creatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
-            var separetor = new[] { ' ' };
-            var taskDescription = description.Split(separetor, 3);
-            var taskName = new StringBuilder(taskDescription[0], 20);
-            if (taskDescription.Length > 1)
-            {
-                taskName.Append(' ').Append(taskDescription[1]);
-            }
 
             var task = new HumanTask
             {
                 Created = DateTime.Now,
                 CreatorId = creatorId,
                 Description = description,
-                Name = taskName.ToString(),
+                Name = description.Truncate(20),
                 Priority = 0,
                 ProjectId = projectId,
             };
@@ -126,42 +122,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 UserId = this.userProcessor.GetUserByName(User.Identity.Name).Id
             };
             this.taskProcessor.AddHistory(taskHistory);
-
-            List<User> projectUsers = new List<User>(this.projectProcessor.GetAllUsersInProject(task.ProjectId));
-            projectUsers.Add(this.projectProcessor.GetProjectById(task.ProjectId).Creator);
-
-            this.CreateNewsForUsers(taskHistory, projectUsers);
+            this.newsProcessor.CreateNewsForUsersInProject(taskHistory,task.ProjectId);
 
             this.notifier.CreateTask(task.Id);
 
             return this.RedirectToAction("Project", "Project", new { id = task.ProjectId });
-        }
-
-        /// <summary>
-        /// The create news for users.
-        /// </summary>
-        /// <param name="taskHistory">
-        /// The task history.
-        /// </param>
-        /// <param name="projectUsers">
-        /// The project users.
-        /// </param>
-        private void CreateNewsForUsers(HumanTaskHistory taskHistory, IEnumerable<User> projectUsers)
-        {
-            foreach (var projectUser in projectUsers)
-            {
-                var news = new News
-                {
-                    HumanTaskHistory = taskHistory,
-                    IsRead = false,
-                    User = projectUser,
-                    UserId = projectUser.Id,
-                    HumanTaskHistoryId = taskHistory.Id,
-                };
-
-                this.newsRepository.AddNews(news);
-                this.notifier.SetCountOfNewses(projectUser.UserName);
-            }
         }
     }
 }

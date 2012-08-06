@@ -26,6 +26,19 @@
 
         public string TimeAgo { get; set; }
 
-        public bool IsRead;
+        public bool IsRead { get; set; }
+
+        public string ContainerClassName { get; set; }
+
+        public string WhoChangeLinkDetails { get; set; }
+
+        public string WhoAssigneLinkDetails { get; set; }
+
+        public string TaskLinkDetails { get; set; }
+
+        public bool IsMove { get; set; }
+
+        public bool IsAssigne { get; set; }
+
     }
 }

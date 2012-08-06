@@ -228,6 +228,11 @@ function listProjects(response) {
     if (userProjectsCount + creatorProjectsCount == 0) {
         $(".project_list").html("<span>There are no projects yet</span>");
     }
+    $('.project_name').each(function () {
+        if ($(this).html() == $('#content h2').html()) {
+            $(this).addClass('active_proj');
+        }
+    });
 }
 
 function projectsOutput(projects, li_class) {
