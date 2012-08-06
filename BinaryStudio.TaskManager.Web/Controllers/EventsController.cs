@@ -15,11 +15,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly IUserProcessor userProcessor;
         private readonly INewsRepository newsRepository;
         private readonly INotifier notifier;
-        public EventsController(IUserProcessor userProcessor, INewsRepository newsRepository, INotifier notifier)
+        private readonly IProjectRepository projectRepository;
+        public EventsController(IUserProcessor userProcessor, INewsRepository newsRepository, INotifier notifier, IProjectRepository projectRepository)
         {
             this.userProcessor = userProcessor;
             this.newsRepository = newsRepository;
             this.notifier = notifier;
+            this.projectRepository = projectRepository;
         }
 
         //
@@ -33,11 +35,17 @@ namespace BinaryStudio.TaskManager.Web.Controllers
            
             foreach (var newse in news)
             {
-                var dateTimeDifference = DateTime.Now.Subtract(newse.HumanTaskHistory.ChangeDateTime);
                 eventsViewModels.Add(CreateEventViewModel(newse));
             }
-            
-            return View(eventsViewModels);
+            var listEvents = new ListEventViewModel();
+            listEvents.Events = eventsViewModels;
+            listEvents.Projects = new List<ProjectDataForEventsViewModel>();
+            listEvents.Projects.AddRange(userProcessor.GetUserByName(User.Identity.Name).UserProjects.Select(
+                x => new ProjectDataForEventsViewModel{ProjectId = x.Id,ProjectName = x.Name}));
+            listEvents.Projects.AddRange(projectRepository.GetAllProjectsForTheirCreator(user).Select(
+                x => new ProjectDataForEventsViewModel { ProjectId = x.Id, ProjectName = x.Name }));
+
+            return View(listEvents);
         }
 
 
@@ -61,8 +69,14 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                    :"",
                           IsRead = news.IsRead,
                           WhoAssigneUserId = news.HumanTaskHistory.NewAssigneeId,
-                          WhoAssigneUserName = news.HumanTaskHistory.NewAssigneeId.HasValue ? userProcessor.GetUser(news.HumanTaskHistory.NewAssigneeId.Value).UserName : ""
-                       };
+                          WhoAssigneUserName = news.HumanTaskHistory.NewAssigneeId.HasValue ? userProcessor.GetUser(news.HumanTaskHistory.NewAssigneeId.Value).UserName : "",
+                          ContainerClassName = news.IsRead ? "container evnt_read" : "container evnt_unread",
+                          TaskLinkDetails = "/Project/Details/"+ news.HumanTaskHistory.TaskId,
+                           WhoAssigneLinkDetails = "/Project/UserDetails?userId=" + news.HumanTaskHistory.NewAssigneeId,
+                           WhoChangeLinkDetails = "/Project/UserDetails?userId=" + news.HumanTaskHistory.UserId,
+                           IsMove = news.HumanTaskHistory.Action == ChangeHistoryTypes.Move ? true : false,
+                           IsAssigne = news.HumanTaskHistory.NewAssigneeId.HasValue
+                          };
         }
 
         public string TakeTimeAgo(DateTime time)
@@ -86,7 +100,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             }
             if (dateTimeDifference.TotalHours > 48)
             {
-                return dateTimeDifference.TotalDays.ToString() + " days ago";
+                return Math.Floor(dateTimeDifference.TotalDays).ToString() + " days ago";
             }
             return time.ToString();
         }
@@ -111,5 +125,45 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             newsRepository.MarkAllUnreadNewsForUser(user.Id);
             this.notifier.SetCountOfNewses(user.UserName);
         }
+
+        // type == 1, all news about all tasks in my projects
+        // type == 2, news about only me
+        // type > 2, news for some project
+       
+        public ActionResult GetNews(ListEventViewModel eventsViewModels,  int type,int projectId=-1)
+        {
+            //var eventsViewModels = new List<EventViewModel>();
+            eventsViewModels.Events=new List<EventViewModel>();
+            var user = userProcessor.GetUserByName(User.Identity.Name).Id;
+            List<News> news = new List<News>(newsRepository.GetAllNewsForUser(user).OrderByDescending(x => x.HumanTaskHistory.ChangeDateTime));
+            if (type == 2)
+            {
+                news = news.Where(
+                        x =>
+                        x.HumanTaskHistory.NewAssigneeId == user ||
+                        x.HumanTaskHistory.UserId == user ).ToList();
+            }
+            if(type > 2)
+            {
+                news = news.Where(x => x.HumanTaskHistory.Task.ProjectId == projectId).ToList();
+            }
+
+            foreach (var newse in news)
+            {
+                eventsViewModels.Events.Add(CreateEventViewModel(newse));
+            }
+
+            eventsViewModels.Projects = new List<ProjectDataForEventsViewModel>();
+            eventsViewModels.Projects.AddRange(userProcessor.GetUserByName(User.Identity.Name).UserProjects.Select(
+                x => new ProjectDataForEventsViewModel { ProjectId = x.Id, ProjectName = x.Name }));
+            eventsViewModels.Projects.AddRange(projectRepository.GetAllProjectsForTheirCreator(user).Select(
+                x => new ProjectDataForEventsViewModel { ProjectId = x.Id, ProjectName = x.Name }));
+
+            //eventsViewModels.Projects = new List<Project>(userProcessor.GetUserByName(User.Identity.Name).UserProjects);
+            return Json(eventsViewModels);
+            
+        }
+
+
     }
 }

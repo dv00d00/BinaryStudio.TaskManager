@@ -92,6 +92,9 @@
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="PerpetuumSoft.Knockout">
+      <HintPath>..\packages\Knockout.MVC.0.5.1\lib\PerpetuumSoft.Knockout.dll</HintPath>
+    </Reference>
     <Reference Include="SignalR">
       <HintPath>..\packages\SignalR.Server.0.5.2\lib\net40\SignalR.dll</HintPath>
     </Reference>
@@ -150,8 +153,10 @@
     <Compile Include="Models\InMemoryTokenManager.cs" />
     <Compile Include="Models\InvitationsViewModel.cs" />
     <Compile Include="Models\LandingModels.cs" />
+    <Compile Include="Models\ListEventViewModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\ProjectCollaboratorsViewModel.cs" />
+    <Compile Include="Models\ProjectDataForEventsViewModel.cs" />
     <Compile Include="Models\ProjectView.cs" />
     <Compile Include="Models\RegisterLinkedInModel.cs" />
     <Compile Include="Models\SingleTaskViewModel.cs" />
@@ -258,8 +263,11 @@
     <Content Include="Scripts\jquery.signalR-0.5.2.min.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\custome.signalR.js" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\landing.js" />
+    <Content Include="Scripts\perpetuum.knockout.js" />
     <Content Include="Scripts\TaskModel.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
