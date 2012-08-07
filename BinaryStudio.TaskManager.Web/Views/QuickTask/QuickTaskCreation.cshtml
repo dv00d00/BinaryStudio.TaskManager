@@ -8,7 +8,6 @@
     $(document).ready(function () {
 
         $(".create").click(function () {
-
             var projId = 2;
             var taskDescription = "Task1 created by me";
             $.ajax({
@@ -18,6 +17,7 @@
                 dataType: "json",
                 traditional: true
             });
+            
         });
     });
 </script>
