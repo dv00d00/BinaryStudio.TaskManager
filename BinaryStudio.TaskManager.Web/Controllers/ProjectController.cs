@@ -145,7 +145,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 AssigneeId = (userId != -1) ? userId : (int?)null,
                 CreatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id,
                 Created = DateTime.Now,
-                IsBlocking = false,
                 Tasks = this.taskProcessor.GetOpenTasksListInProject(projectId),
                 ProjectId = projectId
             };
@@ -183,7 +182,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     ProjectId = createModel.ProjectId,
                     BlockingTaskId = createModel.BlockingTask
                 };
+
+                if (task.Priority == 3)
+                {
+                    task.AssigneeId = this.userProcessor.GetUserByTaskId(task.BlockingTaskId);
+                    task.Assigned = task.AssigneeId == (int?)null ? task.Created : (DateTime?)null;
+                }
+
                 this.taskProcessor.CreateTask(task);
+
                 var taskHistory = new HumanTaskHistory
                                       {
                                           NewDescription = task.Description,
@@ -197,6 +204,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                       };
                 this.taskProcessor.AddHistory(taskHistory);
                 this.notifier.CreateTask(task.Id);
+
+                if (task.Priority == 3)
+                {
+                    this.MoveTask(task.Id, 0, task.AssigneeId ?? 0, task.ProjectId);
+                }
 
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId });
             }

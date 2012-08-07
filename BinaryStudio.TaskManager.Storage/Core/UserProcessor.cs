@@ -31,19 +31,13 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// </summary>
         private readonly ICryptoProvider cryptoProvider;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserProcessor"/> class.
-        /// </summary>
-        /// <param name="userRepository">
-        /// The user repository.
-        /// </param>
-        /// <param name="cryptoProvider">
-        /// The crypto provider.
-        /// </param>
-        public UserProcessor(IUserRepository userRepository, ICryptoProvider cryptoProvider)
+        private readonly ITaskProcessor taskProcessor;
+
+        public UserProcessor(IUserRepository userRepository, ICryptoProvider cryptoProvider, ITaskProcessor taskProcessor)
         {
             this.userRepository = userRepository;
             this.cryptoProvider = cryptoProvider;
+            this.taskProcessor = taskProcessor;
         }
 
         /// <summary>
@@ -251,6 +245,20 @@ namespace BinaryStudio.TaskManager.Logic.Core
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// The get user by task id.
+        /// </summary>
+        /// <param name="taskId">
+        /// The task id.
+        /// </param>
+        /// <returns>
+        /// The BinaryStudio.TaskManager.Logic.Domain.User.
+        /// </returns>
+        public int? GetUserByTaskId(int taskId)
+        {
+            return this.taskProcessor.GetTaskById(taskId).AssigneeId;
         }
 
         /// <summary>

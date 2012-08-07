@@ -27,7 +27,7 @@ namespace BinaryStudio.TaskManager.Logic.Domain
 
         public int ProjectId { get; set; }
 
-        public int? BlockingTaskId { get; set; }
+        public int BlockingTaskId { get; set; }
 
         public virtual Project Project { get; set; }
 
