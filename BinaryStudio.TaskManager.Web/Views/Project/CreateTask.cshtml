@@ -65,12 +65,12 @@
                     @Html.ValidationMessageFor(model => model.Finished)
                 </div>
             </div>
-            <div id="blocking">
+            <div>
                 Is task bloking:
-                @Html.CheckBoxFor(model => model.IsBlocking) <br />
+                @Html.CheckBoxFor(model => model.IsBlocking, new {@id ="blocking"}) <br />
             </div>
-            <div id="taskslist">
-                @Html.DropDownListFor(x => x.Tasks, Model.Tasks, "Choose blocking task:")
+            <div>
+                @Html.DropDownListFor(x => x.Tasks, Model.Tasks, "Choose blocking task:",new { @id="taskslist"})
             </div>
             <div data-managerid="0" style="display: none">
                 olo
@@ -99,10 +99,11 @@
         });
 
         $("#blocking").click(function () {
-            if (this.checked) {
-                $("#taskslist").attr('disabled', 'disabled');
+
+            if (!$("#blocking").prop("checked")) {
+                $("#taskslist").prop("disabled", true);
             } else {
-                $("#taskslist").removeAttr('disabled');
+                $("#taskslist").prop("disabled", false);
             }
         });
 
