@@ -111,3 +111,9 @@ button.all_read
 {
     float: left;
 }
+
+#register_block 
+{
+    width: 300px;
+    margin: 0 auto;
+}
