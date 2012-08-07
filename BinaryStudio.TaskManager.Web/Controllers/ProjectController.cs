@@ -486,7 +486,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                           Action = ChangeHistoryTypes.Change,
                                           UserId = this.userProcessor.GetUserByName(User.Identity.Name).Id
                                       };
-
                 
                 this.taskProcessor.AddHistory(taskHistory);
                 this.newsProcessor.CreateNewsForUsersInProject(taskHistory,humanTask.ProjectId);
