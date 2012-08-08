@@ -455,6 +455,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 Description = task.Description,
                 Name = task.Name,
                 Finished = task.Finished,
+                Tasks = this.taskProcessor.GetOpenTasksListInProject(projectId),
                 ProjectId = projectId,
                 Id = taskId
             };

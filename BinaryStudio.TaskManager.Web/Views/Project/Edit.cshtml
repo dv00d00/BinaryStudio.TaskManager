@@ -20,6 +20,7 @@
         @Html.HiddenFor(model => model.ProjectId)
         @Html.HiddenFor(model => model.Assigned)
         @Html.HiddenFor(model => model.Priority, new { id = "priorityValue" })
+        @Html.HiddenFor(model => model.BlockingTask, new { id = "blockingTask" })
         <div class="editor-label">
             Name:
         </div>
@@ -64,6 +65,15 @@
                     @Html.ValidationMessageFor(model => model.Finished)
                 </div>
             </div>
+            <div class="editor-label">
+           Blocking task:
+        </div>
+        <div>
+            @Html.DropDownListFor(x => x.Tasks, Model.Tasks, "Choose blocking task:", new { @id = "taskslist" })
+        </div>
+        <div data-managerid="0" style="display: none">
+            olo
+        </div>
             <input type="submit" value="Save" class="btn btn-primary" />
             @Html.ActionLink("Return to tasks list", "Project", new { id = Model.ProjectId }, new { @class = "btn" })
         </p>
@@ -75,9 +85,22 @@
         $('#Finished').datepicker({
             format: 'dd-mm-yyyy'
         });
+
+        $("#taskslist").click(function () {
+            var value = $(this).val();
+            $("#blockingTask").val(value);
+        });
+
+        $("#taskslist").prop("disabled", true);
+
         $(".priority").click(function () {
             var value = $(this).val();
             $("#priorityValue").val(value);
+            if (value != "3") {
+                $("#taskslist").prop("disabled", true);
+            } else {
+                $("#taskslist").prop("disabled", false);
+            }
         });
     });
 </script>
