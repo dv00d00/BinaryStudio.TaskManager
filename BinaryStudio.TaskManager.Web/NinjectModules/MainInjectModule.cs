@@ -11,6 +11,7 @@ namespace BinaryStudio.TaskManager.Web.NinjectModules
 {
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
+    using BinaryStudio.TaskManager.Web.Extentions;
 
     using Ninject.Modules;
     using Ninject.Web.Common;
@@ -39,6 +40,7 @@ namespace BinaryStudio.TaskManager.Web.NinjectModules
             this.Bind<IGlobalHost>().To<GlobalHostImpl>().InRequestScope();
             this.Bind<INewsRepository>().To<NewsRepository>().InRequestScope();
             this.Bind<INewsProcessor>().To<NewsProcessor>().InRequestScope();
+            this.Bind<IStringExtensions>().To<StringExtensions>().InRequestScope();
         }
     }
 }

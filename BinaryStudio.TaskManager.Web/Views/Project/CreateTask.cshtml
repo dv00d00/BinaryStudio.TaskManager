@@ -55,29 +55,26 @@
                 }
             }
         </div>
-        <p>
-            <div class="editor-label">
-                Finish Date:
+        <div class="editor-label">
+            Finish Date:
+        </div>
+        <div class="editor-field">
+            <div class="input-append date" data-date="06-09-2011" data-date-format="dd-mm-yyyy">
+                @Html.TextBoxFor(model => model.Finished)
+                @Html.ValidationMessageFor(model => model.Finished)
             </div>
-            <div class="editor-field">
-                <div class="input-append date" data-date="06-09-2011" data-date-format="dd-mm-yyyy">
-                    @Html.TextBoxFor(model => model.Finished)
-                    @Html.ValidationMessageFor(model => model.Finished)
-                </div>
-            </div>
-            <div>
-                Is task bloking:
-                @Html.CheckBoxFor(model => model.IsBlocking, new {@id ="blocking"}) <br />
-            </div>
-            <div>
-                @Html.DropDownListFor(x => x.Tasks, Model.Tasks, "Choose blocking task:",new { @id="taskslist"})
-            </div>
-            <div data-managerid="0" style="display: none">
-                olo
-            </div>
-            <input type="submit" value="Save" class="btn btn-primary" />
-            @Html.ActionLink("Return to project", "Project", new { id = Model.ProjectId }, new { @class = "btn" })
-        </p>
+        </div>
+        <div class="editor-label">
+           Blocking task:
+        </div>
+        <div>
+            @Html.DropDownListFor(x => x.Tasks, Model.Tasks, "Choose blocking task:", new { @id = "taskslist" })
+        </div>
+        <div data-managerid="0" style="display: none">
+            olo
+        </div>
+        <input type="submit" value="Save" class="btn btn-primary" />
+        @Html.ActionLink("Return to project", "Project", new { id = Model.ProjectId }, new { @class = "btn" })
     </fieldset>
 }
 
@@ -88,24 +85,21 @@
             format: 'dd-mm-yyyy'
         });
 
-        $(".priority").click(function () {
-            var value = $(this).val();
-            $("#priorityValue").val(value);
-        });
-
         $("#taskslist").click(function () {
             var value = $(this).val();
             $("#blockingTask").val(value);
         });
+        
+        $("#taskslist").prop("disabled", true);
 
-        $("#blocking").click(function () {
-
-            if (!$("#blocking").prop("checked")) {
+        $(".priority").click(function () {
+            var value = $(this).val();
+            $("#priorityValue").val(value);
+            if(value != "3") {
                 $("#taskslist").prop("disabled", true);
             } else {
                 $("#taskslist").prop("disabled", false);
             }
         });
-
     });
 </script>

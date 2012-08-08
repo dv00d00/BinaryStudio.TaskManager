@@ -40,6 +40,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly INewsRepository newsRepository;
 
         private readonly INewsProcessor newsProcessor;
+
+        private readonly IStringExtensions stringExtensions;
         /// <summary>
         /// Initializes a new instance of the <see cref="QuickTaskController"/> class.
         /// </summary>
@@ -58,7 +60,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="newsRepository">
         /// The news Repository.
         /// </param>
-        public QuickTaskController(IUserProcessor userProcessor, ITaskProcessor taskProcessor, IProjectProcessor projectProcessor, INotifier notifier, INewsRepository newsRepository, INewsProcessor newsProcessor)
+        public QuickTaskController(IUserProcessor userProcessor, ITaskProcessor taskProcessor, IProjectProcessor projectProcessor, 
+            INotifier notifier, INewsRepository newsRepository, INewsProcessor newsProcessor, IStringExtensions stringExtensions)
         {
             this.userProcessor = userProcessor;
             this.taskProcessor = taskProcessor;
@@ -66,6 +69,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.notifier = notifier;
             this.newsRepository = newsRepository;
             this.newsProcessor = newsProcessor;
+            this.stringExtensions = stringExtensions;
         }
 
         /// <summary>
@@ -104,7 +108,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 Created = DateTime.Now,
                 CreatorId = creatorId,
                 Description = description,
-                Name = description.Truncate(20),
+                Name = stringExtensions.Truncate(description, 20),
                 Priority = 0,
                 ProjectId = projectId,
             };

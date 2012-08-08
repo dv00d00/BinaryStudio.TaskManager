@@ -16,6 +16,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
+    using BinaryStudio.TaskManager.Web.Extentions;
     using BinaryStudio.TaskManager.Web.Models;
 
     /// <summary>
@@ -75,7 +76,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="newsProcessor">
         /// The news Processor.
         /// </param>
-        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, INotifier notifier, INewsRepository newsRepository, INewsProcessor newsProcessor)
+        private readonly IStringExtensions stringExtensions;
+
+        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, 
+            INotifier notifier, INewsRepository newsRepository, INewsProcessor newsProcessor, IStringExtensions stringExtensions)
         {
             this.projectProcessor = projectProcessor;
             this.notifier = notifier;
@@ -83,6 +87,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.userProcessor = userProcessor;
             this.newsRepository = newsRepository;
             this.newsProcessor = newsProcessor;
+            this.stringExtensions = stringExtensions;
         }
 
         /// <summary>
@@ -145,7 +150,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 AssigneeId = (userId != -1) ? userId : (int?)null,
                 CreatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id,
                 Created = DateTime.Now,
-                IsBlocking = false,
                 Tasks = this.taskProcessor.GetOpenTasksListInProject(projectId),
                 ProjectId = projectId
             };
@@ -183,7 +187,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     ProjectId = createModel.ProjectId,
                     BlockingTaskId = createModel.BlockingTask
                 };
+
+                if (task.Priority == 3)
+                {
+                    task.AssigneeId = this.userProcessor.GetUserByTaskId(task.BlockingTaskId);
+                    task.Assigned = task.AssigneeId == (int?)null ? task.Created : (DateTime?)null;
+                }
+
                 this.taskProcessor.CreateTask(task);
+
                 var taskHistory = new HumanTaskHistory
                                       {
                                           NewDescription = task.Description,
@@ -197,6 +209,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                       };
                 this.taskProcessor.AddHistory(taskHistory);
                 this.notifier.CreateTask(task.Id);
+                this.newsProcessor.CreateNewsForUsersInProject(taskHistory, task.ProjectId);
 
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId });
             }
@@ -447,6 +460,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 Description = task.Description,
                 Name = task.Name,
                 Finished = task.Finished,
+                Tasks = this.taskProcessor.GetOpenTasksListInProject(projectId),
                 ProjectId = projectId,
                 Id = taskId
             };
@@ -486,7 +500,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                           Action = ChangeHistoryTypes.Change,
                                           UserId = this.userProcessor.GetUserByName(User.Identity.Name).Id
                                       };
-
                 
                 this.taskProcessor.AddHistory(taskHistory);
                 this.newsProcessor.CreateNewsForUsersInProject(taskHistory,humanTask.ProjectId);
@@ -607,6 +620,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var assigneeName = task.AssigneeId.HasValue
                                    ? this.userProcessor.GetUser((int)task.AssigneeId).UserName
                                    : "none";
+            var blockedTaskName = "none";
+            if (task.BlockingTaskId != 0)
+            {
+                blockedTaskName = this.taskProcessor.GetTaskById(task.BlockingTaskId).Name;
+            }
+
             var model = new SingleTaskViewModel
                             {
                                 HumanTask = task,
@@ -616,7 +635,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                     this.taskProcessor.GetAllHistoryForTask(taskId).OrderByDescending(
                                         x => x.ChangeDateTime)
                                     .ToList(),
-                                Priorities = this.taskProcessor.GetPrioritiesList()
+                                Priorities = this.taskProcessor.GetPrioritiesList(),
+                                BlockedTaskName = blockedTaskName
                             };
             return model;
         }
@@ -634,6 +654,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult TaskView(int taskId)
         {
             var task = taskProcessor.GetTaskById(taskId);
+            task.Name = stringExtensions.Truncate(task.Name, 15);
+            task.Description = stringExtensions.Truncate(task.Description, 50);
             return this.PartialView("ManagerTasksTablePartialView", task);
         }
 
