@@ -77,12 +77,12 @@
         <div class="task_list" data-bind="foreach: tasks">
             <div class="task_in_list">
                 <div data-bind="if: AssigneePhoto==true&&AssigneeId!=null" class="assignee_photo">
-                    <a href="#" rel="popover" class="assignee_popover" data-bind="attr: {'data-content':'<img class=large_photo src=/Project/GetImage?UserId='+AssigneeId+'> Assigned to '+Assignee}">
+                    <a href="#" rel="popover" class="assignee_popover img_holder" data-bind="attr: {'data-content':'<img class=large_photo src=/Project/GetImage?UserId='+AssigneeId+'> Assigned to '+Assignee}">
                         <img data-bind="attr: {'src': '/Project/GetImage?UserId='+AssigneeId}" />
                     </a>
                 </div>    
                 <div data-bind="if: AssigneePhoto==false&&AssigneeId!=null" class="assignee_photo">
-                    <a href="#" rel="popover" class="assignee_popover" data-bind="attr: {'data-content':'Assigned to '+Assignee}"><img src="/Content/images/photo.png" /></a>
+                    <a href="#" rel="popover" class="assignee_popover img_holder" data-bind="attr: {'data-content':'Assigned to '+Assignee}"><img src="/Content/images/photo.png" /></a>
                 </div>    
                 <div data-bind="attr: {'class': 'priority prior_'+Priority}"></div>
                 <a data-bind="text:Name, attr: { 'data-content': 'Created: '+CreatedDate+'<br>'+CreatedTime+'<br>By '+Creator,'data-original-title':Name, 'href':'/Project/Details/'+Id}" rel="popover" class="task_popover"></a>
