@@ -42,14 +42,12 @@
                     <div class="proj_row" data-id="@project.Id">
                         <div class="delete_btn"></div>
                         <div class="created_projs project_name">@project.Name</div>
-                        <a href="/Project/Project/@project.Id"><div title="@project.Name dashboard" class="dashboard_btn"></div></a>
                     </div>
                 }
 
                 @foreach (var project in Model.UserProjects)
                 {
                     <div class="user_projs project_name">@project.Name</div>
-                    <a href="/Project/Project/@project.Id"><div title="@project.Name dashboard" class="dashboard_btn"></div></a>
                 }
             </div>
             <div id="loader">
