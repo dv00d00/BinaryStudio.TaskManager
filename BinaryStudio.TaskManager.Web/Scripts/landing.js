@@ -1,6 +1,10 @@
 ﻿var modelData = new TaskModel();
 $(function () {
 
+    $(document).on("dblclick", ".project_list .project_name", function () {
+        var num = $(this).parent("div").attr("data-id");
+        location.href = "/Project/Project/"+num;
+    });
     /**** Tooltip  ******/
     $('.dashboard_btn').tooltip({
         position: 'left',
