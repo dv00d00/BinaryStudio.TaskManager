@@ -65,8 +65,23 @@ namespace BinaryStudio.TaskManager.Web.Tests
         [Test]
         public void Should_CreateTask_WhenMethodCreateTaskWasCalledWithAssignedId3()
         {
+            // arreange 
+            User user = new User
+                            {
+                                Id = 1,
+                                UserName = "Name"
+                            };
+
+            CreateTaskViewModel model = new CreateTaskViewModel
+                                            {
+                                                AssigneeId = 3,
+                                                Description = "Description",
+                                                Name = "Name"
+                                            };
+            this.userProcessorMock.Setup(it => it.GetUserByName(null)).Returns(user);
+
             // act
-            this.controller.CreateTask(new CreateTaskViewModel { AssigneeId = 3 });
+            this.controller.CreateTask(model);
 
             // assert
             this.taskProcessorMock.Verify(x => x.CreateTask(It.Is<HumanTask>(it => it.AssigneeId == 3)), Times.Once());
