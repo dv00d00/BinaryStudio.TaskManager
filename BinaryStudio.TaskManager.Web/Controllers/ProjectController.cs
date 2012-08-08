@@ -615,6 +615,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var assigneeName = task.AssigneeId.HasValue
                                    ? this.userProcessor.GetUser((int)task.AssigneeId).UserName
                                    : "none";
+            var blockedTaskName = "none";
+            if (task.BlockingTaskId != 0)
+            {
+                blockedTaskName = this.taskProcessor.GetTaskById(task.BlockingTaskId).Name;
+            }
+
             var model = new SingleTaskViewModel
                             {
                                 HumanTask = task,
@@ -624,7 +630,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                     this.taskProcessor.GetAllHistoryForTask(taskId).OrderByDescending(
                                         x => x.ChangeDateTime)
                                     .ToList(),
-                                Priorities = this.taskProcessor.GetPrioritiesList()
+                                Priorities = this.taskProcessor.GetPrioritiesList(),
+                                BlockedTaskName = blockedTaskName
                             };
             return model;
         }

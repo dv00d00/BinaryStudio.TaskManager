@@ -14,6 +14,8 @@ namespace BinaryStudio.TaskManager.Web.Models
         
         public string AssigneeName { get; set; }
 
+        public string BlockedTaskName { get; set; }
+
         public IList<HumanTaskHistory> TaskHistories { get; set; }
 
     }
