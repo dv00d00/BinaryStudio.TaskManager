@@ -7,9 +7,9 @@ div.sortableTasks a
 }
 .column
 {
-    width: 270px;
+    width: 230px;
     float: left;
-    min-height: 300px;
+    min-height: 150px;
 }
 div.task
 {
