@@ -298,7 +298,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public IEnumerable<SelectListItem> GetOpenTasksListInProject(int projectId)
         {
             IEnumerable<SelectListItem> tasks =
-                this.humanTaskRepository.GetAllTasksInProject(projectId).Where(x => x.Closed == null).ToList().Select(
+                this.humanTaskRepository.GetAllTasksInProject(projectId).Where(x => x.Closed == null).Where(it => it.BlockingTaskId == 0).ToList().Select(
                     it => new SelectListItem
                         {
                     Text = it.Name,

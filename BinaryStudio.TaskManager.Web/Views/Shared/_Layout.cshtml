@@ -76,6 +76,9 @@
                     if(response>0) {
                         content.html('Events <span class="badge badge-important" data-id="newses_count">' + response + '</span>');
                     }
+                    else {
+                        content.html('Events <span class="badge badge-important" data-id="newses_count" style =" display: none">' + response + '</span>');
+                    }
                 }
             });
             startSignalRConnection(-1, "@User.Identity.Name", false);

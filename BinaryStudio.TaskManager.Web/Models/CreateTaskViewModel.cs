@@ -42,8 +42,6 @@ namespace BinaryStudio.TaskManager.Web.Models
 
         public int ProjectId { get; set; }
 
-        public bool IsBlocking { get; set; }
-
         public IEnumerable<SelectListItem> Tasks;
 
         public int BlockingTask { get; set; }

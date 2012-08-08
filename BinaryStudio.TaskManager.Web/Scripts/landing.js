@@ -1,6 +1,10 @@
 ﻿var modelData = new TaskModel();
 $(function () {
 
+    $(document).on("dblclick", ".project_list .project_name", function () {
+        var num = $(this).parent("div").attr("data-id");
+        location.href = "/Project/Project/"+num;
+    });
     /**** Tooltip  ******/
     $('.dashboard_btn').tooltip({
         position: 'left',
@@ -101,9 +105,9 @@ $(function () {
         $(this).addClass("active_proj");
         var url = null;
         switch ($(this).attr("id")) {
-            case "all_tasks": url = "/Landing/GetAllTasks"; break;
-            case "my_tasks": url = "/Landing/GetMyTasks"; break;
-            case "unassigned_tasks": url = "/Landing/GetUnassignedTasks"; break;
+            case "all_tasks": url = "all"; break;
+            case "my_tasks": url = "my"; break;
+            case "unassigned_tasks": url = "unassigned"; break;
         }
         var groupName = $(this).html();
         getTaskGroup(url, groupName);
@@ -164,9 +168,11 @@ function getTaskList(proj) {
 
 function getTaskGroup(url, groupName) {
     $.ajax({
+        data: { 'projectId'   : "-1",
+                'taskGroup'       : url},
         dataType: "JSON",
         type: "GET",
-        url: url,
+        url: "/Landing/GetTasks",
         success: function (data) {
             var task = null;
             modelData.project(data.Project.Name);

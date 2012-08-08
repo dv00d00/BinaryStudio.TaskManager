@@ -168,6 +168,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.GetProjectById(projectId).Creator;
         }
 
+
         /// <summary>
         /// The create custom project with project name and description.
         /// </summary>
