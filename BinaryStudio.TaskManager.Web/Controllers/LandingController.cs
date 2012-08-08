@@ -16,11 +16,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     {
         //
         // GET: /Landing/
-        private IProjectRepository projectRepository;
+        private readonly IProjectRepository projectRepository;
 
-        private IUserRepository userRepository;
+        private readonly IUserRepository userRepository;
 
-        private ITaskProcessor taskProcessor;
+        private readonly ITaskProcessor taskProcessor;
 
         public LandingController(IProjectRepository projectRepository, IUserRepository userRepository, ITaskProcessor taskProcessor)
         {
@@ -47,10 +47,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     Created = DateTime.Now,
                     Creator = user,
                     Name = projectName,
-                    CreatorId = user.Id,
-                   // ProjectUsers = new Collection<User>{user}
+                    CreatorId = user.Id
                 };
-            this.projectRepository.Add(project);
+            projectRepository.Add(project);
             var projectList = projectRepository.GetAllProjectsForUser(user.Id);
             var projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name }).ToList();
             var model = new LandingProjectsModel { UserProjects = projectsToModel };
@@ -68,7 +67,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             {
                 this.taskProcessor.DeleteTask(humanTask.Id);
             }
-            this.projectRepository.Delete(projectId);
+            projectRepository.Delete(projectId);
             var user = userRepository.GetByName(User.Identity.Name);
             var projectList = projectRepository.GetAllProjectsForUser(user.Id);
 
@@ -81,11 +80,39 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetTasks(int projectId)
+        public ActionResult GetTasks(int projectId, string taskGroup)
         {
+            List<HumanTask> taskList = null;
+            string groupName = null;
+            Project currentProject = null;
             var user = userRepository.GetByName(User.Identity.Name);
-            var currentProject = projectRepository.GetById(projectId);
-            var taskList = currentProject.Tasks;
+            
+            if (projectId != -1)
+            {
+                currentProject = projectRepository.GetById(projectId);
+                taskList = currentProject.Tasks.ToList();
+            }
+            else
+            {
+                switch (taskGroup)
+                {
+                    case "all": 
+                        taskList = projectRepository.GetAllProjectsForUser(user.Id).SelectMany(proj => proj.Tasks).ToList();
+                        taskList.AddRange(projectRepository.GetAllProjectsForTheirCreator(user.Id).SelectMany(proj => proj.Tasks).ToList());
+                        groupName = "All Tasks";
+                        break;
+                    case "my":
+                        taskList = projectRepository.GetAllProjectsForUser(user.Id).SelectMany(proj => proj.Tasks).Where(x => x.AssigneeId == user.Id).ToList();
+                        taskList.AddRange(projectRepository.GetAllProjectsForTheirCreator(user.Id).SelectMany(proj => proj.Tasks).Where(x => x.AssigneeId == user.Id).ToList());
+                        groupName = "My Tasks";
+                        break;
+                    case "unassigned": 
+                        taskList = projectRepository.GetAllProjectsForUser(user.Id).SelectMany(proj => proj.Tasks).Where(x => x.AssigneeId == null).ToList();
+                        taskList.AddRange(projectRepository.GetAllProjectsForTheirCreator(user.Id).SelectMany(proj => proj.Tasks).Where(x => x.AssigneeId == null).ToList());
+                        groupName = "Unassigned";
+                        break;
+                }
+            }
             var tasksToModel = taskList.Where(x => x.Closed == (DateTime?)null).Select(task => new TaskView
                             {
                                 Id = task.Id,
@@ -100,107 +127,14 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                             });
             var projectModel = new ProjectView
                 {
-                    Id = currentProject.Id,
-                    Name = currentProject.Name,
+                    Id = projectId != -1 ? currentProject.Id : -1,
+                    Name = projectId != -1 ? currentProject.Name : groupName,
                     Tasks = tasksToModel
                 };
             var model = new LandingTasksModel()
                 {
                     Project = projectModel
                 };
-            return Json(model, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        public ActionResult GetAllTasks()
-        {
-            var user = userRepository.GetByName(User.Identity.Name);
-            var taskList = projectRepository.GetAllProjectsForUser(user.Id).SelectMany(proj => proj.Tasks).ToList();
-            taskList.AddRange(projectRepository.GetAllProjectsForTheirCreator(user.Id).SelectMany(proj => proj.Tasks).ToList());
-            var tasksToModel = taskList.Select(task => new TaskView
-            {
-                Id = task.Id,
-                Description = task.Description == null ? null : this.stringTrim(task.Description, 100),
-                Name = task.Name,
-                Priority = task.Priority,
-                Created = task.Created,
-                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString(),
-                AssigneeId = task.AssigneeId,
-                Assignee = task.AssigneeId == null ? null : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).UserName.ToString(),
-                AssigneePhoto = task.AssigneeId == null ? false : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).ImageData != null
-            });
-            var projectModel = new ProjectView
-            {
-                Name = "All Tasks",
-                Tasks = tasksToModel
-            };
-            var model = new LandingTasksModel()
-            {
-                Project = projectModel
-            };
-
-            return Json(model, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        public ActionResult GetMyTasks()
-        {
-            var user = userRepository.GetByName(User.Identity.Name);
-            var taskList = projectRepository.GetAllProjectsForUser(user.Id).SelectMany(proj => proj.Tasks).Where(x => x.AssigneeId == user.Id).ToList();
-            taskList.AddRange(projectRepository.GetAllProjectsForTheirCreator(user.Id).SelectMany(proj => proj.Tasks).Where(x => x.AssigneeId == user.Id).ToList());
-            var tasksToModel = taskList.Select(task => new TaskView
-            {
-                Id = task.Id,
-                Description = task.Description == null ? null : this.stringTrim(task.Description, 100),
-                Name = task.Name,
-                Priority = task.Priority,
-                Created = task.Created,
-                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString(),
-                AssigneeId = task.AssigneeId,
-                Assignee = task.AssigneeId == null ? null : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).UserName.ToString(),
-                AssigneePhoto = task.AssigneeId == null ? false : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).ImageData != null
-            });
-            var projectModel = new ProjectView
-            {
-                Name = "My Tasks",
-                Tasks = tasksToModel
-            };
-            var model = new LandingTasksModel()
-            {
-                Project = projectModel
-            };
-
-            return Json(model, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        public ActionResult GetUnassignedTasks()
-        {
-            var user = userRepository.GetByName(User.Identity.Name);
-            var taskList = projectRepository.GetAllProjectsForUser(user.Id).SelectMany(proj => proj.Tasks).Where(x => x.AssigneeId == null).ToList();
-            taskList.AddRange(projectRepository.GetAllProjectsForTheirCreator(user.Id).SelectMany(proj => proj.Tasks).Where(x => x.AssigneeId == null).ToList());
-            var tasksToModel = taskList.Select(task => new TaskView
-            {
-                Id = task.Id,
-                Description = task.Description == null ? null : this.stringTrim(task.Description, 100),
-                Name = task.Name,
-                Priority = task.Priority,
-                Created = task.Created,
-                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString(),
-                AssigneeId = task.AssigneeId,
-                Assignee = task.AssigneeId == null ? null : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).UserName.ToString(),
-                AssigneePhoto = task.AssigneeId == null ? false : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).ImageData != null
-            });
-            var projectModel = new ProjectView
-            {
-                Name = "Unassigned Tasks",
-                Tasks = tasksToModel
-            };
-            var model = new LandingTasksModel()
-            {
-                Project = projectModel
-            };
-
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 

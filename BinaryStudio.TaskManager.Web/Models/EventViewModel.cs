@@ -40,5 +40,7 @@
 
         public bool IsAssigne { get; set; }
 
+        public bool IsVisible { get; set; }
+
     }
 }

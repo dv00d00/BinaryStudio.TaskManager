@@ -44,6 +44,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 x => new ProjectDataForEventsViewModel{ProjectId = x.Id,ProjectName = x.Name}));
             listEvents.Projects.AddRange(projectRepository.GetAllProjectsForTheirCreator(user).Select(
                 x => new ProjectDataForEventsViewModel { ProjectId = x.Id, ProjectName = x.Name }));
+            listEvents.CurrentUserId = user;
 
             return View(listEvents);
         }
@@ -75,7 +76,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                            WhoAssigneLinkDetails = "/Project/UserDetails?userId=" + news.HumanTaskHistory.NewAssigneeId,
                            WhoChangeLinkDetails = "/Project/UserDetails?userId=" + news.HumanTaskHistory.UserId,
                            IsMove = news.HumanTaskHistory.Action == ChangeHistoryTypes.Move ? true : false,
-                           IsAssigne = news.HumanTaskHistory.NewAssigneeId.HasValue
+                           IsAssigne = news.HumanTaskHistory.NewAssigneeId.HasValue,
+                           IsVisible = true,
                           };
         }
 
@@ -132,38 +134,36 @@ namespace BinaryStudio.TaskManager.Web.Controllers
        
         public ActionResult GetNews(ListEventViewModel eventsViewModels,  int type,int projectId=-1)
         {
-            //var eventsViewModels = new List<EventViewModel>();
-            eventsViewModels.Events=new List<EventViewModel>();
-            var user = userProcessor.GetUserByName(User.Identity.Name).Id;
-            List<News> news = new List<News>(newsRepository.GetAllNewsForUser(user).OrderByDescending(x => x.HumanTaskHistory.ChangeDateTime));
+             eventsViewModels.Events = eventsViewModels.Events.Select(x =>
+                                            {
+                                                x.IsVisible = true;
+                                                return x;
+                                            }).ToList();
             if (type == 2)
             {
-                news = news.Where(
-                        x =>
-                        x.HumanTaskHistory.NewAssigneeId == user ||
-                        x.HumanTaskHistory.UserId == user ).ToList();
+                foreach (var event_ in eventsViewModels.Events)
+                {
+                    if(event_.WhoAssigneUserId != eventsViewModels.CurrentUserId 
+                       && event_.WhoChangeUserId != eventsViewModels.CurrentUserId )
+                    {
+                        event_.IsVisible = false;
+                    }
+                }
+               
             }
             if(type > 2)
             {
-                news = news.Where(x => x.HumanTaskHistory.Task.ProjectId == projectId).ToList();
+                foreach (var event_ in eventsViewModels.Events)
+                {
+                    if(event_.ProjectId != projectId)
+                    {
+                        event_.IsVisible = false;
+                    }
+                }
+                
             }
-
-            foreach (var newse in news)
-            {
-                eventsViewModels.Events.Add(CreateEventViewModel(newse));
-            }
-
-            eventsViewModels.Projects = new List<ProjectDataForEventsViewModel>();
-            eventsViewModels.Projects.AddRange(userProcessor.GetUserByName(User.Identity.Name).UserProjects.Select(
-                x => new ProjectDataForEventsViewModel { ProjectId = x.Id, ProjectName = x.Name }));
-            eventsViewModels.Projects.AddRange(projectRepository.GetAllProjectsForTheirCreator(user).Select(
-                x => new ProjectDataForEventsViewModel { ProjectId = x.Id, ProjectName = x.Name }));
-
-            //eventsViewModels.Projects = new List<Project>(userProcessor.GetUserByName(User.Identity.Name).UserProjects);
-            return Json(eventsViewModels);
             
-        }
-
-
+            return Json(eventsViewModels);
+           }
     }
 }

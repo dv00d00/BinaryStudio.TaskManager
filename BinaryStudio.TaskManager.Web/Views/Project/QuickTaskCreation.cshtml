@@ -17,16 +17,11 @@
         var self = this;
         var onSuccess = function () {
             $(self).parents(".project/project");
-
-//            $(".quicktaskarea").value = "" ;
-//            .attr('value','updated value of textarea');
-
         };
         
         $(".create").click(function () {
 
             var projId = @Model.ProjectId;
-
                 var taskDescription = jQuery(".quicktaskarea").val();
                 $.ajax({
                     type: "POST",
@@ -35,6 +30,7 @@
                     dataType: "json",
                     traditional: true
                 }).success(onSuccess);
+                $(".quicktaskarea").val("");
             });
 
         });
