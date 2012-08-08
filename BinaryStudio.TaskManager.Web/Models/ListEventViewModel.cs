@@ -9,6 +9,8 @@ namespace BinaryStudio.TaskManager.Web.Models
 
         public List<ProjectDataForEventsViewModel> Projects { get; set; }
 
+        public List<InvintationsInEventsViewModel> Invitations { get; set; } 
+
         public int CurrentUserId { get; set; }
     }
 }

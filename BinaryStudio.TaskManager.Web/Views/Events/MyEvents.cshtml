@@ -43,18 +43,40 @@
             <button class="btn btn-inverse all_read">Mark all news as read</button>
         </div>
         <div class="span8">
+            
             @{
-                
+                if(Model.Invitations.Count>0)
+                {
+                    <h2>Your Invitations</h2>
+                }
+                foreach (var invitation in Model.Invitations)
+                {
+                    <div  class="container invitationEvent">
+                        <strong>
+                            @Html.ActionLink(invitation.SenderName, "UserDetails", "Project", new { userId = invitation.SenderId })
+                            <span> invites you to project </span> 
+                            @Html.ActionLink(" " + invitation.ProjectName, "Project", "Project", new { id = invitation.ProjectId })
+                        </strong>
+                        <p style="margin: 0px;width: 300px;">
+                            <a class="InvitationButton submitInvitation" id="@invitation.InvitationId" href="#" style="float: left"> Accept </a> 
+                            <a class="InvitationButton refuseInvitation" id="@invitation.InvitationId" href="#" style="float: right"> No thanks </a>
+                        </p>
+
+                    </div>
+                    <hr style="margin: 9px 0; margin-left: 20px"/>
+        
+                }
+                <h2>Your events</h2>
                 @*foreach (EventViewModel event_ in ko.Model) *@
                 using (var event_ = ko.Foreach(m => m.Events))
                 {
                     using (event_.If(x => x.IsVisible))
                     {
 
-                        <div @event_.Bind.Attr("class", e => e.ContainerClassName).Attr("id", e => e.NewsId)>
+                        <div @event_.Bind.Attr("class", e => e.ContainerClassName).Attr("id", e => e.NewsId) style="margin-left: 20px">
                             <strong>
                             
-                                <a @event_.Bind.Attr("id", e => e.ProjectId).Text(e => e.ProjectName)> </a>
+                                <a @event_.Bind.Attr("href", e => e.ProjectLinkDetails).Text(e => e.ProjectName)> </a>
                                 <br/>
                                 <a @event_.Bind.Attr("href", e => e.WhoChangeLinkDetails).Text(e => e.WhoChangeUserName)> </a>
                                 <span @event_.Bind.Text(e => e.Action)></span>
@@ -75,7 +97,7 @@
                             </strong>
                         </div>
 
-                        <hr style="margin: 9px 0"/>
+                        <hr style="margin: 9px 0; margin-left: 20px"/>
                     }
                 }
 
@@ -115,6 +137,41 @@
         clickedA.click(function () {
             clickedA.parent().removeClass('active')
             $(this).parent().addClass('active');
+        });
+        var onError = function () {
+            alert("Error while AJAX request");
+        };
+
+        $("a.InvitationButton.submitInvitation").click(function () {
+            var self = this;
+            var onSuccess = function () {
+                $(self).parents("div.container.invitationEvent").animate({ opacity: "hide" }, "slow");
+            };
+
+            var id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url: "/Events/SubmitInvitationInProject/",
+                data: { invitationId: id },
+                dataType: "json",
+                traditional: true
+            }).success(onSuccess).error(onError);
+        });
+
+        $("a.InvitationButton.refuseInvitation").click(function () {
+            var self = this;
+            var onSuccess = function () {
+                $(self).parents("div.container.invitationEvent").animate({ opacity: "hide" }, "slow");
+            };
+
+            var id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url: "/Events/RefuseFromParticipateProject/",
+                data: { invitationId: id },
+                dataType: "json",
+                traditional: true
+            }).success(onSuccess("You refuse")).error(onError);
         });
     });
 </script>

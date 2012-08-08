@@ -6,11 +6,11 @@
 
         public string ProjectName { get; set; }
 
+        public string ProjectLinkDetails { get; set; }
+
         public int ProjectId { get; set; }
 
         public string TaskName { get; set; }
-
-        public int TaskId { get; set; }
 
         public string Action { get; set; }
 
@@ -41,6 +41,6 @@
         public bool IsAssigne { get; set; }
 
         public bool IsVisible { get; set; }
-
+        
     }
 }

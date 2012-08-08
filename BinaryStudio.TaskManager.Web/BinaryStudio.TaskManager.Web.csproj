@@ -151,6 +151,7 @@
     <Compile Include="Models\CreateTaskViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
+    <Compile Include="Models\InvintationsInEventsViewModel.cs" />
     <Compile Include="Models\InvitationsViewModel.cs" />
     <Compile Include="Models\LandingModels.cs" />
     <Compile Include="Models\ListEventViewModel.cs" />
