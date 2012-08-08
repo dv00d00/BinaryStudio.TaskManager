@@ -204,11 +204,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                       };
                 this.taskProcessor.AddHistory(taskHistory);
                 this.notifier.CreateTask(task.Id);
-
-                if (task.Priority == 3)
-                {
-                    this.MoveTask(task.Id, 0, task.AssigneeId ?? 0, task.ProjectId);
-                }
+                this.newsProcessor.CreateNewsForUsersInProject(taskHistory, task.ProjectId);
 
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId });
             }
