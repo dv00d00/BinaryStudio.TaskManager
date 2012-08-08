@@ -1,4 +1,12 @@
-﻿<div class="button">
+﻿@model BinaryStudio.TaskManager.Logic.Domain.HumanTask
+
+<div id="editor-field">
+
+    @Html.TextAreaFor(model => model.Description, new { @class = "quicktaskarea", @style = "resize: none;" })
+
+</div>
+
+<div class="button">
     <button title="Quick task creation" class="create btn">
         Create
     </button>
@@ -6,18 +14,24 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
+        var self = this;
+        var onSuccess = function () {
+            $(self).parents(".project/project");
+        };
+        
         $(".create").click(function () {
-            var projId = 2;
-            var taskDescription = "Task1 created by me";
-            $.ajax({
-                type: "POST",
-                url: "/QuickTask/QuickTaskCreation/",
-                data: { projectId: projId, description: taskDescription },
-                dataType: "json",
-                traditional: true
+
+            var projId = @Model.ProjectId;
+                var taskDescription = jQuery(".quicktaskarea").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/QuickTask/QuickTaskCreation/",
+                    data: { projectId: projId, description: taskDescription },
+                    dataType: "json",
+                    traditional: true
+                }).success(onSuccess);
+                $(".quicktaskarea").val("");
             });
-            
+
         });
-    });
 </script>
