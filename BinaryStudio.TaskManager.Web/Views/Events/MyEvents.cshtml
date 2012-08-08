@@ -58,10 +58,9 @@
                             @Html.ActionLink(" " + invitation.ProjectName, "Project", "Project", new { id = invitation.ProjectId })
                         </strong>
                         <p style="margin: 0px;width: 300px;">
-                            <a class="InvitationButton submitInvitation" id="@invitation.InvitationId" href="#" style="float: left"> Accept </a> 
-                            <a class="InvitationButton refuseInvitation" id="@invitation.InvitationId" href="#" style="float: right"> No thanks </a>
+                            <a class="InvitationButton submitInvitation" id="@invitation.InvitationId" href="#" style="float: left"><i class="icon-ok"></i> Accept </a> 
+                            <a class="InvitationButton refuseInvitation" id="@invitation.InvitationId" href="#" style="float: right"><i class="icon-remove"></i> No thanks </a>
                         </p>
-
                     </div>
                     <hr style="margin: 9px 0; margin-left: 20px"/>
         

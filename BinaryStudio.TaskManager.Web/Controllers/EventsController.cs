@@ -131,6 +131,26 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return Json(count);
         }
 
+        [HttpPost]
+        public ActionResult GetInvitationsCount()
+        {
+            int count = projectProcessor.GetAllInvitationsToUser(userProcessor.GetUserByName(User.Identity.Name).Id).Count() ;
+            return Json(count);
+        }
+
+        [HttpPost]
+        public ActionResult GetInvitationsAndNewsCount()
+        {
+            int[] countArray = new int[2];
+            int userId = userProcessor.GetUserByName(User.Identity.Name).Id;
+            int newsCount = newsRepository.GetNewsCount(userId);
+            int invitesCount = projectProcessor.GetAllInvitationsToUser(userId).Count();
+            countArray[0] = newsCount;
+            countArray[1] = invitesCount;
+            return Json(countArray);
+        }
+
+
         public void MarkAllUnreadNewsAsRead()
         {
             var user = userProcessor.GetUserByName(User.Identity.Name);

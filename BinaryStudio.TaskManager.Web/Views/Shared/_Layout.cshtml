@@ -61,26 +61,30 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var content = $('#spec');
-        
+
         //if(@User.Identity.IsAuthenticated == 'true') {
-            
-            $.ajax({
-                dataType: "JSON",
-                type: "POST",
-                url: "/Events/GetNewsCount",
-                beforeSend: function() {
-                    //$("#loader").show();
-                },
-                success: function(response) {
-                    //$("#loader").hide();
-                    if(response>0) {
-                        content.html('Events <span class="badge badge-important" data-id="newses_count">' + response + '</span>');
-                    }
-                    else {
-                        content.html('Events <span class="badge badge-important" data-id="newses_count" style =" display: none">' + response + '</span>');
-                    }
+
+        $.ajax({
+            dataType: "JSON",
+            type: "POST",
+            url: "/Events/GetInvitationsAndNewsCount",
+            beforeSend: function () {
+                //$("#loader").show();
+            },
+            success: function (response) {
+                //$("#loader").hide();
+                if (response[0] > 0) {
+                    content.html('Events <span class="badge badge-important" data-id="newses_count">' + response[0] + '</span>');
                 }
-            });
-            startSignalRConnection(-1, "@User.Identity.Name", false);
+                else {
+                    content.html('Events <span class="badge badge-important" data-id="newses_count" style =" display: none">' + response[0] + '</span>');
+                }
+                if (response[1] > 0) {
+                    content.append('<span class="badge badge-warning" data-id="invites_count">' + response[1] + '</span>');
+                }
+
+            }
+        });
+        startSignalRConnection(-1, "@User.Identity.Name", false);
     });
 </script> 
