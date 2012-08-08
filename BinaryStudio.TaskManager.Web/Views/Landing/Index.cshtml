@@ -47,7 +47,9 @@
 
                 @foreach (var project in Model.UserProjects)
                 {
-                    <div class="user_projs project_name">@project.Name</div>
+                    <div class="proj_row" data-id="@project.Id">
+                        <div class="user_projs project_name">@project.Name</div>
+                    </div>
                 }
             </div>
             <div id="loader">
