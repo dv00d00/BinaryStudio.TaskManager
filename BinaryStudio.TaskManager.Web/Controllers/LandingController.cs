@@ -10,6 +10,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
+    using BinaryStudio.TaskManager.Web.Extentions;
     using BinaryStudio.TaskManager.Web.Models;
     [Authorize]
     public class LandingController : Controller
@@ -22,11 +23,14 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         private readonly ITaskProcessor taskProcessor;
 
-        public LandingController(IProjectRepository projectRepository, IUserRepository userRepository, ITaskProcessor taskProcessor)
+        private readonly IStringExtensions stringExtensions;
+
+        public LandingController(IProjectRepository projectRepository, IUserRepository userRepository, ITaskProcessor taskProcessor, IStringExtensions stringExtensions)
         {
             this.projectRepository = projectRepository;
             this.userRepository = userRepository;
             this.taskProcessor = taskProcessor;
+            this.stringExtensions = stringExtensions;
         }
 
         public ActionResult Index()
@@ -116,7 +120,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var tasksToModel = taskList.Where(x => x.Closed == (DateTime?)null).Select(task => new TaskView
                             {
                                 Id = task.Id,
-                                Description = task.Description==null?null:this.stringTrim(task.Description, 100),
+                                Description = stringExtensions.Truncate(task.Description, 100),
                                 Name = task.Name,
                                 Priority = task.Priority,
                                 Created = task.Created,
@@ -137,12 +141,5 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 };
             return Json(model, JsonRequestBehavior.AllowGet);
         }
-
-        private string stringTrim(string description, int length)
-        {
-            var str = description.Replace(Environment.NewLine, " ");
-            return str.Length > length ? str.Substring(0, length) + "..." : str;
-        }
-
     }
 }

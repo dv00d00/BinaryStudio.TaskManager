@@ -2,15 +2,22 @@ using System;
 
 namespace BinaryStudio.TaskManager.Web.Extentions
 {
-    public static class StringExtensions
+    public class StringExtensions : IStringExtensions
     {
-        public static string Truncate(this string source, int count)
+        public string Truncate(string source, int count)
         {
-            if (source == null)
+            var truncatedString = "";
+            if (source != null)
             {
-                return "";
+                truncatedString = source.Substring(0, Math.Min(count, source.Length));
+                if (count < source.Length) truncatedString += "...";
             }
-            return source.Substring(0, Math.Min(count, source.Length));
+            return truncatedString;
+        }
+
+        public string ToSingleLine(string source)
+        {
+            return source.Replace(Environment.NewLine, " ");
         }
     }
 }

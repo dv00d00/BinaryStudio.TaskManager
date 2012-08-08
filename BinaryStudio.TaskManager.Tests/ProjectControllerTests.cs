@@ -7,6 +7,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
     using BinaryStudio.TaskManager.Web.Controllers;
+    using BinaryStudio.TaskManager.Web.Extentions;
 
     using Moq;
 
@@ -35,6 +36,8 @@ namespace BinaryStudio.TaskManager.Web.Tests
 
         private Mock<INewsProcessor> newsProcessorMock;
 
+        private Mock<IStringExtensions> stringExtensionsMock;
+
         [SetUp]
         public void Init()
         {
@@ -44,6 +47,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.projectProcessorMock = new Mock<IProjectProcessor>();
             this.notifierMock = new Mock<INotifier>();
             this.newsRepositoryMock = new Mock<INewsRepository>();
+            this.stringExtensionsMock = new Mock<IStringExtensions>();
             this.newsProcessorMock = new Mock<INewsProcessor>();
             this.controller = new ProjectController(
                 this.taskProcessorMock.Object,
@@ -51,8 +55,8 @@ namespace BinaryStudio.TaskManager.Web.Tests
                 this.projectProcessorMock.Object,
                 this.notifierMock.Object,
                 this.newsRepositoryMock.Object,
-                this.newsProcessorMock.Object
-                );
+                this.newsProcessorMock.Object,
+                this.stringExtensionsMock.Object);
         }
 
         /// <summary>

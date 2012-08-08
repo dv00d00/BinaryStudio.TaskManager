@@ -16,6 +16,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
+    using BinaryStudio.TaskManager.Web.Extentions;
     using BinaryStudio.TaskManager.Web.Models;
 
     /// <summary>
@@ -75,7 +76,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="newsProcessor">
         /// The news Processor.
         /// </param>
-        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, INotifier notifier, INewsRepository newsRepository, INewsProcessor newsProcessor)
+        private readonly IStringExtensions stringExtensions;
+
+        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, 
+            INotifier notifier, INewsRepository newsRepository, INewsProcessor newsProcessor, IStringExtensions stringExtensions)
         {
             this.projectProcessor = projectProcessor;
             this.notifier = notifier;
@@ -83,6 +87,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.userProcessor = userProcessor;
             this.newsRepository = newsRepository;
             this.newsProcessor = newsProcessor;
+            this.stringExtensions = stringExtensions;
         }
 
         /// <summary>
@@ -649,6 +654,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult TaskView(int taskId)
         {
             var task = taskProcessor.GetTaskById(taskId);
+            task.Name = stringExtensions.Truncate(task.Name, 15);
+            task.Description = stringExtensions.Truncate(task.Description, 50);
             return this.PartialView("ManagerTasksTablePartialView", task);
         }
 
