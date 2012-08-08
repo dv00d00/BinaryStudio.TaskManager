@@ -117,5 +117,6 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             // assert
             this.newsRepositoryMock.Verify(it => it.AddNews(It.IsAny<News>()), Times.Exactly(2));
         }
+
     }
 }
