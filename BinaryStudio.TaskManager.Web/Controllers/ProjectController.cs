@@ -120,6 +120,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 var managerModel = new ManagerTasksViewModel
                 {
                     User = user,
+                    ProjectId = id,
                     Tasks = isOpenedProjects
                         ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, user.Id).ToList()
                         : this.taskProcessor.GetAllClosedTasksForUserInProject(id, user.Id).ToList()

@@ -42,5 +42,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         /// The tasks.
         /// </value>
         public List<HumanTask> Tasks { get; set; }
+
+        public int ProjectId { get; set; }
     }
 }
