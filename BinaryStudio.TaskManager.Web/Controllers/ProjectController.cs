@@ -55,6 +55,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </summary>
         private readonly INewsProcessor newsProcessor;
 
+        private readonly IStringExtensions stringExtensions;
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectController"/> class.
         /// </summary>
@@ -73,7 +74,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="newsProcessor">
         /// The news Processor.
         /// </param>
-        private readonly IStringExtensions stringExtensions;
 
         public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, 
             INotifier notifier, INewsProcessor newsProcessor, IStringExtensions stringExtensions)
@@ -440,7 +440,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         /// <summary>
-        /// The edit.
+        /// Task edit method.
         /// </summary>
         /// <param name="createModel">
         /// The human task.

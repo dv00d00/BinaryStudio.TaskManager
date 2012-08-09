@@ -1,10 +1,22 @@
 ﻿var modelData = new TaskModel();
+var toDashboard = function (element, where) {
+    var num = element.parent("div").attr("data-id");
+    if (where == "here"){
+        $("*").css("cursor", "progress");
+        location.href = "/Project/Project/" + num;
+    }
+    else
+        window.open("/Project/Project/" + num);
+};
 $(function () {
 
     $(document).on("dblclick", ".project_list .project_name", function () {
-        var num = $(this).parent("div").attr("data-id");
-        $("*").css("cursor", "progress");
-        location.href = "/Project/Project/" + num;
+        toDashboard($(this),"here");
+    });
+    $(document).on("mousedown", ".project_list .project_name", function (e) {
+        if (e.which == 2) {
+            toDashboard($(this),"there");
+        }
     });
     /**** Tooltip  ******/
     $('.dashboard_btn').tooltip({
@@ -158,10 +170,27 @@ function getTaskList(proj) {
             for (var i = 0; i < data.Tasks.length; i++) {
                 task = data.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));
-                var thisTask = new Task(task.Id, task.Name,
-                    task.Description, date, task.Creator, task.Priority,
-                    task.AssigneeId, task.Assignee, task.AssigneePhoto);
+                var thisTask = new Object({
+                    Id: task.id,
+                    Name: task.name,
+                    Description: task.Description,
+                    CreatedDate: date.toLocaleDateString(),
+                    CreatedTime: date.toLocaleTimeString(),
+                    Creator: task.Creator,
+                    Priority: task.Priority,
+                    AssigneeId: task.AssigneeId,
+                    Assignee: task.Assignee,
+                    AssigneePhoto: task.AssigneePhoto
+                });
                 modelData.tasks.push(thisTask);
+            }
+            for (var i = 0; i < data.Users.length; i++) {
+                var user = data.Users[i];
+                var thisUser = new Object({
+                    Id: user.Id,
+                    Name: user.Name
+                });
+                modelData.users.push(thisUser);
             }
         }
     });
@@ -170,7 +199,7 @@ function getTaskList(proj) {
 function getTaskGroup(url, groupName) {
     $.ajax({
         data: { 'projectId'   : "-1",
-                'taskGroup'       : url},
+                'taskGroup'   : url},
         dataType: "JSON",
         type: "GET",
         url: "/Landing/GetTasks",
@@ -182,9 +211,18 @@ function getTaskGroup(url, groupName) {
             for (var i = 0; i < data.Tasks.length; i++) {
                 task = data.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));
-                var thisTask = new Task(task.Id, task.Name,
-                    task.Description, date, task.Creator, task.Priority,
-                    task.AssigneeId, task.Assignee, task.AssigneePhoto);
+                var thisTask = new Object({
+                    Id: task.id,
+                    Name: task.name,
+                    Description: task.Description,
+                    CreatedDate: date.toLocaleDateString(),
+                    CreatedTime: date.toLocaleTimeString(),
+                    Creator: task.Creator,
+                    Priority: task.Priority,
+                    AssigneeId: task.AssigneeId,
+                    Assignee: task.Assignee,
+                    AssigneePhoto: task.AssigneePhoto
+                });
                 modelData.tasks.push(thisTask);
             }
         }

@@ -89,12 +89,20 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             List<HumanTask> taskList = null;
             string groupName = null;
             Project currentProject = null;
+            List<LandingUserModel> usersToModel = null;
             var user = userRepository.GetByName(User.Identity.Name);
             
             if (projectId != -1)
             {
                 currentProject = projectRepository.GetById(projectId);
                 taskList = currentProject.Tasks.ToList();
+                var usersList = projectRepository.GetAllUsersInProject(projectId).ToList();
+                usersList.Add(projectRepository.GetCreatorForProject(projectId));
+                usersToModel = usersList.Select(currentUser => new LandingUserModel()
+                {
+                    Id = currentUser.Id,
+                    Name = currentUser.UserName
+                }).ToList();
             }
             else
             {
@@ -133,7 +141,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 {
                     Id = projectId != -1 ? currentProject.Id : -1,
                     Name = projectId != -1 ? currentProject.Name : groupName,
-                    Tasks = tasksToModel
+                    Tasks = tasksToModel,
+                    Users = usersToModel
                 };
             return Json(model, JsonRequestBehavior.AllowGet);
         }
