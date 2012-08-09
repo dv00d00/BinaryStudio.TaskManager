@@ -1,0 +1,20 @@
+﻿@using BinaryStudio.TaskManager.Web.Controllers
+@using BinaryStudio.TaskManager.Web.Extentions
+@model BinaryStudio.TaskManager.Logic.Domain.User
+@* This partial view draw a task block in table *@
+@{ <div class ="task"  id = @Model.Id.ToString() style="position: relative;">
+        <div style="overflow: hidden; margin: 5px">
+            <p>
+                @if (@Model.ImageData == null)
+                {
+                    <img class="pull-left" align = "top" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="70" height="70"/>
+                }
+                else
+                {
+                    <img class="pull-left" align = "top" width="70" height="70" src="@Url.Action("GetImage", "Project", new { UserId = Model.Id })" />
+                }
+                @Html.ActionLink(Model.UserName, "UserDetails", new { userId = Model.Id }, new { @class = "btn btn-info" })
+            </p>
+        </div>
+    </div>
+}
