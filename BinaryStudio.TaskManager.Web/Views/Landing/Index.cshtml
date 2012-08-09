@@ -59,7 +59,7 @@
     </div>
     <div class="span1">&nbsp;</div>
     <div id="content" class="span8">
-        <h2 data-bind="text: project"></h2>
+        <h2 data-bind="{'text': project,'attr':{'data-id':projectId}}"></h2>
         <div class="btn-group sort_btn">
               <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
                 Sort
@@ -77,12 +77,12 @@
         <div class="task_list" data-bind="foreach: tasks">
             <div class="task_in_list" data-bind="attr: {'data-id':Id}">
                 <div data-bind="if: AssigneePhoto==true&&AssigneeId!=null" class="assignee_photo">
-                    <a href="#" rel="popover" class="assignee_popover img_holder" data-bind="attr: {'data-content':'<img class=large_photo src=/Project/GetImage?UserId='+AssigneeId+'> Assigned to '+Assignee}">
+                    <a href="#" rel="popover" class="assignee_popover img_holder" data-bind="{'attr': {'data-content':'<img class=large_photo src=/Project/GetImage?UserId='+AssigneeId+'> Assigned to '+Assignee}, 'css': { 'appointive':  $parent.isProject() }}">
                         <img data-bind="attr: {'src': '/Project/GetImage?UserId='+AssigneeId}" />
                     </a>
                 </div>    
                 <div data-bind="if: AssigneePhoto==false&&AssigneeId!=null" class="assignee_photo">
-                    <a href="#" rel="popover" class="assignee_popover img_holder" data-bind="attr: {'data-content':'Assigned to '+Assignee}"><img src="/Content/images/photo.png" /></a>
+                    <a href="#" rel="popover" class="assignee_popover img_holder" data-bind="{'attr': {'data-content':'Assigned to '+Assignee}, 'css': { 'appointive':  $parent.isProject() }}"><img src="/Content/images/photo.png" /></a>
                 </div>   
                 <div data-bind="if: AssigneeId==null" class="assignee_photo">
                     <a href="#" rel="popover" class="assignee_popover img_holder"></a>

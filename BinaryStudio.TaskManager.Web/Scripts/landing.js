@@ -24,11 +24,12 @@ $(function () {
     $(document).on("click", ".img_holder", function (e) {
         var top = e.pageY + 25;
         var left = e.pageX - 225;
-        $(".user_list_holder").css({
-            "display": "block",
-            "top": top,
-            "left": left
-        });
+        if ($("#content h2").attr("data-id") != -1)
+            $(".user_list_holder").css({
+                "display": "block",
+                "top": top,
+                "left": left
+            });
         scrollPresence();
         $(".user_list_input").focus();
         taskId = $(this).parent("div").parent("div").attr("data-id");
@@ -236,6 +237,7 @@ function getTaskList(proj) {
         success: function (data) {
             var task = null;
             modelData.project(data.Name);
+            modelData.projectId(data.Id);
             $("#content").children(".proj_title").html("[project]");
             modelData.tasks.removeAll();
             modelData.users.removeAll();
@@ -279,6 +281,7 @@ function getTaskGroup(url, groupName) {
         success: function (data) {
             var task = null;
             modelData.project(data.Name);
+            modelData.projectId(data.Id);
             $("#content").children(".proj_title").html("[" + groupName + "]");
             modelData.tasks.removeAll();
             modelData.users.removeAll();
@@ -348,7 +351,7 @@ function listProjects(response) {
         $(".project_list").html("<span>There are no projects yet</span>");
     }
     $('.project_name').each(function () {
-        if ($(this).html() == $('#content h2').html()) {
+        if ($(this).parent("div").attr("data-id") == $('#content h2').attr("data-id")) {
             $(this).addClass('active_proj');
         }
     });

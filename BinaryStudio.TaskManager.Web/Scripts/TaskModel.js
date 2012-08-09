@@ -1,10 +1,14 @@
 ﻿var TaskModel = function () {
     var self = this;
     self.project = ko.observable();
+    self.projectId = ko.observable();
     self.tasks = ko.observableArray([]);
     self.users = ko.observableArray([]);
-    self.sortByPriority = function() {
-        self.tasks.sort(function(left, right) {
+    self.isProject = function () {
+        return self.projectId() != -1;
+    };
+    self.sortByPriority = function () {
+        self.tasks.sort(function (left, right) {
             return left.Priority == right.Priority ? 0 : (left.Priority > right.Priority ? -1 : 1);
         });
     };

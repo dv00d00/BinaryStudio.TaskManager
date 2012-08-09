@@ -219,7 +219,7 @@ img {
     display: inline-block;
     margin-top: 7px;
 }
-.img_holder:hover {
+.appointive:hover {
     background: #F8F8F8;
     border: 1px solid #D4D4D4; 
     border-bottom-color: #BCBCBC;
@@ -228,13 +228,12 @@ img {
     border-radius: 5px;
 }
 
-.img_holder:hover img {
+.appointive:hover img {
     position: relative;
     left: 1px;
     bottom : 1px;
 }
-
-.img_holder:hover::after {
+.appointive:hover::after {
     content: "";
     display: block;
     position: absolute;
