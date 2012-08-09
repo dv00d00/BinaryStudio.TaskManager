@@ -35,12 +35,15 @@
                   {
                       <div class="nav-collapse">
                           <ul class="nav">
-                              <li >
-                                  <a href="/Events/MyEvents" id = "spec">Events </a>
+                              <li>
+                                  <a href="/Events/MyEvents" id = "spec">Events</a>
                               </li>
-@*                              <li>
-                                  @Html.ActionLink("Landing", "Index", "Landing")
-                              </li>*@
+                              @if (Roles.IsUserInRole("admin"))
+                              {
+                                  <li>
+                                      <a href="/Admin/AdminPanel">Admin Panel</a>
+                                  </li>
+                              }
                           </ul>
                       </div>
                   }
@@ -68,11 +71,7 @@
             dataType: "JSON",
             type: "POST",
             url: "/Events/GetInvitationsAndNewsCount",
-            beforeSend: function () {
-                //$("#loader").show();
-            },
             success: function (response) {
-                //$("#loader").hide();
                 if (response[0] > 0) {
                     content.html('Events <span class="badge badge-important" data-id="newses_count">' + response[0] + '</span>');
                 }
