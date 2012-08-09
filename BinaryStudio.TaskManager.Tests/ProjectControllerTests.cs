@@ -54,7 +54,6 @@ namespace BinaryStudio.TaskManager.Web.Tests
                 this.userProcessorMock.Object,
                 this.projectProcessorMock.Object,
                 this.notifierMock.Object,
-                this.newsRepositoryMock.Object,
                 this.newsProcessorMock.Object,
                 this.stringExtensionsMock.Object);
         }

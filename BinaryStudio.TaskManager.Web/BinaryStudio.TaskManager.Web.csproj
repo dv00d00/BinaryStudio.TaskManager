@@ -153,7 +153,6 @@
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
     <Compile Include="Models\InvintationsInEventsViewModel.cs" />
-    <Compile Include="Models\InvitationsViewModel.cs" />
     <Compile Include="Models\LandingModels.cs" />
     <Compile Include="Models\ListEventViewModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
@@ -362,7 +361,6 @@
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
     <Content Include="Views\Profile\Profile.cshtml" />
-    <Content Include="Views\Project\Invitations.cshtml" />
     <Content Include="Views\HumanTasks\AllManagersWithTasks.cshtml" />
     <Content Include="Views\HumanTasks\ManagerTasksTablePartialView.cshtml" />
     <Content Include="Views\Project\Project.cshtml" />

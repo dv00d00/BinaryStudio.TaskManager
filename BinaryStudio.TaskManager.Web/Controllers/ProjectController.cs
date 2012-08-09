@@ -70,22 +70,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="notifier">
         /// The notifier.
         /// </param>
-        /// <param name="newsRepository">
-        /// The news Repository.
-        /// </param>
         /// <param name="newsProcessor">
         /// The news Processor.
         /// </param>
         private readonly IStringExtensions stringExtensions;
 
         public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, 
-            INotifier notifier, INewsRepository newsRepository, INewsProcessor newsProcessor, IStringExtensions stringExtensions)
+            INotifier notifier, INewsProcessor newsProcessor, IStringExtensions stringExtensions)
         {
             this.projectProcessor = projectProcessor;
             this.notifier = notifier;
             this.taskProcessor = taskProcessor;
             this.userProcessor = userProcessor;
-            this.newsRepository = newsRepository;
             this.newsProcessor = newsProcessor;
             this.stringExtensions = stringExtensions;
         }
@@ -356,32 +352,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.projectProcessor.RemoveUserFromProject(userId, projectId);
         }
 
-        /// <summary>
-        /// The invitations.
-        /// </summary>
-        /// <returns>
-        /// The System.Web.Mvc.ActionResult.
-        /// </returns>
-        public ActionResult Invitations()
-        {
-            var user = this.userProcessor.GetUserByName(User.Identity.Name);
-            var invitationsToUser = this.projectProcessor.GetAllInvitationsToUser(user.Id);
-
-            var model = invitationsToUser.Select(invitation => new InvitationsViewModel { Invitation = invitation, Sender = invitation.Sender, Project = invitation.Project }).ToList();
-            return this.View(model);
-        }
-
-        /// <summary>
-        /// The submit invitation in project.
-        /// </summary>
-        /// <param name="invitationId">
-        /// The invitation id.
-        /// </param>
-        [HttpPost]
-        public void SubmitInvitationInProject(int invitationId)
-        {
-            this.projectProcessor.ConfirmInvitationInProject(invitationId);
-        }
+       
+       
 
         /// <summary>
         /// The get image.
@@ -590,17 +562,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.View(model);
         }
 
-        /// <summary>
-        /// The refuse from participate project.
-        /// </summary>
-        /// <param name="invitationId">
-        /// The invitation id.
-        /// </param>
-        [HttpPost]
-        public void RefuseFromParticipateProject(int invitationId)
-        {
-            this.projectProcessor.RefuseFromParticipateProject(invitationId);
-        }
+        
 
         /// <summary>
         /// The create single task view model by id.

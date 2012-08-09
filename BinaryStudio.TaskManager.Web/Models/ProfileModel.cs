@@ -34,11 +34,7 @@
         /// </summary>
         public string Email { get; set; }
 
-        /// <summary>
-        /// Gets or sets the invitations count.
-        /// </summary>
-        public int InvitationsCount { get; set; }
-    }
+     }
 
     /// <summary>
     /// The change password model.
