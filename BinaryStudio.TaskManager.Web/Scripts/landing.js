@@ -36,10 +36,12 @@ $(function () {
                 $(".user_list_holder").hide();
             }
             $("user_list_holder").off();
+            $(document).off("click", ".user_list li");
         });
         $(".user_list_close").click(function () {
             $(".user_list_holder").hide();
             $(".user_list_close").off("click");
+            $(document).off("click", ".user_list li");
         });
         var taskId = $(this).parent("div").parent("div").attr("data-id");
         $(document).on("click", ".user_list li", function () {
@@ -56,7 +58,7 @@ $(function () {
                     location.reload(true);
                 }
             });
-            $(".user_list li").off();
+            $(document).off("click", ".user_list li");
         });
         $(document).on("click", ".user_list_clear", function () {
             var userId = $(this).attr('data-id');
