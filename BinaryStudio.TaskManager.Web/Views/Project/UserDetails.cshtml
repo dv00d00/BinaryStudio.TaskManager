@@ -26,9 +26,9 @@
             @creatorName
         </td>
         <td>
-            @this.Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @this.Html.ActionLink("Edit", "Edit", new { taskId = item.Id, projectId = item.ProjectId }) |
             @this.Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @this.Html.ActionLink("Delete", "Delete", new { idTask = item.Id })
+            @this.Html.ActionLink("Delete", "Delete", new { idTask = item.Id, projectId = item.ProjectId })
         </td>
     </tr>
 }
