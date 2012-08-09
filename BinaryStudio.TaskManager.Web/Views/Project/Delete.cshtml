@@ -7,10 +7,10 @@
 </h2>
 <h3>
     Are you sure you want to delete this task?
-    <button title="Yes" class="btn btn-success">
+    <button title="Yes" class="yes btn btn-success">
         Yes
      </button>
-    <button title="No" class="btn btn-danger" >
+    <button title="No" class="no btn btn-danger" >
         No
     </button>
 </h3>
@@ -20,7 +20,7 @@
 {
     <br />
     <div>
-        <input type="submit" value="Delete" class="btn btn-primary" /><br />
+        <input type="submit" value="Delete" class="delete btn btn-primary" /><br />
     </div>
 }
 <p>
@@ -31,3 +31,19 @@
     <span class="divider-vertical"></span>
     @Html.ActionLink("Back to project dashboard", "Project", new { id = Model.HumanTask.ProjectId }, new { @class = "btn" })
 </p>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".delete").prop("disabled", true);
+
+        $(".yes").click(function () {
+            $(".delete").prop("disabled", false);
+        });
+
+        $(".no").click(function () {
+            $(".delete").prop("disabled", true);
+        });
+        
+    });
+</script>
