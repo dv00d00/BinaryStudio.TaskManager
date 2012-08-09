@@ -371,6 +371,7 @@
     <Content Include="Views\Profile\ChangePassword.cshtml" />
     <Content Include="Views\Project\QuickTaskCreation.cshtml" />
     <Content Include="Views\QuickTask\QuickTaskCreation.cshtml" />
+    <Content Include="Views\Project\UserPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\AdminPanel.cshtml" />

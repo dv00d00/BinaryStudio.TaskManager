@@ -121,19 +121,7 @@
                 {   
                     <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
                     <lo>
-                        <p>
-                            @if (@user.User.ImageData == null)
-                            {
-                                <img class="pull-left" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="70" height="70"/>
-                            }
-                            else
-                            {
-                                <img class="pull-left" width="70" height="70" src="@Url.Action("GetImage", "Project", new { UserId = user.User.Id })" />
-                            }
-                            @Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })
-                        </p>
-                        <p>@Html.ActionLink("Create task", "CreateTask", new { userId = user.User.Id, projectId = Model.ProjectId }, new { @class = "btn" })</p>
-
+                        @Html.Partial("UserPartialView", user.User)
                         <div data-managerid = @user.User.Id.ToString()>
                         </div>
                      </lo>
