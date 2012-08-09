@@ -5,5 +5,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         public int Id { get; set; }
 
         public string Name { get; set; }
+
+        public bool Photo{ get; set; }
     }
 }

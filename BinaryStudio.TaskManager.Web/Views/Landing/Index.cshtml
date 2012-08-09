@@ -75,7 +75,7 @@
         <div class="no_filtered">No tasks matching filtered value</div>
         <div data-bind="visible: tasks().length==0">No tasks yet</div>
         <div class="task_list" data-bind="foreach: tasks">
-            <div class="task_in_list">
+            <div class="task_in_list" data-bind="attr: {'data-id':Id}">
                 <div data-bind="if: AssigneePhoto==true&&AssigneeId!=null" class="assignee_photo">
                     <a href="#" rel="popover" class="assignee_popover img_holder" data-bind="attr: {'data-content':'<img class=large_photo src=/Project/GetImage?UserId='+AssigneeId+'> Assigned to '+Assignee}">
                         <img data-bind="attr: {'src': '/Project/GetImage?UserId='+AssigneeId}" />
@@ -83,7 +83,10 @@
                 </div>    
                 <div data-bind="if: AssigneePhoto==false&&AssigneeId!=null" class="assignee_photo">
                     <a href="#" rel="popover" class="assignee_popover img_holder" data-bind="attr: {'data-content':'Assigned to '+Assignee}"><img src="/Content/images/photo.png" /></a>
-                </div>    
+                </div>   
+                <div data-bind="if: AssigneeId==null" class="assignee_photo">
+                    <a href="#" rel="popover" class="assignee_popover img_holder"></a>
+                </div>     
                 <div data-bind="attr: {'class': 'priority prior_'+Priority}"></div>
                 <a data-bind="text:Name, attr: { 'data-content': 'Created: '+CreatedDate+'<br>'+CreatedTime+'<br>By '+Creator,'data-original-title':Name, 'href':'/Project/Details/'+Id}" rel="popover" class="task_popover"></a>
                 <div data-bind="text: Description"></div>
@@ -91,6 +94,18 @@
         </div>
     </div>
     <div id="right_panel" class="span3">
+    </div>
+    <div class="user_list_holder">
+        <div class="user_list_header">
+            <div class="user_list_title"><span>Assign someone to this task</span><span class="user_list_close">x</span></div>
+            <input type="text" class="user_list_input"/>
+        </div>
+        <div>
+            <div class="user_list_clear">Clear assignee</div>
+            <ul class="user_list" data-bind="foreach: users">
+                <li data-bind="attr:{'data-id': Id}"><img data-bind="attr: {'src': Photo}" /><span data-bind="text: Name"></span></li>
+            </ul>
+        </div>
     </div>
     <div class="modal hide" id="delete_box">
         <div class="modal-header">

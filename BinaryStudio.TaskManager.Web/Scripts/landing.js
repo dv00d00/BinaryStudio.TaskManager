@@ -9,15 +9,73 @@ var toDashboard = function (element, where) {
         window.open("/Project/Project/" + num);
 };
 $(function () {
-
+    /*********** To dashboard clicks handling ************/
     $(document).on("dblclick", ".project_list .project_name", function () {
-        toDashboard($(this),"here");
+        toDashboard($(this), "here");
     });
     $(document).on("mousedown", ".project_list .project_name", function (e) {
         if (e.which == 2) {
-            toDashboard($(this),"there");
+            toDashboard($(this), "there");
         }
     });
+
+    /************** Assign menu **************/
+
+    $(document).on("click", ".img_holder", function (e) {
+        var top = e.pageY + 25;
+        var left = e.pageX - 225;
+        $(".user_list_holder").css({
+            "display": "block",
+            "top": top,
+            "left": left
+        });
+        $(document).keyup(function (e) {
+            var code = null;
+            code = (e.keyCode ? e.keyCode : e.which);
+            if (code == 27) {
+                $(".user_list_holder").hide();
+            }
+            $("user_list_holder").off();
+        });
+        $(".user_list_close").click(function () {
+            $(".user_list_holder").hide();
+            $(".user_list_close").off("click");
+        });
+        var taskId = $(this).parent("div").parent("div").attr("data-id");
+        $(document).on("click", ".user_list li", function () {
+            var userId = $(this).attr('data-id');
+            $.ajax({
+                'data': { 'taskId': taskId,
+                    'senderId': -1,
+                    'receiverId': userId
+                },
+                'dataType': 'JSON',
+                'type': 'POST',
+                'url': '/HumanTasks/MoveTask',
+                success: function () {
+                    location.reload(true);
+                }
+            });
+            $(".user_list li").off();
+        });
+        $(document).on("click", ".user_list_clear", function () {
+            var userId = $(this).attr('data-id');
+            $.ajax({
+                'data': { 'taskId': taskId,
+                    'senderId': -1,
+                    'receiverId': -1
+                },
+                'dataType': 'JSON',
+                'type': 'POST',
+                'url': '/HumanTasks/MoveTask',
+                success: function () {
+                    location.reload(true);
+                }
+            });
+            $(".user_list_clear").off();
+        });
+    });
+
     /**** Tooltip  ******/
     $('.dashboard_btn').tooltip({
         position: 'left',
@@ -167,12 +225,13 @@ function getTaskList(proj) {
             modelData.project(data.Name);
             $("#content").children(".proj_title").html("[project]");
             modelData.tasks.removeAll();
+            modelData.users.removeAll();
             for (var i = 0; i < data.Tasks.length; i++) {
                 task = data.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));
                 var thisTask = new Object({
-                    Id: task.id,
-                    Name: task.name,
+                    Id: task.Id,
+                    Name: task.Name,
                     Description: task.Description,
                     CreatedDate: date.toLocaleDateString(),
                     CreatedTime: date.toLocaleTimeString(),
@@ -188,7 +247,8 @@ function getTaskList(proj) {
                 var user = data.Users[i];
                 var thisUser = new Object({
                     Id: user.Id,
-                    Name: user.Name
+                    Name: user.Name,
+                    Photo : user.Photo==true? '/Project/GetImage?UserId='+user.Id : '/Content/images/photo.png'
                 });
                 modelData.users.push(thisUser);
             }
@@ -208,6 +268,7 @@ function getTaskGroup(url, groupName) {
             modelData.project(data.Name);
             $("#content").children(".proj_title").html("[" + groupName + "]");
             modelData.tasks.removeAll();
+            modelData.users.removeAll();
             for (var i = 0; i < data.Tasks.length; i++) {
                 task = data.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));

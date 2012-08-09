@@ -101,7 +101,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 usersToModel = usersList.Select(currentUser => new LandingUserModel()
                 {
                     Id = currentUser.Id,
-                    Name = currentUser.UserName
+                    Name = currentUser.UserName,
+                    Photo = userRepository.GetById(currentUser.Id).ImageData != null
                 }).ToList();
             }
             else
