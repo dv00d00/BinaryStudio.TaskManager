@@ -555,10 +555,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>
         [HttpPost]
         [ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int idTask, int projectId)
+        public ActionResult DeleteConfirmed(int idTask)
         {
+            var task = this.taskProcessor.GetTaskById(idTask);
             this.taskProcessor.DeleteTask(idTask);
-            return this.RedirectToAction("Project", new { id = projectId });
+            return this.RedirectToAction("Project", new { id = task.ProjectId });
         }
 
         /// <summary>

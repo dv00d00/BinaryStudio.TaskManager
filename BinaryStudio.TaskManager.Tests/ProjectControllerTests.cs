@@ -177,10 +177,10 @@ namespace BinaryStudio.TaskManager.Web.Tests
         /// The should_ delete task with id 5 from task processor.
         /// </summary>
         [Test]
-        public void Should_DeleteTaskWithId5FromProjectWithId1TaskProcessor()
+        public void Should_DeleteTaskWithId5FromProjectTaskProcessor()
         {
             // act
-            this.controller.DeleteConfirmed(5, 1);
+            this.controller.DeleteConfirmed(5);
 
             // assert
             this.taskProcessorMock.Verify(x => x.DeleteTask(5), Times.Once());
