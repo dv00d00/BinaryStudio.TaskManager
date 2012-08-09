@@ -3,7 +3,8 @@ $(function () {
 
     $(document).on("dblclick", ".project_list .project_name", function () {
         var num = $(this).parent("div").attr("data-id");
-        location.href = "/Project/Project/"+num;
+        $("*").css("cursor", "progress");
+        location.href = "/Project/Project/" + num;
     });
     /**** Tooltip  ******/
     $('.dashboard_btn').tooltip({
@@ -253,7 +254,6 @@ function projectsOutput(projects, li_class) {
         <div class='proj_row' data-id='" + projects[i].Id + "'>\
                          " + ownProjDelete + "\
                          <div  class='" + li_class + " project_name'>" + name + "</div>\
-                         <a href='/Project/Project/" + projects[i].Id + "'><div class='dashboard_btn' title='" + projects[i].Name + " dashboard'></div></a>\
                      </div>");
          if (projects[i].Name.length >= 20)
             $("li[data-id=" + projects[i].Id + "]").attr("title", projects[i].Name);
