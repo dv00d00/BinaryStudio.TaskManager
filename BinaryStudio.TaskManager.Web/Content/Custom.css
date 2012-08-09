@@ -24,6 +24,19 @@ div.task
     background: -moz-linear-gradient(top,  #ffffff,  #dcd8d8); /* for firefox 3.6+ */
 }
 
+div.user
+{
+    border-radius: 15px 15px 15px 15px; /*border:2px solid black; */
+    width: 200px;
+    height: 130px;
+    margin: 10px;
+    box-shadow: 3px 3px 5px 1px #cccccc;
+    background: #dcd8d8; /* for non-css3 browsers */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcd8d8'); /* for IE */
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dcd8d8)); /* for webkit browsers */
+    background: -moz-linear-gradient(top,  #ffffff,  #dcd8d8); /* for firefox 3.6+ */
+}
+
 .placeholderTask
 {
     opacity: 33;

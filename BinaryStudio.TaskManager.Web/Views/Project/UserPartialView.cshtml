@@ -2,16 +2,16 @@
 @using BinaryStudio.TaskManager.Web.Extentions
 @model BinaryStudio.TaskManager.Logic.Domain.User
 @* This partial view draw a task block in table *@
-@{ <div class ="task"  id = @Model.Id.ToString() style="position: relative;">
-        <div style="overflow: hidden; margin: 5px">
+@{ <div class ="user"  id = @Model.Id.ToString() style="position: relative;">
+        <div style="overflow: hidden; margin-left: 20px; padding-top: 20px">
             <p>
                 @if (@Model.ImageData == null)
                 {
-                    <img class="pull-left" align = "top" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="70" height="70"/>
+                    <img class="pull-left" align = "top" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="60" height="60"/>
                 }
                 else
                 {
-                    <img class="pull-left" align = "top" width="70" height="70" src="@Url.Action("GetImage", "Project", new { UserId = Model.Id })" />
+                    <img class="pull-left" align = "top" width="60" height="60" src="@Url.Action("GetImage", "Project", new { UserId = Model.Id })" />
                 }
                 @Html.ActionLink(Model.UserName, "UserDetails", new { userId = Model.Id }, new { @class = "btn btn-info" })
             </p>
