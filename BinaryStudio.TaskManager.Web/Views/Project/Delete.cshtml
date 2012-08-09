@@ -7,10 +7,18 @@
 </h2>
 <h3>
     Are you sure you want to delete this task?
+    <button title="Yes" class="btn btn-success">
+        Yes
+     </button>
+    <button title="No" class="btn btn-danger" >
+        No
+    </button>
 </h3>
+<br />
 @Html.Partial("TaskDetailsPartial")
 @using (Html.BeginForm())
 {
+    <br />
     <div>
         <input type="submit" value="Delete" class="btn btn-primary" /><br />
     </div>
