@@ -159,7 +159,7 @@
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\ProjectCollaboratorsViewModel.cs" />
     <Compile Include="Models\ProjectDataForEventsViewModel.cs" />
-    <Compile Include="Models\ProjectView.cs" />
+    <Compile Include="Models\LandingProjectModel.cs" />
     <Compile Include="Models\RegisterLinkedInModel.cs" />
     <Compile Include="Models\SingleTaskViewModel.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />
@@ -167,7 +167,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\TaskView.cs" />
+    <Compile Include="Models\LandingTaskModel.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Models\TokenHelper.cs" />
     <Compile Include="Models\UserModels.cs" />

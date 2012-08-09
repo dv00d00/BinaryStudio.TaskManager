@@ -2,7 +2,7 @@ namespace BinaryStudio.TaskManager.Web.Models
 {
     using System;
 
-    public class TaskView
+    public class LandingTaskModel
     {
         public int Id { get; set; }
 

@@ -152,11 +152,11 @@ function getTaskList(proj) {
         },
         success: function (data) {
             var task = null;
-            modelData.project(data.Project.Name);
+            modelData.project(data.Name);
             $("#content").children(".proj_title").html("[project]");
             modelData.tasks.removeAll();
-            for (var i = 0; i < data.Project.Tasks.length; i++) {
-                task = data.Project.Tasks[i];
+            for (var i = 0; i < data.Tasks.length; i++) {
+                task = data.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));
                 var thisTask = new Task(task.Id, task.Name,
                     task.Description, date, task.Creator, task.Priority,
@@ -176,11 +176,11 @@ function getTaskGroup(url, groupName) {
         url: "/Landing/GetTasks",
         success: function (data) {
             var task = null;
-            modelData.project(data.Project.Name);
+            modelData.project(data.Name);
             $("#content").children(".proj_title").html("[" + groupName + "]");
             modelData.tasks.removeAll();
-            for (var i = 0; i < data.Project.Tasks.length; i++) {
-                task = data.Project.Tasks[i];
+            for (var i = 0; i < data.Tasks.length; i++) {
+                task = data.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));
                 var thisTask = new Task(task.Id, task.Name,
                     task.Description, date, task.Creator, task.Priority,

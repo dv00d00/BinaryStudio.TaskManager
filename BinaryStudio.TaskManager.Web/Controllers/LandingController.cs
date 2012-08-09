@@ -55,10 +55,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 };
             projectRepository.Add(project);
             var projectList = projectRepository.GetAllProjectsForUser(user.Id);
-            var projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name }).ToList();
-            var model = new LandingProjectsModel { UserProjects = projectsToModel };
+            var projectsToModel = projectList.Select(proj => new LandingProjectModel { Id = proj.Id, Name = proj.Name }).ToList();
+            var model = new LandingProjectsListModel { UserProjects = projectsToModel };
             projectList = projectRepository.GetAllProjectsForTheirCreator(user.Id);
-            projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name }).ToList();
+            projectsToModel = projectList.Select(proj => new LandingProjectModel { Id = proj.Id, Name = proj.Name }).ToList();
             model.CreatorProjects = projectsToModel;
             return Json(model);
         }
@@ -75,10 +75,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var user = userRepository.GetByName(User.Identity.Name);
             var projectList = projectRepository.GetAllProjectsForUser(user.Id);
 
-            var projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name }).ToList();
-            var model = new LandingProjectsModel { UserProjects = projectsToModel };
+            var projectsToModel = projectList.Select(proj => new LandingProjectModel { Id = proj.Id, Name = proj.Name }).ToList();
+            var model = new LandingProjectsListModel { UserProjects = projectsToModel };
             projectList = projectRepository.GetAllProjectsForTheirCreator(user.Id);
-            projectsToModel = projectList.Select(proj => new ProjectView { Id = proj.Id, Name = proj.Name }).ToList();
+            projectsToModel = projectList.Select(proj => new LandingProjectModel { Id = proj.Id, Name = proj.Name }).ToList();
             model.CreatorProjects = projectsToModel;
             return Json(model);
         }
@@ -117,7 +117,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                         break;
                 }
             }
-            var tasksToModel = taskList.Where(x => x.Closed == (DateTime?)null).Select(task => new TaskView
+            var tasksToModel = taskList.Where(x => x.Closed == (DateTime?)null).Select(task => new LandingTaskModel
                             {
                                 Id = task.Id,
                                 Description = stringExtensions.Truncate(task.Description, 100),
@@ -129,15 +129,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                 Assignee = task.AssigneeId== null?null:userRepository.GetById(task.AssigneeId.GetValueOrDefault()).UserName.ToString(),
                                 AssigneePhoto = task.AssigneeId==null?false:userRepository.GetById(task.AssigneeId.GetValueOrDefault()).ImageData!=null
                             });
-            var projectModel = new ProjectView
+            var model = new LandingProjectModel
                 {
                     Id = projectId != -1 ? currentProject.Id : -1,
                     Name = projectId != -1 ? currentProject.Name : groupName,
                     Tasks = tasksToModel
-                };
-            var model = new LandingTasksModel()
-                {
-                    Project = projectModel
                 };
             return Json(model, JsonRequestBehavior.AllowGet);
         }

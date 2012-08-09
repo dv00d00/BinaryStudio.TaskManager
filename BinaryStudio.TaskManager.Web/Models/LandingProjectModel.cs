@@ -4,12 +4,12 @@ namespace BinaryStudio.TaskManager.Web.Models
 
     using BinaryStudio.TaskManager.Logic.Domain;
 
-    public class ProjectView
+    public class LandingProjectModel
     {
         public int Id { get; set; }
         
         public string Name { get; set; }
 
-        public IEnumerable<TaskView> Tasks { get; set; }
+        public IEnumerable<LandingTaskModel> Tasks { get; set; }
     }
 }

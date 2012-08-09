@@ -25,15 +25,10 @@ namespace BinaryStudio.TaskManager.Web.Models
         public HumanTask ProjectHumanTask { get; set; }
     }
 
-    public class LandingProjectsModel
+    public class LandingProjectsListModel
     {
-        public IEnumerable<ProjectView> UserProjects { get; set; }
+        public IEnumerable<LandingProjectModel> UserProjects { get; set; }
 
-        public IEnumerable<ProjectView> CreatorProjects { get; set; }
-    }
-
-    public class LandingTasksModel
-    {
-        public ProjectView Project { get; set; }
+        public IEnumerable<LandingProjectModel> CreatorProjects { get; set; }
     }
 }
