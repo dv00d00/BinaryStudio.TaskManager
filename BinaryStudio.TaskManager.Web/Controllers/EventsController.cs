@@ -124,20 +124,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.notifier.SetCountOfNews(news.User.UserName);
         }
 
-        [HttpPost]
-        public ActionResult GetNewsCount()
-        {
-            int count = newsRepository.GetNewsCount(userProcessor.GetUserByName(User.Identity.Name).Id);
-            return Json(count);
-        }
-
-        [HttpPost]
-        public ActionResult GetInvitationsCount()
-        {
-            int count = projectProcessor.GetAllInvitationsToUser(userProcessor.GetUserByName(User.Identity.Name).Id).Count() ;
-            return Json(count);
-        }
-
+       
         [HttpPost]
         public ActionResult GetInvitationsAndNewsCount()
         {

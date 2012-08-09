@@ -13,24 +13,20 @@
     
 @ko.Html.Hidden()
 <div class="container-fluid" style="margin-top: 30px">
-    <h2>My news</h2>
-    
-    <div class="row-fluid">
+    <div class="row-fluid" style="margin-top: 30px">
         <div class="span2">
             <!--Sidebar content-->
             <div class="row-fluid">
-                <div class="span6">
-                    <ul class="nav nav-pills nav-stacked">
+               
+                    <ul class="nav nav-pills nav-stacked" style="width: 150px;">
         
                         <li class="active">
-                           @* <a href="#" id="1" >All</a> *@
-                            @ko.Html.HyperlinkButton("All", "GetNews", "Events", new { type=1})
+                          @ko.Html.HyperlinkButton("All", "GetNews", "Events", new { type=1})
                         </li>
                         <li>
                             
                             @ko.Html.HyperlinkButton("Only my", "GetNews", "Events", new { type=2})
-                            @* <a href="#" id="2"  >Only my</a> *@
-                        </li>
+                           </li>
                         @foreach (var project in Model.Projects)
                         {
                             <li>
@@ -39,7 +35,6 @@
                         } 
                     </ul>
                 </div>
-            </div>
             <button class="btn btn-inverse all_read">Mark all news as read</button>
         </div>
         <div class="span8">
@@ -59,7 +54,7 @@
                         </strong>
                         <p style="margin: 0px;width: 300px;">
                             <a class="InvitationButton submitInvitation" id="@invitation.InvitationId" href="#" style="float: left"><i class="icon-ok"></i> Accept </a> 
-                            <a class="InvitationButton refuseInvitation" id="@invitation.InvitationId" href="#" style="float: right"><i class="icon-remove"></i> No thanks </a>
+                            <a class="InvitationButton refuseInvitation" id="@invitation.InvitationId" href="#" style="float: right"><i class="icon-remove"></i> No, thanks </a>
                         </p>
                     </div>
                     <hr style="margin: 9px 0; margin-left: 20px"/>
