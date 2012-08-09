@@ -13,25 +13,29 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        var self = this;
-        var onSuccess = function () {
-            $(self).parents(".project/project");
-        };
-        
-        $(".create").click(function () {
-
-            var projId = @Model.ProjectId;
-                var taskDescription = jQuery(".quicktaskarea").val();
-                $.ajax({
-                    type: "POST",
-                    url: "/QuickTask/QuickTaskCreation/",
-                    data: { projectId: projId, description: taskDescription },
-                    dataType: "json",
-                    traditional: true
-                }).success(onSuccess);
-                $(".quicktaskarea").val("");
-            });
-
+    $(document).ready(function() {
+        $(".create").click(function (){createTask()});
+        $(".quicktaskarea").keydown(function(e) {
+            if (e.ctrlKey && e.keyCode == 13) {
+                createTask();
+            }
         });
+    });
+
+    function createTask() {
+       var self = this;
+       var onSuccess = function() {
+           $(self).parents(".project/project");
+       };
+       var projId = @Model.ProjectId;
+       var taskDescription = jQuery(".quicktaskarea").val();
+       $.ajax({
+           type: "POST",
+           url: "/QuickTask/QuickTaskCreation/",
+           data: { projectId: projId, description: taskDescription },
+           dataType: "json",
+           traditional: true
+       }).success(onSuccess);
+       $(".quicktaskarea").val("");
+    }
 </script>
