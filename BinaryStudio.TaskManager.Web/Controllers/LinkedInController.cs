@@ -69,7 +69,7 @@ namespace ThirdPartySignup.Controllers
                 if (user != null)
                 {
                     FormsAuthentication.SetAuthCookie(user.UserName, false);
-                    return this.RedirectToAction("AllManagersWithTasks", "HumanTasks");
+                    return this.RedirectToAction("Index", "Landing");
                 }
                 else
                 {
@@ -92,7 +92,7 @@ namespace ThirdPartySignup.Controllers
             if (user != null)
             {
                 FormsAuthentication.SetAuthCookie(user.UserName, false);
-                return RedirectToAction("AllManagersWithTasks", "HumanTasks");
+                return RedirectToAction("Index", "Landing");
             }
             else
             {
@@ -138,7 +138,7 @@ namespace ThirdPartySignup.Controllers
                 if (createStatus)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName,true);
-                    return this.RedirectToAction("AllManagersWithTasks", "HumanTasks");
+                    return this.RedirectToAction("Index", "Landing");
                 }
                 else
                 {
