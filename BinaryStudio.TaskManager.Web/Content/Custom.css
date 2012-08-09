@@ -28,7 +28,7 @@ div.user
 {
     border-radius: 15px 15px 15px 15px; /*border:2px solid black; */
     width: 200px;
-    height: 130px;
+    height: 120px;
     margin: 10px;
     box-shadow: 3px 3px 5px 1px #cccccc;
     background: #dcd8d8; /* for non-css3 browsers */
