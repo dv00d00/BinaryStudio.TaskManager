@@ -51,11 +51,12 @@ $(function () {
         $.ajax({
             'data': { 'taskId': taskId,
                 'senderId': -1,
-                'receiverId': userId
+                'receiverId': userId,
+                'projectId': -1
             },
             'dataType': 'JSON',
             'type': 'POST',
-            'url': '/HumanTasks/MoveTask',
+            'url': '/Project/MoveTask',
             success: function () {
                 location.reload(true);
             }
@@ -65,11 +66,12 @@ $(function () {
         $.ajax({
             'data': { 'taskId': taskId,
                 'senderId': -1,
-                'receiverId': -1
+                'receiverId': -1,
+                'projectId': -1
             },
             'dataType': 'JSON',
             'type': 'POST',
-            'url': '/HumanTasks/MoveTask',
+            'url': '/Project/MoveTask',
             success: function () {
                 location.reload(true);
             }

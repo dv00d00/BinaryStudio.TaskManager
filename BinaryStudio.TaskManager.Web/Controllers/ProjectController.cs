@@ -248,7 +248,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         }
 
         /// <summary>
-        /// The move task from one user to another.
+        /// Moves task from one user to another.
         /// </summary>
         /// <param name="taskId">
         /// The task id.
