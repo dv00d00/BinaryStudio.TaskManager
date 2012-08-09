@@ -20,7 +20,7 @@ $(function () {
     });
 
     /************** Assign menu **************/
-
+    var taskId = null;
     $(document).on("click", ".img_holder", function (e) {
         var top = e.pageY + 25;
         var left = e.pageX - 225;
@@ -29,53 +29,62 @@ $(function () {
             "top": top,
             "left": left
         });
-        $(document).keyup(function (e) {
-            var code = null;
-            code = (e.keyCode ? e.keyCode : e.which);
-            if (code == 27) {
-                $(".user_list_holder").hide();
-            }
-            $("user_list_holder").off();
-            $(document).off("click", ".user_list li");
-        });
-        $(".user_list_close").click(function () {
+        scrollPresence();
+        $(".user_list_input").focus();
+        taskId = $(this).parent("div").parent("div").attr("data-id");
+    });
+    $(document).keyup(function (e) {
+        var code = null;
+        code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 27) {
             $(".user_list_holder").hide();
-            $(".user_list_close").off("click");
-            $(document).off("click", ".user_list li");
+            clearInput();
+        }
+        $("user_list_holder").off();
+    });
+    $(".user_list_close").click(function () {
+        $(".user_list_holder").hide();
+        clearInput();
+    });
+    $(document).on("click.user_list", ".user_list li", function () {
+        var userId = $(this).attr('data-id');
+        $.ajax({
+            'data': { 'taskId': taskId,
+                'senderId': -1,
+                'receiverId': userId
+            },
+            'dataType': 'JSON',
+            'type': 'POST',
+            'url': '/HumanTasks/MoveTask',
+            success: function () {
+                location.reload(true);
+            }
         });
-        var taskId = $(this).parent("div").parent("div").attr("data-id");
-        $(document).on("click", ".user_list li", function () {
-            var userId = $(this).attr('data-id');
-            $.ajax({
-                'data': { 'taskId': taskId,
-                    'senderId': -1,
-                    'receiverId': userId
-                },
-                'dataType': 'JSON',
-                'type': 'POST',
-                'url': '/HumanTasks/MoveTask',
-                success: function () {
-                    location.reload(true);
-                }
-            });
-            $(document).off("click", ".user_list li");
+    });
+    $(document).on("click.user_list", ".user_list_clear", function () {
+        $.ajax({
+            'data': { 'taskId': taskId,
+                'senderId': -1,
+                'receiverId': -1
+            },
+            'dataType': 'JSON',
+            'type': 'POST',
+            'url': '/HumanTasks/MoveTask',
+            success: function () {
+                location.reload(true);
+            }
         });
-        $(document).on("click", ".user_list_clear", function () {
-            var userId = $(this).attr('data-id');
-            $.ajax({
-                'data': { 'taskId': taskId,
-                    'senderId': -1,
-                    'receiverId': -1
-                },
-                'dataType': 'JSON',
-                'type': 'POST',
-                'url': '/HumanTasks/MoveTask',
-                success: function () {
-                    location.reload(true);
-                }
-            });
-            $(".user_list_clear").off();
+    });
+
+    $('.user_list_input').keyup(function () {
+        var search_val = $(this).val();
+        for (var i = 0; i < modelData.users().length; i++) {
+            modelData.users()[i]._destroy = false;
+        }
+        modelData.users.destroy(function (item) {
+            return item.Name.indexOf(search_val) == -1;
         });
+        scrollPresence();
     });
 
     /**** Tooltip  ******/
@@ -364,4 +373,22 @@ function projectsOutput(projects, li_class) {
         });
     }
     return i;
+}
+
+function scrollPresence()
+{
+    var user_list = $(".user_list");
+    if (user_list.height() < 250) {
+        user_list.css("overflow-y", "hidden");
+    }
+    else {
+        user_list.css("overflow-y", "scroll");
+    }
+}
+
+function clearInput() {
+    $(".user_list_input").val("");
+    for (var i = 0; i < modelData.users().length; i++) {
+        modelData.users()[i]._destroy = false;
+    }
 }

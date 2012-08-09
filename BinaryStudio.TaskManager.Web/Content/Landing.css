@@ -272,6 +272,7 @@ img {
 .user_list {
     list-style: none;
     margin: 0px;
+    max-height: 250px;
 }
 .user_list li,
 .user_list_clear {

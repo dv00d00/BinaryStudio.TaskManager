@@ -98,7 +98,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 taskList = currentProject.Tasks.ToList();
                 var usersList = projectRepository.GetAllUsersInProject(projectId).ToList();
                 usersList.Add(projectRepository.GetCreatorForProject(projectId));
-                usersToModel = usersList.Select(currentUser => new LandingUserModel()
+                usersToModel = usersList.OrderBy(x => x.UserName).Select(currentUser => new LandingUserModel()
                 {
                     Id = currentUser.Id,
                     Name = currentUser.UserName,
