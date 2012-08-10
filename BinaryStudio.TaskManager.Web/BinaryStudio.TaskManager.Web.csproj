@@ -270,6 +270,7 @@
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\landing.js" />
     <Content Include="Scripts\perpetuum.knockout.js" />
+    <Content Include="Scripts\PopupDialog.js" />
     <Content Include="Scripts\TaskModel.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -372,6 +373,7 @@
     <Content Include="Views\Project\QuickTaskCreation.cshtml" />
     <Content Include="Views\QuickTask\QuickTaskCreation.cshtml" />
     <Content Include="Views\Project\UserPartialView.cshtml" />
+    <Content Include="Views\Project\CreateTask!!.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\AdminPanel.cshtml" />

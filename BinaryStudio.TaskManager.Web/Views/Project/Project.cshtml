@@ -2,9 +2,8 @@
 @{
     ViewBag.Title = "Project";
 }
-<style>
-    
-</style>
+<link href="../../Content/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
+<script src="../../Scripts/PopupDialog.js" type="text/javascript"></script>
 <script src="../../Scripts/MicrosoftAjax.js" type="text/javascript"></script>
 <script src="../../Scripts/MicrosoftMvcAjax.js" type="text/javascript"></script>
 <script src="../../Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
@@ -61,11 +60,9 @@
                 traditional: true
             }); 
                       
-        });       
+        });
 
     });
-
-
 </script>
 <!-- Caption of the table "Managers-Tasks"-->
 <fieldset>
@@ -103,7 +100,9 @@
                             }
                             @Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })
                         </p>
-                        <p>@Html.ActionLink("Create task", "CreateTask", new { userId = user.User.Id, projectId = Model.ProjectId }, new { @class = "btn" })</p>
+                        <p>
+                            @Html.ActionLink("Create task", "CreateTask", "Project", new { userId = user.User.Id, projectId = Model.ProjectId }, new { @class = "openDialog", data_dialog_id = "aboutlDialog", data_dialog_title = "About Us" })
+                        </p>                        
                     </td> 
                     }
                 }
@@ -178,8 +177,10 @@
         <!-- Create a column with tasks-->
     </table>
 </fieldset>
+
 <p align="center" class="well-large">
 </p>
+
 @Ajax.ActionLink(" ", "QuickTaskCreation", "QuickTask", new AjaxOptions
 
 {
