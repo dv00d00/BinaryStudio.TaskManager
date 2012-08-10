@@ -11,6 +11,12 @@ div.sortableTasks a
     float: left;
     min-height: 150px;
 }
+.usercolumn
+{
+    width: 230px;
+    float: left;
+    min-height: 150px;
+}
 div.task
 {
     border-radius: 15px 15px 15px 15px; /*border:2px solid black; */

@@ -45,6 +45,8 @@
             placeholder: "placeholderTask",
             cursor: 'move'
         });
+
+
         $(".column").disableSelection();
 
         $('.done').click(function () {
@@ -85,9 +87,32 @@
                 <td align="center">
                     <p>@Html.ActionLink("Create unassigned task", "CreateTask", new { userId = -1, projectId = Model.ProjectId }, new { @class = "btn" })</p>
                 </td>
-                <td align="center">
-                    <p>All users in project</p>
-                </td>
+                @if (Model.NumberOfUsers < 5)
+                {
+                    foreach (var user in Model.UsersTasks)
+                    {   
+                    <td valign="top" align="center">
+                        <p>
+                            @if (@user.User.ImageData == null)
+                            {
+                                <img class="pull-left" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="70" height="70"/>
+                            }
+                            else
+                            {
+                                <img class="pull-left" width="70" height="70" src="@Url.Action("GetImage", "Project", new { UserId = user.User.Id })" />
+                            }
+                            @Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })
+                        </p>
+                        <p>@Html.ActionLink("Create task", "CreateTask", new { userId = user.User.Id, projectId = Model.ProjectId }, new { @class = "btn" })</p>
+                    </td> 
+                    }
+                }
+                else
+                {
+                    <td align="center">
+                        <p>All users in project</p>
+                    </td>
+                }
             </tr>
             
             <tr>
@@ -115,18 +140,39 @@
                             olo</div>
                     </div>
                 </td>
-                <td class="container">                
-                <ul>
-                @foreach (var user in Model.UsersTasks)
-                {   
-                    <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
-                    <lo>
-                        @Html.Partial("UserPartialView", user)
-                     </lo>
-                     </div>                    
+                @if (Model.NumberOfUsers < 5)
+                {
+                    foreach (var user in Model.UsersTasks)
+                    {   
+                    <td valign="top" class="well">
+                        <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
+                            @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
+                            {
+                                <div class="task-holder" data-taskid= @task.Id.ToString() id=@task.Id.ToString()>
+                                    @Html.Partial("ManagerTasksTablePartialView", task)
+                                </div>
+                            }
+                            <div data-managerid = @user.User.Id.ToString()>
+                            </div>
+                        </div>
+                    </td> 
+                    }
                 }
-                </ul>
-                </td>
+                else
+                {
+                    <td class="container">                
+                        <ul>
+                            @foreach (var user in Model.UsersTasks)
+                            {   
+                                <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
+                                    <lo>
+                                        @Html.Partial("UserPartialView", user)
+                                    </lo>
+                                </div>                    
+                            }
+                        </ul>
+                    </td>
+                }
             </tr>
         }
         <!-- Create a column with tasks-->
@@ -136,7 +182,7 @@
 </p>
 @Ajax.ActionLink(" ", "QuickTaskCreation", "QuickTask", new AjaxOptions
 
-    {
-        InsertionMode = InsertionMode.Replace,
-        UpdateTargetId = "mydiv"
-    })
+{
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "mydiv"
+})

@@ -22,5 +22,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         public HumanTask QuickTask { get; set; }
 
         public int ProjectId { get; set; }
+
+        public int NumberOfUsers { get; set; }
     }
 }

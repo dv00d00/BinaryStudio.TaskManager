@@ -105,7 +105,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 UsersTasks = new List<ManagerTasksViewModel>(),
                 UnAssignedTasks = this.taskProcessor.GetUnAssignedTasksForProject(id).ToList(),
                 QuickTask = new HumanTask(),
-                ProjectId = id
+                ProjectId = id,
+                NumberOfUsers = this.projectProcessor.GetAllUsersInProject(id).Count()
             };
             model.QuickTask.ProjectId = id;
             var users = new List<User>();
