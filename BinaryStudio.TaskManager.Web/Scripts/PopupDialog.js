@@ -13,8 +13,8 @@ $(document).ready(function () {
                         title: $(this).attr("data-dialog-title"),
                         close: function () { $(this).remove(); },
                         modal: true,
-                        height: 250,
-                        width: 900,
+                        height: 500,
+                        width: 400,
                         left: 0
 
                     })

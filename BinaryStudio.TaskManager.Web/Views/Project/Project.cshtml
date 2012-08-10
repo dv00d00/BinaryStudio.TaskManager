@@ -101,7 +101,7 @@
                             @Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })
                         </p>
                         <p>
-                            @Html.ActionLink("Create task", "CreateTask", "Project", new { userId = user.User.Id, projectId = Model.ProjectId }, new { @class = "openDialog", data_dialog_id = "aboutlDialog", data_dialog_title = "About Us" })
+                            @Html.ActionLink("Create task", "CreateTask", "Project", new { userId = user.User.Id, projectId = Model.ProjectId }, new { @class = "btn openDialog", data_dialog_id = "aboutlDialog", data_dialog_title = "Create new task" })
                         </p>                        
                     </td> 
                     }

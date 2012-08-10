@@ -1,10 +1,103 @@
-﻿@{
-    ViewBag.Title = "About Us";
-    Layout = null;
+﻿@model BinaryStudio.TaskManager.Web.Models.CreateTaskViewModel
+@{
+    ViewBag.Title = "Creating new task";
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Task data</legend>
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.AssigneeId)
+        @Html.HiddenFor(model => model.CreatorId)
+        @Html.HiddenFor(model => model.Created)
+        @Html.HiddenFor(model => model.ProjectId)
+        @Html.HiddenFor(model => model.Assigned)
+        @Html.HiddenFor(model => model.Priority, new { id = "priorityValue" })
+        @Html.HiddenFor(model => model.BlockingTask, new { id = "blockingTask" })
+        <div class="editor-label">
+            Name:
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            Description:
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+        <div class="editor-label">
+            Priority:
+        </div>
+        <div class="btn-group" data-toggle="buttons-radio">
+            @foreach (var priority in Model.Priorities)
+            {
+                if (@priority.Value == "0")
+                {
+                    <button class="btn priority active" type="button" value=@priority.Value>
+                        @priority.Text
+                    </button>                    
+                }
+                else
+                {
+                    <button class="btn priority" type="button" value=@priority.Value>
+                        @priority.Text
+                    </button>                    
+                }
+            }
+        </div>
+        <div class="editor-label">
+            Finish Date:
+        </div>
+        <div class="editor-field">
+            <div class="input-append date" data-date="06-09-2011" data-date-format="dd-mm-yyyy">
+                @Html.TextBoxFor(model => model.Finished)
+                @Html.ValidationMessageFor(model => model.Finished)
+            </div>
+        </div>
+        <div class="editor-label">
+           Blocking task:
+        </div>
+        <div>
+            @Html.DropDownListFor(x => x.Tasks, Model.Tasks, "Choose blocking task:", new { @id = "taskslist" })
+        </div>
+        <div data-managerid="0" style="display: none">
+            olo
+        </div>
+        <input type="submit" value="Save" class="btn btn-primary" />
+        @Html.ActionLink("Return to project", "Project", new { id = Model.ProjectId }, new { @class = "btn" })
+    </fieldset>
 }
 
-<h2>About</h2>
-<p>
-Hello, this is a modal jquery popup !
-</p>
-<p><a href="javascript:void(0);" class="close">Close this Window</a></p>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Finished').val('06-09-2011');
+        $('#Finished').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+
+        $("#taskslist").click(function () {
+            var value = $(this).val();
+            $("#blockingTask").val(value);
+        });
+        
+        $("#taskslist").prop("disabled", true);
+
+        $(".priority").click(function () {
+            var value = $(this).val();
+            $("#priorityValue").val(value);
+            if(value != "3") {
+                $("#taskslist").prop("disabled", true);
+            } else {
+                $("#taskslist").prop("disabled", false);
+            }
+        });
+    });
+</script>
