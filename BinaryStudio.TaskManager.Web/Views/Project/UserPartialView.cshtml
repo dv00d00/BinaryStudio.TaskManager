@@ -16,7 +16,7 @@
                 @Html.ActionLink(Model.User.UserName, "UserDetails", new { userId = Model.User.Id }, new { @class = "btn btn-info" })
             </p>
             <p>
-                @Html.ActionLink("Create task", "CreateTask", "Project", new { userId = Model.User.Id, projectId = Model.ProjectId }, new { @class = "btn openDialog", data_dialog_id = "aboutlDialog", data_dialog_title = "Create new task" })
+                @Html.ActionLink("Create task", "CreateTask", "Project", new { userId = Model.User.Id, projectId = Model.ProjectId }, new { @class = "btn openDialog", data_dialog_id = "aboutDialog", data_dialog_title = "Create new task" })
             </p>
         </div>
     </div>
