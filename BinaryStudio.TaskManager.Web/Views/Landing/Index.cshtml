@@ -85,7 +85,7 @@
                     <a href="#" rel="popover" class="assignee_popover img_holder" data-bind="{'attr': {'data-content':'Assigned to '+Assignee}, 'css': { 'appointive':  $parent.isProject() }}"><img src="/Content/images/photo.png" /></a>
                 </div>   
                 <div data-bind="if: AssigneeId==null" class="assignee_photo">
-                    <a href="#" rel="popover" class="assignee_popover img_holder"></a>
+                    <a href="#" rel="popover" class="assignee_popover img_holder" data-bind="'css': { 'appointive':  $parent.isProject() }"></a>
                 </div>     
                 <div data-bind="attr: {'class': 'priority prior_'+Priority}"></div>
                 <a data-bind="text:Name, attr: { 'data-content': 'Created: '+CreatedDate+'<br>'+CreatedTime+'<br>By '+Creator,'data-original-title':Name, 'href':'/Project/Details/'+Id}" rel="popover" class="task_popover"></a>
