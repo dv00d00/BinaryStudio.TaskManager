@@ -46,18 +46,7 @@
     }
 }
 <div class="row-fluid">
-    <div>
-        @Html.ActionLink("Your invitations", "Invitations", "Project", null, new { @class = "btn" })
-        @if (@Model.InvitationsCount == 0)
-        {
-
-        }
-        else
-        {
-            <span style="color: red; font-size: 14pt"> + @Model.InvitationsCount </span>
-        }
-    </div>
-    <div>
+   <div>
         <p />@Html.ActionLink("Change password", "ChangePassword", "Profile", null, new { @class = "btn" })    
     </div>
 </div>

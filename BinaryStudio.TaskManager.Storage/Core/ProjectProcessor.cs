@@ -168,6 +168,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             return this.GetProjectById(projectId).Creator;
         }
 
+
         /// <summary>
         /// The create custom project with project name and description.
         /// </summary>
@@ -191,6 +192,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
                     Description = projectDescription
                 };
             this.projectRepository.Add(project);
+        }
+
+        public IEnumerable<Project> GetAllProjectsForTheirCreator(int userId)
+        {
+           return projectRepository.GetAllProjectsForTheirCreator(userId);
+        }
+
+        public IEnumerable<Project> GetAllProjectsForUser(int userId)
+        {
+            return projectRepository.GetAllProjectsForUser(userId);
         }
     }
 }

@@ -152,13 +152,14 @@
     <Compile Include="Models\CreateTaskViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
-    <Compile Include="Models\InvitationsViewModel.cs" />
+    <Compile Include="Models\InvintationsInEventsViewModel.cs" />
     <Compile Include="Models\LandingModels.cs" />
+    <Compile Include="Models\LandingUserModel.cs" />
     <Compile Include="Models\ListEventViewModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\ProjectCollaboratorsViewModel.cs" />
     <Compile Include="Models\ProjectDataForEventsViewModel.cs" />
-    <Compile Include="Models\ProjectView.cs" />
+    <Compile Include="Models\LandingProjectModel.cs" />
     <Compile Include="Models\RegisterLinkedInModel.cs" />
     <Compile Include="Models\SingleTaskViewModel.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />
@@ -166,7 +167,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\TaskView.cs" />
+    <Compile Include="Models\LandingTaskModel.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Models\TokenHelper.cs" />
     <Compile Include="Models\UserModels.cs" />
@@ -361,7 +362,6 @@
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
     <Content Include="Views\Profile\Profile.cshtml" />
-    <Content Include="Views\Project\Invitations.cshtml" />
     <Content Include="Views\HumanTasks\AllManagersWithTasks.cshtml" />
     <Content Include="Views\HumanTasks\ManagerTasksTablePartialView.cshtml" />
     <Content Include="Views\Project\Project.cshtml" />

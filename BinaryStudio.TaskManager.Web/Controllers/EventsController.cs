@@ -15,13 +15,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly IUserProcessor userProcessor;
         private readonly INewsRepository newsRepository;
         private readonly INotifier notifier;
-        private readonly IProjectRepository projectRepository;
-        public EventsController(IUserProcessor userProcessor, INewsRepository newsRepository, INotifier notifier, IProjectRepository projectRepository)
+        private readonly IProjectProcessor projectProcessor;
+        public EventsController(IUserProcessor userProcessor, INewsRepository newsRepository, INotifier notifier, IProjectProcessor projectProcessor)
         {
             this.userProcessor = userProcessor;
             this.newsRepository = newsRepository;
             this.notifier = notifier;
-            this.projectRepository = projectRepository;
+            this.projectProcessor = projectProcessor;
         }
 
         //
@@ -40,12 +40,22 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var listEvents = new ListEventViewModel();
             listEvents.Events = eventsViewModels;
             listEvents.Projects = new List<ProjectDataForEventsViewModel>();
-            listEvents.Projects.AddRange(userProcessor.GetUserByName(User.Identity.Name).UserProjects.Select(
+            listEvents.Projects.AddRange(projectProcessor.GetAllProjectsForUser(user).Select(
                 x => new ProjectDataForEventsViewModel{ProjectId = x.Id,ProjectName = x.Name}));
-            listEvents.Projects.AddRange(projectRepository.GetAllProjectsForTheirCreator(user).Select(
+            listEvents.Projects.AddRange(projectProcessor.GetAllProjectsForTheirCreator(user).Select(
                 x => new ProjectDataForEventsViewModel { ProjectId = x.Id, ProjectName = x.Name }));
             listEvents.CurrentUserId = user;
-
+            listEvents.Invitations = projectProcessor.GetAllInvitationsToUser(user).Select(x => 
+                new InvintationsInEventsViewModel
+                    {
+                        InvitationId = x.Id,
+                        ProjectId = x.ProjectId,
+                        ProjectName = x.Project.Name,
+                        SenderId = x.SenderId,
+                        SenderName = x.Sender.UserName
+                    }
+                ).ToList();
+            
             return View(listEvents);
         }
 
@@ -56,7 +66,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                        {
                            ProjectId = news.HumanTaskHistory.Task.ProjectId,
                            ProjectName = news.HumanTaskHistory.Task.Project.Name,
-                           TaskId = news.HumanTaskHistory.TaskId,
                            TaskName = news.HumanTaskHistory.NewName,
                            WhoChangeUserName = userProcessor.GetUser(news.HumanTaskHistory.UserId).UserName,
                            WhoChangeUserId = news.HumanTaskHistory.UserId,
@@ -75,6 +84,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                           TaskLinkDetails = "/Project/Details/"+ news.HumanTaskHistory.TaskId,
                            WhoAssigneLinkDetails = "/Project/UserDetails?userId=" + news.HumanTaskHistory.NewAssigneeId,
                            WhoChangeLinkDetails = "/Project/UserDetails?userId=" + news.HumanTaskHistory.UserId,
+                           ProjectLinkDetails = "/Project/Project/"+news.HumanTaskHistory.Task.ProjectId ,
                            IsMove = news.HumanTaskHistory.Action == ChangeHistoryTypes.Move ? true : false,
                            IsAssigne = news.HumanTaskHistory.NewAssigneeId.HasValue,
                            IsVisible = true,
@@ -114,12 +124,19 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.notifier.SetCountOfNews(news.User.UserName);
         }
 
+       
         [HttpPost]
-        public ActionResult GetNewsCount()
+        public ActionResult GetInvitationsAndNewsCount()
         {
-            int count = newsRepository.GetNewsCount(userProcessor.GetUserByName(User.Identity.Name).Id);
-            return Json(count);
+            int[] countArray = new int[2];
+            int userId = userProcessor.GetUserByName(User.Identity.Name).Id;
+            int newsCount = newsRepository.GetNewsCount(userId);
+            int invitesCount = projectProcessor.GetAllInvitationsToUser(userId).Count();
+            countArray[0] = newsCount;
+            countArray[1] = invitesCount;
+            return Json(countArray);
         }
+
 
         public void MarkAllUnreadNewsAsRead()
         {
@@ -149,8 +166,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                         event_.IsVisible = false;
                     }
                 }
-               
-            }
+             }
             if(type > 2)
             {
                 foreach (var event_ in eventsViewModels.Events)
@@ -162,8 +178,32 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 }
                 
             }
-            
             return Json(eventsViewModels);
            }
+
+        /// <summary>
+        /// The refuse from participate project.
+        /// </summary>
+        /// <param name="invitationId">
+        /// The invitation id.
+        /// </param>
+        [HttpPost]
+        public void RefuseFromParticipateProject(int invitationId)
+        {
+            this.projectProcessor.RefuseFromParticipateProject(invitationId);
+        }
+
+        /// <summary>
+        /// The submit invitation in project.
+        /// </summary>
+        /// <param name="invitationId">
+        /// The invitation id.
+        /// </param>
+        [HttpPost]
+        public void SubmitInvitationInProject(int invitationId)
+        {
+            this.projectProcessor.ConfirmInvitationInProject(invitationId);
+        }
+
     }
 }

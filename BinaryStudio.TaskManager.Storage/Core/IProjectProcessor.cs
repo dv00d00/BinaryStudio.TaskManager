@@ -103,5 +103,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
         IEnumerable<User> GetUsersAndCreatorInProject(int projectId);
 
         User GetCreator(int projectId);
+
+        IEnumerable<Project> GetAllProjectsForTheirCreator(int userId);
+
+        IEnumerable<Project> GetAllProjectsForUser(int userId);
     }
 }

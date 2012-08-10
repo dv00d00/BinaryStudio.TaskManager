@@ -1,5 +1,94 @@
 ﻿var modelData = new TaskModel();
+var toDashboard = function (element, where) {
+    var num = element.parent("div").attr("data-id");
+    if (where == "here"){
+        $("*").css("cursor", "progress");
+        location.href = "/Project/Project/" + num;
+    }
+    else
+        window.open("/Project/Project/" + num);
+};
 $(function () {
+    /*********** To dashboard clicks handling ************/
+    $(document).on("dblclick", ".project_list .project_name", function () {
+        toDashboard($(this), "here");
+    });
+    $(document).on("mousedown", ".project_list .project_name", function (e) {
+        if (e.which == 2) {
+            toDashboard($(this), "there");
+        }
+    });
+
+    /************** Assign menu **************/
+    var taskId = null;
+    $(document).on("click", ".img_holder", function (e) {
+        var top = e.pageY + 25;
+        var left = e.pageX - 225;
+        if ($("#content h2").attr("data-id") != -1)
+            $(".user_list_holder").css({
+                "display": "block",
+                "top": top,
+                "left": left
+            });
+        scrollPresence();
+        $(".user_list_input").focus();
+        taskId = $(this).parent("div").parent("div").attr("data-id");
+    });
+    $(document).keyup(function (e) {
+        var code = null;
+        code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 27) {
+            $(".user_list_holder").hide();
+            clearInput();
+        }
+        $("user_list_holder").off();
+    });
+    $(".user_list_close").click(function () {
+        $(".user_list_holder").hide();
+        clearInput();
+    });
+    $(document).on("click.user_list", ".user_list li", function () {
+        var userId = $(this).attr('data-id');
+        $.ajax({
+            'data': { 'taskId': taskId,
+                'senderId': -1,
+                'receiverId': userId,
+                'projectId': -1
+            },
+            'dataType': 'JSON',
+            'type': 'POST',
+            'url': '/Project/MoveTask',
+            success: function () {
+                location.reload(true);
+            }
+        });
+    });
+    $(document).on("click.user_list", ".user_list_clear", function () {
+        $.ajax({
+            'data': { 'taskId': taskId,
+                'senderId': -1,
+                'receiverId': -1,
+                'projectId': -1
+            },
+            'dataType': 'JSON',
+            'type': 'POST',
+            'url': '/Project/MoveTask',
+            success: function () {
+                location.reload(true);
+            }
+        });
+    });
+
+    $('.user_list_input').keyup(function () {
+        var search_val = $(this).val();
+        for (var i = 0; i < modelData.users().length; i++) {
+            modelData.users()[i]._destroy = false;
+        }
+        modelData.users.destroy(function (item) {
+            return item.Name.indexOf(search_val) == -1;
+        });
+        scrollPresence();
+    });
 
     /**** Tooltip  ******/
     $('.dashboard_btn').tooltip({
@@ -147,16 +236,36 @@ function getTaskList(proj) {
         },
         success: function (data) {
             var task = null;
-            modelData.project(data.Project.Name);
+            modelData.project(data.Name);
+            modelData.projectId(data.Id);
             $("#content").children(".proj_title").html("[project]");
             modelData.tasks.removeAll();
-            for (var i = 0; i < data.Project.Tasks.length; i++) {
-                task = data.Project.Tasks[i];
+            modelData.users.removeAll();
+            for (var i = 0; i < data.Tasks.length; i++) {
+                task = data.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));
-                var thisTask = new Task(task.Id, task.Name,
-                    task.Description, date, task.Creator, task.Priority,
-                    task.AssigneeId, task.Assignee, task.AssigneePhoto);
+                var thisTask = new Object({
+                    Id: task.Id,
+                    Name: task.Name,
+                    Description: task.Description,
+                    CreatedDate: date.toLocaleDateString(),
+                    CreatedTime: date.toLocaleTimeString(),
+                    Creator: task.Creator,
+                    Priority: task.Priority,
+                    AssigneeId: task.AssigneeId,
+                    Assignee: task.Assignee,
+                    AssigneePhoto: task.AssigneePhoto
+                });
                 modelData.tasks.push(thisTask);
+            }
+            for (var i = 0; i < data.Users.length; i++) {
+                var user = data.Users[i];
+                var thisUser = new Object({
+                    Id: user.Id,
+                    Name: user.Name,
+                    Photo : user.Photo==true? '/Project/GetImage?UserId='+user.Id : '/Content/images/photo.png'
+                });
+                modelData.users.push(thisUser);
             }
         }
     });
@@ -165,21 +274,32 @@ function getTaskList(proj) {
 function getTaskGroup(url, groupName) {
     $.ajax({
         data: { 'projectId'   : "-1",
-                'taskGroup'       : url},
+                'taskGroup'   : url},
         dataType: "JSON",
         type: "GET",
         url: "/Landing/GetTasks",
         success: function (data) {
             var task = null;
-            modelData.project(data.Project.Name);
+            modelData.project(data.Name);
+            modelData.projectId(data.Id);
             $("#content").children(".proj_title").html("[" + groupName + "]");
             modelData.tasks.removeAll();
-            for (var i = 0; i < data.Project.Tasks.length; i++) {
-                task = data.Project.Tasks[i];
+            modelData.users.removeAll();
+            for (var i = 0; i < data.Tasks.length; i++) {
+                task = data.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));
-                var thisTask = new Task(task.Id, task.Name,
-                    task.Description, date, task.Creator, task.Priority,
-                    task.AssigneeId, task.Assignee, task.AssigneePhoto);
+                var thisTask = new Object({
+                    Id: task.id,
+                    Name: task.name,
+                    Description: task.Description,
+                    CreatedDate: date.toLocaleDateString(),
+                    CreatedTime: date.toLocaleTimeString(),
+                    Creator: task.Creator,
+                    Priority: task.Priority,
+                    AssigneeId: task.AssigneeId,
+                    Assignee: task.Assignee,
+                    AssigneePhoto: task.AssigneePhoto
+                });
                 modelData.tasks.push(thisTask);
             }
         }
@@ -231,7 +351,7 @@ function listProjects(response) {
         $(".project_list").html("<span>There are no projects yet</span>");
     }
     $('.project_name').each(function () {
-        if ($(this).html() == $('#content h2').html()) {
+        if ($(this).parent("div").attr("data-id") == $('#content h2').attr("data-id")) {
             $(this).addClass('active_proj');
         }
     });
@@ -249,7 +369,6 @@ function projectsOutput(projects, li_class) {
         <div class='proj_row' data-id='" + projects[i].Id + "'>\
                          " + ownProjDelete + "\
                          <div  class='" + li_class + " project_name'>" + name + "</div>\
-                         <a href='/Project/Project/" + projects[i].Id + "'><div class='dashboard_btn' title='" + projects[i].Name + " dashboard'></div></a>\
                      </div>");
          if (projects[i].Name.length >= 20)
             $("li[data-id=" + projects[i].Id + "]").attr("title", projects[i].Name);
@@ -259,4 +378,22 @@ function projectsOutput(projects, li_class) {
         });
     }
     return i;
+}
+
+function scrollPresence()
+{
+    var user_list = $(".user_list");
+    if (user_list.height() < 250) {
+        user_list.css("overflow-y", "hidden");
+    }
+    else {
+        user_list.css("overflow-y", "scroll");
+    }
+}
+
+function clearInput() {
+    $(".user_list_input").val("");
+    for (var i = 0; i < modelData.users().length; i++) {
+        modelData.users()[i]._destroy = false;
+    }
 }

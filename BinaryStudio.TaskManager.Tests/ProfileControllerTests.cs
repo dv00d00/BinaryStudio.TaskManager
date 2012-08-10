@@ -46,7 +46,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.projectProcessorMock = new Mock<IProjectProcessor>();
 
             this.controller = new ProfileController(
-                this.userProcessorMock.Object, this.projectProcessorMock.Object, this.userRepositoryMock.Object);
+                this.userProcessorMock.Object, this.projectProcessorMock.Object);
         }
     }
 }

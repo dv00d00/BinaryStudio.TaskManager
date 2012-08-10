@@ -38,19 +38,6 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.mockReminderRepository.Setup(x => x.GetById(taskId)).Returns(reminder);
         }
         
-        //[Test]
-        //public void Should_ReturnIndexView_WhenDefaultIndexIsCalled()
-        //{
-        //    // arrange
-
-
-        //    // act
-        //    var result = reminderController.MyReminders();
-            
-        //    // assert
-        //    result.AssertViewRendered().ForView("");
-        //}
-
         [Test]
         public void Should_ReturnDetailsViewWithReminder_WhenDetailsViewIsCalled()
         {
@@ -62,45 +49,6 @@ namespace BinaryStudio.TaskManager.Web.Tests
             //assert
             result.AssertViewRendered().ForView("").WithViewData<Reminder>();
         }
-
-        //[Test]
-        //public void Should_ReturnCreateView_WhenCreateIsCalled()
-        //{
-        //    //arrange
-
-        //    //act
-        //    var result = reminderController.Create();
-
-        //    //assert
-        //    result.AssertViewRendered().ForView("");
-        //}
-
-     //[Test]
-     //public void Should_ReturnCreateViewWithReminderData_WhenCreateWithParameterIsCalled()
-     //{
-     //    //arrange
-     //    var reminderController = new ReminderController(mockReminderRepository.Object,
-     //        mockEmployeeRepository.Object, mockTaskProcessor.Object);
-     //    
-     //    //act
-     //    var result = reminderController.Create(reminderWithNoEmployee);
-     //
-     //    //assert
-     //    result.AssertViewRendered().ForView("").WithViewData<Reminder>();
-     //}
-
-        //[Test]
-        //public void Should_RedirectToIndex_WhenReminderBeingAddedIsCorrect()
-        //{
-        //    // arrange            
-            
-        //    //act
-        //    var result = reminderController.Create(reminder);
-
-        //    //assert
-        //    Assert.IsNotNull(result);
-        //    result.AssertActionRedirect().ToAction("Index");
-        //}
 
         [Test]
         public void Should_ReturnViewWithRemiderData_WhenEditWithIDIsCalled()
@@ -114,19 +62,6 @@ namespace BinaryStudio.TaskManager.Web.Tests
             Assert.IsNotNull(result);
             result.AssertViewRendered().ForView("").WithViewData<Reminder>();
         }
-
-        //[Test]
-        //public void Should_ReturnEditViewWithRemiderData_WhenEditWithReminderIsCalled()
-        //{
-        //    //arrange
-
-        //    //act
-        //    var result = reminderController.Edit(reminder);
-
-        //    //assert
-        //    Assert.IsNotNull(result);
-        //    result.AssertActionRedirect().ToAction("Index");
-        //}
 
         [Test]
         public void Should_ReturnDeleteViewWithRemiderData_WhenDeleteIsCalled()

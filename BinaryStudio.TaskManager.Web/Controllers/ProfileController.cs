@@ -51,11 +51,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="userRepository">
         /// The user repository.
         /// </param>
-        public ProfileController(IUserProcessor userProcessor, IProjectProcessor projectProcessor, IUserRepository userRepository)
+        public ProfileController(IUserProcessor userProcessor, IProjectProcessor projectProcessor)
         {
             this.userProcessor = userProcessor;
             this.projectProcessor = projectProcessor;
-            this.userRepository = userRepository;
         }
 
         /// <summary>
@@ -122,10 +121,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var userId = this.userProcessor.GetUserByName(User.Identity.Name).Id;
             var model = new ProfileModel
                 {
-                    InvitationsCount = this.projectProcessor.GetAllInvitationsToUser(userId).Count(),
-                    UserName = this.userProcessor.GetUserByName(User.Identity.Name).UserName,
-                    Email = this.userRepository.GetUserEmailById(userId),
-                    ImageData = this.userRepository.GetUserImageById(userId)
+                   UserName = this.userProcessor.GetUserByName(User.Identity.Name).UserName,
+                    Email = this.userProcessor.GetUser(userId).Email,
+                   ImageData = this.userProcessor.GetUser(userId).ImageData
                 };
             return this.View(model);
         }

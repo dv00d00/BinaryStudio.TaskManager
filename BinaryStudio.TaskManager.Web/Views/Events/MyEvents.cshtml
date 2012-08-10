@@ -13,24 +13,20 @@
     
 @ko.Html.Hidden()
 <div class="container-fluid" style="margin-top: 30px">
-    <h2>My news</h2>
-    
-    <div class="row-fluid">
+    <div class="row-fluid" style="margin-top: 30px">
         <div class="span2">
             <!--Sidebar content-->
             <div class="row-fluid">
-                <div class="span6">
-                    <ul class="nav nav-pills nav-stacked">
+                <h3>Filters</h3>
+                    <ul class="nav nav-pills nav-stacked" style="width: 150px;">
         
                         <li class="active">
-                           @* <a href="#" id="1" >All</a> *@
-                            @ko.Html.HyperlinkButton("All", "GetNews", "Events", new { type=1})
+                          @ko.Html.HyperlinkButton("All", "GetNews", "Events", new { type=1})
                         </li>
                         <li>
                             
                             @ko.Html.HyperlinkButton("Only my", "GetNews", "Events", new { type=2})
-                            @* <a href="#" id="2"  >Only my</a> *@
-                        </li>
+                           </li>
                         @foreach (var project in Model.Projects)
                         {
                             <li>
@@ -39,22 +35,42 @@
                         } 
                     </ul>
                 </div>
-            </div>
             <button class="btn btn-inverse all_read">Mark all news as read</button>
         </div>
         <div class="span8">
+            
             @{
-                
+                if(Model.Invitations.Count>0)
+                {
+                    <h2>Your Invitations</h2>
+                }
+                foreach (var invitation in Model.Invitations)
+                {
+                    <div  class="container invitationEvent">
+                        <strong>
+                            @Html.ActionLink(invitation.SenderName, "UserDetails", "Project", new { userId = invitation.SenderId })
+                            <span> invites you to project </span> 
+                            @Html.ActionLink(" " + invitation.ProjectName, "Project", "Project", new { id = invitation.ProjectId })
+                        </strong>
+                        <p style="margin: 0px;width: 300px;">
+                            <a class="InvitationButton submitInvitation" id="@invitation.InvitationId" href="#" style="float: left"><i class="icon-ok"></i> Accept </a> 
+                            <a class="InvitationButton refuseInvitation" id="@invitation.InvitationId" href="#" style="float: right"><i class="icon-remove"></i> No, thanks </a>
+                        </p>
+                    </div>
+                    <hr style="margin: 9px 0; margin-left: 20px"/>
+        
+                }
+                <h2>Your events</h2>
                 @*foreach (EventViewModel event_ in ko.Model) *@
                 using (var event_ = ko.Foreach(m => m.Events))
                 {
                     using (event_.If(x => x.IsVisible))
                     {
 
-                        <div @event_.Bind.Attr("class", e => e.ContainerClassName).Attr("id", e => e.NewsId)>
+                        <div @event_.Bind.Attr("class", e => e.ContainerClassName).Attr("id", e => e.NewsId) style="margin-left: 20px">
                             <strong>
                             
-                                <a @event_.Bind.Attr("id", e => e.ProjectId).Text(e => e.ProjectName)> </a>
+                                <a @event_.Bind.Attr("href", e => e.ProjectLinkDetails).Text(e => e.ProjectName)> </a>
                                 <br/>
                                 <a @event_.Bind.Attr("href", e => e.WhoChangeLinkDetails).Text(e => e.WhoChangeUserName)> </a>
                                 <span @event_.Bind.Text(e => e.Action)></span>
@@ -75,7 +91,7 @@
                             </strong>
                         </div>
 
-                        <hr style="margin: 9px 0"/>
+                        <hr style="margin: 9px 0; margin-left: 20px"/>
                     }
                 }
 
@@ -115,6 +131,41 @@
         clickedA.click(function () {
             clickedA.parent().removeClass('active')
             $(this).parent().addClass('active');
+        });
+        var onError = function () {
+            alert("Error while AJAX request");
+        };
+
+        $("a.InvitationButton.submitInvitation").click(function () {
+            var self = this;
+            var onSuccess = function () {
+                $(self).parents("div.container.invitationEvent").animate({ opacity: "hide" }, "slow");
+            };
+
+            var id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url: "/Events/SubmitInvitationInProject/",
+                data: { invitationId: id },
+                dataType: "json",
+                traditional: true
+            }).success(onSuccess).error(onError);
+        });
+
+        $("a.InvitationButton.refuseInvitation").click(function () {
+            var self = this;
+            var onSuccess = function () {
+                $(self).parents("div.container.invitationEvent").animate({ opacity: "hide" }, "slow");
+            };
+
+            var id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url: "/Events/RefuseFromParticipateProject/",
+                data: { invitationId: id },
+                dataType: "json",
+                traditional: true
+            }).success(onSuccess("You refuse")).error(onError);
         });
     });
 </script>
