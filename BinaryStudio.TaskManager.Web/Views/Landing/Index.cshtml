@@ -77,16 +77,19 @@
         <div class="task_list" data-bind="foreach: tasks">
             <div class="task_in_list" data-bind="attr: {'data-id':Id}">
                 <div data-bind="if: AssigneePhoto==true&&AssigneeId!=null" class="assignee_photo">
-                    <a href="#" rel="popover" class="assignee_popover img_holder" data-bind="{'attr': {'data-content':'<img class=large_photo src=/Project/GetImage?UserId='+AssigneeId+'> Assigned to '+Assignee}, 'css': { 'appointive':  $parent.isProject() }}">
+                    <a href="#"class="img_holder" data-bind="'css': { 'appointive':  $parent.isProject() }">
                         <img data-bind="attr: {'src': '/Project/GetImage?UserId='+AssigneeId}" />
                     </a>
                 </div>    
                 <div data-bind="if: AssigneePhoto==false&&AssigneeId!=null" class="assignee_photo">
-                    <a href="#" rel="popover" class="assignee_popover img_holder" data-bind="{'attr': {'data-content':'Assigned to '+Assignee}, 'css': { 'appointive':  $parent.isProject() }}"><img src="/Content/images/photo.png" /></a>
+                    <a href="#" class="img_holder" data-bind="'css': { 'appointive':  $parent.isProject() }">
+                        <img src="/Content/images/photo.png" />
+                    </a>
                 </div>   
                 <div data-bind="if: AssigneeId==null" class="assignee_photo">
-                    <a href="#" rel="popover" class="assignee_popover img_holder" data-bind="'css': { 'appointive':  $parent.isProject() }"></a>
+                    <a href="#" class="img_holder" data-bind="'css': { 'appointive':  $parent.isProject() }"></a>
                 </div>     
+                <span class="assignee_name" data-bind="{'if':'AssigneeId!=null','text':Assignee}"></span>
                 <div data-bind="attr: {'class': 'priority prior_'+Priority}"></div>
                 <a data-bind="text:Name, attr: { 'data-content': 'Created: '+CreatedDate+'<br>'+CreatedTime+'<br>By '+Creator,'data-original-title':Name, 'href':'/Project/Details/'+Id}" rel="popover" class="task_popover"></a>
                 <div data-bind="text: Description"></div>
