@@ -20,6 +20,12 @@ $(function () {
     });
 
     /************** Assign menu **************/
+    $(document).on("mouseover", ".appointive", function () {
+        $(this).parent("div").parent("div").children("span").css("left", "2px");
+    });
+    $(document).on("mouseout", ".appointive", function () {
+        $(this).parent("div").parent("div").children("span").css("left", "0px");
+    });
     var taskId = null;
     $(document).on("click", ".img_holder", function (e) {
         var top = e.pageY + 25;
@@ -49,36 +55,31 @@ $(function () {
     });
     $(document).on("click.user_list", ".user_list li", function () {
         var userId = $(this).attr('data-id');
+        moveTask(-1, userId, taskId);
+
+    });
+    $(document).on("click.user_list", ".user_list_clear", function () {
+        moveTask(-1, -1, taskId);
+    });
+    function moveTask(projectId, userId, taskId) {
         $.ajax({
             'data': { 'taskId': taskId,
                 'senderId': -1,
                 'receiverId': userId,
-                'projectId': -1
+                'projectId': projectId
             },
             'dataType': 'JSON',
             'type': 'POST',
             'url': '/Project/MoveTask',
-            success: function () {
-                location.reload(true);
-            }
-        });
-    });
-    $(document).on("click.user_list", ".user_list_clear", function () {
-        $.ajax({
-            'data': { 'taskId': taskId,
-                'senderId': -1,
-                'receiverId': -1,
-                'projectId': -1
+            beforeSend: function () {
+                $("body").css("cursor", "progress");
+                $(".user_list_holder").hide();
             },
-            'dataType': 'JSON',
-            'type': 'POST',
-            'url': '/Project/MoveTask',
             success: function () {
                 location.reload(true);
             }
         });
-    });
-
+    }
     $('.user_list_input').keyup(function () {
         var search_val = $(this).val();
         for (var i = 0; i < modelData.users().length; i++) {
@@ -180,7 +181,7 @@ $(function () {
     getTaskList(homeProj);
     ko.applyBindings(modelData);
     $('body').popover({
-        selector: '.assignee_popover,.task_popover',
+        selector: '.task_popover',
         delay: { show: 100 },
         placement: 'top'
     });
