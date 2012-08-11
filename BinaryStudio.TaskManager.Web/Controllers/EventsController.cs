@@ -136,13 +136,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             countArray[1] = invitesCount;
             return Json(countArray);
         }
-
-
-        public void MarkAllUnreadNewsAsRead()
+        
+        public ActionResult MarkAllUnreadNewsAsReaden(ListEventViewModel eventsViewModels)
         {
             var user = userProcessor.GetUserByName(User.Identity.Name);
             newsRepository.MarkAllUnreadNewsForUser(user.Id);
+            eventsViewModels.Events = eventsViewModels.Events.Select(x =>
+            {
+                x.ContainerClassName = "container evnt_read";
+                return x;
+            }).ToList();
             this.notifier.SetCountOfNews(user.UserName);
+            return Json(eventsViewModels);
         }
 
         // type == 1, all news about all tasks in my projects
