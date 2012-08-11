@@ -98,14 +98,21 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult Project(int id, bool isOpenedProjects = true)
+        public ActionResult Project(int id, int? userId, bool isOpenedProjects = true)
         {
+            string userName = "";
+            if (userId!=null)
+            {
+               userName = this.userProcessor.GetUser((int) userId).UserName;
+            }
             var model = new ProjectViewModel
             {
                 UsersTasks = new List<ManagerTasksViewModel>(),
                 UnAssignedTasks = this.taskProcessor.GetUnAssignedTasksForProject(id).ToList(),
                 QuickTask = new HumanTask(),
                 ProjectId = id,
+                ChosenUserId = userId,
+                ChosenUserName = userName,
                 NumberOfUsers = this.projectProcessor.GetAllUsersInProject(id).Count()
             };
             model.QuickTask.ProjectId = id;
@@ -352,10 +359,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public void RemoveUserFromProject(int userId, int projectId)
         {
             this.projectProcessor.RemoveUserFromProject(userId, projectId);
-        }
-
-       
-       
+        }  
 
         /// <summary>
         /// The get image.
@@ -532,6 +536,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             this.taskProcessor.DeleteTask(idTask);
             return this.RedirectToAction("Project", new { id = projectId });
+        }
+
+        public ActionResult UsersTasks(int userId, int projectId, ManagerTasksViewModel managerModel)
+        {
+            return this.RedirectToAction("Project", new { id = projectId, userId = userId });
         }
 
         /// <summary>

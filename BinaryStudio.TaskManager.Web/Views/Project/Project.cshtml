@@ -81,9 +81,18 @@
                 <td align="center" width="250">
                     Actions
                 </td>
-                <td align="center">
-                    <p>@Html.ActionLink("Create unassigned task", "CreateTask", new { userId = -1, projectId = Model.ProjectId }, new { @class = "btn" })</p>
-                </td>
+                @if (Model.ChosenUserId == null)
+                {
+                    <td align="center">
+                        Unassigned tasks
+                    </td>
+                }
+                else
+                {
+                    <td align="center">
+                        @Model.ChosenUserName's tasks
+                    </td>
+                }
                 @if (Model.NumberOfUsers < 5)
                 {
                     foreach (var user in Model.UsersTasks)

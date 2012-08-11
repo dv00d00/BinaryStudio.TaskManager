@@ -24,5 +24,9 @@ namespace BinaryStudio.TaskManager.Web.Models
         public int ProjectId { get; set; }
 
         public int NumberOfUsers { get; set; }
+
+        public int? ChosenUserId { get; set; }
+
+        public string ChosenUserName { get; set; }
     }
 }

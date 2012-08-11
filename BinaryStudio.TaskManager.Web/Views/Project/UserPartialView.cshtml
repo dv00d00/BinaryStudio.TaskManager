@@ -13,8 +13,12 @@
                 {
                     <img class="pull-left" align = "top" width="60" height="60" src="@Url.Action("GetImage", "Project", new { UserId = Model.User.Id })" />
                 }
-                @Html.ActionLink(Model.User.UserName, "UserDetails", new { userId = Model.User.Id }, new { @class = "btn btn-info" })
+                @*@Html.ActionLink(Model.User.UserName, "UserDetails", new { userId = Model.User.Id }, new { @class = "btn btn-info" })*@
+                @Html.ActionLink(Model.User.UserName, "UsersTasks",  new { userId = Model.User.Id, projectId = Model.ProjectId, Model }, new { @class = "btn btn-info" })
             </p>
+            <a href="/Project/Details/@Model.ProjectId" style="position: absolute; bottom:0px; left: 15px; font-size: 9pt;" >
+                <img height="25" width="25" style="padding-bottom: 4px;" src=@Url.Content("~/Content/images/details.png")/>
+                details </a>
             <p>
                 @Html.ActionLink("Create task", "CreateTask", "Project", new { userId = Model.User.Id, projectId = Model.ProjectId }, new { @class = "btn openDialog", data_dialog_id = "aboutDialog", data_dialog_title = "Create new task" })
             </p>
