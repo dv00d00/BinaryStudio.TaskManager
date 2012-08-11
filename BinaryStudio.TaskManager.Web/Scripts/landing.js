@@ -108,8 +108,7 @@ $(function () {
         if ($(this).val() == "Filter tasks")
             $(this).val("");
     });
-
-
+        
     /******** Project name length *******/
 
     $(".project_name").each(function () {
@@ -204,27 +203,6 @@ $(function () {
         var proj = $(this).parent(".proj_row").attr("data-id");
         getTaskList(proj);
     });
-
-    $('#ProjectHumanTask').change(function () {
-        for (var i = 0; i < modelData.tasks().length; i++) {
-            modelData.tasks()[i]._destroy = false;
-        }
-        modelData.tasks.destroy(function (item) {
-            return item.Name.indexOf($("#ProjectHumanTask").val()) == -1;
-        });
-        var undestroyedExists = false;
-        for (var i = 0; i < modelData.tasks().length; i++) {
-            if (modelData.tasks()[i]._destroy == false) {
-                undestroyedExists = true;
-                break;
-            }
-        }
-        if (undestroyedExists == false) {
-            for (var i = 0; i < modelData.tasks().length; i++) {
-                modelData.tasks()[i]._destroy = false;
-            }
-        }
-    });
 });
 function getTaskList(proj) {
     $.ajax({
@@ -239,7 +217,6 @@ function getTaskList(proj) {
             var task = null;
             modelData.project(data.Name);
             modelData.projectId(data.Id);
-            $("#content").children(".proj_title").html("[project]");
             modelData.tasks.removeAll();
             modelData.users.removeAll();
             for (var i = 0; i < data.Tasks.length; i++) {
@@ -259,6 +236,7 @@ function getTaskList(proj) {
                 });
                 modelData.tasks.push(thisTask);
             }
+            modelData.allTasks();
             for (var i = 0; i < data.Users.length; i++) {
                 var user = data.Users[i];
                 var thisUser = new Object({
@@ -283,15 +261,14 @@ function getTaskGroup(url, groupName) {
             var task = null;
             modelData.project(data.Name);
             modelData.projectId(data.Id);
-            $("#content").children(".proj_title").html("[" + groupName + "]");
             modelData.tasks.removeAll();
             modelData.users.removeAll();
             for (var i = 0; i < data.Tasks.length; i++) {
                 task = data.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));
                 var thisTask = new Object({
-                    Id: task.id,
-                    Name: task.name,
+                    Id: task.Id,
+                    Name: task.Name,
                     Description: task.Description,
                     CreatedDate: date.toLocaleDateString(),
                     CreatedTime: date.toLocaleTimeString(),
@@ -303,6 +280,7 @@ function getTaskGroup(url, groupName) {
                 });
                 modelData.tasks.push(thisTask);
             }
+            modelData.allTasks();
         }
     });
 }
