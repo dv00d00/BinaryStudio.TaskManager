@@ -129,14 +129,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
             if (userId != null)
             {
-                //var chosenUserModel = new ManagerTasksViewModel
-                //{
-                    model.ChosenUserTasks.User = this.userProcessor.GetUser((int)userId);
-                    model.ChosenUserTasks.ProjectId = id;
-                    model.ChosenUserTasks.Tasks = isOpenedProjects
-                            ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, (int)userId).ToList()
-                            : this.taskProcessor.GetAllClosedTasksForUserInProject(id, (int)userId).ToList();
-                //};
+                model.ChosenUserTasks.User = this.userProcessor.GetUser((int)userId);
+                model.ChosenUserTasks.ProjectId = id;
+                model.ChosenUserTasks.Tasks = isOpenedProjects
+                         ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, (int)userId).ToList()
+                         : this.taskProcessor.GetAllClosedTasksForUserInProject(id, (int)userId).ToList();                
             }
                        
             return this.View(model);
@@ -223,7 +220,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 this.notifier.CreateTask(task.Id);
                 this.newsProcessor.CreateNewsForUsersInProject(taskHistory, task.ProjectId);
 
-                return this.RedirectToAction("Project", new { id = createModel.ProjectId });
+                return this.RedirectToAction("Project", new { id = createModel.ProjectId, userId = createModel.AssigneeId });
             }
 
             createModel.Priorities = taskProcessor.GetPrioritiesList();
@@ -489,7 +486,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 this.taskProcessor.AddHistory(taskHistory);
                 this.newsProcessor.CreateNewsForUsersInProject(taskHistory,humanTask.ProjectId);
 
-                return this.RedirectToAction("Project", new { id = createModel.ProjectId });
+                return this.RedirectToAction("Project", new { id = createModel.ProjectId, userId = createModel.AssigneeId });
             }
 
             return this.View(createModel);
@@ -543,11 +540,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             this.taskProcessor.DeleteTask(idTask);
             return this.RedirectToAction("Project", new { id = projectId });
-        }
-
-        public ActionResult UsersTasks(int userId, int projectId, ManagerTasksViewModel managerModel)
-        {
-            return this.RedirectToAction("Project", new { id = projectId, userId = userId });
         }
 
         /// <summary>
