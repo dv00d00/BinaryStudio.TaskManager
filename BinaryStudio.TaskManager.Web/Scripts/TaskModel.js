@@ -4,6 +4,8 @@
     self.projectId = ko.observable();
     self.tasks = ko.observableArray([]);
     self.users = ko.observableArray([]);
+    self.filter = ko.observable("all");
+    self.userId = ko.observable();
     self.isProject = function () {
         return self.projectId() != -1;
     };
@@ -22,4 +24,23 @@
             return left.AssigneeId == right.AssigneeId ? 0 : (left.AssigneeId < right.AssigneeId ? -1 : 1);
         });
     };
+    self.filterByAssignee = function (task) {
+        $(".all_tasks").show();
+        self.filter("user");
+        self.userId(task.AssigneeId);
+    };
+    self.allTasks = function () {
+        $(".all_tasks").hide();
+        self.filter("all");
+    };
+    self.tasksToShow = ko.computed(function () {
+        if (self.filter() == 'all')
+            return self.tasks();
+        else if (self.filter() == 'user') {
+            return ko.utils.arrayFilter(this.tasks(), function(task) {
+                return task.AssigneeId == self.userId();
+            });
+        }
+
+    }, this);
 };

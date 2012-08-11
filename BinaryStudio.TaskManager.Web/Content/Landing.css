@@ -138,11 +138,13 @@
 }
 
 /************ Central part  *************/
-.proj_title {
-    color: green;
+.all_tasks {
+    display: block;
     float: right;
-    margin-right: 50px;
+    margin-right: 10px;
+    display: none; 
 }
+
 #content h2 {
     display: inline-block;
 }
