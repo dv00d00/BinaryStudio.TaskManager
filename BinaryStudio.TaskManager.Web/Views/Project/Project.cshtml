@@ -90,7 +90,7 @@
                 else
                 {
                     <td align="center">
-                        @Model.ChosenUserName's tasks
+                        @Model.ChosenUserTasks.User.UserName's tasks
                     </td>
                 }
                 @if (Model.NumberOfUsers < 5)
@@ -135,18 +135,34 @@
                     </div>
                 </td>
                 <td valign="top" class="well">
-                    <div class="column" align="center" width="250" id="-1">
-                        @foreach (var unAssignedTask in Model.UnAssignedTasks)
-                        {
-                            <div class="task-holder" data-taskid= @unAssignedTask.Id.ToString() id = @unAssignedTask.Id.ToString()>
-                                @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
+                    @if (Model.ChosenUserId == null)
+                    {
+                        <div class="column" align="center" width="250" id="-1">
+                            @foreach (var unAssignedTask in Model.UnAssignedTasks)
+                            {
+                                <div class="task-holder" data-taskid= @unAssignedTask.Id.ToString() id = @unAssignedTask.Id.ToString()>
+                                    @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
+                                </div>
+                            }
+                            <div data-managerid="0" style="display: none">
+                                olo</div>
+                            <div class="task" style="display: none">
+                                olo</div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="column" id=@Model.ChosenUserTasks.User.Id.ToString() align = "center" valign="top" width="250">
+                            @foreach (var task in Model.ChosenUserTasks.Tasks.OrderByDescending(x => x.Priority))
+                            {
+                                <div class="task-holder" data-taskid= @task.Id.ToString() id=@task.Id.ToString()>
+                                    @Html.Partial("ManagerTasksTablePartialView", task)
+                                </div>
+                            }
+                            <div data-managerid = @Model.ChosenUserTasks.User.Id.ToString()>
                             </div>
-                        }
-                        <div data-managerid="0" style="display: none">
-                            olo</div>
-                        <div class="task" style="display: none">
-                            olo</div>
-                    </div>
+                        </div>
+                    }
                 </td>
                 @if (Model.NumberOfUsers < 5)
                 {

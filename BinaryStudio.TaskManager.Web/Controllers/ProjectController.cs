@@ -100,11 +100,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>
         public ActionResult Project(int id, int? userId, bool isOpenedProjects = true)
         {
-            string userName = "";
-            if (userId!=null)
-            {
-               userName = this.userProcessor.GetUser((int) userId).UserName;
-            }
             var model = new ProjectViewModel
             {
                 UsersTasks = new List<ManagerTasksViewModel>(),
@@ -112,7 +107,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 QuickTask = new HumanTask(),
                 ProjectId = id,
                 ChosenUserId = userId,
-                ChosenUserName = userName,
+                ChosenUserTasks = new ManagerTasksViewModel(),
                 NumberOfUsers = this.projectProcessor.GetAllUsersInProject(id).Count()
             };
             model.QuickTask.ProjectId = id;
@@ -132,6 +127,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 model.UsersTasks.Add(managerModel);
             }
 
+            if (userId != null)
+            {
+                //var chosenUserModel = new ManagerTasksViewModel
+                //{
+                    model.ChosenUserTasks.User = this.userProcessor.GetUser((int)userId);
+                    model.ChosenUserTasks.ProjectId = id;
+                    model.ChosenUserTasks.Tasks = isOpenedProjects
+                            ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, (int)userId).ToList()
+                            : this.taskProcessor.GetAllClosedTasksForUserInProject(id, (int)userId).ToList();
+                //};
+            }
+                       
             return this.View(model);
         }
 

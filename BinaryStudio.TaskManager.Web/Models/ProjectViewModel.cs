@@ -25,8 +25,10 @@ namespace BinaryStudio.TaskManager.Web.Models
 
         public int NumberOfUsers { get; set; }
 
+        public ManagerTasksViewModel ChosenUserTasks { get; set; }
+
         public int? ChosenUserId { get; set; }
 
-        public string ChosenUserName { get; set; }
+        //public string ChosenUserName { get; set; }
     }
 }
