@@ -1,16 +1,9 @@
 ﻿@model BinaryStudio.TaskManager.Logic.Domain.HumanTask
 
-<div id="editor-field">
-
-    @Html.TextAreaFor(model => model.Description, new { @class = "quicktaskarea", @style = "resize: none;" })
-
-</div>
-
-<div class="button">
-    <button title="Quick task creation" class="create btn">
+@*<button title="Quick task creation" class="create btn">
         Create
-    </button>
-</div>
+    </button>*@
+    @Html.TextAreaFor(model => model.Description, new { @class = "quicktaskarea", @style = "resize: none;" })
 
 <script type="text/javascript">
     $(document).ready(function() {

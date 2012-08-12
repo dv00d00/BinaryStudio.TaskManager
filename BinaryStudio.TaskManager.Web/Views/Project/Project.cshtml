@@ -66,7 +66,14 @@
 </script>
 <!-- Caption of the table "Managers-Tasks"-->
 <fieldset>
-    <legend class="well-large">Users with their tasks in current project</legend>
+<br/>
+<br/>
+    <div id="mydiv" align="right">
+        @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new { projectId = Model.ProjectId }, new { @class = "btn" })
+       @* @Html.ActionLink("Show closed tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = false }, new { @class = "btn" })
+        @Html.ActionLink("Show opened tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = true }, new { @class = "btn" })*@
+        @Html.Partial("QuickTaskCreation", Model.QuickTask)
+    </div>
     <table align="center" class="container-fluid" valign="top">
         @if (Model.UsersTasks.Count == 0)
         {
@@ -78,9 +85,6 @@
         {
             <!-- Header of the table (Managers names)-->
             <tr>
-                <td align="center" width="250">
-                    Actions
-                </td>
                 @if (Model.ChosenUserId == null)
                 {
                     <td align="center">
@@ -124,16 +128,6 @@
             </tr>
             
             <tr>
-                <td align="center" width="250" valign="top">
-                    <div class="editor-field">
-                        <p />@Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new { projectId = Model.ProjectId }, new { @class = "btn" })
-                        <br />
-                        <p />@Html.ActionLink("Show closed tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = false }, new { @class = "btn" })
-                        <br />
-                        <p />@Html.ActionLink("Show opened tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = true }, new { @class = "btn" })
-                        <div id="mydiv">@Html.Partial("QuickTaskCreation", Model.QuickTask)</div>
-                    </div>
-                </td>
                 <td valign="top" class="well">
                     @if (Model.ChosenUserId == null)
                     {
