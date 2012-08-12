@@ -138,11 +138,13 @@
 }
 
 /************ Central part  *************/
-.proj_title {
-    color: green;
+.all_tasks {
+    display: block;
     float: right;
-    margin-right: 50px;
+    margin-right: 10px;
+    display: none; 
 }
+
 #content h2 {
     display: inline-block;
 }
@@ -178,7 +180,17 @@
 .prior_3 {
     background: #B94A48;
 }
-
+.assignee_name {
+    float: right;
+    margin-right: 10px;
+    position: relative;
+    top: 7px;
+    color: gray;
+}
+.assignee_name:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
 .assignee_photo {
     display: inline-block;
     float: right;

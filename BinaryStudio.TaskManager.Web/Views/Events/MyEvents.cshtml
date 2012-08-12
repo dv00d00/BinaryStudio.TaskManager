@@ -35,7 +35,8 @@
                         } 
                     </ul>
                 </div>
-            <button class="btn btn-inverse all_read">Mark all news as read</button>
+            @*<button class="btn btn-inverse all_read">Mark all news as read</button>*@
+             @ko.Html.HyperlinkButton("Mark all news as read", "MarkAllUnreadNewsAsReaden", "Events", null, new { @class = "btn btn-inverse all_read" })
         </div>
         <div class="span8">
             
@@ -116,15 +117,6 @@
                 data: { newsId: nId },
                 dataType: "json",
                 traditional: true
-            });
-        });
-        $('.all_read').click(function () {
-            var unread_evnts = $('.evnt_unread');
-            unread_evnts.addClass('evnt_read');
-            unread_evnts.removeClass('evnt_unread');
-            $.ajax({
-                type: "POST",
-                url: "/Events/MarkAllUnreadNewsAsRead"
             });
         });
         var clickedA = $("ul.nav.nav-pills.nav-stacked li a");
