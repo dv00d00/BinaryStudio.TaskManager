@@ -239,32 +239,11 @@ $(function () {
         $(".prior_name").html($(this).attr("data-prior"));
     });
     $(".add_task_btn").click(function () {
-        var task_name = $("#add_task_box input").val();
-        var priority = $(".priority_buttons .btn.active").val();
-        if (task_name != "") {
-            var thisTask = new Object({
-                Name: task_name,
-                Priority: priority,
-                AssigneeId: $(".add_task_assignee").attr("data-id"),
-                ProjectId: $("#content h2").attr("data-id")
-            });
-            $.ajax({
-                'data': {
-                    'AssigneeId': thisTask.AssigneeId,
-                    'Name': thisTask.Name,
-                    'Priority': thisTask.Priority,
-                    'ProjectId': thisTask.ProjectId
-                },
-                'dataType': 'JSON',
-                'type': 'POST',
-                'url': '/Landing/CreateTask',
-                beforeSend: function () {
-                    $('body').css('cursor', 'progress');
-                },
-                success: function () {
-                    location.reload(true);
-                }
-            });
+        addTask();
+    });
+    $(".new_task_name").keyup(function (e) {
+        if (e.which == 13) {
+            addTask();
         }
     });
     $(document).on("keyup", function (e) {
@@ -484,4 +463,37 @@ function moveTask(projectId, userId, taskId) {
             location.reload(true);
         }
     });
+}
+
+function addTask() {
+    var task_name = $("#add_task_box input").val();
+    var priority = $(".priority_buttons .btn.active").val();
+    if (task_name != "") {
+        var thisTask = new Object({
+            Name: task_name,
+            Priority: priority,
+            AssigneeId: $(".add_task_assignee").attr("data-id"),
+            ProjectId: $("#content h2").attr("data-id")
+        });
+        $.ajax({
+            'data': {
+                'AssigneeId': thisTask.AssigneeId,
+                'Name': thisTask.Name,
+                'Priority': thisTask.Priority,
+                'ProjectId': thisTask.ProjectId
+            },
+            'dataType': 'JSON',
+            'type': 'POST',
+            'url': '/Landing/CreateTask',
+            beforeSend: function () {
+                $('body').css('cursor', 'progress');
+            },
+            success: function () {
+                location.reload(true);
+            }
+        });
+    }
+    else {
+        $(".new_task_name").focus();
+    }
 }

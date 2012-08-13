@@ -108,11 +108,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 ProjectId = id,
                 ChosenUserId = userId,
                 ChosenUserTasks = new ManagerTasksViewModel(),
-                NumberOfUsers = this.projectProcessor.GetAllUsersInProject(id).Count()
+                NumberOfUsers = this.projectProcessor.GetUsersAndCreatorInProject(id).Count()
             };
             model.QuickTask.ProjectId = id;
             var users = new List<User>();
-            users = this.projectProcessor.GetAllUsersInProject(id).Reverse().ToList();
+            users = this.projectProcessor.GetUsersAndCreatorInProject(id).Reverse().ToList();
             users.Add(this.projectProcessor.GetProjectById(id).Creator);
             foreach (var user in users)
             {

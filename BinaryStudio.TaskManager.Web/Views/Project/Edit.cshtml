@@ -2,6 +2,10 @@
 @model BinaryStudio.TaskManager.Web.Models.CreateTaskViewModel
 @{
     ViewBag.Title = "Edit task";
+    if (Request.IsAjaxRequest())
+    {
+        Layout = null;
+    }
 }
 <h2 class="well-large">
     Create new task
