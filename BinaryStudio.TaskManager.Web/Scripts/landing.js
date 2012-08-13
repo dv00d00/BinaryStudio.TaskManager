@@ -27,11 +27,24 @@ $(function () {
         $(this).parent("div").parent("div").children("span").css("left", "0px");
     });
     var taskId = null;
-    $(document).on("click", ".img_holder", function (e) {
-        var top = e.pageY + 25;
-        var left = e.pageX - 225;
+    $(document).on("click", ".img_holder,.add_task_assignee_photo", function (e) {
+        var top;
+        var left;
+        var user_list_holder = $('.user_list_holder');
+        if ($(window).height() > (e.pageY + 200)) {//> (e.pageY + $('.user_list_holder').height())) {
+            top = e.pageY + 25;
+        }
+        else {
+            top = e.pageY - user_list_holder.height() - 25;
+        }
+        if ($(window).width() > (e.pageX + user_list_holder.width())) {
+            left = e.pageX - 30;
+        }
+        else {
+            left = e.pageX - 225;
+        }
         if ($("#content h2").attr("data-id") != -1)
-            $(".user_list_holder").css({
+            user_list_holder.css({
                 "display": "block",
                 "top": top,
                 "left": left
@@ -39,6 +52,14 @@ $(function () {
         scrollPresence();
         $(".user_list_input").focus();
         taskId = $(this).parent("div").parent("div").attr("data-id");
+        user_list_holder.removeClass("instant_task_move");
+        user_list_holder.removeClass("assignee_to_choose");
+        if ($(this).hasClass("img_holder")) {
+            user_list_holder.addClass("instant_task_move");
+        }
+        else {
+            user_list_holder.addClass("assignee_to_choose");
+        }
     });
     $(document).keyup(function (e) {
         var code = null;
@@ -53,33 +74,26 @@ $(function () {
         $(".user_list_holder").hide();
         clearInput();
     });
-    $(document).on("click.user_list", ".user_list li", function () {
+
+    $(document).on("click.user_list", ".assignee_to_choose li", function () {
+        var self = $(this);
+        var userId = self.attr('data-id');
+        $(".user_list_holder").hide();
+        $(".add_task_assignee_photo").html("");
+        self.children("img").clone().appendTo($(".add_task_assignee_photo"));
+        $(".add_task_assignee").attr("data-id",userId);
+        $(".add_task_assignee span").html(self.children("span").text());
+    });
+
+    $(document).on("click.user_list", ".instant_task_move li", function () {
         var userId = $(this).attr('data-id');
         moveTask(-1, userId, taskId);
 
     });
-    $(document).on("click.user_list", ".user_list_clear", function () {
+    $(document).on("click.user_list", ".instant_task_move .user_list_clear", function () {
         moveTask(-1, -1, taskId);
     });
-    function moveTask(projectId, userId, taskId) {
-        $.ajax({
-            'data': { 'taskId': taskId,
-                'senderId': -1,
-                'receiverId': userId,
-                'projectId': projectId
-            },
-            'dataType': 'JSON',
-            'type': 'POST',
-            'url': '/Project/MoveTask',
-            beforeSend: function () {
-                $("body").css("cursor", "progress");
-                $(".user_list_holder").hide();
-            },
-            success: function () {
-                location.reload(true);
-            }
-        });
-    }
+
     $('.user_list_input').keyup(function () {
         var search_val = $(this).val();
         for (var i = 0; i < modelData.users().length; i++) {
@@ -108,7 +122,7 @@ $(function () {
         if ($(this).val() == "Filter tasks")
             $(this).val("");
     });
-        
+
     /******** Project name length *******/
 
     $(".project_name").each(function () {
@@ -171,8 +185,16 @@ $(function () {
                 sendNewProject();
             }
         });
-    })
-        ;
+        $(".add_proj_btn").prop("disabled", "true");
+        $("#add_proj_box input").keyup(function () {
+            if ($(this).val() != "") {
+                $(".add_proj_btn").removeAttr("disabled");
+            }
+            else {
+                $(".add_proj_btn").prop("disabled", "true");
+            }
+        });
+    });
 
     /********* Project Tasks View  *******/
     var homeProj = $("#projects .proj_row:first-child").attr("data-id");
@@ -186,6 +208,7 @@ $(function () {
     });
 
     $(document).on("click", ".task_group_list .project_name", function () {
+        $(".new_task_btn").hide();
         $(".project_name").removeClass("active_proj");
         $(this).addClass("active_proj");
         var url = null;
@@ -198,12 +221,60 @@ $(function () {
         getTaskGroup(url, groupName);
     });
     $(document).on("click", ".user_projs,.created_projs", function () {
+        $(".new_task_btn").show();
         $(".project_name").removeClass("active_proj");
         $(this).addClass("active_proj");
         var proj = $(this).parent(".proj_row").attr("data-id");
         getTaskList(proj);
     });
+
+    /*********** Add Task ****************/
+    $(".new_task_btn").click(function () {
+        newTaskInputEnter();
+    });
+    $(".add_task_cancel").click(function () {
+        newTaskInputEscape();
+    });
+    $(".add_task_btn").click(function () {
+        var task_name = $("#add_task_box input").val();
+        if (task_name != "") {
+            var thisTask = new Object({
+                Name: task_name,
+                Priority: '1',
+                AssigneeId: $(".add_task_assignee").attr("data-id"),
+                ProjectId: $("#content h2").attr("data-id")
+            });
+            $.ajax({
+                'data': {
+                    'AssigneeId': thisTask.AssigneeId,
+                    'Name' : thisTask.Name,
+                    'Priority': thisTask.Priority,
+                    'ProjectId': thisTask.ProjectId
+                },
+                'dataType': 'JSON',
+                'type': 'POST',
+                'url': '/Landing/CreateTask',
+                beforeSend: function () {
+                    $('body').css('cursor', 'progress');  
+                },
+                success: function () {
+                    location.reload(true);
+                }
+            });
+        }
+    });
+    $(document).on("keyup", function (e) {
+        if (e.which == 13) {
+            newTaskInputEnter();
+        }
+    });
+    $(".new_task_name").keyup(function (e) {
+        if (e.which == 27)
+            newTaskInputEscape();
+    });
 });
+
+/******************** Functions ************************/
 function getTaskList(proj) {
     $.ajax({
         data: { projectId: proj },
@@ -375,4 +446,38 @@ function clearInput() {
     for (var i = 0; i < modelData.users().length; i++) {
         modelData.users()[i]._destroy = false;
     }
+}
+
+function newTaskInputEnter() {
+    $(".new_task_btn").hide();
+    $("#add_task_box").show();
+    $(".new_task_name").focus();
+}
+
+function newTaskInputEscape() {
+    $("#add_task_box").hide();
+    $(".new_task_btn").show();
+    $(".new_task_name").val("");
+    $(".add_task_assignee_photo").html("");
+    $(".add_task_assignee span").html("");
+} 
+
+function moveTask(projectId, userId, taskId) {
+    $.ajax({
+        'data': { 'taskId': taskId,
+            'senderId': -1,
+            'receiverId': userId,
+            'projectId': projectId
+        },
+        'dataType': 'JSON',
+        'type': 'POST',
+        'url': '/Project/MoveTask',
+        beforeSend: function () {
+            $("body").css("cursor", "progress");
+            $(".user_list_holder").hide();
+        },
+        success: function () {
+            location.reload(true);
+        }
+    });
 }

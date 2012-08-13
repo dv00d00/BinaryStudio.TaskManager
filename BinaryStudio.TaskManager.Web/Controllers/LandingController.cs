@@ -147,5 +147,23 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 };
             return Json(model, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public void CreateTask(LandingCreateTaskModel model)
+        {
+            var creatorId = this.userRepository.GetByName(User.Identity.Name).Id;
+
+            var task = new HumanTask
+            {
+                Created = DateTime.Now,
+                CreatorId = creatorId,
+                Description = "",
+                Name = model.Name,
+                Priority = model.Priority,
+                ProjectId = model.ProjectId,
+                AssigneeId = model.AssigneeId
+            };
+            this.taskProcessor.CreateTask(task);
+        }
     }
 }

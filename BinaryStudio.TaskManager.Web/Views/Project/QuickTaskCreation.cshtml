@@ -14,11 +14,16 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $(".create").prop("disabled","true");
         $(".create").click(function (){createTask()});
-        $(".quicktaskarea").keydown(function(e) {
+        $(".quicktaskarea").keyup(function(e) {
             if (e.ctrlKey && e.keyCode == 13) {
                 createTask();
             }
+            if ($(this).val()!="")
+                $(".create").removeAttr("disabled");
+            else
+                $(".create").prop("disabled","true");
         });
     });
 

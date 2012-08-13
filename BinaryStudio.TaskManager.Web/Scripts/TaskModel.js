@@ -58,7 +58,7 @@
         self.data.name("");
         self.filter("all");
         if (self.tasks().length == 0) {
-            filterByName.prop("disabled","true");
+            filterByName.prop("disabled", "true");
         }
         else {
             filterByName.removeAttr("disabled");
@@ -84,4 +84,7 @@
             }
         }
     }, this);
+    /*self.addTask = function() {
+        
+    };*/
 };

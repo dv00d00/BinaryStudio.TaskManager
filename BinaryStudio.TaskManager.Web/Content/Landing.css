@@ -89,19 +89,26 @@
     opacity: 1;
 }
 
-.new_project_btn {
+.new_project_btn, .new_task_btn {
+    padding-right: 20px !important;   
     height: 16px;
-    position: absolute;
-    right: 0px;
-    padding: 2px;
-    padding-right: 20px;
     background: url("images/plus_icon.gif") no-repeat;
     background-position: right;
     margin-top: 5px;
     cursor: pointer;
 }
-
-.new_project_btn:hover 
+.new_project_btn {
+    position: absolute;
+    right: 0px;
+    padding: 2px; 
+}
+.new_task_btn {
+    display: inline-block;
+    clear: both;
+    float: right;
+}
+.new_project_btn:hover,
+ .new_task_btn:hover 
 {
     border-bottom: #249400 1px dashed; 
 }
@@ -120,7 +127,8 @@
     margin-left: 20px;
 }
 
-.add_cancel:hover{
+.add_cancel:hover,
+.add_task_cancel:hover{
     text-decoration: underline;
     cursor: pointer;
 }
@@ -137,125 +145,6 @@
     top: 0;
 }
 
-/************ Central part  *************/
-.all_tasks {
-    display: block;
-    float: right;
-    margin-right: 10px;
-    display: none; 
-}
-
-#content h2 {
-    display: inline-block;
-}
-.task_in_list {
-    border-bottom: 1px solid #EEE;
-    margin-top: 10px;
-    height: 35px;
-}
-.task_in_list:first-child{
-    border-top: 2px solid #EEE;
-    padding-top: 10px;
-}
-
-.priority {
-    width: 5px;
-    height: 30px;
-    border-radius: 1px;
-    float: left;
-    margin-right: 10px;
-}
-.prior_1 {
-    background: #3A87AD;
-}
-
-.prior_2 {
-    background: #F89406;
-}
-
-.prior_0 {
-    background: #468847;
-}
-
-.prior_3 {
-    background: #B94A48;
-}
-.assignee_name {
-    float: right;
-    margin-right: 10px;
-    position: relative;
-    top: 7px;
-    color: gray;
-}
-.assignee_name:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-.assignee_photo {
-    display: inline-block;
-    float: right;
-}
-.assignee_photo img{
-    width: 30px;
-    height: 30px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-}
-img {
-    border: 0px;
-}
-.large_photo {
-    width: 70px;
-    height: 70px;
-    display: inline-block;
-}
-
-.no_filtered {
-    display: none;
-}
-
-.sort_btn.btn-group {
-    float: right;
-    display: block;
-}
-
-.img_holder{
-    position: relative;
-    width: 45px;
-    height: 30px;
-    bottom: 9px;
-    padding: 0;
-    padding-left: -10px;
-    line-height: 28px;
-    display: inline-block;
-    margin-top: 7px;
-}
-.appointive:hover {
-    background: #F8F8F8;
-    border: 1px solid #D4D4D4; 
-    border-bottom-color: #BCBCBC;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-}
-
-.appointive:hover img {
-    position: relative;
-    left: 1px;
-    bottom : 1px;
-}
-.appointive:hover::after {
-    content: "";
-    display: block;
-    position: absolute;
-    border: 4px solid black;
-    border-color: black transparent transparent;
-    top: 22px;
-    right: 3px;
-    width: 0px;
-    height: 0px;
-}
 
 .user_list_holder {
     width: 250px;
@@ -327,4 +216,164 @@ img {
 .user_list_header {
     padding-bottom: 2px;
     border-bottom: 2px solid black !important;
+}
+
+#add_task_box {
+    display: none;
+    background: #EBFFD8;
+    padding: 10px 0px 5px 20px;
+    overflow: auto;
+    margin: 0px;
+    clear: both;
+}
+
+.add_task_btn {
+    float: left;  
+}
+
+.new_task_name {
+    width: 95% !important;
+}
+
+.add_task_cancel {
+    margin-left: 10px;
+    margin-top: 5px;
+    float: left;
+}
+
+.add_task_assignee_photo {
+    cursor: pointer;
+    bottom: 0px !important;
+    width: 45px;
+    height: 30px;
+    line-height: 28px;
+    position: relative;
+    float: left;
+    margin-left: 50px;
+    background: white !important;
+}
+.add_task_assignee span {
+    position: relative;
+    top: 7px;
+    margin-left: 10px;
+    font-weight: bolder;
+}
+/******** Central part  *************/
+.all_tasks {
+    display: block;
+    float: right;
+    margin-right: 10px;
+    display: none; 
+}
+
+#content h2 {
+    display: inline-block;
+}
+.task_in_list {
+    border-bottom: 1px solid #EEE;
+    margin-top: 10px;
+    height: 35px;
+}
+.task_in_list:first-child{
+    border-top: 2px solid #EEE;
+    padding-top: 10px;
+}
+
+.priority {
+    width: 5px;
+    height: 30px;
+    border-radius: 1px;
+    float: left;
+    margin-right: 10px;
+}
+.prior_1 {
+    background: #3A87AD;
+}
+
+.prior_2 {
+    background: #F89406;
+}
+
+.prior_0 {
+    background: #468847;
+}
+
+.prior_3 {
+    background: #B94A48;
+}
+.assignee_name {
+    float: right;
+    margin-right: 10px;
+    position: relative;
+    top: 7px;
+    color: gray;
+}
+.assignee_name:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.assignee_photo {
+    display: inline-block;
+    float: right;
+}
+.assignee_photo img, .add_task_assignee_photo img{
+    width: 30px;
+    height: 30px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+img {
+    border: 0px;
+}
+.large_photo {
+    width: 70px;
+    height: 70px;
+    display: inline-block;
+}
+
+.no_filtered {
+    display: none;
+}
+
+.sort_btn.btn-group {
+    float: right;
+    display: block;
+}
+
+.img_holder{
+    position: relative;
+    width: 45px;
+    height: 30px;
+    bottom: 9px;
+    padding: 0;
+    padding-left: -10px;
+    line-height: 28px;
+    display: inline-block;
+    margin-top: 7px;
+}
+.appointive:hover, .add_task_assignee_photo{
+    background: #F8F8F8;
+    border: 1px solid #D4D4D4; 
+    border-bottom-color: #BCBCBC;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.appointive:hover img {
+    position: relative;
+    left: 1px;
+    bottom : 1px;
+}
+.appointive:hover::after, .add_task_assignee_photo::after {
+    content: "";
+    display: block;
+    position: absolute;
+    border: 4px solid black;
+    border-color: black transparent transparent;
+    top: 22px;
+    right: 3px;
+    width: 0px;
+    height: 0px;
 }
