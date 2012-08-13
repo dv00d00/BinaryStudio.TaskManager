@@ -98,14 +98,17 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult Project(int id, bool isOpenedProjects = true)
+        public ActionResult Project(int id, int? userId, bool isOpenedProjects = true)
         {
             var model = new ProjectViewModel
             {
                 UsersTasks = new List<ManagerTasksViewModel>(),
                 UnAssignedTasks = this.taskProcessor.GetUnAssignedTasksForProject(id).ToList(),
                 QuickTask = new HumanTask(),
-                ProjectId = id
+                ProjectId = id,
+                ChosenUserId = userId,
+                ChosenUserTasks = new ManagerTasksViewModel(),
+                NumberOfUsers = this.projectProcessor.GetAllUsersInProject(id).Count()
             };
             model.QuickTask.ProjectId = id;
             var users = new List<User>();
@@ -124,6 +127,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 model.UsersTasks.Add(managerModel);
             }
 
+            if (userId != null)
+            {
+                model.ChosenUserTasks.User = this.userProcessor.GetUser((int)userId);
+                model.ChosenUserTasks.ProjectId = id;
+                model.ChosenUserTasks.Tasks = isOpenedProjects
+                         ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, (int)userId).ToList()
+                         : this.taskProcessor.GetAllClosedTasksForUserInProject(id, (int)userId).ToList();                
+            }
+                       
             return this.View(model);
         }
 
@@ -208,7 +220,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 this.notifier.CreateTask(task.Id);
                 this.newsProcessor.CreateNewsForUsersInProject(taskHistory, task.ProjectId);
 
-                return this.RedirectToAction("Project", new { id = createModel.ProjectId });
+                return this.RedirectToAction("Project", new { id = createModel.ProjectId, userId = createModel.AssigneeId });
             }
 
             createModel.Priorities = taskProcessor.GetPrioritiesList();
@@ -351,10 +363,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public void RemoveUserFromProject(int userId, int projectId)
         {
             this.projectProcessor.RemoveUserFromProject(userId, projectId);
-        }
-
-       
-       
+        }  
 
         /// <summary>
         /// The get image.
@@ -477,7 +486,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 this.taskProcessor.AddHistory(taskHistory);
                 this.newsProcessor.CreateNewsForUsersInProject(taskHistory,humanTask.ProjectId);
 
-                return this.RedirectToAction("Project", new { id = createModel.ProjectId });
+                return this.RedirectToAction("Project", new { id = createModel.ProjectId, userId = createModel.AssigneeId });
             }
 
             return this.View(createModel);

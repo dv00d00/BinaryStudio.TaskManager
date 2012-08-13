@@ -7,14 +7,20 @@ div.sortableTasks a
 }
 .column
 {
-    width: 230px;
+    width: 180px;
+    float: left;
+    min-height: 150px;
+}
+.usercolumn
+{
+    width: 200px;
     float: left;
     min-height: 150px;
 }
 div.task
 {
     border-radius: 15px 15px 15px 15px; /*border:2px solid black; */
-    width: 200px;
+    width: 170px;
     height: 100px;
     margin: 10px;
     box-shadow: 3px 3px 5px 1px #cccccc;
@@ -27,9 +33,9 @@ div.task
 div.user
 {
     border-radius: 15px 15px 15px 15px; /*border:2px solid black; */
-    width: 200px;
+    width: 170px;
     height: 120px;
-    margin: 10px;
+    margin: 5px;
     box-shadow: 3px 3px 5px 1px #cccccc;
     background: #dcd8d8; /* for non-css3 browsers */
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcd8d8'); /* for IE */

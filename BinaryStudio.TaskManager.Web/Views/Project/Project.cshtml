@@ -2,9 +2,8 @@
 @{
     ViewBag.Title = "Project";
 }
-<style>
-    
-</style>
+<link href="../../Content/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
+<script src="../../Scripts/PopupDialog.js" type="text/javascript"></script>
 <script src="../../Scripts/MicrosoftAjax.js" type="text/javascript"></script>
 <script src="../../Scripts/MicrosoftMvcAjax.js" type="text/javascript"></script>
 <script src="../../Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
@@ -45,6 +44,8 @@
             placeholder: "placeholderTask",
             cursor: 'move'
         });
+
+
         $(".column").disableSelection();
 
         $('.done').click(function () {
@@ -59,15 +60,20 @@
                 traditional: true
             }); 
                       
-        });       
+        });
 
     });
-
-
 </script>
 <!-- Caption of the table "Managers-Tasks"-->
 <fieldset>
-    <legend class="well-large">Users with their tasks in current project</legend>
+<br/>
+<br/>
+    <div id="mydiv" align="right">
+        @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new { projectId = Model.ProjectId }, new { @class = "btn" })
+       @* @Html.ActionLink("Show closed tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = false }, new { @class = "btn" })
+        @Html.ActionLink("Show opened tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = true }, new { @class = "btn" })*@
+        @Html.Partial("QuickTaskCreation", Model.QuickTask)
+    </div>
     <table align="center" class="container-fluid" valign="top">
         @if (Model.UsersTasks.Count == 0)
         {
@@ -79,64 +85,124 @@
         {
             <!-- Header of the table (Managers names)-->
             <tr>
-                <td align="center" width="250">
-                    Actions
-                </td>
-                <td align="center">
-                    <p>@Html.ActionLink("Create unassigned task", "CreateTask", new { userId = -1, projectId = Model.ProjectId }, new { @class = "btn" })</p>
-                </td>
-                <td align="center">
-                    <p>All users in project</p>
-                </td>
+                @if (Model.ChosenUserId == null)
+                {
+                    <td align="center">
+                        Unassigned tasks
+                    </td>
+                }
+                else
+                {
+                    <td align="center">
+                        @Model.ChosenUserTasks.User.UserName's tasks
+                    </td>
+                }
+                @if (Model.NumberOfUsers < 5)
+                {
+                    foreach (var user in Model.UsersTasks)
+                    {   
+                    <td valign="top" align="center">
+                        <p>
+                            @if (@user.User.ImageData == null)
+                            {
+                                <img class="pull-left" src="@Url.Content("~/Content/images/photo.png")" alt="Photo" width="70" height="70"/>
+                            }
+                            else
+                            {
+                                <img class="pull-left" width="70" height="70" src="@Url.Action("GetImage", "Project", new { UserId = user.User.Id })" />
+                            }
+                            @Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })
+                        </p>
+                        <p>
+                            @Html.ActionLink("Create task", "CreateTask", "Project", new { userId = user.User.Id, projectId = Model.ProjectId }, new { @class = "btn openDialog", data_dialog_id = "aboutDialog", data_dialog_title = "Create new task" })
+                        </p>                        
+                    </td> 
+                    }
+                }
+                else
+                {
+                    <td align="center">
+                        <p>All users in project</p>
+                    </td>
+                }
             </tr>
             
             <tr>
-                <td align="center" width="250" valign="top">
-                    <div class="editor-field">
-                        <p />@Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new { projectId = Model.ProjectId }, new { @class = "btn" })
-                        <br />
-                        <p />@Html.ActionLink("Show closed tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = false }, new { @class = "btn" })
-                        <br />
-                        <p />@Html.ActionLink("Show opened tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = true }, new { @class = "btn" })
-                        <div id="mydiv">@Html.Partial("QuickTaskCreation", Model.QuickTask)</div>
-                    </div>
-                </td>
                 <td valign="top" class="well">
-                    <div class="column" align="center" width="250" id="-1">
-                        @foreach (var unAssignedTask in Model.UnAssignedTasks)
-                        {
-                            <div class="task-holder" data-taskid= @unAssignedTask.Id.ToString() id = @unAssignedTask.Id.ToString()>
-                                @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
+                    @if (Model.ChosenUserId == null)
+                    {
+                        <div class="column" align="center" width="250" id="-1">
+                            @foreach (var unAssignedTask in Model.UnAssignedTasks)
+                            {
+                                <div class="task-holder" data-taskid= @unAssignedTask.Id.ToString() id = @unAssignedTask.Id.ToString()>
+                                    @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
+                                </div>
+                            }
+                            <div data-managerid="0" style="display: none">
+                                olo</div>
+                            <div class="task" style="display: none">
+                                olo</div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="column" id=@Model.ChosenUserTasks.User.Id.ToString() align = "center" valign="top" width="250">
+                            @foreach (var task in Model.ChosenUserTasks.Tasks.OrderByDescending(x => x.Priority))
+                            {
+                                <div class="task-holder" data-taskid= @task.Id.ToString() id=@task.Id.ToString()>
+                                    @Html.Partial("ManagerTasksTablePartialView", task)
+                                </div>
+                            }
+                            <div data-managerid = @Model.ChosenUserTasks.User.Id.ToString()>
                             </div>
-                        }
-                        <div data-managerid="0" style="display: none">
-                            olo</div>
-                        <div class="task" style="display: none">
-                            olo</div>
-                    </div>
+                        </div>
+                    }
                 </td>
-                <td class="container">                
-                <ul>
-                @foreach (var user in Model.UsersTasks)
-                {   
-                    <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
-                    <lo>
-                        @Html.Partial("UserPartialView", user)
-                     </lo>
-                     </div>                    
+                @if (Model.NumberOfUsers < 5)
+                {
+                    foreach (var user in Model.UsersTasks)
+                    {   
+                    <td valign="top" class="well">
+                        <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
+                            @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
+                            {
+                                <div class="task-holder" data-taskid= @task.Id.ToString() id=@task.Id.ToString()>
+                                    @Html.Partial("ManagerTasksTablePartialView", task)
+                                </div>
+                            }
+                            <div data-managerid = @user.User.Id.ToString()>
+                            </div>
+                        </div>
+                    </td> 
+                    }
                 }
-                </ul>
-                </td>
+                else
+                {
+                    <td class="container">                
+                        <ul>
+                            @foreach (var user in Model.UsersTasks)
+                            {   
+                                <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
+                                    <lo>
+                                        @Html.Partial("UserPartialView", user)
+                                    </lo>
+                                </div>                    
+                            }
+                        </ul>
+                    </td>
+                }
             </tr>
         }
         <!-- Create a column with tasks-->
     </table>
 </fieldset>
+
 <p align="center" class="well-large">
 </p>
+
 @Ajax.ActionLink(" ", "QuickTaskCreation", "QuickTask", new AjaxOptions
 
-    {
-        InsertionMode = InsertionMode.Replace,
-        UpdateTargetId = "mydiv"
-    })
+{
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "mydiv"
+})

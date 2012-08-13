@@ -77,7 +77,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             return this.dataBaseContext.Projects.First(it => it.Id == projectId).Tasks.ToList();
         }
-
+                
         /// <summary>
         /// The get unassingned tasks.
         /// </summary>

@@ -3,7 +3,7 @@
 @model BinaryStudio.TaskManager.Web.Models.ManagerTasksViewModel     
 @* This partial view draw a task block in table *@
 @{ <div class ="user"  id = @Model.User.Id.ToString() style="position: relative;">
-        <div style="overflow: hidden; margin-left: 20px; padding-top: 25px">
+        <div style="overflow: hidden; margin-left: 10px; padding-top: 20px">
             <p>
                 @if (@Model.User.ImageData == null)
                 {
@@ -13,9 +13,11 @@
                 {
                     <img class="pull-left" align = "top" width="60" height="60" src="@Url.Action("GetImage", "Project", new { UserId = Model.User.Id })" />
                 }
-                @Html.ActionLink(Model.User.UserName, "UserDetails", new { userId = Model.User.Id }, new { @class = "btn btn-info" })
+                @Html.ActionLink(Model.User.UserName, "Project", new { id = Model.ProjectId, userId = Model.User.Id}, new { @class = "btn btn-info" })
             </p>
-            <p>@Html.ActionLink("Create task", "CreateTask", new { userId = Model.User.Id, projectId = Model.ProjectId }, new { @class = "btn" })</p>
+            <p>
+                @Html.ActionLink("Create task", "CreateTask", "Project", new { userId = Model.User.Id, projectId = Model.ProjectId }, new { @class = "btn openDialog", data_dialog_id = "aboutDialog", data_dialog_title = "Create new task" })
+            </p>
         </div>
     </div>
 }
