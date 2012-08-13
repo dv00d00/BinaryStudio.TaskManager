@@ -81,8 +81,8 @@ $(function () {
         $(".user_list_holder").hide();
         $(".add_task_assignee_photo").html("");
         self.children("img").clone().appendTo($(".add_task_assignee_photo"));
-        $(".add_task_assignee").attr("data-id",userId);
-        $(".add_task_assignee span").html(self.children("span").text());
+        $(".add_task_assignee").attr("data-id", userId);
+        $(".add_task_assignee_name span").html(self.children("span").text());
     });
 
     $(document).on("click.user_list", ".instant_task_move li", function () {
@@ -235,19 +235,23 @@ $(function () {
     $(".add_task_cancel").click(function () {
         newTaskInputEscape();
     });
+    $(".priority_buttons .btn").click(function () {
+        $(".prior_name").html($(this).attr("data-prior"));
+    });
     $(".add_task_btn").click(function () {
         var task_name = $("#add_task_box input").val();
+        var priority = $(".priority_buttons .btn.active").val();
         if (task_name != "") {
             var thisTask = new Object({
                 Name: task_name,
-                Priority: '1',
+                Priority: priority,
                 AssigneeId: $(".add_task_assignee").attr("data-id"),
                 ProjectId: $("#content h2").attr("data-id")
             });
             $.ajax({
                 'data': {
                     'AssigneeId': thisTask.AssigneeId,
-                    'Name' : thisTask.Name,
+                    'Name': thisTask.Name,
                     'Priority': thisTask.Priority,
                     'ProjectId': thisTask.ProjectId
                 },
@@ -255,7 +259,7 @@ $(function () {
                 'type': 'POST',
                 'url': '/Landing/CreateTask',
                 beforeSend: function () {
-                    $('body').css('cursor', 'progress');  
+                    $('body').css('cursor', 'progress');
                 },
                 success: function () {
                     location.reload(true);

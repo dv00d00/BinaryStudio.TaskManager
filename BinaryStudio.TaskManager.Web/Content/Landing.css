@@ -252,10 +252,34 @@
     margin-left: 50px;
     background: white !important;
 }
-.add_task_assignee span {
+.add_task_assignee_name{
     position: relative;
     top: 7px;
     margin-left: 10px;
+    display: inline-block;
+}
+
+.add_task_assignee_name span{
+    font-weight: bolder;
+}
+.add_task_assignee {
+    float: left;
+}
+.priority_buttons {
+    display: inline-block;
+    margin-left: 20px;
+}
+.priority_buttons button{
+    opacity: 0.4;
+}
+.priority_buttons button:hover, 
+.priority_buttons button.active{
+    opacity: 1;
+}
+.prior_name 
+{
+    bottom: 5px;
+    position: relative;
     font-weight: bolder;
 }
 /******** Central part  *************/
@@ -286,19 +310,27 @@
     float: left;
     margin-right: 10px;
 }
-.prior_1 {
+.prior_1, .btn.prior_1:hover
+,.btn.prior_1:focus,.btn.prior_1:active,
+.btn.prior_1.active {
     background: #3A87AD;
 }
 
-.prior_2 {
+.prior_2, .btn.prior_2:hover,
+.btn.prior_2:focus,.btn.prior_2:active,
+.btn.prior_2.active  {
     background: #F89406;
 }
 
-.prior_0 {
+.prior_0,.btn.prior_0:hover,
+.btn.prior_0:focus,.btn.prior_0:active,
+.btn.prior_0.active   {
     background: #468847;
 }
 
-.prior_3 {
+.prior_3,.btn.prior_3:hover,
+.btn.prior_3:focus,.btn.prior_3:active,
+.btn.prior_3.active   {
     background: #B94A48;
 }
 .assignee_name {
