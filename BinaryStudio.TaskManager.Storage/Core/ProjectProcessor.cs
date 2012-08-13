@@ -158,9 +158,18 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public IEnumerable<User> GetUsersAndCreatorInProject(int projectId)
         {
-            List<User>  users = new List<User>(this.GetAllUsersInProject(projectId));
-            users.Add(this.GetCreator(projectId));
-            return users;
+            var users = this.projectRepository.GetAllUsersInProject(projectId);
+            List<User> returnValue = new List<User>();
+            returnValue.Add(this.GetCreator(projectId));
+            if (users == null)
+            {
+                return returnValue;
+            }
+            else
+            {
+                returnValue.AddRange(users);
+            }
+            return returnValue;
         }
 
         public User GetCreator(int projectId)

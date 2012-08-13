@@ -1,6 +1,7 @@
 ﻿namespace BinaryStudio.TaskManager.Logic.Core
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Data;
     using System.Linq;
 
@@ -64,6 +65,10 @@
         public IEnumerable<User> GetAllUsersInProject(int projectId)
         {
             var project = this.dataBaseContext.Projects.SingleOrDefault(x => x.Id == projectId);
+            if (null == project)
+            {
+                return new List<User>();
+            }
             ICollection<User> users = project.ProjectUsers;
             return users;
         }

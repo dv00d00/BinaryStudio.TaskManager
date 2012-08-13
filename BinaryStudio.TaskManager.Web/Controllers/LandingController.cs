@@ -25,12 +25,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         private readonly IStringExtensions stringExtensions;
 
-        public LandingController(IProjectRepository projectRepository, IUserRepository userRepository, ITaskProcessor taskProcessor, IStringExtensions stringExtensions)
+        private readonly IProjectProcessor projectProcessor;
+
+        public LandingController(IProjectRepository projectRepository, IUserRepository userRepository, ITaskProcessor taskProcessor, IStringExtensions stringExtensions, IProjectProcessor projectProcessor)
         {
             this.projectRepository = projectRepository;
             this.userRepository = userRepository;
             this.taskProcessor = taskProcessor;
             this.stringExtensions = stringExtensions;
+            this.projectProcessor = projectProcessor;
         }
 
         public ActionResult Index()
@@ -96,8 +99,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             {
                 currentProject = projectRepository.GetById(projectId);
                 taskList = currentProject.Tasks.ToList();
-                var usersList = projectRepository.GetAllUsersInProject(projectId).ToList();
-                usersList.Add(projectRepository.GetCreatorForProject(projectId));
+                var usersList = projectProcessor.GetUsersAndCreatorInProject(projectId).ToList();
                 usersToModel = usersList.OrderBy(x => x.UserName).Select(currentUser => new LandingUserModel()
                 {
                     Id = currentUser.Id,

@@ -1,6 +1,7 @@
 ﻿namespace BinaryStudio.TaskManager.Logic.Domain
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
 
     /// <summary>
