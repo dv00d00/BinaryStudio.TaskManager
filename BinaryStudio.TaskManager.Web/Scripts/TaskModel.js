@@ -33,6 +33,14 @@
         });
     };
 
+    self.sortByDate = function () {
+        self.tasks.sort(function (left, right) {
+            return left.CompareDate == right.CompareDate ? /*(right.CreatedTime == left.CreatedTime ? 0 :
+                (left.CreatedTime < right.CreatedTime ? -1 : 1)) :*/0:
+                (left.CompareDate < right.CompareDate ? -1 : 1);
+        });
+    };
+    
     self.filterByAssignee = function (task) {
         $(".all_tasks").show();
         self.filter("user");
@@ -84,7 +92,4 @@
             }
         }
     }, this);
-    /*self.addTask = function() {
-        
-    };*/
 };
