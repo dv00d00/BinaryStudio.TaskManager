@@ -55,7 +55,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </summary>
         private readonly INewsProcessor newsProcessor;
 
+        /// <summary>
+        /// The string extensions.
+        /// </summary>
         private readonly IStringExtensions stringExtensions;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectController"/> class.
         /// </summary>
@@ -74,9 +78,16 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="newsProcessor">
         /// The news Processor.
         /// </param>
-
-        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, 
-            INotifier notifier, INewsProcessor newsProcessor, IStringExtensions stringExtensions)
+        /// <param name="stringExtensions">
+        /// The string Extensions.
+        /// </param>
+        public ProjectController(
+            ITaskProcessor taskProcessor,
+            IUserProcessor userProcessor,
+            IProjectProcessor projectProcessor,
+            INotifier notifier,
+            INewsProcessor newsProcessor,
+            IStringExtensions stringExtensions)
         {
             this.projectProcessor = projectProcessor;
             this.notifier = notifier;
@@ -91,6 +102,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </summary>
         /// <param name="id">
         /// The id.
+        /// </param>
+        /// <param name="userId">
+        /// The user Id.
         /// </param>
         /// <param name="isOpenedProjects">
         /// The is Opened Projects.

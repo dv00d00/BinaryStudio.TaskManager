@@ -97,7 +97,7 @@
                         @Model.ChosenUserTasks.User.UserName's tasks
                     </td>
                 }
-                @if (Model.NumberOfUsers < 5)
+                @if (Model.NumberOfUsers <= 5)
                 {
                     foreach (var user in Model.UsersTasks)
                     {   
@@ -158,7 +158,7 @@
                         </div>
                     }
                 </td>
-                @if (Model.NumberOfUsers < 5)
+                @if (Model.NumberOfUsers <= 5)
                 {
                     foreach (var user in Model.UsersTasks)
                     {   
