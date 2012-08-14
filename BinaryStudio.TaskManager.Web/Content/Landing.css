@@ -283,6 +283,9 @@
     font-weight: bolder;
 }
 /******** Central part  *************/
+#content h3 {
+    display: none;
+}
 .all_tasks {
     display: block;
     float: right;
@@ -368,11 +371,14 @@ img {
     display: none;
 }
 
-.sort_btn.btn-group {
+.sort_btn.btn-group,.assignee_btn {
     float: right;
     display: block;
 }
 
+.assignee_btn {
+    margin-right: 10px;
+}
 .img_holder{
     position: relative;
     width: 45px;

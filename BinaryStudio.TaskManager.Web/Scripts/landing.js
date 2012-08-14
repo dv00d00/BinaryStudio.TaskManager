@@ -27,68 +27,74 @@ $(function () {
         $(this).parent("div").parent("div").children("span").css("left", "0px");
     });
     var taskId = null;
-    $(document).on("click", ".img_holder,.add_task_assignee_photo", function (e) {
-        var top;
-        var left;
-        var user_list_holder = $('.user_list_holder');
-        if ($(window).height() > (e.pageY + 200)) {//> (e.pageY + $('.user_list_holder').height())) {
-            top = e.pageY + 25;
-        }
-        else {
-            top = e.pageY - user_list_holder.height() - 25;
-        }
-        if ($(window).width() > (e.pageX + user_list_holder.width())) {
-            left = e.pageX - 30;
-        }
-        else {
-            left = e.pageX - 225;
-        }
-        if ($("#content h2").attr("data-id") != -1)
-            user_list_holder.css({
-                "display": "block",
-                "top": top,
-                "left": left
-            });
-        scrollPresence();
-        $(".user_list_input").focus();
+    $(document).on("click", ".img_holder", function (e) {
+        $(".user_list_title").text("Assign someone to this task");
+        showUserHolder(e);
+        $(".user_list_holder").addClass("instant_task_move");
         taskId = $(this).parent("div").parent("div").attr("data-id");
-        user_list_holder.removeClass("instant_task_move");
-        user_list_holder.removeClass("assignee_to_choose");
-        if ($(this).hasClass("img_holder")) {
-            user_list_holder.addClass("instant_task_move");
+    });
+    $(document).on("click", ".add_task_assignee_photo", function (e) {
+        $(".user_list_title").text("Assign someone to this task");
+        showUserHolder(e);
+        $(".user_list_holder").addClass("assignee_to_choose");
+    });
+    $(document).on("click", ".assignee_btn", function (e) {
+        var user_list_holder = $(".user_list_holder");
+        $(".user_list_clear").hide();
+        if (user_list_holder.hasClass("open") == false) {
+            $(".user_list_title").text("Show tasks for assignee");
+            showUserHolder(e);
+            user_list_holder.addClass("open");
+            $(".user_list_holder").addClass("assignee_filter");
         }
         else {
-            user_list_holder.addClass("assignee_to_choose");
+            user_list_holder.removeClass("open");
+            hideUserHolder();
         }
+        $(".user_list_clear").toggle();
     });
+
     $(document).keyup(function (e) {
         var code = null;
         code = (e.keyCode ? e.keyCode : e.which);
         if (code == 27) {
-            $(".user_list_holder").hide();
-            clearInput();
+            hideUserHolder();
         }
         $("user_list_holder").off();
     });
     $(".user_list_close").click(function () {
-        $(".user_list_holder").hide();
-        clearInput();
+        hideUserHolder();
     });
 
     $(document).on("click.user_list", ".assignee_to_choose li", function () {
         var self = $(this);
         var userId = self.attr('data-id');
-        $(".user_list_holder").hide();
+        hideUserHolder();
         $(".add_task_assignee_photo").html("");
         self.children("img").clone().appendTo($(".add_task_assignee_photo"));
         $(".add_task_assignee").attr("data-id", userId);
         $(".add_task_assignee_name span").html(self.children("span").text());
     });
-
+    $(document).on("click.user_list", ".assignee_to_choose .user_list_clear", function () {
+        hideUserHolder();
+        $(".add_task_assignee").attr("data-id", "");
+        $(".add_task_assignee_photo").html("");
+        $(".add_task_assignee span").text("No one");
+    });
     $(document).on("click.user_list", ".instant_task_move li", function () {
         var userId = $(this).attr('data-id');
         moveTask(-1, userId, taskId);
 
+    });
+
+    $(document).on("click.user_list", ".assignee_filter li", function () {
+        var self = $(this);
+        var task = {
+            AssigneeId: self.attr('data-id'),
+            Assignee: self.children("span").text()
+        };
+        modelData.filterByAssignee(task);
+        hideUserHolder();
     });
     $(document).on("click.user_list", ".instant_task_move .user_list_clear", function () {
         moveTask(-1, -1, taskId);
@@ -110,19 +116,16 @@ $(function () {
         position: 'left',
         delay: { show: 1000 }
     });
-    /***** Filter  *******/
-    $("#left_panel>input").val("Filter tasks");
 
-    $("#left_panel>input").on("blur", function () {
-        if ($(this).val() == "")
-            $(this).val("Filter tasks");
+    /******* Shortcuts ********/
+    $(document).on("keyup", function (e) {
+
+        var code = (e.keyCode ? e.keyCode : e.which);
+        switch (code) {
+            case 70:
+                $("#filterByName").focus();
+        }
     });
-
-    $("#left_panel>input").on("click", function () {
-        if ($(this).val() == "Filter tasks")
-            $(this).val("");
-    });
-
     /******** Project name length *******/
 
     $(".project_name").each(function () {
@@ -219,9 +222,11 @@ $(function () {
         }
         var groupName = $(this).html();
         getTaskGroup(url, groupName);
+        $(".assignee_btn").hide();
     });
     $(document).on("click", ".user_projs,.created_projs", function () {
         $(".new_task_btn").show();
+        $(".assignee_btn").show();
         $(".project_name").removeClass("active_proj");
         $(this).addClass("active_proj");
         var proj = $(this).parent(".proj_row").attr("data-id");
@@ -443,6 +448,7 @@ function newTaskInputEscape() {
     $("#add_task_box").hide();
     $(".new_task_btn").show();
     $(".new_task_name").val("");
+    $(".add_task_assignee").attr("data-id", "");
     $(".add_task_assignee_photo").html("");
     $(".add_task_assignee span").text("No one");
 } 
@@ -498,4 +504,43 @@ function addTask() {
     else {
         $(".new_task_name").focus();
     }
+}
+
+function showUserHolder(e) {
+    var top;
+    var left;
+    var self = $(this);
+    var user_list_holder = $('.user_list_holder');
+    if ($(window).height() > (e.pageY + 200)) {//> (e.pageY + $('.user_list_holder').height())) {
+        top = e.pageY + 25;
+    }
+    else {
+        top = e.pageY - user_list_holder.height() - 25;
+    }
+    if ($(window).width() > (e.pageX + user_list_holder.width())) {
+        left = e.pageX - 30;
+    }
+    else {
+        left = e.pageX - 225;
+    }
+    if ($("#content h2").attr("data-id") != -1)
+        user_list_holder.css({
+            "display": "block",
+            "top": top,
+            "left": left
+        });
+    scrollPresence();
+    $(".user_list_input").focus();
+    $(".user_list_clear").show();
+    user_list_holder.removeClass("instant_task_move");
+    user_list_holder.removeClass("assignee_to_choose");
+    user_list_holder.removeClass("assignee_filter");
+    user_list_holder.removeClass("open");
+}
+
+function hideUserHolder() {
+    var user_list_holder = $('.user_list_holder');
+    user_list_holder.hide();
+    user_list_holder.removeClass("open");
+    clearInput();
 }

@@ -22,7 +22,8 @@
 <script src="@Url.Content("~/Scripts/landing.js")" type="text/javascript"></script>
 <div class="row main-row">
     <div id="left_panel">
-        <input id="filterByName" name="ProjectHumanTask" type="text" value="" data-bind="event: { 'keyup': filterTasksByName}" />
+        
+        Filter: <input id="filterByName" placeholder="Tasks By Name or Description" name="ProjectHumanTask" type="text" value="" data-bind="event: { 'keyup': filterTasksByName}" />
         <div id="task_groups">
             <h3>Task Groups</h3>
             <div class="task_group_list">
@@ -72,7 +73,12 @@
                 <li><a href='#' data-bind='click: $root.sortByDate'>Creation Date</a></li>
             </ul>
         </div>
+        <a class="btn btn-primary assignee_btn" href="#">
+            Assignee
+            <span class="caret"></span>
+        </a>
         <a href="#" class="all_tasks" data-bind="click: allTasks">&larr; All Tasks</a>
+        <h3><span></span>'s Tasks</h3>
         <div class="no_filtered">No tasks matching filtered value</div>
         <div data-bind="visible: tasks().length==0">No tasks yet</div>
         <div class="task_list" data-bind="foreach: tasksToShow">
@@ -118,7 +124,7 @@
     </div>
     <div class="user_list_holder">
         <div class="user_list_header">
-            <div class="user_list_title"><span>Assign someone to this task</span><span class="user_list_close">x</span></div>
+            <div><span class="user_list_title">Assign someone to this task</span><span class="user_list_close">x</span></div>
             <input type="text" class="user_list_input"/>
         </div>
         <div>

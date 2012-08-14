@@ -43,6 +43,8 @@
     self.filterByAssignee = function (task) {
         var user_li = $(".user_list li[data-id='" + task.AssigneeId + "']");
         $(".all_tasks").show();
+        $("#content h3 span").text(task.Assignee);
+        $('#content h3').show();
         self.filter("user");
         self.data.userId(task.AssigneeId);
         $(".add_task_assignee_photo").html("");
@@ -67,8 +69,10 @@
         if (self.filter() == "user") {
             $(".add_task_assignee_photo").html("");
             $(".add_task_assignee span").text("No one");
+            $(".add_task_assignee").attr("data-id", "");
         }
         $(".all_tasks").hide();
+        $('#content h3').hide();
         var filterByName = $("#filterByName");
         filterByName.val("");
         self.data.name("");
@@ -95,7 +99,7 @@
                 return this.tasks();
             } else {
                 return ko.utils.arrayFilter(this.tasks(), function (task) {
-                    return task.Name.toLowerCase().indexOf(name) != -1;
+                    return ((task.Name.toLowerCase().indexOf(name) != -1) || (task.Description.toLowerCase().indexOf(name) != -1));
                 });
             }
         }
