@@ -444,7 +444,7 @@ function newTaskInputEscape() {
     $(".new_task_btn").show();
     $(".new_task_name").val("");
     $(".add_task_assignee_photo").html("");
-    $(".add_task_assignee span").html("");
+    $(".add_task_assignee span").text("No one");
 } 
 
 function moveTask(projectId, userId, taskId) {

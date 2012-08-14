@@ -35,16 +35,20 @@
 
     self.sortByDate = function () {
         self.tasks.sort(function (left, right) {
-            return left.CompareDate == right.CompareDate ? /*(right.CreatedTime == left.CreatedTime ? 0 :
-                (left.CreatedTime < right.CreatedTime ? -1 : 1)) :*/0:
+            return left.CompareDate == right.CompareDate ? 0 :
                 (left.CompareDate < right.CompareDate ? -1 : 1);
         });
     };
-    
+
     self.filterByAssignee = function (task) {
+        var user_li = $(".user_list li[data-id='" + task.AssigneeId + "']");
         $(".all_tasks").show();
         self.filter("user");
         self.data.userId(task.AssigneeId);
+        $(".add_task_assignee_photo").html("");
+        user_li.children("img").clone().appendTo($(".add_task_assignee_photo"));
+        $(".add_task_assignee").attr("data-id", task.AssigneeId);
+        $(".add_task_assignee_name span").html(user_li.children("span").text());
     };
 
     self.filterTasksByName = function () {
@@ -60,6 +64,10 @@
     };
 
     self.allTasks = function () {
+        if (self.filter() == "user") {
+            $(".add_task_assignee_photo").html("");
+            $(".add_task_assignee span").text("No one");
+        }
         $(".all_tasks").hide();
         var filterByName = $("#filterByName");
         filterByName.val("");
