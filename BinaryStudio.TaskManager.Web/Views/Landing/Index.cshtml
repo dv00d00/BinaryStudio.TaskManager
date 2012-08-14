@@ -125,11 +125,11 @@
     <div class="user_list_holder">
         <div class="user_list_header">
             <div><span class="user_list_title">Assign someone to this task</span><span class="user_list_close">x</span></div>
-            <input type="text" class="user_list_input"/>
+            <input type="text" class="user_list_input" data-bind="event: { 'keyup': filterUsersByName}"/>
         </div>
         <div>
             <div class="user_list_clear">Clear assignee</div>
-            <ul class="user_list" data-bind="foreach: users">
+            <ul class="user_list" data-bind="foreach: usersToShow">
                 <li data-bind="attr:{'data-id': Id}"><img data-bind="attr: {'src': Photo}" /><span data-bind="text: Name"></span></li>
             </ul>
         </div>

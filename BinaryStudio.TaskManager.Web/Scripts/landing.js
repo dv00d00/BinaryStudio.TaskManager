@@ -29,16 +29,19 @@ $(function () {
     var taskId = null;
     $(document).on("click", ".img_holder", function (e) {
         $(".user_list_title").text("Assign someone to this task");
+        modelData.allUsers();
         showUserHolder(e);
         $(".user_list_holder").addClass("instant_task_move");
         taskId = $(this).parent("div").parent("div").attr("data-id");
     });
     $(document).on("click", ".add_task_assignee_photo", function (e) {
         $(".user_list_title").text("Assign someone to this task");
+        modelData.allUsers();
         showUserHolder(e);
         $(".user_list_holder").addClass("assignee_to_choose");
     });
     $(document).on("click", ".assignee_btn", function (e) {
+        modelData.allUsers();
         var user_list_holder = $(".user_list_holder");
         $(".user_list_clear").hide();
         if (user_list_holder.hasClass("open") == false) {
@@ -101,13 +104,6 @@ $(function () {
     });
 
     $('.user_list_input').keyup(function () {
-        var search_val = $(this).val();
-        for (var i = 0; i < modelData.users().length; i++) {
-            modelData.users()[i]._destroy = false;
-        }
-        modelData.users.destroy(function (item) {
-            return item.Name.indexOf(search_val) == -1;
-        });
         scrollPresence();
     });
 
@@ -420,22 +416,15 @@ function projectsOutput(projects, li_class) {
     return i;
 }
 
-function scrollPresence()
-{
-    var user_list = $(".user_list");
-    if (user_list.height() < 250) {
-        user_list.css("overflow-y", "hidden");
-    }
-    else {
-        user_list.css("overflow-y", "scroll");
-    }
-}
-
-function clearInput() {
-    $(".user_list_input").val("");
-    for (var i = 0; i < modelData.users().length; i++) {
-        modelData.users()[i]._destroy = false;
-    }
+function scrollPresence() {
+    setTimeout(function() {
+        var user_list = $(".user_list");
+        if (user_list.height() < 250) {
+            user_list.css("overflow-y", "hidden");
+        } else {
+            user_list.css("overflow-y", "scroll");
+        }
+    }, 50);
 }
 
 function newTaskInputEnter() {
@@ -542,5 +531,5 @@ function hideUserHolder() {
     var user_list_holder = $('.user_list_holder');
     user_list_holder.hide();
     user_list_holder.removeClass("open");
-    clearInput();
+    modelData.allUsers();
 }

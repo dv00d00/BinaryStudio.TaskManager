@@ -5,10 +5,12 @@
     self.tasks = ko.observableArray([]);
     self.users = ko.observableArray([]);
     self.filter = ko.observable("all");
+    self.userFilter = ko.observable("all");
     self.data = new Object(
     {
         userId: ko.observable(),
-        name: ko.observable()
+        name: ko.observable(),
+        user: ko.observable()
     });
 
     self.isProject = function () {
@@ -65,6 +67,16 @@
         }
     };
 
+    self.filterUsersByName = function () {
+        var search_val = $(".user_list_input").val();
+        if (search_val != '') {
+            self.data.user(search_val);
+            self.userFilter("name");
+        }
+        else {
+            self.allUsers();
+        }
+    };
     self.allTasks = function () {
         if (self.filter() == "user") {
             $(".add_task_assignee_photo").html("");
@@ -85,6 +97,13 @@
         }
     };
 
+    self.allUsers = function () {
+        var filterByName = $(".user_list_input");
+        filterByName.val("");
+        self.data.user("");
+        self.userFilter("all");
+    };
+    
     self.tasksToShow = ko.computed(function () {
         if (self.filter() == 'all')
             return self.tasks();
@@ -98,10 +117,21 @@
             if (!name) {
                 return this.tasks();
             } else {
-                return ko.utils.arrayFilter(this.tasks(), function (task) {
+                return ko.utils.arrayFilter(self.tasks(), function (task) {
                     return ((task.Name.toLowerCase().indexOf(name) != -1) || (task.Description.toLowerCase().indexOf(name) != -1));
                 });
             }
         }
     }, this);
+    self.usersToShow = ko.computed(function () {
+        if (self.userFilter() == 'all')
+            return self.users();
+        else if (self.userFilter() == 'name') {
+            var name = self.data.user().length == 0 ? null : self.data.user().toLowerCase();
+            return ko.utils.arrayFilter(self.users(), function (user) {
+                return (user.Name.toLowerCase().indexOf(name) != -1);
+            });
+            
+        }
+    });
 };
