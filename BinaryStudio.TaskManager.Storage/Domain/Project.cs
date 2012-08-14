@@ -48,6 +48,6 @@
         /// <summary>
         /// Gets or sets the project users.
         /// </summary>
-        public ICollection<User> ProjectUsers { get; set; }
+        public virtual ICollection<User> ProjectUsers { get; set; }
     }
 }
