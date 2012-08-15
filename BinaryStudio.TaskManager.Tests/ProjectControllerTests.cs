@@ -38,6 +38,8 @@ namespace BinaryStudio.TaskManager.Web.Tests
 
         private Mock<IStringExtensions> stringExtensionsMock;
 
+        private Mock<IReminderProcessor> reminderProcessorMock;
+
         [SetUp]
         public void Init()
         {
@@ -49,13 +51,15 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.newsRepositoryMock = new Mock<INewsRepository>();
             this.stringExtensionsMock = new Mock<IStringExtensions>();
             this.newsProcessorMock = new Mock<INewsProcessor>();
+            this.reminderProcessorMock = new Mock<IReminderProcessor>();
             this.controller = new ProjectController(
                 this.taskProcessorMock.Object,
                 this.userProcessorMock.Object,
                 this.projectProcessorMock.Object,
                 this.notifierMock.Object,
                 this.newsProcessorMock.Object,
-                this.stringExtensionsMock.Object);
+                this.stringExtensionsMock.Object,
+                this.reminderProcessorMock.Object);
         }
 
         /// <summary>

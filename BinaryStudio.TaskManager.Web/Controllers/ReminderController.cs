@@ -69,6 +69,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.View(reminder);
         }
 
+        [HttpPost]
+        public JsonResult GetUsers(string UserName)
+        {
+            Object[][] a = new object[3][];
+            foreach (var o in a)
+            {
+                    
+            }
+
+            return Json(new object[]{ 1, "Username1",2,"UserName2"});
+        }
+
         public ActionResult Edit(int id)
         {
             var reminder = this.reminderRepository.GetById(id);
