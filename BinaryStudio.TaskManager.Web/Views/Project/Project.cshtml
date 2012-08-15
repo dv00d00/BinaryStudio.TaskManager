@@ -81,10 +81,6 @@
                  </li>
                 <li class="divider"></li>
                 <li>
-                    @Html.ActionLink("Someuser view", "Project", new { id = Model.ProjectId })
-                </li>
-                <li class="divider"></li>
-                <li>
                     @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new { projectId = Model.ProjectId })
                 </li>
             </ul>
@@ -104,18 +100,9 @@
         {
             <!-- Header of the table (Managers names)-->
             <tr>
-                @if (Model.ChosenUserId == null)
-                {
-                    <td align="center">
-                        Unassigned tasks
-                    </td>
-                }
-                else
-                {
-                    <td align="center">
-                        @Model.ChosenUserTasks.User.UserName's tasks
-                    </td>
-                }
+                <td align="center">
+                    Unassigned tasks
+                </td>
 
                 @foreach (var user in Model.UsersTasks)
                 {   
@@ -140,34 +127,16 @@
             
             <tr>
                 <td valign="top" class="well">
-                    @if (Model.ChosenUserId == null)
-                    {
-                        <div class="column" align="center" width="250" id="-1">
+                    <div class="column" align="center" width="250" id="-1">
                             @foreach (var unAssignedTask in Model.UnAssignedTasks)
                             {
                                 <div class="task-holder" data-taskid= @unAssignedTask.Id.ToString() id = @unAssignedTask.Id.ToString()>
                                     @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
                                 </div>
                             }
-                            <div data-managerid="0" style="display: none">
-                                olo</div>
-                            <div class="task" style="display: none">
-                                olo</div>
+                            <div data-managerid="0" style="display: none"></div>
+                            <div class="task" style="display: none"></div>
                         </div>
-                    }
-                    else
-                    {
-                        <div class="column" id=@Model.ChosenUserTasks.User.Id.ToString() align = "center" valign="top" width="250">
-                            @foreach (var task in Model.ChosenUserTasks.Tasks.OrderByDescending(x => x.Priority))
-                            {
-                                <div class="task-holder" data-taskid= @task.Id.ToString() id=@task.Id.ToString()>
-                                    @Html.Partial("ManagerTasksTablePartialView", task)
-                                </div>
-                            }
-                            <div data-managerid = @Model.ChosenUserTasks.User.Id.ToString()>
-                            </div>
-                        </div>
-                    }
                 </td>
                 @foreach (var user in Model.UsersTasks)
                 {   

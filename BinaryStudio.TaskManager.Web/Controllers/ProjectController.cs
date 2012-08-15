@@ -161,10 +161,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="projectId">
         /// The project id.
         /// </param>
+        /// <param name="viewStyle">
+        /// The view Style.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult CreateTask(int userId, int projectId)
+        public ActionResult CreateTask(int userId, int projectId, bool viewStyle)
         {
             var createModel = new CreateTaskViewModel
             {
@@ -173,7 +176,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 CreatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id,
                 Created = DateTime.Now,
                 Tasks = this.taskProcessor.GetOpenTasksListInProject(projectId),
-                ProjectId = projectId
+                ProjectId = projectId,
+                ViewStyle = viewStyle
             };
             createModel.Priority = int.Parse(createModel.Priorities.First().Value);
             return this.View(createModel);
@@ -233,6 +237,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 this.notifier.CreateTask(task.Id);
                 this.newsProcessor.CreateNewsForUsersInProject(taskHistory, task.ProjectId);
 
+                if (true == createModel.ViewStyle)
+                {
+                    return this.RedirectToAction("MultyuserView", new { projectId = createModel.ProjectId, userId = createModel.AssigneeId });
+                }
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId, userId = createModel.AssigneeId });
             }
 
