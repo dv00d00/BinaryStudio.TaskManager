@@ -68,8 +68,27 @@
 <fieldset>
 <br/>
 <br/>
-    <div id="mydiv" align="right">
-        @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new { projectId = Model.ProjectId }, new { @class = "btn" })
+    <div id="mydiv" align="left">
+        <div class="btn-group pull-left">
+            <div class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+                <span class="label label-info log_name">
+                    Actions
+                </span><span class="caret"></span>
+            </div>
+            <ul class="dropdown-menu">
+                <li>
+                    @Html.ActionLink("Multyuser view", "Project", "Project", new { projectId = Model.ProjectId, viewStyle = true })        
+                 </li>
+                <li class="divider"></li>
+                <li>
+                    @Html.ActionLink("Someuser view", "Project", "Project", new { projectId = Model.ProjectId })
+                </li>
+                <li class="divider"></li>
+                <li>
+                    @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new { projectId = Model.ProjectId })
+                </li>
+            </ul>
+        </div>
        @* @Html.ActionLink("Show closed tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = false }, new { @class = "btn" })
         @Html.ActionLink("Show opened tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = true }, new { @class = "btn" })*@
         @Html.Partial("QuickTaskCreation", Model.QuickTask)
@@ -97,10 +116,9 @@
                         @Model.ChosenUserTasks.User.UserName's tasks
                     </td>
                 }
-                @if (Model.NumberOfUsers <= 5)
-                {
-                    foreach (var user in Model.UsersTasks)
-                    {   
+
+                @foreach (var user in Model.UsersTasks)
+                {   
                     <td valign="top" align="center">
                         <p>
                             @if (@user.User.ImageData == null)
@@ -117,13 +135,6 @@
                             @Html.ActionLink("Create task", "CreateTask", "Project", new { userId = user.User.Id, projectId = Model.ProjectId }, new { @class = "btn openDialog", data_dialog_id = "aboutDialog", data_dialog_title = "Create new task" })
                         </p>                        
                     </td> 
-                    }
-                }
-                else
-                {
-                    <td align="center">
-                        <p>All users in project</p>
-                    </td>
                 }
             </tr>
             
@@ -158,10 +169,8 @@
                         </div>
                     }
                 </td>
-                @if (Model.NumberOfUsers <= 5)
-                {
-                    foreach (var user in Model.UsersTasks)
-                    {   
+                @foreach (var user in Model.UsersTasks)
+                {   
                     <td valign="top" class="well">
                         <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
                             @foreach (var task in user.Tasks.OrderByDescending(x => x.Priority))
@@ -174,22 +183,6 @@
                             </div>
                         </div>
                     </td> 
-                    }
-                }
-                else
-                {
-                    <td class="container">                
-                        <ul>
-                            @foreach (var user in Model.UsersTasks)
-                            {   
-                                <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
-                                    <lo>
-                                        @Html.Partial("UserPartialView", user)
-                                    </lo>
-                                </div>                    
-                            }
-                        </ul>
-                    </td>
                 }
             </tr>
         }

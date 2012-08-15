@@ -104,15 +104,18 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// The id.
         /// </param>
         /// <param name="userId">
-        /// The user Id.
+        /// The user id.
+        /// </param>
+        /// <param name="viewStyle">
+        /// The view style.
         /// </param>
         /// <param name="isOpenedProjects">
-        /// The is Opened Projects.
+        /// The is opened projects.
         /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult Project(int id, int? userId, bool isOpenedProjects = true)
+        public ActionResult Project(int id, int? userId, bool? viewStyle, bool isOpenedProjects = true)
         {
             var model = new ProjectViewModel
             {
@@ -148,7 +151,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                          ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, (int)userId).ToList()
                          : this.taskProcessor.GetAllClosedTasksForUserInProject(id, (int)userId).ToList();                
             }
-                       
+
+            if (true == viewStyle)
+            {
+                return this.RedirectToAction("MultyuserView", new { model });
+            }
+
             return this.View(model);
         }
 
@@ -585,8 +593,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.View(model);
         }
 
-        
-
         /// <summary>
         /// The create single task view model by id.
         /// </summary>
@@ -672,6 +678,20 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
             taskProcessor.AddHistory(humanTaskHistory);
             this.newsProcessor.CreateNewsForUsersInProject(humanTaskHistory,humanTask.ProjectId);
+        }
+
+        /// <summary>
+        /// The multyuser view.
+        /// </summary>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        public ActionResult MultyuserView(ProjectViewModel model)
+        {
+            return this.View(model);
         }
     }
 }
