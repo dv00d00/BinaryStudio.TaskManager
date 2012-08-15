@@ -77,11 +77,11 @@
             </div>
             <ul class="dropdown-menu">
                 <li>
-                    @Html.ActionLink("Multyuser view", "Project", "Project", new { projectId = Model.ProjectId, viewStyle = true })        
+                    @Html.ActionLink("Multyuser view", "MultyuserView",  new { projectId = Model.ProjectId })        
                  </li>
                 <li class="divider"></li>
                 <li>
-                    @Html.ActionLink("Someuser view", "Project", "Project", new { projectId = Model.ProjectId })
+                    @Html.ActionLink("Someuser view", "Project", new { id = Model.ProjectId })
                 </li>
                 <li class="divider"></li>
                 <li>

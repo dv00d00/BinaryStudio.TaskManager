@@ -106,16 +106,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="userId">
         /// The user id.
         /// </param>
-        /// <param name="viewStyle">
-        /// The view style.
-        /// </param>
         /// <param name="isOpenedProjects">
         /// The is opened projects.
         /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult Project(int id, int? userId, bool? viewStyle, bool isOpenedProjects = true)
+        public ActionResult Project(int id, int? userId, bool isOpenedProjects = true)
         {
             var model = new ProjectViewModel
             {
@@ -150,11 +147,6 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 model.ChosenUserTasks.Tasks = isOpenedProjects
                          ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, (int)userId).ToList()
                          : this.taskProcessor.GetAllClosedTasksForUserInProject(id, (int)userId).ToList();                
-            }
-
-            if (true == viewStyle)
-            {
-                return this.RedirectToAction("MultyuserView", new { model });
             }
 
             return this.View(model);
@@ -677,20 +669,61 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             };
 
             taskProcessor.AddHistory(humanTaskHistory);
-            this.newsProcessor.CreateNewsForUsersInProject(humanTaskHistory,humanTask.ProjectId);
+            this.newsProcessor.CreateNewsForUsersInProject(humanTaskHistory, humanTask.ProjectId);
         }
 
         /// <summary>
         /// The multyuser view.
         /// </summary>
-        /// <param name="model">
-        /// The model.
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <param name="isOpenedProjects">
+        /// The is opened projects.
         /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult MultyuserView(ProjectViewModel model)
+        public ActionResult MultyuserView(int projectId, int? userId, bool isOpenedProjects = true)
         {
+            var model = new ProjectViewModel
+            {
+                UsersTasks = new List<ManagerTasksViewModel>(),
+                UnAssignedTasks = this.taskProcessor.GetUnAssignedTasksForProject(projectId).ToList(),
+                QuickTask = new HumanTask(),
+                ProjectId = projectId,
+                ChosenUserId = userId,
+                ChosenUserTasks = new ManagerTasksViewModel(),
+                NumberOfUsers = this.projectProcessor.GetUsersAndCreatorInProject(projectId).Count()
+            };
+            model.QuickTask.ProjectId = projectId;
+            var users = new List<User>();
+            users = this.projectProcessor.GetUsersAndCreatorInProject(projectId).Reverse().ToList();
+            foreach (var user in users)
+            {
+                var managerModel = new ManagerTasksViewModel
+                {
+                    User = user,
+                    ProjectId = projectId,
+                    Tasks = isOpenedProjects
+                        ? this.taskProcessor.GetAllOpenTasksForUserInProject(projectId, user.Id).ToList()
+                        : this.taskProcessor.GetAllClosedTasksForUserInProject(projectId, user.Id).ToList()
+                };
+                model.UsersTasks.Add(managerModel);
+            }
+
+            if (userId != null)
+            {
+                model.ChosenUserTasks.User = this.userProcessor.GetUser((int)userId);
+                model.ChosenUserTasks.ProjectId = projectId;
+                model.ChosenUserTasks.Tasks = isOpenedProjects
+                         ? this.taskProcessor.GetAllOpenTasksForUserInProject(projectId, (int)userId).ToList()
+                         : this.taskProcessor.GetAllClosedTasksForUserInProject(projectId, (int)userId).ToList();
+            }
+
             return this.View(model);
         }
     }
