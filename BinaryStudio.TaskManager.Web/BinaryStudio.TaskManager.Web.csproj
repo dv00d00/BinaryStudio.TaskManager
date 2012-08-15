@@ -355,7 +355,6 @@
     <Content Include="Views\HumanTasks\TaskDetailsPartial.cshtml" />
     <Content Include="Views\LinkedIn\RegisterLinkedIn.cshtml" />
     <Content Include="Views\Project\CreateTask.cshtml" />
-    <Content Include="Views\Project\PersonalProject.cshtml" />
     <Content Include="Views\Account\RegisterNewUser.cshtml" />
     <Content Include="Views\Project\InviteOrDeleteUser.cshtml" />
     <Content Include="Views\SignalR\Index.cshtml" />
@@ -368,13 +367,13 @@
     <Content Include="Views\HumanTasks\AllManagersWithTasks.cshtml" />
     <Content Include="Views\HumanTasks\ManagerTasksTablePartialView.cshtml" />
     <Content Include="Views\Project\Project.cshtml" />
-    <Content Include="Views\Project\UserDetails.cshtml" />
     <Content Include="Views\Project\ManagerTasksTablePartialView.cshtml" />
     <Content Include="Views\Landing\Index.cshtml" />
     <Content Include="Views\Profile\ChangePassword.cshtml" />
     <Content Include="Views\Project\QuickTaskCreation.cshtml" />
     <Content Include="Views\QuickTask\QuickTaskCreation.cshtml" />
     <Content Include="Views\Project\UserPartialView.cshtml" />
+    <Content Include="Views\Project\MultiuserView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\AdminPanel.cshtml" />

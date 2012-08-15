@@ -178,7 +178,7 @@ $(function () {
         }
     }
 
-    $(".keyboard").click(function() {
+    $(".keyboard").click(function () {
         $("#shortcuts_window").modal('show');
     });
     /******** Project name length *******/
@@ -197,6 +197,9 @@ $(function () {
     $("#delete_box").on('hidden', function () {
         $(".yes").off();
         $(window).off("keydown");
+        $(document).on("focus", "input", function () {
+            $(document).off(".short");
+        });
     });
 
     $(document).on("click", ".delete_btn", function () {
@@ -204,6 +207,7 @@ $(function () {
         $(".modal-body").html("<p>Are you sure, that you want to delete project</p>\
             <span> <b>" + $(this).parent(".proj_row").children(".project_name").html() + "</b>?</span>");
         $("#delete_box").modal('show');
+        $(document).off(".short");
         $(".yes").on("click", function () {
             deleteProjectQuery(proj);
             $(".yes").off();
@@ -216,6 +220,11 @@ $(function () {
                 $("#delete_box").modal('hide');
             }
             $(window).off("keydown");
+            setTimeout(function () {
+                $(document).on("keyup.short", function (d) {
+                    bindShortcuts(d);
+                });
+            }, 100);
         });
     });
 
@@ -243,6 +252,8 @@ $(function () {
             }
             else if (code == 13) {
                 sendNewProject();
+                $(".user_list_input").focus();
+                setTimeout(function() { $("input").blur(); }, 100);
             }
         });
         $(".add_proj_btn").prop("disabled", "true");
@@ -451,7 +462,12 @@ function listProjects(response) {
 
 function projectsOutput(projects, li_class) {
     var name = null;
+    var user = "";
     for (var i = 0; i < projects.length; i++) {
+        if (li_class == 'user_projs') {
+            user = "<b>" + projects[i].Creator + "</b>/";
+        } else
+            user = "";
         if (projects[i].Name.length < 20)
             name = projects[i].Name;
         else
@@ -460,7 +476,7 @@ function projectsOutput(projects, li_class) {
         $(".project_list").append("\
         <div class='proj_row' data-id='" + projects[i].Id + "'>\
                          " + ownProjDelete + "\
-                         <div  class='" + li_class + " project_name'>" + name + "</div>\
+                         <div  class='" + li_class + " project_name'>" +user+ name + "</div>\
                      </div>");
          if (projects[i].Name.length >= 20)
             $("li[data-id=" + projects[i].Id + "]").attr("title", projects[i].Name);

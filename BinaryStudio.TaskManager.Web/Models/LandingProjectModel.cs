@@ -10,6 +10,8 @@ namespace BinaryStudio.TaskManager.Web.Models
         
         public string Name { get; set; }
 
+        public string Creator { get; set; }
+
         public IEnumerable<LandingTaskModel> Tasks { get; set; }
 
         public IEnumerable<LandingUserModel> Users { get; set; }

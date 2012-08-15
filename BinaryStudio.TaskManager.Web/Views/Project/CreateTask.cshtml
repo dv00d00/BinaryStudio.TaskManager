@@ -68,11 +68,16 @@
         <div>
             @Html.DropDownListFor(x => x.Tasks, Model.Tasks, "Choose blocking task:", new { @id = "taskslist" })
         </div>
-        <div data-managerid="0" style="display: none">
-            olo
-        </div>
+        <div data-managerid="0" style="display: none"></div>
         <input type="submit" value="Save" class="btn btn-primary" />
-        @Html.ActionLink("Return to project", "Project", new { id = Model.ProjectId }, new { @class = "btn" })
+        @if (Model.ViewStyle == true)
+        {
+            @Html.ActionLink("Return to project", "MultiuserView", new { projectId = Model.ProjectId }, new { @class = "btn" }) 
+        }
+        else
+        {
+            @Html.ActionLink("Return to project", "Project", new { id = Model.ProjectId }, new { @class = "btn" })
+        }
     </fieldset>
 }
 

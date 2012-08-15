@@ -1,6 +1,4 @@
-﻿@using BinaryStudio.TaskManager.Web.Controllers
-@using BinaryStudio.TaskManager.Web.Extentions
-@model BinaryStudio.TaskManager.Logic.Domain.HumanTask
+﻿@model BinaryStudio.TaskManager.Logic.Domain.HumanTask
 @* This partial view draw a task block in table *@
 @{ string divClass = "pr" + Model.Priority.ToString();
    string[] pClass = { "priorityLow", "priorityMiddle", "priorityHigh", "blocking" };

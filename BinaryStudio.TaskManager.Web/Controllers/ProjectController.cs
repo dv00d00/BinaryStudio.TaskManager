@@ -55,9 +55,16 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </summary>
         private readonly INewsProcessor newsProcessor;
 
+        /// <summary>
+        /// The string extensions.
+        /// </summary>
         private readonly IStringExtensions stringExtensions;
 
+        /// <summary>
+        /// The reminder processor.
+        /// </summary>
         private readonly IReminderProcessor reminderProcessor;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectController"/> class.
         /// </summary>
@@ -74,9 +81,14 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// The notifier.
         /// </param>
         /// <param name="newsProcessor">
-        /// The news Processor.
+        /// The news processor.
         /// </param>
-
+        /// <param name="stringExtensions">
+        /// The string extensions.
+        /// </param>
+        /// <param name="reminderProcessor">
+        /// The reminder processor.
+        /// </param>
         public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, 
             INotifier notifier, INewsProcessor newsProcessor, IStringExtensions stringExtensions, IReminderProcessor reminderProcessor)
         {
@@ -95,8 +107,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="id">
         /// The id.
         /// </param>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
         /// <param name="isOpenedProjects">
-        /// The is Opened Projects.
+        /// The is opened projects.
         /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
@@ -137,7 +152,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                          ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, (int)userId).ToList()
                          : this.taskProcessor.GetAllClosedTasksForUserInProject(id, (int)userId).ToList();                
             }
-                       
+
             return this.View(model);
         }
 
@@ -150,10 +165,13 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="projectId">
         /// The project id.
         /// </param>
+        /// <param name="viewStyle">
+        /// The view Style.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult CreateTask(int userId, int projectId)
+        public ActionResult CreateTask(int userId, int projectId, bool? viewStyle)
         {
             var createModel = new CreateTaskViewModel
             {
@@ -162,7 +180,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 CreatorId = this.userProcessor.GetUserByName(User.Identity.Name).Id,
                 Created = DateTime.Now,
                 Tasks = this.taskProcessor.GetOpenTasksListInProject(projectId),
-                ProjectId = projectId
+                ProjectId = projectId,
+                ViewStyle = viewStyle
             };
             createModel.Priority = int.Parse(createModel.Priorities.First().Value);
             return this.View(createModel);
@@ -221,9 +240,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 this.taskProcessor.AddHistory(taskHistory);
                 this.notifier.CreateTask(task.Id);
                 this.newsProcessor.CreateNewsForUsersInProject(taskHistory, task.ProjectId);
-                //creating reamider
-                
-                
+
+                if (true == createModel.ViewStyle)
+                {
+                    return this.RedirectToAction("MultiuserView", new { projectId = createModel.ProjectId, userId = createModel.AssigneeId });
+                }
+
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId, userId = createModel.AssigneeId });
             }
 
@@ -234,36 +256,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
             return this.View(createModel);
         }
-
-
-        /// <summary>
-        /// The personal project.
-        /// </summary>
-        /// <returns>
-        /// The System.Web.Mvc.ActionResult.
-        /// </returns>
-        [Authorize]
-        public ActionResult PersonalProject()
-        {
-            const int ProjectId = 1;
-            var model = new ProjectViewModel
-                {
-                    UsersTasks = new List<ManagerTasksViewModel>(),
-                    UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList()
-                };
-            var users = this.projectProcessor.GetAllUsersInProject(ProjectId);
-            foreach (var viewModel in users.Select(user => new ManagerTasksViewModel
-                {
-                    User = user,
-                    Tasks = this.taskProcessor.GetTasksList(user.Id).ToList()
-                }))
-            {
-                model.UsersTasks.Add(viewModel);
-            }
-
-            return this.View(model);
-        }
-
+        
         /// <summary>
         /// Moves task from one user to another.
         /// </summary>
@@ -428,11 +421,14 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="projectId">
         /// The project id.
         /// </param>
+        /// <param name="viewStyle">
+        /// The view Style.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         [Authorize]
-        public ActionResult Edit(int taskId, int projectId)
+        public ActionResult Edit(int taskId, int projectId, bool? viewStyle)
         {
             var task = this.taskProcessor.GetTaskById(taskId);
             var createModel = new CreateTaskViewModel
@@ -448,7 +444,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 Finished = task.Finished,
                 Tasks = this.taskProcessor.GetOpenTasksListInProject(projectId),
                 ProjectId = projectId,
-                Id = taskId
+                Id = taskId,
+                ViewStyle = viewStyle
             };
             return this.View(createModel);
         }
@@ -488,7 +485,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                       };
                 
                 this.taskProcessor.AddHistory(taskHistory);
-                this.newsProcessor.CreateNewsForUsersInProject(taskHistory,humanTask.ProjectId);
+                this.newsProcessor.CreateNewsForUsersInProject(taskHistory, humanTask.ProjectId);
+
+                if (true == createModel.ViewStyle)
+                {
+                    return this.RedirectToAction("MultiuserView", new { projectId = createModel.ProjectId, userId = createModel.AssigneeId });
+                }
 
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId, userId = createModel.AssigneeId });
             }
@@ -507,7 +509,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>        
         public ActionResult Details(int id)
         {
-            var model = this.CreateSingleTaskViewModelById(id);            
+            var model = this.CreateSingleTaskViewModelById(id, true);            
             return this.View(model);
         }
 
@@ -522,7 +524,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>
         public ActionResult Delete(int idTask)
         {
-            var model = this.CreateSingleTaskViewModelById(idTask);
+            var model = this.CreateSingleTaskViewModelById(idTask, true);
             return this.View(model);
         }
 
@@ -545,49 +547,20 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.taskProcessor.DeleteTask(idTask);
             return this.RedirectToAction("Project", new { id = projectId });
         }
-
-        /// <summary>
-        /// The user details.
-        /// </summary>
-        /// <param name="userId">
-        /// The user id.
-        /// </param>
-        /// <returns>
-        /// The System.Web.Mvc.ActionResult.
-        /// </returns>
-        [Authorize]
-        public ActionResult UserDetails(int userId)
-        {
-            this.ViewBag.ManagerName = this.userProcessor.GetUser(userId).UserName;
-            this.ViewBag.ManagerId = userId;
-            IList<HumanTask> humanTasks = this.taskProcessor.GetTasksList(userId).ToList();
-            IList<TaskViewModel> model =
-                humanTasks.Select(
-                    task =>
-                    new TaskViewModel
-                    {
-                        Task = task,
-                        CreatorName =
-                            task.CreatorId.HasValue
-                                ? this.userProcessor.GetUser(task.CreatorId.Value).UserName
-                                : string.Empty
-                    }).ToList();
-
-            return this.View(model);
-        }
-
         
-
         /// <summary>
         /// The create single task view model by id.
         /// </summary>
         /// <param name="taskId">
         /// The task id.
         /// </param>
+        /// <param name="viewStyle">
+        /// The view Style.
+        /// </param>
         /// <returns>
         /// The BinaryStudio.TaskManager.Web.Models.SingleTaskViewModel.
         /// </returns>
-        private SingleTaskViewModel CreateSingleTaskViewModelById(int taskId)
+        private SingleTaskViewModel CreateSingleTaskViewModelById(int taskId, bool? viewStyle)
         {
             var task = this.taskProcessor.GetTaskById(taskId);
             var creatorName = task.CreatorId.HasValue
@@ -612,7 +585,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                         x => x.ChangeDateTime)
                                     .ToList(),
                                 Priorities = this.taskProcessor.GetPrioritiesList(),
-                                BlockedTaskName = blockedTaskName
+                                BlockedTaskName = blockedTaskName,
+                                ViewStyle = viewStyle
                             };
             return model;
         }
@@ -662,7 +636,62 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             };
 
             taskProcessor.AddHistory(humanTaskHistory);
-            this.newsProcessor.CreateNewsForUsersInProject(humanTaskHistory,humanTask.ProjectId);
+            this.newsProcessor.CreateNewsForUsersInProject(humanTaskHistory, humanTask.ProjectId);
+        }
+
+        /// <summary>
+        /// The multyuser view.
+        /// </summary>
+        /// <param name="projectId">
+        /// The project id.
+        /// </param>
+        /// <param name="userId">
+        /// The user id.
+        /// </param>
+        /// <param name="isOpenedProjects">
+        /// The is opened projects.
+        /// </param>
+        /// <returns>
+        /// The System.Web.Mvc.ActionResult.
+        /// </returns>
+        public ActionResult MultiuserView(int projectId, int? userId, bool isOpenedProjects = true)
+        {
+            var model = new ProjectViewModel
+            {
+                UsersTasks = new List<ManagerTasksViewModel>(),
+                UnAssignedTasks = this.taskProcessor.GetUnAssignedTasksForProject(projectId).ToList(),
+                QuickTask = new HumanTask(),
+                ProjectId = projectId,
+                ChosenUserId = userId,
+                ChosenUserTasks = new ManagerTasksViewModel(),
+                NumberOfUsers = this.projectProcessor.GetUsersAndCreatorInProject(projectId).Count()
+            };
+            model.QuickTask.ProjectId = projectId;
+            var users = new List<User>();
+            users = this.projectProcessor.GetUsersAndCreatorInProject(projectId).Reverse().ToList();
+            foreach (var user in users)
+            {
+                var managerModel = new ManagerTasksViewModel
+                {
+                    User = user,
+                    ProjectId = projectId,
+                    Tasks = isOpenedProjects
+                        ? this.taskProcessor.GetAllOpenTasksForUserInProject(projectId, user.Id).ToList()
+                        : this.taskProcessor.GetAllClosedTasksForUserInProject(projectId, user.Id).ToList()
+                };
+                model.UsersTasks.Add(managerModel);
+            }
+
+            if (userId != null)
+            {
+                model.ChosenUserTasks.User = this.userProcessor.GetUser((int)userId);
+                model.ChosenUserTasks.ProjectId = projectId;
+                model.ChosenUserTasks.Tasks = isOpenedProjects
+                         ? this.taskProcessor.GetAllOpenTasksForUserInProject(projectId, (int)userId).ToList()
+                         : this.taskProcessor.GetAllClosedTasksForUserInProject(projectId, (int)userId).ToList();
+            }
+
+            return this.View(model);
         }
     }
 }
