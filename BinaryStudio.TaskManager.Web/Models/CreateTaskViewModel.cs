@@ -46,6 +46,6 @@ namespace BinaryStudio.TaskManager.Web.Models
 
         public int BlockingTask { get; set; }
 
-        public bool ViewStyle { get; set; }
+        public bool? ViewStyle { get; set; }
     }
 }

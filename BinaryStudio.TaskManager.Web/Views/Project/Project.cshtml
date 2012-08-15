@@ -116,7 +116,9 @@
                             {
                                 <img class="pull-left" width="70" height="70" src="@Url.Action("GetImage", "Project", new { UserId = user.User.Id })" />
                             }
-                            @Html.ActionLink(user.User.UserName, "UserDetails", new { userId = user.User.Id }, new { @class = "btn btn-info" })
+                            <button class="btn btn-info">
+                                @user.User.UserName
+                            </button>
                         </p>
                         <p>
                             @Html.ActionLink("Create task", "CreateTask", "Project", new { userId = user.User.Id, projectId = Model.ProjectId }, new { @class = "btn openDialog", data_dialog_id = "aboutDialog", data_dialog_title = "Create new task" })

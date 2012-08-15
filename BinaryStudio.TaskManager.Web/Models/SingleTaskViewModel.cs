@@ -16,6 +16,8 @@ namespace BinaryStudio.TaskManager.Web.Models
 
         public string BlockedTaskName { get; set; }
 
+        public bool? ViewStyle { get; set; }
+
         public IList<HumanTaskHistory> TaskHistories { get; set; }
 
     }

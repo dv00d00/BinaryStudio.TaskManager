@@ -75,11 +75,11 @@
         <div>
             @Html.DropDownListFor(x => x.Tasks, Model.Tasks, "Choose blocking task:", new { @id = "taskslist" })
         </div>
-        <div data-managerid="0" style="display: none">
-            olo
-        </div>
+        <div data-managerid="0" style="display: none"></div>
             <input type="submit" value="Save" class="btn btn-primary" />
-            @Html.ActionLink("Return to tasks list", "Project", new { id = Model.ProjectId }, new { @class = "btn" })
+            @(this.Model.ViewStyle == true ? 
+                this.Html.ActionLink("Return to project", "MultyuserView", new { projectId = this.Model.ProjectId }, new { @class = "btn" }) : 
+                this.Html.ActionLink("Return to project", "Project", new { id = this.Model.ProjectId }, new { @class = "btn" }))
         </p>
     </fieldset>
 }
