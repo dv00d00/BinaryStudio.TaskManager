@@ -61,6 +61,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly IStringExtensions stringExtensions;
 
         /// <summary>
+        /// The reminder processor.
+        /// </summary>
+        private readonly IReminderProcessor reminderProcessor;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ProjectController"/> class.
         /// </summary>
         /// <param name="taskProcessor">
@@ -76,18 +81,16 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// The notifier.
         /// </param>
         /// <param name="newsProcessor">
-        /// The news Processor.
+        /// The news processor.
         /// </param>
         /// <param name="stringExtensions">
-        /// The string Extensions.
+        /// The string extensions.
         /// </param>
-        public ProjectController(
-            ITaskProcessor taskProcessor,
-            IUserProcessor userProcessor,
-            IProjectProcessor projectProcessor,
-            INotifier notifier,
-            INewsProcessor newsProcessor,
-            IStringExtensions stringExtensions)
+        /// <param name="reminderProcessor">
+        /// The reminder processor.
+        /// </param>
+        public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, 
+            INotifier notifier, INewsProcessor newsProcessor, IStringExtensions stringExtensions, IReminderProcessor reminderProcessor)
         {
             this.projectProcessor = projectProcessor;
             this.notifier = notifier;
@@ -95,6 +98,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.userProcessor = userProcessor;
             this.newsProcessor = newsProcessor;
             this.stringExtensions = stringExtensions;
+            this.reminderProcessor = reminderProcessor;
         }
 
         /// <summary>

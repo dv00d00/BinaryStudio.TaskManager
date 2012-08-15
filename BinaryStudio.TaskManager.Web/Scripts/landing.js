@@ -1,6 +1,5 @@
 ﻿var modelData = new TaskModel();
-var toDashboard = function (element, where) {
-    var num = element.parent("div").attr("data-id");
+var toDashboard = function (num, where) {
     if (where == "here"){
         $("*").css("cursor", "progress");
         location.href = "/Project/Project/" + num;
@@ -11,11 +10,11 @@ var toDashboard = function (element, where) {
 $(function () {
     /*********** To dashboard clicks handling ************/
     $(document).on("dblclick", ".project_list .project_name", function () {
-        toDashboard($(this), "here");
+        toDashboard($(this).parent("div").attr("data-id"), "here");
     });
     $(document).on("mousedown", ".project_list .project_name", function (e) {
         if (e.which == 2) {
-            toDashboard($(this), "there");
+            toDashboard($(this).parent("div").attr("data-id"), "there");
         }
     });
 
@@ -27,81 +26,84 @@ $(function () {
         $(this).parent("div").parent("div").children("span").css("left", "0px");
     });
     var taskId = null;
-    $(document).on("click", ".img_holder,.add_task_assignee_photo", function (e) {
-        var top;
-        var left;
-        var user_list_holder = $('.user_list_holder');
-        if ($(window).height() > (e.pageY + 200)) {//> (e.pageY + $('.user_list_holder').height())) {
-            top = e.pageY + 25;
-        }
-        else {
-            top = e.pageY - user_list_holder.height() - 25;
-        }
-        if ($(window).width() > (e.pageX + user_list_holder.width())) {
-            left = e.pageX - 30;
-        }
-        else {
-            left = e.pageX - 225;
-        }
-        if ($("#content h2").attr("data-id") != -1)
-            user_list_holder.css({
-                "display": "block",
-                "top": top,
-                "left": left
-            });
-        scrollPresence();
-        $(".user_list_input").focus();
+    $(document).on("click", ".img_holder", function (e) {
+        $(".user_list_title").text("Assign someone to this task");
+        modelData.allUsers();
+        showUserHolder(e);
+        $(".user_list_holder").addClass("instant_task_move");
         taskId = $(this).parent("div").parent("div").attr("data-id");
-        user_list_holder.removeClass("instant_task_move");
-        user_list_holder.removeClass("assignee_to_choose");
-        if ($(this).hasClass("img_holder")) {
-            user_list_holder.addClass("instant_task_move");
+    });
+    $(document).on("click", ".add_task_assignee_photo", function (e) {
+        $(".user_list_title").text("Assign someone to this task");
+        modelData.allUsers();
+        showUserHolder(e);
+        $(".user_list_holder").addClass("assignee_to_choose");
+    });
+    $(document).on("click", ".assignee_btn", function (e) {
+        modelData.allUsers();
+        var user_list_holder = $(".user_list_holder");
+        $(".user_list_clear").hide();
+        if (user_list_holder.hasClass("open") == false) {
+            $(".user_list_title").text("Show tasks for assignee");
+            showUserHolder(e);
+            user_list_holder.addClass("open");
+            $(".user_list_holder").addClass("assignee_filter");
         }
         else {
-            user_list_holder.addClass("assignee_to_choose");
+            user_list_holder.removeClass("open");
+            hideUserHolder();
         }
+        $(".user_list_clear").toggle();
     });
-    $(document).keyup(function (e) {
+
+    $(document).keyup(".user_list_input", function (e) {
         var code = null;
         code = (e.keyCode ? e.keyCode : e.which);
         if (code == 27) {
-            $(".user_list_holder").hide();
-            clearInput();
+            hideUserHolder();
         }
         $("user_list_holder").off();
     });
     $(".user_list_close").click(function () {
-        $(".user_list_holder").hide();
-        clearInput();
+        hideUserHolder();
     });
 
     $(document).on("click.user_list", ".assignee_to_choose li", function () {
         var self = $(this);
         var userId = self.attr('data-id');
-        $(".user_list_holder").hide();
+        hideUserHolder();
+        $(".new_task_name").focus();
         $(".add_task_assignee_photo").html("");
         self.children("img").clone().appendTo($(".add_task_assignee_photo"));
         $(".add_task_assignee").attr("data-id", userId);
         $(".add_task_assignee_name span").html(self.children("span").text());
     });
-
+    $(document).on("click.user_list", ".assignee_to_choose .user_list_clear", function () {
+        hideUserHolder();
+        $(".add_task_assignee").attr("data-id", "");
+        $(".add_task_assignee_photo").html("");
+        $(".add_task_assignee span").text("No one");
+    });
     $(document).on("click.user_list", ".instant_task_move li", function () {
         var userId = $(this).attr('data-id');
         moveTask(-1, userId, taskId);
 
+    });
+
+    $(document).on("click.user_list", ".assignee_filter li", function () {
+        var self = $(this);
+        var task = {
+            AssigneeId: self.attr('data-id'),
+            Assignee: self.children("span").text()
+        };
+        modelData.filterByAssignee(task);
+        hideUserHolder();
     });
     $(document).on("click.user_list", ".instant_task_move .user_list_clear", function () {
         moveTask(-1, -1, taskId);
     });
 
     $('.user_list_input').keyup(function () {
-        var search_val = $(this).val();
-        for (var i = 0; i < modelData.users().length; i++) {
-            modelData.users()[i]._destroy = false;
-        }
-        modelData.users.destroy(function (item) {
-            return item.Name.indexOf(search_val) == -1;
-        });
         scrollPresence();
     });
 
@@ -110,19 +112,75 @@ $(function () {
         position: 'left',
         delay: { show: 1000 }
     });
-    /***** Filter  *******/
-    $("#left_panel>input").val("Filter tasks");
 
-    $("#left_panel>input").on("blur", function () {
-        if ($(this).val() == "")
-            $(this).val("Filter tasks");
+    /******* Shortcuts ********/
+    $(document).on("keyup.short", function (e) {
+        bindShortcuts(e);
     });
 
-    $("#left_panel>input").on("click", function () {
-        if ($(this).val() == "Filter tasks")
-            $(this).val("");
+    $(document).on("focus", "input", function () {
+        $(document).off(".short");
     });
+    $(document).on("blur", "input", function () {
+        $(document).on("keyup.short", function (e) {
+            bindShortcuts(e);
+        });
+    });
+    function bindShortcuts(e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        switch (code) {
+            case 13:
+                newTaskInputEnter();
+                break;
+            case 84:
+                newTaskInputEnter();
+                break;
+            case 70:
+                $("#filterByName").focus();
+                break;
+            case 83:
+                $(".sort_btn").toggleClass("open");
+                break;
+            case 80:
+                modelData.sortByPriority();
+                break;
+            case 65:
+                modelData.sortByAssignee();
+                break;
+            case 67:
+                modelData.sortByDate();
+                break;
+            case 68:
+                var num = ($("#content h2").attr("data-id"));
+                if ((num != "") && (num != '-1') && (num != null))
+                    toDashboard(num, "here");
+                break;
+            case 78:
+                modelData.sortByName();
+                break;
+            case 75:
+                $("#shortcuts_window").modal('show');
+                break;
+            case 77:
+                $(".new_task_btn").hide();
+                $(".project_name").removeClass("active_proj");
+                $("#my_tasks").addClass("active_proj");
+                getTaskGroup("my", "My Tasks");
+                $(".assignee_btn").hide();
+                break;
+            case 85:
+                $(".new_task_btn").hide();
+                $(".project_name").removeClass("active_proj");
+                $("#unassigned_tasks").addClass("active_proj");
+                getTaskGroup("unassigned", "Unassigned Tasks");
+                $(".assignee_btn").hide();
+                break;
+        }
+    }
 
+    $(".keyboard").click(function () {
+        $("#shortcuts_window").modal('show');
+    });
     /******** Project name length *******/
 
     $(".project_name").each(function () {
@@ -139,6 +197,9 @@ $(function () {
     $("#delete_box").on('hidden', function () {
         $(".yes").off();
         $(window).off("keydown");
+        $(document).on("focus", "input", function () {
+            $(document).off(".short");
+        });
     });
 
     $(document).on("click", ".delete_btn", function () {
@@ -146,6 +207,7 @@ $(function () {
         $(".modal-body").html("<p>Are you sure, that you want to delete project</p>\
             <span> <b>" + $(this).parent(".proj_row").children(".project_name").html() + "</b>?</span>");
         $("#delete_box").modal('show');
+        $(document).off(".short");
         $(".yes").on("click", function () {
             deleteProjectQuery(proj);
             $(".yes").off();
@@ -158,6 +220,11 @@ $(function () {
                 $("#delete_box").modal('hide');
             }
             $(window).off("keydown");
+            setTimeout(function () {
+                $(document).on("keyup.short", function (d) {
+                    bindShortcuts(d);
+                });
+            }, 100);
         });
     });
 
@@ -181,8 +248,12 @@ $(function () {
             code = (e.keyCode ? e.keyCode : e.which);
             if (code == 27) {
                 $(".newBox").remove();
-            } else if (code == 13) {
+                $("input").blur();
+            }
+            else if (code == 13) {
                 sendNewProject();
+                $(".user_list_input").focus();
+                setTimeout(function() { $("input").blur(); }, 100);
             }
         });
         $(".add_proj_btn").prop("disabled", "true");
@@ -219,9 +290,11 @@ $(function () {
         }
         var groupName = $(this).html();
         getTaskGroup(url, groupName);
+        $(".assignee_btn").hide();
     });
     $(document).on("click", ".user_projs,.created_projs", function () {
         $(".new_task_btn").show();
+        $(".assignee_btn").show();
         $(".project_name").removeClass("active_proj");
         $(this).addClass("active_proj");
         var proj = $(this).parent(".proj_row").attr("data-id");
@@ -244,11 +317,6 @@ $(function () {
     $(".new_task_name").keyup(function (e) {
         if (e.which == 13) {
             addTask();
-        }
-    });
-    $(document).on("keyup", function (e) {
-        if (e.which == 13) {
-            newTaskInputEnter();
         }
     });
     $(".new_task_name").keyup(function (e) {
@@ -282,6 +350,7 @@ function getTaskList(proj) {
                     Description: task.Description,
                     CreatedDate: date.toLocaleDateString(),
                     CreatedTime: date.toLocaleTimeString(),
+                    CompareDate: date,
                     Creator: task.Creator,
                     Priority: task.Priority,
                     AssigneeId: task.AssigneeId,
@@ -326,6 +395,7 @@ function getTaskGroup(url, groupName) {
                     Description: task.Description,
                     CreatedDate: date.toLocaleDateString(),
                     CreatedTime: date.toLocaleTimeString(),
+                    CompareDate: date,
                     Creator: task.Creator,
                     Priority: task.Priority,
                     AssigneeId: task.AssigneeId,
@@ -392,7 +462,12 @@ function listProjects(response) {
 
 function projectsOutput(projects, li_class) {
     var name = null;
+    var user = "";
     for (var i = 0; i < projects.length; i++) {
+        if (li_class == 'user_projs') {
+            user = "<b>" + projects[i].Creator + "</b>/";
+        } else
+            user = "";
         if (projects[i].Name.length < 20)
             name = projects[i].Name;
         else
@@ -401,7 +476,7 @@ function projectsOutput(projects, li_class) {
         $(".project_list").append("\
         <div class='proj_row' data-id='" + projects[i].Id + "'>\
                          " + ownProjDelete + "\
-                         <div  class='" + li_class + " project_name'>" + name + "</div>\
+                         <div  class='" + li_class + " project_name'>" +user+ name + "</div>\
                      </div>");
          if (projects[i].Name.length >= 20)
             $("li[data-id=" + projects[i].Id + "]").attr("title", projects[i].Name);
@@ -413,22 +488,15 @@ function projectsOutput(projects, li_class) {
     return i;
 }
 
-function scrollPresence()
-{
-    var user_list = $(".user_list");
-    if (user_list.height() < 250) {
-        user_list.css("overflow-y", "hidden");
-    }
-    else {
-        user_list.css("overflow-y", "scroll");
-    }
-}
-
-function clearInput() {
-    $(".user_list_input").val("");
-    for (var i = 0; i < modelData.users().length; i++) {
-        modelData.users()[i]._destroy = false;
-    }
+function scrollPresence() {
+    setTimeout(function() {
+        var user_list = $(".user_list");
+        if (user_list.height() < 250) {
+            user_list.css("overflow-y", "hidden");
+        } else {
+            user_list.css("overflow-y", "scroll");
+        }
+    }, 50);
 }
 
 function newTaskInputEnter() {
@@ -438,11 +506,13 @@ function newTaskInputEnter() {
 }
 
 function newTaskInputEscape() {
+    $("input").blur();
     $("#add_task_box").hide();
     $(".new_task_btn").show();
     $(".new_task_name").val("");
+    $(".add_task_assignee").attr("data-id", "");
     $(".add_task_assignee_photo").html("");
-    $(".add_task_assignee span").html("");
+    $(".add_task_assignee span").text("No one");
 } 
 
 function moveTask(projectId, userId, taskId) {
@@ -496,4 +566,44 @@ function addTask() {
     else {
         $(".new_task_name").focus();
     }
+}
+
+function showUserHolder(e) {
+    var top;
+    var left;
+    var self = $(this);
+    var user_list_holder = $('.user_list_holder');
+    if ($(window).height() > (e.pageY + 200)) {//> (e.pageY + $('.user_list_holder').height())) {
+        top = e.pageY + 25;
+    }
+    else {
+        top = e.pageY - user_list_holder.height() - 25;
+    }
+    if ($(window).width() > (e.pageX + user_list_holder.width())) {
+        left = e.pageX - 30;
+    }
+    else {
+        left = e.pageX - 225;
+    }
+    if ($("#content h2").attr("data-id") != -1)
+        user_list_holder.css({
+            "display": "block",
+            "top": top,
+            "left": left
+        });
+    scrollPresence();
+    $(".user_list_input").focus();
+    $(".user_list_clear").show();
+    user_list_holder.removeClass("instant_task_move");
+    user_list_holder.removeClass("assignee_to_choose");
+    user_list_holder.removeClass("assignee_filter");
+    user_list_holder.removeClass("open");
+}
+
+function hideUserHolder() {
+    var user_list_holder = $('.user_list_holder');
+    user_list_holder.hide();
+    user_list_holder.removeClass("open");
+    modelData.allUsers();
+    $("input").blur();
 }

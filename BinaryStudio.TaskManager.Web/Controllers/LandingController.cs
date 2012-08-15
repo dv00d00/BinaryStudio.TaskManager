@@ -58,10 +58,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 };
             projectRepository.Add(project);
             var projectList = projectRepository.GetAllProjectsForUser(user.Id);
-            var projectsToModel = projectList.Select(proj => new LandingProjectModel { Id = proj.Id, Name = proj.Name }).ToList();
+            var projectsToModel = projectList.Select(proj => new LandingProjectModel { Id = proj.Id, Name = proj.Name, Creator = proj.Creator.UserName}).ToList();
             var model = new LandingProjectsListModel { UserProjects = projectsToModel };
             projectList = projectRepository.GetAllProjectsForTheirCreator(user.Id);
-            projectsToModel = projectList.Select(proj => new LandingProjectModel { Id = proj.Id, Name = proj.Name }).ToList();
+            projectsToModel = projectList.Select(proj => new LandingProjectModel { Id = proj.Id, Name = proj.Name, Creator = proj.Creator.UserName }).ToList();
             model.CreatorProjects = projectsToModel;
             return Json(model);
         }
@@ -78,10 +78,10 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var user = userRepository.GetByName(User.Identity.Name);
             var projectList = projectRepository.GetAllProjectsForUser(user.Id);
 
-            var projectsToModel = projectList.Select(proj => new LandingProjectModel { Id = proj.Id, Name = proj.Name }).ToList();
+            var projectsToModel = projectList.Select(proj => new LandingProjectModel { Id = proj.Id, Name = proj.Name, Creator = proj.Creator.UserName }).ToList();
             var model = new LandingProjectsListModel { UserProjects = projectsToModel };
             projectList = projectRepository.GetAllProjectsForTheirCreator(user.Id);
-            projectsToModel = projectList.Select(proj => new LandingProjectModel { Id = proj.Id, Name = proj.Name }).ToList();
+            projectsToModel = projectList.Select(proj => new LandingProjectModel { Id = proj.Id, Name = proj.Name, Creator = proj.Creator.UserName }).ToList();
             model.CreatorProjects = projectsToModel;
             return Json(model);
         }

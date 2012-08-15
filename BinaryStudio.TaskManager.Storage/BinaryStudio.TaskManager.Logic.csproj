@@ -110,6 +110,7 @@
     <Compile Include="Core\INewsRepository.cs" />
     <Compile Include="Core\IProjectProcessor.cs" />
     <Compile Include="Core\IProjectRepository.cs" />
+    <Compile Include="Core\IReminderProcessor.cs" />
     <Compile Include="Core\IReminderRepository.cs" />
     <Compile Include="Core\ITaskProcessor.cs" />
     <Compile Include="Core\HumanTaskRepository.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Core\Notifier.cs" />
     <Compile Include="Core\ProjectProcessor.cs" />
     <Compile Include="Core\ProjectRepository.cs" />
+    <Compile Include="Core\ReminderProcessor.cs" />
     <Compile Include="Core\ReminderRepository.cs" />
     <Compile Include="Core\ReminderSender.cs" />
     <Compile Include="Core\SignalR\SignalRClients.cs" />
