@@ -56,6 +56,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly INewsProcessor newsProcessor;
 
         private readonly IStringExtensions stringExtensions;
+
+        private readonly IReminderProcessor reminderProcessor;
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectController"/> class.
         /// </summary>
@@ -76,7 +78,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </param>
 
         public ProjectController(ITaskProcessor taskProcessor, IUserProcessor userProcessor, IProjectProcessor projectProcessor, 
-            INotifier notifier, INewsProcessor newsProcessor, IStringExtensions stringExtensions)
+            INotifier notifier, INewsProcessor newsProcessor, IStringExtensions stringExtensions, IReminderProcessor reminderProcessor)
         {
             this.projectProcessor = projectProcessor;
             this.notifier = notifier;
@@ -84,6 +86,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.userProcessor = userProcessor;
             this.newsProcessor = newsProcessor;
             this.stringExtensions = stringExtensions;
+            this.reminderProcessor = reminderProcessor;
         }
 
         /// <summary>
@@ -218,6 +221,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 this.taskProcessor.AddHistory(taskHistory);
                 this.notifier.CreateTask(task.Id);
                 this.newsProcessor.CreateNewsForUsersInProject(taskHistory, task.ProjectId);
+
 
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId, userId = createModel.AssigneeId });
             }

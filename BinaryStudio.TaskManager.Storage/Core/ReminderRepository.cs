@@ -31,6 +31,12 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.dataBaseContext.SaveChanges();
         }
 
+        public void Delete(int reminderId)
+        {
+            Reminder reminder = this.dataBaseContext.Reminders.Single(x => x.Id == reminderId);
+            Delete(reminder);
+        }
+
         public void Update(Reminder reminder)
         {
             this.dataBaseContext.Entry(reminder).State = EntityState.Modified;
