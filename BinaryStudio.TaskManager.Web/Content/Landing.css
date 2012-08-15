@@ -113,6 +113,38 @@
     border-bottom: #249400 1px dashed; 
 }
 
+.keyboard {
+    margin-left: 46px;
+    background: url('/Content/images/keyboard.png') no-repeat;
+    background-position: right;
+    background-size: 10%;
+    display: block;
+    margin-bottom: 10px;
+    width: 180px;
+    padding-right: 10px;
+    color: gray;
+    border-bottom: gray 1px dashed;
+    opacity: 0.5;
+}
+.keyboard:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+.shortcuts_list ul {
+    list-style: none;
+}
+.shortcuts_list ul li {
+    margin-top: 20px;
+}
+.shortcuts_list ul li span{
+    background: black;    
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: white;
+    padding: 5px 10px 5px 10px;
+    
+}
 /****************** Boxes ********************/
 
 #delete_box {
