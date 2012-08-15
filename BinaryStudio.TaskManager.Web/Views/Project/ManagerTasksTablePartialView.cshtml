@@ -3,7 +3,11 @@
 @{ string divClass = "pr" + Model.Priority.ToString();
    string[] pClass = { "priorityLow", "priorityMiddle", "priorityHigh", "blocking" };
     <div class ="task"  id = @Model.Id.ToString() style="position: relative;">
-        <p class= "@pClass[@Model.Priority].ToString()" style="text-overflow: clip; border-radius: 13px 13px 0px 0px; font-size: 10pt; margin-top: 0.5px ;margin-bottom: 4px; height: 20px; padding-top: 5px;">@Model.Name</p>
+        <p class= "@pClass[@Model.Priority].ToString()" style="text-overflow: clip; border-radius: 13px 13px 0px 0px; font-size: 10pt; margin-top: 0.5px ;margin-bottom: 4px; height: 20px; padding-top: 5px;">
+            <i class= "icon-edit" style="position: absolute; left: 15px;" title="edit task"></i>
+            @Model.Name
+            <button class="close" style="position: absolute; right: 15px" title="delete task">&times;</button>
+        </p>
         <div style="overflow: hidden; margin: 5px">
             @Model.Description
         </div>

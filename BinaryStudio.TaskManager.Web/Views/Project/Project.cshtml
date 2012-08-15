@@ -78,13 +78,14 @@
             <ul class="dropdown-menu">
                 <li>
                     @Html.ActionLink("Multi-user view", "MultiuserView",  new { projectId = Model.ProjectId })        
-                 </li>
+                </li>
                 <li class="divider"></li>
                 <li>
                     @Html.ActionLink("Invite or delete the user", "InviteOrDeleteUser", new { projectId = Model.ProjectId })
                 </li>
             </ul>
         </div>
+        <span class="divider-vertical"></span>
        @* @Html.ActionLink("Show closed tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = false }, new { @class = "btn" })
         @Html.ActionLink("Show opened tasks", "Project", new { projectId = Model.ProjectId, isOpenedProjects = true }, new { @class = "btn" })*@
         @Html.Partial("QuickTaskCreation", Model.QuickTask)
