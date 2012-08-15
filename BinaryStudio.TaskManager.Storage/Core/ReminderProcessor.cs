@@ -29,5 +29,15 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             reminderRepository.Update(reminder);
         }
+
+        public IList<Reminder> GetRemindersForUser(int userId)
+        {
+            return reminderRepository.GetAll().Where(x => x.UserId == userId && x.WasDelivered == false && x.ReminderDate.ToShortDateString()==DateTime.Now.ToShortDateString()).ToList();
+        }
+
+        public bool IsUserHaveReminders(int userId)
+        {
+            return GetRemindersForUser(userId).Count > 0;
+        }
     }
 }

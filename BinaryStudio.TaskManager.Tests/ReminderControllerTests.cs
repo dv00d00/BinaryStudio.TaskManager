@@ -18,6 +18,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
         private Mock<IUserRepository> mockUserRepository;
 
         private Reminder reminder;
+        private Mock<IReminderProcessor> mockReminderProcessor; 
         private ReminderController reminderController;
 
         private const int taskId = 1; 
@@ -28,10 +29,13 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.mockUserRepository = new Mock<IUserRepository>();
             this.mockTaskProcessor = new Mock<ITaskProcessor>();
             this.mockReminderRepository = new Mock<IReminderRepository>();
+            this.mockReminderProcessor = new Mock<IReminderProcessor>();
+
             this.reminderController = new ReminderController(
                 this.mockReminderRepository.Object,
                 this.mockUserRepository.Object, 
-                this.mockTaskProcessor.Object);
+                this.mockTaskProcessor.Object,
+                mockReminderProcessor.Object);
 
             this.reminder = new Reminder { Id = taskId, Content = "asd", UserId = 1 };
             

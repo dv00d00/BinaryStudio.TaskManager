@@ -12,6 +12,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly IReminderRepository reminderRepository;
         private readonly ITaskProcessor taskProcessor;
         private readonly IUserRepository userRepository;
+        private readonly IReminderProcessor reminderProcessor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReminderController"/> class.
@@ -28,16 +29,19 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ReminderController(
             IReminderRepository reminderRepository,
             IUserRepository userRepository,
-            ITaskProcessor taskProcessor)
+            ITaskProcessor taskProcessor,
+            IReminderProcessor reminderProcessor)
         {
             this.reminderRepository = reminderRepository;
             this.userRepository = userRepository;
             this.taskProcessor = taskProcessor;
+            this.reminderProcessor = reminderProcessor;
         }
         
         public ViewResult MyReminders()
         {
-            return this.View(this.reminderRepository.GetAllRemindersForUser(userRepository.GetByName(User.Identity.Name).Id));
+            return
+                this.View(this.reminderProcessor.GetRemindersForUser((userRepository.GetByName(User.Identity.Name).Id)));//  GetAllRemindersForUser(userRepository.GetByName(User.Identity.Name).Id));
         }
         
         public ViewResult Details(int id)
@@ -115,6 +119,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             Reminder reminder = this.reminderRepository.GetById(id);
             this.reminderRepository.Delete(reminder);
             return this.RedirectToAction("Index");
+        }
+
+        public ActionResult IsUserHasReminders()
+        {
+            int userId = userRepository.GetByName(User.Identity.Name).Id;
+            return Json(reminderProcessor.IsUserHaveReminders(userId));
         }
     }
 }

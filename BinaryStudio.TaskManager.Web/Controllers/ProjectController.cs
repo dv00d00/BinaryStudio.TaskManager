@@ -221,8 +221,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 this.taskProcessor.AddHistory(taskHistory);
                 this.notifier.CreateTask(task.Id);
                 this.newsProcessor.CreateNewsForUsersInProject(taskHistory, task.ProjectId);
-
-
+                //creating reamider
+                
+                
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId, userId = createModel.AssigneeId });
             }
 
