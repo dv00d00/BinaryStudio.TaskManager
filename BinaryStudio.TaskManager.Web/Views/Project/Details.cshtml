@@ -15,7 +15,7 @@
         {
             @Html.ActionLink("Edit", "Edit", "Project", new { taskId = Model.HumanTask.Id, projectId = Model.HumanTask.ProjectId, viewStyle = true }, new { @class = "btn openDialog", data_dialog_id = "aboutDialog", data_dialog_title = "Edit" })    
             <span class="divider-vertical"></span>
-            @Html.ActionLink("Return to project", "MultyuserView", new { projectId = Model.HumanTask.ProjectId, viewStyle = true }, new { @class = "btn" })
+            @Html.ActionLink("Return to project", "MultiuserView", new { projectId = Model.HumanTask.ProjectId, viewStyle = true }, new { @class = "btn" })
         }
     else
     {

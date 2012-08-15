@@ -239,7 +239,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
                 if (true == createModel.ViewStyle)
                 {
-                    return this.RedirectToAction("MultyuserView", new { projectId = createModel.ProjectId, userId = createModel.AssigneeId });
+                    return this.RedirectToAction("MultiuserView", new { projectId = createModel.ProjectId, userId = createModel.AssigneeId });
                 }
 
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId, userId = createModel.AssigneeId });
@@ -252,36 +252,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
             return this.View(createModel);
         }
-
-
-        /// <summary>
-        /// The personal project.
-        /// </summary>
-        /// <returns>
-        /// The System.Web.Mvc.ActionResult.
-        /// </returns>
-        [Authorize]
-        public ActionResult PersonalProject()
-        {
-            const int ProjectId = 1;
-            var model = new ProjectViewModel
-                {
-                    UsersTasks = new List<ManagerTasksViewModel>(),
-                    UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList()
-                };
-            var users = this.projectProcessor.GetAllUsersInProject(ProjectId);
-            foreach (var viewModel in users.Select(user => new ManagerTasksViewModel
-                {
-                    User = user,
-                    Tasks = this.taskProcessor.GetTasksList(user.Id).ToList()
-                }))
-            {
-                model.UsersTasks.Add(viewModel);
-            }
-
-            return this.View(model);
-        }
-
+        
         /// <summary>
         /// Moves task from one user to another.
         /// </summary>
@@ -514,7 +485,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
                 if (true == createModel.ViewStyle)
                 {
-                    return this.RedirectToAction("MultyuserView", new { projectId = createModel.ProjectId, userId = createModel.AssigneeId });
+                    return this.RedirectToAction("MultiuserView", new { projectId = createModel.ProjectId, userId = createModel.AssigneeId });
                 }
 
                 return this.RedirectToAction("Project", new { id = createModel.ProjectId, userId = createModel.AssigneeId });
@@ -572,37 +543,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.taskProcessor.DeleteTask(idTask);
             return this.RedirectToAction("Project", new { id = projectId });
         }
-
-        /// <summary>
-        /// The user details.
-        /// </summary>
-        /// <param name="userId">
-        /// The user id.
-        /// </param>
-        /// <returns>
-        /// The System.Web.Mvc.ActionResult.
-        /// </returns>
-        [Authorize]
-        public ActionResult UserDetails(int userId)
-        {
-            this.ViewBag.ManagerName = this.userProcessor.GetUser(userId).UserName;
-            this.ViewBag.ManagerId = userId;
-            IList<HumanTask> humanTasks = this.taskProcessor.GetTasksList(userId).ToList();
-            IList<TaskViewModel> model =
-                humanTasks.Select(
-                    task =>
-                    new TaskViewModel
-                    {
-                        Task = task,
-                        CreatorName =
-                            task.CreatorId.HasValue
-                                ? this.userProcessor.GetUser(task.CreatorId.Value).UserName
-                                : string.Empty
-                    }).ToList();
-
-            return this.View(model);
-        }
-
+        
         /// <summary>
         /// The create single task view model by id.
         /// </summary>
@@ -656,19 +597,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         [HttpPost]
-        public ActionResult TaskView(int taskId, bool? viewStyle)
+        public ActionResult TaskView(int taskId)
         {
             var task = taskProcessor.GetTaskById(taskId);
             task.Name = stringExtensions.Truncate(task.Name, 15);
             task.Description = stringExtensions.Truncate(task.Description, 50);
-            var taskModel = new TaskViewModel
-                {
-                    Task = task,
-                    ViewStyle = viewStyle,
-                    CreatorName =
-                        task.CreatorId.HasValue ? this.userProcessor.GetUser(task.CreatorId.Value).UserName : string.Empty
-                };
-            return this.PartialView("ManagerTasksTablePartialView", taskModel);
+            return this.PartialView("ManagerTasksTablePartialView", task);
         }
 
         /// <summary>
@@ -716,7 +650,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult MultyuserView(int projectId, int? userId, bool isOpenedProjects = true)
+        public ActionResult MultiuserView(int projectId, int? userId, bool isOpenedProjects = true)
         {
             var model = new ProjectViewModel
             {

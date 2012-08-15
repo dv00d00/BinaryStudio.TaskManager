@@ -78,7 +78,7 @@
         <div data-managerid="0" style="display: none"></div>
             <input type="submit" value="Save" class="btn btn-primary" />
             @(this.Model.ViewStyle == true ? 
-                this.Html.ActionLink("Return to project", "MultyuserView", new { projectId = this.Model.ProjectId }, new { @class = "btn" }) : 
+                this.Html.ActionLink("Return to project", "MultiuserView", new { projectId = this.Model.ProjectId }, new { @class = "btn" }) : 
                 this.Html.ActionLink("Return to project", "Project", new { id = this.Model.ProjectId }, new { @class = "btn" }))
         </p>
     </fieldset>
