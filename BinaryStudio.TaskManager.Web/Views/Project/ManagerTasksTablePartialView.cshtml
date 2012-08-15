@@ -1,34 +1,37 @@
-﻿@model BinaryStudio.TaskManager.Logic.Domain.HumanTask
+﻿@model BinaryStudio.TaskManager.Web.Models.TaskViewModel
+@*@model BinaryStudio.TaskManager.Logic.Domain.HumanTask*@
 @* This partial view draw a task block in table *@
-@{ string divClass = "pr" + Model.Priority.ToString();
+@{ string divClass = "pr" + Model.Task.Priority.ToString();
    string[] pClass = { "priorityLow", "priorityMiddle", "priorityHigh", "blocking" };
-    <div class ="task"  id = @Model.Id.ToString() style="position: relative;">
-        <p class= "@pClass[@Model.Priority].ToString()" style="text-overflow: clip; border-radius: 13px 13px 0px 0px; font-size: 10pt; margin-top: 0.5px ;margin-bottom: 4px; height: 20px; padding-top: 5px;">
-            <i class= "icon-edit" style="position: absolute; left: 15px;" title="edit task"></i>
-            @Model.Name
+    <div class ="task"  id = @Model.Task.Id.ToString() style="position: relative;">
+        <p class= "@pClass[@Model.Task.Priority].ToString()" style="text-overflow: clip; border-radius: 13px 13px 0px 0px; font-size: 10pt; margin-top: 0.5px ;margin-bottom: 4px; height: 20px; padding-top: 5px;">
+            <a href="@Url.Action("Edit", "Project", new {taskId = @Model.Task.Id, projectId = @Model.Task.ProjectId, viewStyle = @Model.ViewStyle})">
+                <i class= "icon-edit" style="position: absolute; left: 15px;" title="edit task"></i>
+            </a>
+            @Model.Task.Name
             <button class="close" style="position: absolute; right: 15px" title="delete task">&times;</button>
         </p>
         <div style="overflow: hidden; margin: 5px">
-            @Model.Description
+            @Model.Task.Description
         </div>
         <br />
         <div>
             @*Html.ActionLink("Details", "Details", new { id = Model.Id }, new { @class = "label label-info ui-state-disabled", @style = "position : absolute; bottom:5px; left: 20px;" }) *@
-            <a href="/Project/Details/@Model.Id" style="position: absolute; bottom:0px; left: 15px; font-size: 9pt;" >
+            <a href="/Project/Details/@Model.Task.Id" style="position: absolute; bottom:0px; left: 15px; font-size: 9pt;" >
                 <img height="25" width="25" style="padding-bottom: 4px;" src=@Url.Content("~/Content/images/details.png")/>
                 details </a>
-            @if (Model.AssigneeId.HasValue)
+            @if (Model.Task.AssigneeId.HasValue)
             {
-                if (Model.Closed == (DateTime?)null)
+                if (Model.Task.Closed == (DateTime?)null)
                 {
-                <a  class="done" id="@Model.Id" style="position: absolute; bottom: 0px; left: 110px; font-size: 9pt; cursor: pointer;" >
+                <a  class="done" id="@Model.Task.Id" style="position: absolute; bottom: 0px; left: 110px; font-size: 9pt; cursor: pointer;" >
                     <img height="25" width="25" style="padding-bottom: 4px;" src=@Url.Content("~/Content/images/done.png")/>
                     done </a>
                 }
                 else
                 {
                 <p style="position: absolute; bottom: 0px; left: 90px; font-size: 9pt; margin: 0 0 7px;">
-                    closed:@Model.Closed.Value.ToShortDateString()
+                    closed:@Model.Task.Closed.Value.ToShortDateString()
                 </p>
                 }
             }
