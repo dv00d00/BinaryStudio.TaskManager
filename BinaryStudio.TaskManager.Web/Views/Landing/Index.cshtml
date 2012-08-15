@@ -49,7 +49,7 @@
                 @foreach (var project in Model.UserProjects)
                 {
                     <div class="proj_row" data-id="@project.Id">
-                        <div class="user_projs project_name">@project.Name</div>
+                        <div class="user_projs project_name"><b>@project.Creator.UserName</b>/@project.Name</div>
                     </div>
                 }
             </div>
