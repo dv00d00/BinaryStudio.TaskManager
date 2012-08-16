@@ -44,6 +44,7 @@ namespace BinaryStudio.TaskManager.Web.NinjectModules
             this.Bind<INewsProcessor>().To<NewsProcessor>().InRequestScope();
             this.Bind<IStringExtensions>().To<StringExtensions>().InRequestScope();
             this.Bind<IReminderProcessor>().To<ReminderProcessor>().InRequestScope();
+            this.Bind<IReminderSender>().To<ReminderSender>().InRequestScope();
         }
     }
 }

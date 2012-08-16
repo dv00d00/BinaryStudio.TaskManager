@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using BinaryStudio.TaskManager.Logic.Domain;
 using BinaryStudio.TaskManager.Web.SignalR;
 using SignalR;
@@ -108,7 +109,21 @@ namespace BinaryStudio.TaskManager.Logic.Core
             {
                 context.Clients[clientConnection.ConnectionId].ReciveMessageOnClient(message);
             }
-            
+        }
+
+        public bool SendReminderToDesktopClient(int userId, string message)
+        {
+            var connects = new List<ClientConnection>(this.connectionProvider.GetClientConnectionsForUser(userId));
+            var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
+            if (connects.Count > 0)
+            {
+                foreach (var clientConnection in connects)
+                {
+                    context.Clients[clientConnection.ConnectionId].ReciveMessageOnClient(message);
+                }
+                return true;
+            }
+            return false;
         }
 
         public void BroadcastNews(News news)
