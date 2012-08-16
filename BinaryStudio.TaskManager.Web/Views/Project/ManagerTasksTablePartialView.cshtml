@@ -8,7 +8,11 @@
                 <i class= "icon-edit" style="position: absolute; left: 15px;" title="edit task"></i>
             </a>
             @Model.Task.Name
-            <button class="close" style="position: absolute; right: 15px" title="delete task">&times;</button>
+            <a href="@Url.Action("Delete", "Project", new { idTask = @Model.Task.Id, projectId = @Model.Task.ProjectId, viewStyle = @Model.ViewStyle })">
+                <button class="close" style="position: absolute; right: 15px" title="delete task" >
+                    &times;
+                </button>
+            </a>
         </p>
         <div style="overflow: hidden; margin: 5px">
             @Model.Task.Description

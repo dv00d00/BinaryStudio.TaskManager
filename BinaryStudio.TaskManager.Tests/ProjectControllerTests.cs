@@ -185,7 +185,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.taskProcessorMock.Setup(x => x.GetAllHistoryForTask(5)).Returns(new List<HumanTaskHistory>());
 
             // act
-            this.controller.Delete(5);
+            this.controller.Delete(5, true);
 
             // assert
             this.taskProcessorMock.Verify(x => x.GetTaskById(5), Times.Once());
@@ -198,7 +198,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
         public void Should_DeleteTaskWithId5FromProjectWithId1TaskProcessor()
         {
             // act
-            this.controller.DeleteConfirmed(5, 1);
+            this.controller.DeleteConfirmed(5, 1, null);
 
             // assert
             this.taskProcessorMock.Verify(x => x.DeleteTask(5), Times.Once());
