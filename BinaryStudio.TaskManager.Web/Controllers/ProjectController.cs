@@ -579,10 +579,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int idTask, int projectId, bool? viewStyle)
         {
+            var userId = this.taskProcessor.GetTaskById(idTask).AssigneeId;
             this.taskProcessor.DeleteTask(idTask);
             if (true == viewStyle)
             {
-                return this.RedirectToAction("MultiuserView", new { projectId, userId = this.taskProcessor.GetTaskById(idTask).AssigneeId });
+                return this.RedirectToAction("MultiuserView", new { projectId, userId});
             }
 
             return this.RedirectToAction("Project", new { id = projectId });

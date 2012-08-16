@@ -26,10 +26,14 @@
 <p>
     <p>
     </p>
-    <span class="divider-vertical"></span>
-    @Html.ActionLink("Back to all tasks view", "AllTasks", new { projectId = Model.HumanTask.ProjectId }, new { @class = "btn" })
-    <span class="divider-vertical"></span>
-    @Html.ActionLink("Back to project dashboard", "Project", new { id = Model.HumanTask.ProjectId }, new { @class = "btn" })
+    @if (Model.ViewStyle == true)
+    {
+        @Html.ActionLink("Return to project", "MultiuserView", new { projectId = Model.HumanTask.ProjectId }, new { @class = "btn" }) 
+    }
+    else
+    {
+        @Html.ActionLink("Return to project", "Project", new { id = Model.HumanTask.ProjectId }, new { @class = "btn" })
+    }
 </p>
 
 <script type="text/javascript">

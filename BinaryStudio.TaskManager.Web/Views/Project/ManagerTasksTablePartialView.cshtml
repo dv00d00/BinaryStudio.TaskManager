@@ -9,9 +9,7 @@
             </a>
             @Model.Task.Name
             <a href="@Url.Action("Delete", "Project", new { idTask = @Model.Task.Id, projectId = @Model.Task.ProjectId, viewStyle = @Model.ViewStyle })">
-                <button class="close" style="position: absolute; right: 15px" title="delete task" >
-                    &times;
-                </button>
+                <i class= "icon-remove" style="position: absolute; right: 15px" title="delete task"></i>
             </a>
         </p>
         <div style="overflow: hidden; margin: 5px">
