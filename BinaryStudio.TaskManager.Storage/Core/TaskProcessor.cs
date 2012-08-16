@@ -68,11 +68,12 @@ namespace BinaryStudio.TaskManager.Logic.Core
                 Reminder reminder = new Reminder
                 {
                     ReminderDate = task.Finished.Value.AddDays(-1),
-                    Content = "You need to do " + task.Name + " task for tomorrow",
+                    Content = "You need to do '" + task.Name + "' task for tomorrow",
                     Task = task,
                     TaskId = task.Id,
                     UserId = task.AssigneeId.Value,
                     WasDelivered = false,
+                    IsSend = false,
                     User = userRepository.GetById(task.AssigneeId.Value)
                 };
                 reminderRepository.Add(reminder);

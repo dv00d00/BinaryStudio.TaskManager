@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BinaryStudio.TaskManager.Logic.Domain;
 
 namespace BinaryStudio.TaskManager.Logic.Core
@@ -10,5 +11,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void UpdateReminder(Reminder reminder);
         IList<Reminder> GetRemindersForUser(int userId);
         bool IsUserHaveReminders(int userId);
+        IList<Reminder> GetRemindersOnDate(DateTime dateTime);
     }
 }

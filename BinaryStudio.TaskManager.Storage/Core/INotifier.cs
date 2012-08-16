@@ -16,5 +16,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void BroadcastNewsToDesktopClient(News news);
 
         void BroadcastNews(News news);
+
+        bool SendReminderToDesktopClient(int userId, string message);
     }
 }

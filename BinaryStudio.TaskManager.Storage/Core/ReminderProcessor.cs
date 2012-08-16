@@ -32,12 +32,19 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public IList<Reminder> GetRemindersForUser(int userId)
         {
-            return reminderRepository.GetAll().Where(x => x.UserId == userId && x.WasDelivered == false && x.ReminderDate.ToShortDateString()==DateTime.Now.ToShortDateString()).ToList();
+            return reminderRepository.GetAll().Where(x => x.UserId == userId && x.WasDelivered == false 
+                && x.ReminderDate.ToShortDateString()==DateTime.Now.ToShortDateString()).ToList();
         }
 
         public bool IsUserHaveReminders(int userId)
         {
             return GetRemindersForUser(userId).Count > 0;
+        }
+
+        public IList<Reminder> GetRemindersOnDate(DateTime dateTime)
+        {
+            return reminderRepository.GetAll().Where(x => x.WasDelivered == false && x.IsSend==false
+                && x.ReminderDate.ToShortDateString() == dateTime.ToShortDateString()).ToList();
         }
     }
 }
