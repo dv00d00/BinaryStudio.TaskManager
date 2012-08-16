@@ -26,11 +26,17 @@ namespace BinaryStudio.TaskManager.Web.SignalR
             SignalRClients.AddConnection(id, projectId, userName, userId, isWPFClientConnection);
         }
 
+        public void ChangeProject(string connectionId, int projectId)
+        {
+            SignalRClients.ChangeConnectionProject(connectionId, projectId);
+        }
+
         public void LoginWithClient(string id, string userName, string password)
         {
             bool status = userProcessor.LogOnUser(userName, password);
             Clients[id].ReciveClientLogonStatus(status);
         }
+
     }
 }
 

@@ -118,10 +118,19 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>
         public ActionResult Project(int id, int? userId, bool isOpenedProjects = true)
         {
+            IList<HumanTask> unassignedHumanTasks = this.taskProcessor.GetUnAssignedTasksForProject(id).ToList();
+            List<TaskViewModel> unassignedTaskModel =
+                unassignedHumanTasks.Select(
+                    task =>
+                    new TaskViewModel
+                    {
+                        Task = task,
+                        CreatorName = string.Empty
+                    }).ToList();
             var model = new ProjectViewModel
             {
                 UsersTasks = new List<ManagerTasksViewModel>(),
-                UnAssignedTasks = this.taskProcessor.GetUnAssignedTasksForProject(id).ToList(),
+                UnAssignedTasks = unassignedTaskModel,
                 QuickTask = new HumanTask(),
                 ProjectId = id,
                 ChosenUserId = userId,
@@ -129,28 +138,48 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 NumberOfUsers = this.projectProcessor.GetUsersAndCreatorInProject(id).Count()
             };
             model.QuickTask.ProjectId = id;
+
             var users = new List<User>();
             users = this.projectProcessor.GetUsersAndCreatorInProject(id).Reverse().ToList();
             foreach (var user in users)
             {
+                IList<HumanTask> humanTasks = isOpenedProjects
+                        ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, user.Id).ToList()
+                        : this.taskProcessor.GetAllClosedTasksForUserInProject(id, user.Id).ToList();
+                List<TaskViewModel> taskModel =
+                    humanTasks.Select(
+                        task =>
+                        new TaskViewModel
+                        {
+                            Task = task,
+                            CreatorName = string.Empty
+                        }).ToList();
                 var managerModel = new ManagerTasksViewModel
                 {
                     User = user,
                     ProjectId = id,
-                    Tasks = isOpenedProjects
-                        ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, user.Id).ToList()
-                        : this.taskProcessor.GetAllClosedTasksForUserInProject(id, user.Id).ToList()
+                    Tasks = taskModel
                 };
                 model.UsersTasks.Add(managerModel);
             }
 
             if (userId != null)
             {
+                IList<HumanTask> chosenTasks = isOpenedProjects
+                         ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, (int)userId).ToList()
+                         : this.taskProcessor.GetAllClosedTasksForUserInProject(id, (int)userId).ToList();
+                List<TaskViewModel> chosenTaskModel =
+                    chosenTasks.Select(
+                        task =>
+                        new TaskViewModel
+                        {
+                            Task = task,
+                            CreatorName = string.Empty,
+                            ViewStyle = false
+                        }).ToList();
                 model.ChosenUserTasks.User = this.userProcessor.GetUser((int)userId);
                 model.ChosenUserTasks.ProjectId = id;
-                model.ChosenUserTasks.Tasks = isOpenedProjects
-                         ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, (int)userId).ToList()
-                         : this.taskProcessor.GetAllClosedTasksForUserInProject(id, (int)userId).ToList();                
+                model.ChosenUserTasks.Tasks = chosenTaskModel;                
             }
 
             return this.View(model);
@@ -300,7 +329,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 this.taskProcessor.MoveTaskToUnassigned(taskId);
             }
             
-            this.notifier.MoveTask(taskId, receiverId);
+            this.notifier.MoveTask(humanTask, receiverId);
         }
 
         /// <summary>
@@ -606,7 +635,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var task = taskProcessor.GetTaskById(taskId);
             task.Name = stringExtensions.Truncate(task.Name, 15);
             task.Description = stringExtensions.Truncate(task.Description, 50);
-            return this.PartialView("ManagerTasksTablePartialView", task);
+            var model = new TaskViewModel { Task = task, CreatorName = string.Empty };
+            return this.PartialView("ManagerTasksTablePartialView", model);
         }
 
         /// <summary>
@@ -656,10 +686,20 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// </returns>
         public ActionResult MultiuserView(int projectId, int? userId, bool isOpenedProjects = true)
         {
+            IList<HumanTask> unassignedHumanTasks = this.taskProcessor.GetUnAssignedTasksForProject(projectId).ToList();
+            List<TaskViewModel> unassignedTaskModel =
+                unassignedHumanTasks.Select(
+                    task =>
+                    new TaskViewModel
+                    {
+                        Task = task,
+                        CreatorName = string.Empty,
+                        ViewStyle = true
+                    }).ToList();
             var model = new ProjectViewModel
             {
                 UsersTasks = new List<ManagerTasksViewModel>(),
-                UnAssignedTasks = this.taskProcessor.GetUnAssignedTasksForProject(projectId).ToList(),
+                UnAssignedTasks = unassignedTaskModel,
                 QuickTask = new HumanTask(),
                 ProjectId = projectId,
                 ChosenUserId = userId,
@@ -667,28 +707,48 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 NumberOfUsers = this.projectProcessor.GetUsersAndCreatorInProject(projectId).Count()
             };
             model.QuickTask.ProjectId = projectId;
+
             var users = new List<User>();
             users = this.projectProcessor.GetUsersAndCreatorInProject(projectId).Reverse().ToList();
             foreach (var user in users)
             {
+                IList<HumanTask> humanTasks = isOpenedProjects
+                        ? this.taskProcessor.GetAllOpenTasksForUserInProject(projectId, user.Id).ToList()
+                        : this.taskProcessor.GetAllClosedTasksForUserInProject(projectId, user.Id).ToList();
+                List<TaskViewModel> taskModel =
+                    humanTasks.Select(
+                        task =>
+                        new TaskViewModel
+                        {
+                            Task = task,
+                            CreatorName = string.Empty
+                        }).ToList();
                 var managerModel = new ManagerTasksViewModel
                 {
                     User = user,
                     ProjectId = projectId,
-                    Tasks = isOpenedProjects
-                        ? this.taskProcessor.GetAllOpenTasksForUserInProject(projectId, user.Id).ToList()
-                        : this.taskProcessor.GetAllClosedTasksForUserInProject(projectId, user.Id).ToList()
+                    Tasks = taskModel
                 };
                 model.UsersTasks.Add(managerModel);
             }
 
             if (userId != null)
             {
-                model.ChosenUserTasks.User = this.userProcessor.GetUser((int)userId);
-                model.ChosenUserTasks.ProjectId = projectId;
-                model.ChosenUserTasks.Tasks = isOpenedProjects
+                IList<HumanTask> chosenTasks = isOpenedProjects
                          ? this.taskProcessor.GetAllOpenTasksForUserInProject(projectId, (int)userId).ToList()
                          : this.taskProcessor.GetAllClosedTasksForUserInProject(projectId, (int)userId).ToList();
+                List<TaskViewModel> chosenTaskModel =
+                    chosenTasks.Select(
+                        task =>
+                        new TaskViewModel
+                        {
+                            Task = task,
+                            CreatorName = string.Empty,
+                            ViewStyle = true
+                        }).ToList();
+                model.ChosenUserTasks.User = this.userProcessor.GetUser((int)userId);
+                model.ChosenUserTasks.ProjectId = projectId;
+                model.ChosenUserTasks.Tasks = chosenTaskModel;
             }
 
             return this.View(model);

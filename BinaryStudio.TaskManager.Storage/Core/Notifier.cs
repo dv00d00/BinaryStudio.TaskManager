@@ -3,9 +3,17 @@ using BinaryStudio.TaskManager.Logic.Domain;
 using BinaryStudio.TaskManager.Web.SignalR;
 using SignalR;
 using SignalR.Hubs;
-
 namespace BinaryStudio.TaskManager.Logic.Core
 {
+    using System;
+    public class UserToAssign
+    {
+        public int? Id { get; set; }
+
+        public string Name { get; set; }
+
+        public bool Photo { get; set; }
+    }
     public class Notifier : INotifier
     {
         private readonly IHumanTaskRepository humanTaskRepository;
@@ -14,8 +22,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
         private readonly IConnectionProvider connectionProvider;
         private readonly IProjectRepository projectRepository;
         private readonly IUserProcessor userProcessor;
+        private readonly IUserRepository userRepository;
 
-        public Notifier(IHumanTaskRepository humanTaskRepository, IGlobalHost globalHost, IConnectionProvider connectionProvider, INewsRepository newsRepository,IProjectRepository projectRepository, IUserProcessor userProcessor)
+        public Notifier(IHumanTaskRepository humanTaskRepository, IGlobalHost globalHost, IConnectionProvider connectionProvider, INewsRepository newsRepository,IProjectRepository projectRepository, IUserProcessor userProcessor, IUserRepository userRepository)
         {
             this.humanTaskRepository = humanTaskRepository;
             this.globalHost = globalHost;
@@ -23,19 +32,25 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.newsRepository = newsRepository;
             this.projectRepository = projectRepository;
             this.userProcessor = userProcessor;
+            this.userRepository = userRepository;
         }
 
-        public void MoveTask(int taskId, int moveToId)
+        public void MoveTask(HumanTask task, int moveToId)
         {
+            var model = new UserToAssign
+            {
+                Id = moveToId == -1 ? (int?)null : moveToId,
+                Name = moveToId != -1 ? userRepository.GetById(moveToId).UserName : "",
+                Photo = moveToId != -1 ? userRepository.GetById(moveToId).ImageData != null : false
+            };
             // send notificantion
-            moveToId = moveToId == -1 ? 0 : moveToId;
-            var task = humanTaskRepository.GetById(taskId);
+            //moveToId = moveToId == -1 ? 0 : moveToId;
             var clients = this.connectionProvider.GetProjectConnections(task.ProjectId);
 
             var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
             foreach (var clientConnection in clients)
             {
-                context.Clients[clientConnection.ConnectionId].TaskMoved(taskId, moveToId);
+                context.Clients[clientConnection.ConnectionId].TaskMoved(task.Id, model);
             }
         }
 
@@ -45,6 +60,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             int projectId = task.ProjectId;
             var project = projectRepository.GetById(projectId);
             int assignedId = task.AssigneeId ?? 0; 
+
             var clients = this.connectionProvider.GetProjectConnections(projectId);
             var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
 

@@ -4,8 +4,9 @@
 
 
 <script type="text/javascript">
+    var user;
     $(document).ready(function () {
-        startSignalRConnection(-1, "@User.Identity.Name", true);
+        user = @User.Identity.Name;
     });
 </script>
 

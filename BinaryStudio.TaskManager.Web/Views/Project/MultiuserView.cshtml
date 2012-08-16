@@ -124,7 +124,7 @@
                         <div class="column" align="center" width="250" id="-1">
                             @foreach (var unAssignedTask in Model.UnAssignedTasks)
                             {
-                                <div class="task-holder" data-taskid= @unAssignedTask.Id.ToString() id = @unAssignedTask.Id.ToString()>
+                                <div class="task-holder" data-taskid= @unAssignedTask.Task.Id.ToString() id = @unAssignedTask.Task.Id.ToString()>
                                     @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
                                 </div>
                             }
@@ -135,9 +135,9 @@
                     else
                     {
                         <div class="column" id=@Model.ChosenUserTasks.User.Id.ToString() align = "center" valign="top" width="250">
-                            @foreach (var task in Model.ChosenUserTasks.Tasks.OrderByDescending(x => x.Priority))
+                            @foreach (var task in Model.ChosenUserTasks.Tasks.OrderByDescending(x => x.Task.Priority))
                             {
-                                <div class="task-holder" data-taskid= @task.Id.ToString() id=@task.Id.ToString()>
+                                <div class="task-holder" data-taskid= @task.Task.Id.ToString() id=@task.Task.Id.ToString()>
                                     @Html.Partial("ManagerTasksTablePartialView", task)
                                 </div>
                             }

@@ -8,6 +8,26 @@ var toDashboard = function (num, where) {
         window.open("/Project/Project/" + num);
 };
 $(function () {
+    taskHub.TaskMoved = function (movedTaskId, moveToUser) {
+        var thisTask = ko.utils.arrayFirst(modelData.tasks(), function (task) {
+            return task.Id == movedTaskId;
+        });
+        var index = modelData.tasks.indexOf(thisTask);
+        modelData.tasks.replace(modelData.tasks()[index], {
+            Id: thisTask.Id,
+            Name: thisTask.Name,
+            Description: thisTask.Description,
+            CreatedDate: thisTask.CreatedDate,
+            CreatedTime: thisTask.CreatedTime,
+            CompareDate: thisTask.CompareDate,
+            Creator: thisTask.Creator,
+            Priority: thisTask.Priority,
+            AssigneeId: moveToUser.Id,
+            Assignee: moveToUser.Name,
+            AssigneePhoto: moveToUser.Photo
+        });
+    };
+
     /*********** To dashboard clicks handling ************/
     $(document).on("dblclick", ".project_list .project_name", function () {
         toDashboard($(this).parent("div").attr("data-id"), "here");
@@ -184,7 +204,7 @@ $(function () {
     /******** Project name length *******/
 
     $(".project_name").each(function () {
-        var text = $(this).html();
+        var text = $(this).text();
         if (text.length > 20) {
             $(this).attr("title", text);
             $(this).html(text.substr(0, 20) + "...");
@@ -253,7 +273,7 @@ $(function () {
             else if (code == 13) {
                 sendNewProject();
                 $(".user_list_input").focus();
-                setTimeout(function() { $("input").blur(); }, 100);
+                setTimeout(function () { $("input").blur(); }, 100);
             }
         });
         $(".add_proj_btn").prop("disabled", "true");
@@ -270,7 +290,8 @@ $(function () {
     /********* Project Tasks View  *******/
     var homeProj = $("#projects .proj_row:first-child").attr("data-id");
     $("#projects .proj_row:first-child").children(".project_name").addClass("active_proj");
-    getTaskList(homeProj);
+    startSignalRConnection(homeProj, user, false); 
+    getTaskList(homeProj, 'start');
     ko.applyBindings(modelData);
     $('body').popover({
         selector: '.task_popover',
@@ -323,10 +344,14 @@ $(function () {
         if (e.which == 27)
             newTaskInputEscape();
     });
-});
 
+    $("#content h2").click(function () {
+    });
+});
 /******************** Functions ************************/
-function getTaskList(proj) {
+function getTaskList(proj,state) {
+    if (state!='start')
+        taskHub.changeProject($.connection.hub.id, proj);
     $.ajax({
         data: { projectId: proj },
         dataType: "JSON",
@@ -530,7 +555,10 @@ function moveTask(projectId, userId, taskId) {
             $(".user_list_holder").hide();
         },
         success: function () {
-            location.reload(true);
+            $("body").css("cursor", "default");
+        },
+        error: function () {
+            $("body").css("cursor", "default");
         }
     });
 }

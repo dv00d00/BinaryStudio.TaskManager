@@ -333,17 +333,35 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         [Authorize]
         public ActionResult AllManagersWithTasks()
         {
+            IList<HumanTask> unassignedHumanTasks = this.taskProcessor.GetUnassignedTasks().ToList();
+            List<TaskViewModel> unassignedTaskModel =
+                unassignedHumanTasks.Select(
+                    task =>
+                    new TaskViewModel
+                    {
+                        Task = task,
+                        CreatorName = string.Empty
+                    }).ToList();
             var model = new ProjectViewModel
                 {
                     UsersTasks = new List<ManagerTasksViewModel>(),
-                    UnAssignedTasks = this.taskProcessor.GetUnassignedTasks().ToList()
+                    UnAssignedTasks = unassignedTaskModel
                 };
             var users = this.userRepository.GetAll();
             foreach (var user in users)
             {
+                IList<HumanTask> humanTasks = this.taskProcessor.GetTasksList(user.Id).ToList();
+                List<TaskViewModel> taskModel =
+                    humanTasks.Select(
+                        task =>
+                        new TaskViewModel
+                        {
+                            Task = task,
+                            CreatorName = string.Empty
+                        }).ToList();
                 var managerModel = new ManagerTasksViewModel();
                 managerModel.User = user;
-                managerModel.Tasks = this.taskProcessor.GetTasksList(user.Id).ToList();
+                managerModel.Tasks = taskModel;
                 model.UsersTasks.Add(managerModel);
             }
             return this.View(model);
