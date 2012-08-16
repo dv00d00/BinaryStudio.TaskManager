@@ -55,7 +55,7 @@ namespace BinaryStudio.TaskManager.Web
             RegisterRoutes(RouteTable.Routes);
 
             Database.SetInitializer(new DatabaseInitializer());
-            reminderSender = new ReminderSender(new Notifier(new HumanTaskRepository(dataBaseContext),
+            /*reminderSender = new ReminderSender(new Notifier(new HumanTaskRepository(dataBaseContext),
             new GlobalHostImpl(),
             new ConnectionProvider(new ProjectRepository(dataBaseContext))
             , new NewsRepository(dataBaseContext)
@@ -63,7 +63,7 @@ namespace BinaryStudio.TaskManager.Web
             , new UserProcessor(new UserRepository(dataBaseContext), new CryptoProvider(), new TaskProcessor(
                 new HumanTaskRepository(dataBaseContext), new ReminderRepository(dataBaseContext), new UserRepository(dataBaseContext)
                 ))), new ReminderProcessor(new ReminderRepository(dataBaseContext)));
-
+            */
 
             //reminderSender.StartTimer();
         }
