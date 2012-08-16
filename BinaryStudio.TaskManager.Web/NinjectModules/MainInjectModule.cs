@@ -9,9 +9,11 @@
 
 namespace BinaryStudio.TaskManager.Web.NinjectModules
 {
+    using BinaryStudio.TaskManager.Extensions.Extentions;
+    using BinaryStudio.TaskManager.Extensions.Logic;
+    using BinaryStudio.TaskManager.Extensions.Models;
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
-    using BinaryStudio.TaskManager.Web.Extentions;
 
     using Ninject.Modules;
     using Ninject.Web.Common;

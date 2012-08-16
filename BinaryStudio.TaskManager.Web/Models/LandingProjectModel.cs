@@ -2,6 +2,8 @@ namespace BinaryStudio.TaskManager.Web.Models
 {
     using System.Collections.Generic;
 
+    using BinaryStudio.TaskManager.Extensions;
+    using BinaryStudio.TaskManager.Extensions.Models;
     using BinaryStudio.TaskManager.Logic.Domain;
 
     public class LandingProjectModel

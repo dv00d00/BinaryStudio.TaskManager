@@ -5,14 +5,11 @@ using SignalR.Hubs;
 namespace BinaryStudio.TaskManager.Logic.Core
 {
     using System;
-    public class UserToAssign
-    {
-        public int? Id { get; set; }
 
-        public string Name { get; set; }
+    using BinaryStudio.TaskManager.Extensions;
+    using BinaryStudio.TaskManager.Extensions.Extentions;
+    using BinaryStudio.TaskManager.Extensions.Models;
 
-        public bool Photo { get; set; }
-    }
     public class Notifier : INotifier
     {
         private readonly IHumanTaskRepository humanTaskRepository;
@@ -22,8 +19,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
         private readonly IProjectRepository projectRepository;
         private readonly IUserProcessor userProcessor;
         private readonly IUserRepository userRepository;
+        private readonly IStringExtensions stringExtensions;
 
-        public Notifier(IHumanTaskRepository humanTaskRepository, IGlobalHost globalHost, IConnectionProvider connectionProvider, INewsRepository newsRepository,IProjectRepository projectRepository, IUserProcessor userProcessor, IUserRepository userRepository)
+        public Notifier(IHumanTaskRepository humanTaskRepository, IGlobalHost globalHost, IConnectionProvider connectionProvider,
+            INewsRepository newsRepository,IProjectRepository projectRepository, IUserProcessor userProcessor, 
+            IUserRepository userRepository, IStringExtensions stringExtensions)
         {
             this.humanTaskRepository = humanTaskRepository;
             this.globalHost = globalHost;
@@ -32,6 +32,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             this.projectRepository = projectRepository;
             this.userProcessor = userProcessor;
             this.userRepository = userRepository;
+            this.stringExtensions = stringExtensions;
         }
 
         public void MoveTask(HumanTask task, int moveToId)
@@ -58,14 +59,25 @@ namespace BinaryStudio.TaskManager.Logic.Core
             var task = humanTaskRepository.GetById(taskId);
             int projectId = task.ProjectId;
             var project = projectRepository.GetById(projectId);
-            int assignedId = task.AssigneeId ?? 0; 
-
+            int assignedId = task.AssigneeId ?? 0;
+            var taskToSend = new LandingTaskModel
+            {
+                Id = task.Id,
+                Description = stringExtensions.Truncate(task.Description, 70),
+                Name = stringExtensions.Truncate(task.Name, 70),
+                Priority = task.Priority,
+                Created = task.Created,
+                Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName,
+                AssigneeId = task.AssigneeId,
+                Assignee = task.AssigneeId == null ? null : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).UserName,
+                AssigneePhoto = task.AssigneeId == null ? false : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).ImageData != null
+            };
             var clients = this.connectionProvider.GetProjectConnections(projectId);
             var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
 
             foreach (var clientConnection in clients)
             {
-                    context.Clients[clientConnection.ConnectionId].TaskCreated(taskId, assignedId);
+                    context.Clients[clientConnection.ConnectionId].TaskCreated(taskToSend);
             }
         }
 

@@ -28,6 +28,23 @@ $(function () {
         });
     };
 
+    taskHub.TaskCreated = function (task) {
+        var date = new Date(parseInt(task.Created.substr(6)));
+        var thisTask = new Object({
+            Id: task.Id,
+            Name: task.Name,
+            Description: task.Description,
+            CreatedDate: date.toLocaleDateString(),
+            CreatedTime: date.toLocaleTimeString(),
+            CompareDate: date,
+            Creator: task.Creator,
+            Priority: task.Priority,
+            AssigneeId: task.AssigneeId,
+            Assignee: task.Assignee,
+            AssigneePhoto: task.AssigneePhoto
+        });
+        modelData.tasks.push(thisTask);
+    };
     /*********** To dashboard clicks handling ************/
     $(document).on("dblclick", ".project_list .project_name", function () {
         toDashboard($(this).parent("div").attr("data-id"), "here");
@@ -290,7 +307,7 @@ $(function () {
     /********* Project Tasks View  *******/
     var homeProj = $("#projects .proj_row:first-child").attr("data-id");
     $("#projects .proj_row:first-child").children(".project_name").addClass("active_proj");
-    startSignalRConnection(homeProj, user, false); 
+    startSignalRConnection(homeProj, user, false);
     getTaskList(homeProj, 'start');
     ko.applyBindings(modelData);
     $('body').popover({
@@ -385,8 +402,8 @@ function getTaskList(proj,state) {
                 modelData.tasks.push(thisTask);
             }
             modelData.allTasks();
-            for (var i = 0; i < data.Users.length; i++) {
-                var user = data.Users[i];
+            for (var j = 0; j < data.Users.length; j++) {
+                var user = data.Users[j];
                 var thisUser = new Object({
                     Id: user.Id,
                     Name: user.Name,
@@ -566,6 +583,8 @@ function moveTask(projectId, userId, taskId) {
 function addTask() {
     var task_name = $("#add_task_box input").val();
     var priority = $(".priority_buttons .btn.active").val();
+    $("#add_task_box input").val("");
+    $("#add_task_box input").focus();
     if (task_name != "") {
         var thisTask = new Object({
             Name: task_name,
@@ -587,7 +606,11 @@ function addTask() {
                 $('body').css('cursor', 'progress');
             },
             success: function () {
-                location.reload(true);
+                $('body').css('cursor', 'default');
+                //location.reload(true);
+            },
+            error: function () {
+                $('body').css('cursor', 'default');
             }
         });
     }

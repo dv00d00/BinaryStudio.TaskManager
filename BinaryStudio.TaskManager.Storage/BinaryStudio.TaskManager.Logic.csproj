@@ -159,7 +159,12 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BinaryStudio.TaskManager.Extensions\BinaryStudio.TaskManager.Extensions.csproj">
+      <Project>{E43DEF6C-BD72-4EC1-9CC5-96D462880B8C}</Project>
+      <Name>BinaryStudio.TaskManager.Extensions</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

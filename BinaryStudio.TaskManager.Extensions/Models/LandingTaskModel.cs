@@ -1,4 +1,4 @@
-namespace BinaryStudio.TaskManager.Web.Models
+namespace BinaryStudio.TaskManager.Extensions.Models
 {
     using System;
 
@@ -27,16 +27,5 @@ namespace BinaryStudio.TaskManager.Web.Models
         public string Assignee { get; set; }
 
         public bool AssigneePhoto { get; set; }
-    }
-
-    public class LandingCreateTaskModel
-    {
-        public string Name { get; set; }
-
-        public int Priority { get; set; }
-
-        public int? AssigneeId { get; set; }
-
-        public int ProjectId { get; set; }
     }
 }

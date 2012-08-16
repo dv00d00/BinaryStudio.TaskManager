@@ -4,10 +4,10 @@ namespace BinaryStudio.TaskManager.Web.Tests
 {
     using System.Collections.Generic;
 
+    using BinaryStudio.TaskManager.Extensions.Extentions;
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
     using BinaryStudio.TaskManager.Web.Controllers;
-    using BinaryStudio.TaskManager.Web.Extentions;
 
     using Moq;
 
