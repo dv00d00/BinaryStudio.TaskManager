@@ -11,12 +11,16 @@
 <p>
     <p>
     </p>
-    @Html.ActionLink("Edit", "Edit", "Project", new { taskId = Model.HumanTask.Id, projectId = Model.HumanTask.ProjectId }, new { @class = "btn openDialog", data_dialog_id = "aboutDialog", data_dialog_title = "Edit" })
-    <span class="divider-vertical"></span>@*   
-    @Html.ActionLink("Back to all tasks view", "AllTasks", new { projectId = Model.HumanTask.ProjectId }, new { @class = "btn" })
-    <span class="divider-vertical"></span>
-    *@
-    @Html.ActionLink("Back to project dashboard", "Project", new { id = Model.HumanTask.ProjectId }, new { @class = "btn" })
+    @if (Model.ViewStyle == true)
+        {
+            <span class="divider-vertical"></span>
+            @Html.ActionLink("Return to project", "MultiuserView", new { projectId = Model.HumanTask.ProjectId, viewStyle = true }, new { @class = "btn" })
+        }
+    else
+    {
+        <span class="divider-vertical"></span>
+        @Html.ActionLink("Back to project dashboard", "Project", new { id = Model.HumanTask.ProjectId }, new { @class = "btn" })
+    }
 </p>
 <legend>Change history</legend>@* <div class="accordion" id="accordion2"> *@
 @if (Model.TaskHistories != null)

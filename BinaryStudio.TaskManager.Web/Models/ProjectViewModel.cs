@@ -17,7 +17,7 @@ namespace BinaryStudio.TaskManager.Web.Models
     {
         public List<ManagerTasksViewModel> UsersTasks { get; set; }
 
-        public List<HumanTask> UnAssignedTasks { get; set; }
+        public List<TaskViewModel> UnAssignedTasks { get; set; }
 
         public HumanTask QuickTask { get; set; }
 
@@ -28,7 +28,5 @@ namespace BinaryStudio.TaskManager.Web.Models
         public ManagerTasksViewModel ChosenUserTasks { get; set; }
 
         public int? ChosenUserId { get; set; }
-
-        //public string ChosenUserName { get; set; }
     }
 }

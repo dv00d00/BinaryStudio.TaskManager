@@ -8,5 +8,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         void AddReminder(Reminder reminder);
         void DeleteReminder(int reminderId);
         void UpdateReminder(Reminder reminder);
+        IList<Reminder> GetRemindersForUser(int userId);
+        bool IsUserHaveReminders(int userId);
     }
 }

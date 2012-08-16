@@ -45,5 +45,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         public IEnumerable<SelectListItem> Tasks;
 
         public int BlockingTask { get; set; }
+
+        public bool? ViewStyle { get; set; }
     }
 }
