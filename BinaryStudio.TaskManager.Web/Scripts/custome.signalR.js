@@ -3,8 +3,9 @@
 function startSignalRConnection(projectId, userName, isClient) {
     $.connection.hub.start(function () {
         taskHub.join($.connection.hub.id, projectId, userName, isClient);
-    });
+    }).done();
 }
+
 
 taskHub.TaskCreated = function (taskId, managerId) {
      $.ajax({
@@ -23,12 +24,13 @@ taskHub.TaskCreated = function (taskId, managerId) {
     });
 };
 
-taskHub.TaskMoved = function (movedtaskId, moveToId) {
-    jQuery("[data-taskid=" + movedtaskId + "]").fadeOut();
+taskHub.TaskMoved = function (movedTaskId, moveToUser) {
+    jQuery("[data-taskid=" + movedTaskId + "]").fadeOut();
+    var userId = moveToUser.Id != null ? moveToUser.Id.toString() : '0';
     setTimeout(function () {
-        jQuery("[data-taskid=" + movedtaskId + "]").insertBefore(jQuery("[data-managerid=" + moveToId.toString() + "]"));
-        jQuery("[data-taskid=" + movedtaskId + "]").fadeIn();
-    },300);
+        jQuery("[data-taskid=" + movedTaskId + "]").insertBefore(jQuery("[data-managerid=" + userId + "]"));
+        jQuery("[data-taskid=" + movedTaskId + "]").fadeIn();
+    }, 300);
 };
 
 

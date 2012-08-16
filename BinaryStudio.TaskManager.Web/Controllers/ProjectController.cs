@@ -306,7 +306,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 this.taskProcessor.MoveTaskToUnassigned(taskId);
             }
             
-            this.notifier.MoveTask(taskId, receiverId);
+            this.notifier.MoveTask(humanTask, receiverId);
         }
 
         /// <summary>

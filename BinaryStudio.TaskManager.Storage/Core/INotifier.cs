@@ -5,7 +5,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 {
     public interface INotifier
     {
-        void MoveTask(int taskId, int moveToId);
+        void MoveTask(HumanTask task, int moveToId);
 
         void CreateTask(int taskId);
 

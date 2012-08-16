@@ -2,6 +2,8 @@
 
 namespace BinaryStudio.TaskManager.Logic.Core.SignalR
 {
+    using System.Linq;
+
     public static class SignalRClients
     {
         public static IList<ClientConnection> Connections = new List<ClientConnection>();
@@ -16,6 +18,14 @@ namespace BinaryStudio.TaskManager.Logic.Core.SignalR
                                     IsWPFClient = isWPFClient,
                                     UserId = userId
                                 });
+        }
+
+        public static void ChangeConnectionProject(string connectionId, int projectId)
+        {
+            var connection = Connections.Where(con => con.ConnectionId == connectionId).SingleOrDefault();
+            Connections.Remove(connection);
+            connection.ProjectId = projectId;
+            Connections.Add(connection);
         }
     }
 }
