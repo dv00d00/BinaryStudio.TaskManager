@@ -693,7 +693,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     new TaskViewModel
                     {
                         Task = task,
-                        CreatorName = string.Empty
+                        CreatorName = string.Empty,
+                        ViewStyle = true
                     }).ToList();
             var model = new ProjectViewModel
             {
