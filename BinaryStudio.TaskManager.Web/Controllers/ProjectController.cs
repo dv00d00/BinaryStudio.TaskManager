@@ -536,12 +536,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="id">
         /// The id.
         /// </param>
+        /// <param name="viewStyle">
+        /// The view Style.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
-        /// </returns>        
-        public ActionResult Details(int id)
+        /// </returns>
+        public ActionResult Details(int id, bool? viewStyle)
         {
-            var model = this.CreateSingleTaskViewModelById(id, true);            
+            var model = this.CreateSingleTaskViewModelById(id, viewStyle);            
             return this.View(model);
         }
 

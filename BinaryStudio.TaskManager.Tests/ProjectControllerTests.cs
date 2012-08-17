@@ -168,7 +168,7 @@ namespace BinaryStudio.TaskManager.Web.Tests
             this.taskProcessorMock.Setup(x => x.GetAllHistoryForTask(3)).Returns(new List<HumanTaskHistory>());
 
             // act
-            this.controller.Details(3);
+            this.controller.Details(3, null);
 
             // assert
             this.taskProcessorMock.Verify(x => x.GetTaskById(3), Times.Once());
