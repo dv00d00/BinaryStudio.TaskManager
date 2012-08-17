@@ -88,16 +88,9 @@
         }
         $(".all_tasks").hide();
         $('#content h3').hide();
-        var filterByName = $("#filterByName");
-        filterByName.val("");
+        $("#filterByName").val("");
         self.data.name("");
         self.filter("all");
-        if (self.tasks().length == 0) {
-            filterByName.prop("disabled", "true");
-        }
-        else {
-            filterByName.removeAttr("disabled");
-        }
     };
 
     self.allUsers = function () {
@@ -136,5 +129,14 @@
             });
 
         }
+    });
+    self.tasksToShow.subscribe(function (tsks) {
+            var filterByName = $("#filterByName");
+        if(tsks.length == 0) {
+                filterByName.prop("disabled", "true");
+            }
+            else {
+                filterByName.removeAttr("disabled");
+            }
     });
 };

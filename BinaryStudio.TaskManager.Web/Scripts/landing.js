@@ -199,17 +199,13 @@ $(function () {
                 break;
             case 77:
                 $(".new_task_btn").hide();
-                modelData.Active(-1);
-                $(".project_name").removeClass("active_proj");
-                $("#my_tasks").addClass("active_proj");
+                modelData.Active("my");
                 getTaskGroup("my");
                 $(".assignee_btn").hide();
                 break;
             case 85:
                 $(".new_task_btn").hide();
-                modelData.Active(-1);
-                $(".project_name").removeClass("active_proj");
-                $("#unassigned_tasks").addClass("active_proj");
+                modelData.Active("un");
                 getTaskGroup("unassigned");
                 $(".assignee_btn").hide();
                 break;
@@ -322,13 +318,20 @@ $(function () {
 
     $(document).on("click", ".task_group_list .project_name", function () {
         $(".new_task_btn").hide();
-        // $(".project_name").removeClass("active_proj");
-        // $(this).addClass("active_proj");
         var url = null;
         switch ($(this).attr("id")) {
-            case "all_tasks": url = "all"; break;
-            case "my_tasks": url = "my"; break;
-            case "unassigned_tasks": url = "unassigned"; break;
+            case "all_tasks": 
+                url = "all";
+                modelData.Active("all");  
+                break;
+            case "my_tasks": 
+                url = "my";
+                modelData.Active("my");
+                break;
+            case "unassigned_tasks": 
+                url = "unassigned";
+                modelData.Active("un");
+                break;
         }
         getTaskGroup(url);
         $(".assignee_btn").hide();
@@ -640,10 +643,11 @@ function hideUserHolder() {
     $("input").blur();
 }
 
-modelData.Active.subscribe(function (newActive) {
-    if (newActive != -1)
-        getTaskList(newActive);
-    else if (modelData.data.start() == false)
-        taskHub.changeProject($.connection.hub.id, newActive);
-        
+modelData.Active.subscribe(function (newProj) {
+    if ((newProj != "un") && (newProj != "my") && (newProj != "all")) {
+        if (newProj != -1)
+            getTaskList(newProj);
+        else if (modelData.data.start() == false)
+            taskHub.changeProject($.connection.hub.id, newProj);
+    }
 });

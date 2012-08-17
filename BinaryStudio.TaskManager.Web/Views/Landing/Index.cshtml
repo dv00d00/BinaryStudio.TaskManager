@@ -47,9 +47,9 @@
         <div id="task_groups">
             <h3>Task Groups</h3>
             <div class="task_group_list">
-                <div class="project_name" id="all_tasks">All</div>
-                <div class="project_name" id="my_tasks">My Tasks</div>
-                <div class="project_name" id="unassigned_tasks">Unassigned</div>
+                <div class="project_name" id="all_tasks" data-bind="css:{'active_proj': Active() =='all'}">All</div>
+                <div class="project_name" id="my_tasks" data-bind="css:{'active_proj': Active()=='my'}">My Tasks</div>
+                <div class="project_name" id="unassigned_tasks" data-bind="css:{'active_proj': Active()=='un'}">Unassigned</div>
             </div>
         </div>
         <div id="projects">
