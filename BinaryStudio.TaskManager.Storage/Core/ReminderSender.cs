@@ -30,14 +30,14 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public void OnTick(object s, ElapsedEventArgs e)
         {
-            var reminders = this.reminderProcessor.GetRemindersOnDate(DateTime.Now);
-
+            var reminders = this.reminderProcessor.GetRemindersOnDateForSender(DateTime.Now);
+            
            foreach(var reminder in reminders)
            {
                if(notifier.SendReminderToDesktopClient(reminder.UserId,reminder.Content))
                {
                    //reminder.IsSend = true;
-                   reminderProcessor.UpdateReminder(reminder);
+                   //reminderProcessor.UpdateReminder(reminder);
                }
            }
             //foreach (var reminder in reminders)
