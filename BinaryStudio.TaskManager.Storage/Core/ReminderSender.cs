@@ -1,27 +1,45 @@
+using System;
+using System.Timers;
 namespace BinaryStudio.TaskManager.Logic.Core
 {
-    public class ReminderSender
+    public class ReminderSender : IReminderSender
     {
-        private readonly TimeManager timeManager;
+        private readonly Timer timer;
         private readonly INotifier notifier;
-        private readonly IReminderRepository reminderRepository;
-        private readonly IClientConnectionManager clientConnectionManager;
+        private readonly IReminderProcessor reminderProcessor;
 
-        public ReminderSender(TimeManager timeManager, INotifier notifier, IReminderRepository reminderRepository,
-                              IClientConnectionManager clientConnectionManager)
+
+        public ReminderSender(INotifier notifier,IReminderProcessor reminderProcessor)
         {
-            this.timeManager = timeManager;
             this.notifier = notifier;
-            this.reminderRepository = reminderRepository;
-            this.clientConnectionManager = clientConnectionManager;
-
-            this.timeManager.OnTick += this.OnTick;
+            this.timer = new Timer(300000); // 5 minutes
+            this.timer.Elapsed += new ElapsedEventHandler(OnTick);
+            this.reminderProcessor = reminderProcessor;
+            //this.timeManager.OnTick += this.OnTick;
         }
 
-        private void OnTick(object s, TimeArguments e)
+        public void StartTimer()
         {
-            var reminders = this.reminderRepository.GetReminderList(e.DateTime);
+            this.timer.Start();
+        }
 
+        public void StopTimer()
+        {
+            this.timer.Stop();
+        }
+
+        public void OnTick(object s, ElapsedEventArgs e)
+        {
+            var reminders = this.reminderProcessor.GetRemindersOnDate(DateTime.Now);
+
+           foreach(var reminder in reminders)
+           {
+               if(notifier.SendReminderToDesktopClient(reminder.UserId,reminder.Content))
+               {
+                   reminder.IsSend = true;
+                   reminderProcessor.UpdateReminder(reminder);
+               }
+           }
             //foreach (var reminder in reminders)
             //{
             //    var clientConnection = this.clientConnectionManager.GetClientByEmployeeId(reminder.User.Id);

@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using BinaryStudio.TaskManager.Web.Extentions;
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
@@ -8,6 +7,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     using System.Linq;
     using System.Text;
 
+    using BinaryStudio.TaskManager.Extensions.Extentions;
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
     using BinaryStudio.TaskManager.Web.Models;

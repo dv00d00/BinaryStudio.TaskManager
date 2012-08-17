@@ -1,4 +1,5 @@
 ﻿using System.Web.Routing;
+using BinaryStudio.TaskManager.Logic.Core;
 using SignalR;
 using SignalR.Ninject;
 
@@ -14,6 +15,8 @@ namespace BinaryStudio.TaskManager.Web
 
     public class MvcApplication : NinjectHttpApplication
     {
+        private readonly DataBaseContext dataBaseContext = new DataBaseContext();
+        private  IReminderSender reminderSender;
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new ErrorHandler());
@@ -52,6 +55,17 @@ namespace BinaryStudio.TaskManager.Web
             RegisterRoutes(RouteTable.Routes);
 
             Database.SetInitializer(new DatabaseInitializer());
+            /*reminderSender = new ReminderSender(new Notifier(new HumanTaskRepository(dataBaseContext),
+            new GlobalHostImpl(),
+            new ConnectionProvider(new ProjectRepository(dataBaseContext))
+            , new NewsRepository(dataBaseContext)
+            , new ProjectRepository(dataBaseContext)
+            , new UserProcessor(new UserRepository(dataBaseContext), new CryptoProvider(), new TaskProcessor(
+                new HumanTaskRepository(dataBaseContext), new ReminderRepository(dataBaseContext), new UserRepository(dataBaseContext)
+                ))), new ReminderProcessor(new ReminderRepository(dataBaseContext)));
+            */
+
+            //reminderSender.StartTimer();
         }
     }
 }

@@ -146,13 +146,12 @@
     <Compile Include="Controllers\ReminderController.cs" />
     <Compile Include="Controllers\SignalRController.cs" />
     <Compile Include="ErrorHandler.cs" />
-    <Compile Include="Extentions\IStringExtensions.cs" />
-    <Compile Include="Extentions\StringExtensions.cs" />
     <Compile Include="Helpers\TextaheadHelper.cs" />
     <Compile Include="Models\CreateTaskViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\InMemoryTokenManager.cs" />
     <Compile Include="Models\InvintationsInEventsViewModel.cs" />
+    <Compile Include="Models\LandingCreateTaskModel.cs" />
     <Compile Include="Models\LandingModels.cs" />
     <Compile Include="Models\LandingUserModel.cs" />
     <Compile Include="Models\ListEventViewModel.cs" />
@@ -167,7 +166,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\LandingTaskModel.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Models\TokenHelper.cs" />
     <Compile Include="Models\UserModels.cs" />
@@ -312,6 +310,10 @@
     <ProjectReference Include="..\BinaryStudio.TaskManager.DTO\BinaryStudio.TaskManager.DTO.csproj">
       <Project>{79C2FD3E-65F1-46F7-B570-94CDB668BAF8}</Project>
       <Name>BinaryStudio.TaskManager.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BinaryStudio.TaskManager.Extensions\BinaryStudio.TaskManager.Extensions.csproj">
+      <Project>{E43DEF6C-BD72-4EC1-9CC5-96D462880B8C}</Project>
+      <Name>BinaryStudio.TaskManager.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\BinaryStudio.TaskManager.Storage\BinaryStudio.TaskManager.Logic.csproj">
       <Project>{33F650F1-DED6-4459-A3EC-8494CFEBC187}</Project>

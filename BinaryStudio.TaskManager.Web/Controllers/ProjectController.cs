@@ -14,9 +14,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
     using System.Linq;
     using System.Web.Mvc;
 
+    using BinaryStudio.TaskManager.Extensions.Extentions;
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
-    using BinaryStudio.TaskManager.Web.Extentions;
     using BinaryStudio.TaskManager.Web.Models;
 
     /// <summary>

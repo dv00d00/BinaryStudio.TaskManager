@@ -1,7 +1,9 @@
-using System;
-
-namespace BinaryStudio.TaskManager.Web.Extentions
+namespace BinaryStudio.TaskManager.Extensions.Logic
 {
+    using System;
+
+    using BinaryStudio.TaskManager.Extensions.Extentions;
+
     public class StringExtensions : IStringExtensions
     {
         public string Truncate(string source, int count)

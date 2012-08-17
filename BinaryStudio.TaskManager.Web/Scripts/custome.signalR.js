@@ -7,19 +7,20 @@ function startSignalRConnection(projectId, userName, isClient) {
 }
 
 
-taskHub.TaskCreated = function (taskId, managerId) {
-     $.ajax({
+taskHub.TaskCreated = function (taskIn) {
+    $.ajax({
         type: "POST",
         url: "/Project/TaskView",
-        data: { taskId: taskId },
+        data: { taskId: taskIn.Id },
         dataType: 'html',
         success: function (response1) {
-            var task = "<div class=\"task-holder\" data-taskid=" + taskId + " id =" + taskId + ">";
+            var managerId = taskIn.AssigneeId == null ? 0 : taskIn.AssigneeId;
+            var task = "<div class=\"task-holder\" data-taskid=" + taskIn.Id + " id =" + taskIn.Id + ">";
             task += response1;
             task += "</div>";
             jQuery("[data-managerid=" + managerId + "]").html(task);
-            jQuery("[data-taskid=" + taskId + "]").insertBefore(jQuery("[data-managerid=" + managerId + "]"));
-            jQuery("[data-taskid=" + taskId + "]").effect("shake", { times: 2 }, 200);
+            jQuery("[data-taskid=" + taskIn.Id + "]").insertBefore(jQuery("[data-managerid=" + managerId + "]"));
+            jQuery("[data-taskid=" + taskIn.Id + "]").effect("shake", { times: 2 }, 200);
         }
     });
 };

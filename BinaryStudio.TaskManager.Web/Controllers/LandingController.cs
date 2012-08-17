@@ -8,9 +8,11 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System.Collections.ObjectModel;
 
+    using BinaryStudio.TaskManager.Extensions;
+    using BinaryStudio.TaskManager.Extensions.Extentions;
+    using BinaryStudio.TaskManager.Extensions.Models;
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
-    using BinaryStudio.TaskManager.Web.Extentions;
     using BinaryStudio.TaskManager.Web.Models;
     [Authorize]
     public class LandingController : Controller
@@ -27,13 +29,21 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
         private readonly IProjectProcessor projectProcessor;
 
-        public LandingController(IProjectRepository projectRepository, IUserRepository userRepository, ITaskProcessor taskProcessor, IStringExtensions stringExtensions, IProjectProcessor projectProcessor)
+        private readonly INotifier notifier;
+
+        private readonly INewsProcessor newsProcessor;
+
+        public LandingController(IProjectRepository projectRepository, IUserRepository userRepository, 
+            ITaskProcessor taskProcessor, IStringExtensions stringExtensions, IProjectProcessor projectProcessor, 
+            INotifier notifier, INewsProcessor newsProcessor)
         {
             this.projectRepository = projectRepository;
             this.userRepository = userRepository;
             this.taskProcessor = taskProcessor;
             this.stringExtensions = stringExtensions;
             this.projectProcessor = projectProcessor;
+            this.notifier = notifier;
+            this.newsProcessor = newsProcessor;
         }
 
         public ActionResult Index()
@@ -131,8 +141,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var tasksToModel = taskList.Where(x => x.Closed == (DateTime?)null).Select(task => new LandingTaskModel
                             {
                                 Id = task.Id,
-                                Description = stringExtensions.Truncate(task.Description, 100),
-                                Name = task.Name,
+                                Description = stringExtensions.Truncate(task.Description, 70),
+                                Name = stringExtensions.Truncate(task.Name, 70),
                                 Priority = task.Priority,
                                 Created = task.Created,
                                 Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString(),
@@ -166,6 +176,21 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 AssigneeId = model.AssigneeId
             };
             this.taskProcessor.CreateTask(task);
+
+            var taskHistory = new HumanTaskHistory
+            {
+                NewDescription = task.Description,
+                ChangeDateTime = DateTime.Now,
+                NewAssigneeId = task.AssigneeId,
+                NewName = task.Name,
+                Task = task,
+                NewPriority = task.Priority,
+                Action = ChangeHistoryTypes.Create,
+                UserId = this.userRepository.GetByName(User.Identity.Name).Id
+            };
+            this.taskProcessor.AddHistory(taskHistory);
+            this.notifier.CreateTask(task.Id);
+            this.newsProcessor.CreateNewsForUsersInProject(taskHistory, task.ProjectId);
         }
     }
 }

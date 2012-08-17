@@ -9,9 +9,11 @@
 
 namespace BinaryStudio.TaskManager.Web.NinjectModules
 {
+    using BinaryStudio.TaskManager.Extensions.Extentions;
+    using BinaryStudio.TaskManager.Extensions.Logic;
+    using BinaryStudio.TaskManager.Extensions.Models;
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
-    using BinaryStudio.TaskManager.Web.Extentions;
 
     using Ninject.Modules;
     using Ninject.Web.Common;
@@ -42,6 +44,7 @@ namespace BinaryStudio.TaskManager.Web.NinjectModules
             this.Bind<INewsProcessor>().To<NewsProcessor>().InRequestScope();
             this.Bind<IStringExtensions>().To<StringExtensions>().InRequestScope();
             this.Bind<IReminderProcessor>().To<ReminderProcessor>().InRequestScope();
+            this.Bind<IReminderSender>().To<ReminderSender>().InRequestScope();
         }
     }
 }
