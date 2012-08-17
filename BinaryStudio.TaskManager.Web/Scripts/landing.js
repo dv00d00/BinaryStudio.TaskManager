@@ -1,6 +1,5 @@
-﻿var modelData = new TaskModel();
-var toDashboard = function (num, where) {
-    if (where == "here"){
+﻿var toDashboard = function (num, where) {
+    if (where == "here") {
         $("*").css("cursor", "progress");
         location.href = "/Project/Project/" + num;
     }
@@ -188,7 +187,7 @@ $(function () {
                 modelData.sortByDate();
                 break;
             case 68:
-                var num = ($("#content h2").attr("data-id"));
+                var num = modelData.Active();
                 if ((num != "") && (num != '-1') && (num != null))
                     toDashboard(num, "here");
                 break;
@@ -200,16 +199,18 @@ $(function () {
                 break;
             case 77:
                 $(".new_task_btn").hide();
+                modelData.Active(-1);
                 $(".project_name").removeClass("active_proj");
                 $("#my_tasks").addClass("active_proj");
-                getTaskGroup("my", "My Tasks");
+                getTaskGroup("my");
                 $(".assignee_btn").hide();
                 break;
             case 85:
                 $(".new_task_btn").hide();
+                modelData.Active(-1);
                 $(".project_name").removeClass("active_proj");
                 $("#unassigned_tasks").addClass("active_proj");
-                getTaskGroup("unassigned", "Unassigned Tasks");
+                getTaskGroup("unassigned");
                 $(".assignee_btn").hide();
                 break;
         }
@@ -261,7 +262,7 @@ $(function () {
                 $(document).on("keyup.short", function (d) {
                     bindShortcuts(d);
                 });
-            }, 100);
+            }, 300);
         });
     });
 
@@ -305,11 +306,14 @@ $(function () {
     });
 
     /********* Project Tasks View  *******/
-    var homeProj = $("#projects .proj_row:first-child").attr("data-id");
-    $("#projects .proj_row:first-child").children(".project_name").addClass("active_proj");
+    var homeProj = -1;
+    if (modelData.projects().length != 0) {
+        homeProj = modelData.projects()[0].Id;
+        modelData.Active(homeProj);
+    }
     startSignalRConnection(homeProj, user, false);
-    getTaskList(homeProj, 'start');
     ko.applyBindings(modelData);
+    setTimeout(modelData.data.start(false), 200);
     $('body').popover({
         selector: '.task_popover',
         delay: { show: 100 },
@@ -318,25 +322,22 @@ $(function () {
 
     $(document).on("click", ".task_group_list .project_name", function () {
         $(".new_task_btn").hide();
-        $(".project_name").removeClass("active_proj");
-        $(this).addClass("active_proj");
+        // $(".project_name").removeClass("active_proj");
+        // $(this).addClass("active_proj");
         var url = null;
         switch ($(this).attr("id")) {
             case "all_tasks": url = "all"; break;
             case "my_tasks": url = "my"; break;
             case "unassigned_tasks": url = "unassigned"; break;
         }
-        var groupName = $(this).html();
-        getTaskGroup(url, groupName);
+        getTaskGroup(url);
         $(".assignee_btn").hide();
     });
     $(document).on("click", ".user_projs,.created_projs", function () {
         $(".new_task_btn").show();
         $(".assignee_btn").show();
-        $(".project_name").removeClass("active_proj");
-        $(this).addClass("active_proj");
         var proj = $(this).parent(".proj_row").attr("data-id");
-        getTaskList(proj);
+        modelData.Active(proj);
     });
 
     /*********** Add Task ****************/
@@ -362,12 +363,10 @@ $(function () {
             newTaskInputEscape();
     });
 
-    $("#content h2").click(function () {
-    });
 });
 /******************** Functions ************************/
-function getTaskList(proj,state) {
-    if (state!='start')
+function getTaskList(proj) {
+    if (modelData.data.start() == false)
         taskHub.changeProject($.connection.hub.id, proj);
     $.ajax({
         data: { projectId: proj },
@@ -415,7 +414,7 @@ function getTaskList(proj,state) {
     });
 }
 
-function getTaskGroup(url, groupName) {
+function getTaskGroup(url) {
     $.ajax({
         data: { 'projectId'   : "-1",
                 'taskGroup'   : url},
@@ -460,11 +459,20 @@ function sendNewProject() {
         type: "POST",
         url: "/Landing/AddProject",
         beforeSend: function () {
-            $("#loader").show();
+            $("body").css("cursor", "progress");
         },
-        success: function (response) {
-            $("#loader").hide();
-            listProjects(response);
+        success: function (project) {
+            $("body").css("cursor", "default");
+            var proj = Object({
+                Id: project.Id,
+                Name: project.Name,
+                CreatedByYou: true
+            });
+            modelData.projects.push(proj);
+            modelData.Active(proj.Id);
+        },
+        error: function () {
+            $("body").css("cursor", "default");
         }
     });
 }
@@ -477,57 +485,31 @@ function deleteProjectQuery(proj) {
         type: 'POST',
         url: '/Landing/DeleteProject',
         beforeSend: function () {
-            $("#loader").show();
+            $("body").css("cursor", "progress");
         },
-        success: function (response) {
-            $("#loader").hide();
-            listProjects(response);
+        success: function () {
+            $("body").css("cursor", "default");
+            var thisProj = ko.utils.arrayFirst(modelData.projects(), function (project) {
+                return project.Id == proj;
+            });
+            if (modelData.Active() == proj) {
+                act = true;
+            }
+            modelData.projects.remove(thisProj);
+            if (act) {
+                if (modelData.projects().length > 0) {
+                    modelData.Active(modelData.projects()[0].Id);
+                }
+                else {
+                    modelData.Active(-1);
+                    modelData.tasks.removeAll();
+                }
+            }
+        },
+        error: function () {
+            $("body").css("cursor", "default");
         }
     });
-}
-
-function listProjects(response) {
-    var list = $(".project_list");
-    list.html("");
-    var name = null;
-    var creatorProjectsCount = projectsOutput(response.CreatorProjects, "created_projs");
-    var userProjectsCount = projectsOutput(response.UserProjects, "user_projs");
-    if (userProjectsCount + creatorProjectsCount == 0) {
-        $(".project_list").html("<span>There are no projects yet</span>");
-    }
-    $('.project_name').each(function () {
-        if ($(this).parent("div").attr("data-id") == $('#content h2').attr("data-id")) {
-            $(this).addClass('active_proj');
-        }
-    });
-}
-
-function projectsOutput(projects, li_class) {
-    var name = null;
-    var user = "";
-    for (var i = 0; i < projects.length; i++) {
-        if (li_class == 'user_projs') {
-            user = "<b>" + projects[i].Creator + "</b>/";
-        } else
-            user = "";
-        if (projects[i].Name.length < 20)
-            name = projects[i].Name;
-        else
-            name = projects[i].Name.substr(0, 20) + '...';
-        var ownProjDelete = (li_class == 'user_projs') ? "" : "<div class='delete_btn'></div>";
-        $(".project_list").append("\
-        <div class='proj_row' data-id='" + projects[i].Id + "'>\
-                         " + ownProjDelete + "\
-                         <div  class='" + li_class + " project_name'>" +user+ name + "</div>\
-                     </div>");
-         if (projects[i].Name.length >= 20)
-            $("li[data-id=" + projects[i].Id + "]").attr("title", projects[i].Name);
-        $('.dashboard_btn').tooltip({
-            'placement': 'right',
-            delay: { show: 1000 }
-        });
-    }
-    return i;
 }
 
 function scrollPresence() {
@@ -590,7 +572,7 @@ function addTask() {
             Name: task_name,
             Priority: priority,
             AssigneeId: $(".add_task_assignee").attr("data-id"),
-            ProjectId: $("#content h2").attr("data-id")
+            ProjectId: modelData.Active()
         });
         $.ajax({
             'data': {
@@ -607,7 +589,6 @@ function addTask() {
             },
             success: function () {
                 $('body').css('cursor', 'default');
-                //location.reload(true);
             },
             error: function () {
                 $('body').css('cursor', 'default');
@@ -636,7 +617,7 @@ function showUserHolder(e) {
     else {
         left = e.pageX - 225;
     }
-    if ($("#content h2").attr("data-id") != -1)
+    if (modelData.Active() != -1)
         user_list_holder.css({
             "display": "block",
             "top": top,
@@ -658,3 +639,11 @@ function hideUserHolder() {
     modelData.allUsers();
     $("input").blur();
 }
+
+modelData.Active.subscribe(function (newActive) {
+    if (newActive != -1)
+        getTaskList(newActive);
+    else if (modelData.data.start() == false)
+        taskHub.changeProject($.connection.hub.id, newActive);
+        
+});

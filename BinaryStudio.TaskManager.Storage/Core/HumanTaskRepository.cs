@@ -159,9 +159,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             return this.dataBaseContext.HumanTaskHistories.Where(x => x.Task.Id == taskId).ToList();
         }
-
-        //TODO: refactor - why method return the same task, witch is in parameters??
-
+        
         /// <summary>
         /// The add new human task.
         /// </summary>
