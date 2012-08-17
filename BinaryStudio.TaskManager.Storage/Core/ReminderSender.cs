@@ -12,7 +12,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public ReminderSender(INotifier notifier,IReminderProcessor reminderProcessor)
         {
             this.notifier = notifier;
-            this.timer = new Timer(300000); // 5 minutes
+            this.timer = new Timer(20000); // 20 sec
             this.timer.Elapsed += new ElapsedEventHandler(OnTick);
             this.reminderProcessor = reminderProcessor;
             //this.timeManager.OnTick += this.OnTick;
@@ -36,7 +36,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
            {
                if(notifier.SendReminderToDesktopClient(reminder.UserId,reminder.Content))
                {
-                   reminder.IsSend = true;
+                   //reminder.IsSend = true;
                    reminderProcessor.UpdateReminder(reminder);
                }
            }

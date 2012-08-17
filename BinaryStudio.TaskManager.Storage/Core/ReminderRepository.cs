@@ -15,7 +15,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
          public ReminderRepository(DataBaseContext dataBaseContext)
         {
-            this.dataBaseContext = dataBaseContext;
+            this.dataBaseContext = new DataBaseContext();//dataBaseContext;
         }
 
 

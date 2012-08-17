@@ -17,6 +17,7 @@ namespace BinaryStudio.TaskManager.Web
     {
         private readonly DataBaseContext dataBaseContext = new DataBaseContext();
         private  IReminderSender reminderSender;
+        private IKernel kernel;
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new ErrorHandler());
@@ -39,7 +40,7 @@ namespace BinaryStudio.TaskManager.Web
 
         protected override IKernel CreateKernel()
         {
-            var kernel = new StandardKernel();
+            kernel = new StandardKernel();
             GlobalHost.DependencyResolver = new NinjectDependencyResolver(kernel);
             RouteTable.Routes.MapHubs();
             kernel.Load(Assembly.GetExecutingAssembly());
@@ -55,17 +56,9 @@ namespace BinaryStudio.TaskManager.Web
             RegisterRoutes(RouteTable.Routes);
 
             Database.SetInitializer(new DatabaseInitializer());
-            /*reminderSender = new ReminderSender(new Notifier(new HumanTaskRepository(dataBaseContext),
-            new GlobalHostImpl(),
-            new ConnectionProvider(new ProjectRepository(dataBaseContext))
-            , new NewsRepository(dataBaseContext)
-            , new ProjectRepository(dataBaseContext)
-            , new UserProcessor(new UserRepository(dataBaseContext), new CryptoProvider(), new TaskProcessor(
-                new HumanTaskRepository(dataBaseContext), new ReminderRepository(dataBaseContext), new UserRepository(dataBaseContext)
-                ))), new ReminderProcessor(new ReminderRepository(dataBaseContext)));
-            */
-
-            //reminderSender.StartTimer();
+            reminderSender = kernel.Get<IReminderSender>();
+            
+            reminderSender.StartTimer();
         }
     }
 }
