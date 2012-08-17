@@ -548,12 +548,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="idTask">
         /// The id Task.
         /// </param>
+        /// <param name="viewStyle">
+        /// The view Style.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
-        public ActionResult Delete(int idTask)
+        public ActionResult Delete(int idTask, bool? viewStyle)
         {
-            var model = this.CreateSingleTaskViewModelById(idTask, true);
+            var model = this.CreateSingleTaskViewModelById(idTask, viewStyle);
             return this.View(model);
         }
 
@@ -566,14 +569,23 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <param name="projectId">
         /// The project id.
         /// </param>
+        /// <param name="viewStyle">
+        /// The view Style.
+        /// </param>
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
         [HttpPost]
         [ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int idTask, int projectId)
+        public ActionResult DeleteConfirmed(int idTask, int projectId, bool? viewStyle)
         {
+            var userId = this.taskProcessor.GetTaskById(idTask).AssigneeId;
             this.taskProcessor.DeleteTask(idTask);
+            if (true == viewStyle)
+            {
+                return this.RedirectToAction("MultiuserView", new { projectId, userId });
+            }
+
             return this.RedirectToAction("Project", new { id = projectId });
         }
         

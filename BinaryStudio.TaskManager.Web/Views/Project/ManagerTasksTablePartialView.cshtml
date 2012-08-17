@@ -8,7 +8,9 @@
                 <i class= "icon-edit" style="position: absolute; left: 15px;" title="edit task"></i>
             </a>
             @Model.Task.Name
-            <button class="close" style="position: absolute; right: 15px" title="delete task">&times;</button>
+            <a href="@Url.Action("Delete", "Project", new { idTask = @Model.Task.Id, projectId = @Model.Task.ProjectId, viewStyle = @Model.ViewStyle })">
+                <i class= "icon-remove" style="position: absolute; right: 15px" title="delete task"></i>
+            </a>
         </p>
         <div style="overflow: hidden; margin: 5px">
             @Model.Task.Description
@@ -16,21 +18,21 @@
         <br />
         <div>
             <a href="/Project/Details/@Model.Task.Id" style="position: absolute; bottom:0px; left: 15px; font-size: 9pt;" >
-                <img height="25" width="25" style="padding-bottom: 4px;" src=@Url.Content("~/Content/images/details.png")/>
+                <img height="20" width="20" style="padding-bottom: 4px;" src=@Url.Content("~/Content/images/details.png")/>
                 details </a>
             @if (Model.Task.AssigneeId.HasValue)
             {
                 if (Model.Task.Closed == (DateTime?)null)
                 {
-                <a  class="done" id="@Model.Task.Id" style="position: absolute; bottom: 0px; left: 110px; font-size: 9pt; cursor: pointer;" >
-                    <img height="25" width="25" style="padding-bottom: 4px;" src=@Url.Content("~/Content/images/done.png")/>
-                    done </a>
+                    <a  class="done" id="@Model.Task.Id" style="position: absolute; bottom: 0px; left: 110px; font-size: 9pt; cursor: pointer;" >
+                        <img height="18" width="18" style="padding-bottom: 4px;" src=@Url.Content("~/Content/images/done.png")/>
+                        done </a>
                 }
                 else
                 {
-                <p style="position: absolute; bottom: 0px; left: 90px; font-size: 9pt; margin: 0 0 7px;">
-                    closed:@Model.Task.Closed.Value.ToShortDateString()
-                </p>
+                    <p style="position: absolute; bottom: 0px; left: 90px; font-size: 9pt; margin: 0 0 7px;">
+                        closed:@Model.Task.Closed.Value.ToShortDateString()
+                    </p>
                 }
             }
         </div>
