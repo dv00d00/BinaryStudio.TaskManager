@@ -6,6 +6,8 @@ namespace BinaryStudio.TaskManager.Web.Models
     {        
         public HumanTask Task { get; set; }
 
+        public string TaskName { get; set; }
+
         public string CreatorName { get; set; }
 
         public bool? ViewStyle { get; set; }

@@ -125,6 +125,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     new TaskViewModel
                     {
                         Task = task,
+                        TaskName = this.stringExtensions.Truncate(task.Name, 15),
                         CreatorName = string.Empty
                     }).ToList();
             var model = new ProjectViewModel
@@ -152,6 +153,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                         new TaskViewModel
                         {
                             Task = task,
+                            TaskName = this.stringExtensions.Truncate(task.Name, 15),
                             CreatorName = string.Empty
                         }).ToList();
                 var managerModel = new ManagerTasksViewModel
@@ -174,6 +176,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                         new TaskViewModel
                         {
                             Task = task,
+                            TaskName = this.stringExtensions.Truncate(task.Name, 15),
                             CreatorName = string.Empty,
                             ViewStyle = false
                         }).ToList();
@@ -647,7 +650,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var task = taskProcessor.GetTaskById(taskId);
             task.Name = stringExtensions.Truncate(task.Name, 15);
             task.Description = stringExtensions.Truncate(task.Description, 50);
-            var model = new TaskViewModel { Task = task, CreatorName = string.Empty };
+            var model = new TaskViewModel { Task = task, TaskName = this.stringExtensions.Truncate(task.Name, 15), CreatorName = string.Empty };
             return this.PartialView("ManagerTasksTablePartialView", model);
         }
 
@@ -705,6 +708,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                     new TaskViewModel
                     {
                         Task = task,
+                        TaskName = this.stringExtensions.Truncate(task.Name, 15),
                         CreatorName = string.Empty,
                         ViewStyle = true
                     }).ToList();
@@ -733,6 +737,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                         new TaskViewModel
                         {
                             Task = task,
+                            TaskName = this.stringExtensions.Truncate(task.Name, 15),
                             CreatorName = string.Empty
                         }).ToList();
                 var managerModel = new ManagerTasksViewModel
@@ -755,6 +760,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                         new TaskViewModel
                         {
                             Task = task,
+                            TaskName = this.stringExtensions.Truncate(task.Name, 15),
                             CreatorName = string.Empty,
                             ViewStyle = true
                         }).ToList();

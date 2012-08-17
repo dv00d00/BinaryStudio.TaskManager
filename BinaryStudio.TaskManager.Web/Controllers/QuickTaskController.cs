@@ -1,17 +1,24 @@
-﻿using System.Web.Mvc;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="QuickTaskController.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the QuickTaskController type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    using System.Web.Mvc;
 
     using BinaryStudio.TaskManager.Extensions.Extentions;
     using BinaryStudio.TaskManager.Logic.Core;
     using BinaryStudio.TaskManager.Logic.Domain;
-    using BinaryStudio.TaskManager.Web.Models;
 
+    /// <summary>
+    /// The quick task controller.
+    /// </summary>
     public class QuickTaskController : Controller
     {
         /// <summary>
@@ -25,23 +32,20 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         private readonly ITaskProcessor taskProcessor;
 
         /// <summary>
-        /// The project processor.
-        /// </summary>
-        private readonly IProjectProcessor projectProcessor;
-
-        /// <summary>
         /// The notifier.
         /// </summary>
         private readonly INotifier notifier;
 
         /// <summary>
-        /// The news repository
+        /// The news processor.
         /// </summary>
-        private readonly INewsRepository newsRepository;
-
         private readonly INewsProcessor newsProcessor;
 
+        /// <summary>
+        /// The string extensions.
+        /// </summary>
         private readonly IStringExtensions stringExtensions;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="QuickTaskController"/> class.
         /// </summary>
@@ -49,25 +53,27 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// The user processor.
         /// </param>
         /// <param name="taskProcessor">
-        /// The task Processor.
-        /// </param>
-        /// <param name="projectProcessor">
-        /// The project Processor.
+        /// The task processor.
         /// </param>
         /// <param name="notifier">
         /// The notifier.
         /// </param>
-        /// <param name="newsRepository">
-        /// The news Repository.
+        /// <param name="newsProcessor">
+        /// The news processor.
         /// </param>
-        public QuickTaskController(IUserProcessor userProcessor, ITaskProcessor taskProcessor, IProjectProcessor projectProcessor, 
-            INotifier notifier, INewsRepository newsRepository, INewsProcessor newsProcessor, IStringExtensions stringExtensions)
+        /// <param name="stringExtensions">
+        /// The string extensions.
+        /// </param>
+        public QuickTaskController(
+            IUserProcessor userProcessor,
+            ITaskProcessor taskProcessor,
+            INotifier notifier,
+            INewsProcessor newsProcessor,
+            IStringExtensions stringExtensions)
         {
             this.userProcessor = userProcessor;
             this.taskProcessor = taskProcessor;
-            this.projectProcessor = projectProcessor;
             this.notifier = notifier;
-            this.newsRepository = newsRepository;
             this.newsProcessor = newsProcessor;
             this.stringExtensions = stringExtensions;
         }
@@ -108,7 +114,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 Created = DateTime.Now,
                 CreatorId = creatorId,
                 Description = description,
-                Name = stringExtensions.Truncate(description, 20),
+                Name = this.stringExtensions.Truncate(description, 15),
                 Priority = 0,
                 ProjectId = projectId,
             };
@@ -126,7 +132,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 UserId = this.userProcessor.GetUserByName(User.Identity.Name).Id
             };
             this.taskProcessor.AddHistory(taskHistory);
-            this.newsProcessor.CreateNewsForUsersInProject(taskHistory,task.ProjectId);
+            this.newsProcessor.CreateNewsForUsersInProject(taskHistory, task.ProjectId);
 
             this.notifier.CreateTask(task.Id);
 
