@@ -32,8 +32,12 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public IList<Reminder> GetRemindersForUser(int userId)
         {
-            return reminderRepository.GetAll().Where(x => x.UserId == userId && x.WasDelivered == false 
-                && x.ReminderDate.ToShortDateString()==DateTime.Now.ToShortDateString()).ToList();
+            IList<Reminder> reminders = reminderRepository.GetAll().ToList();
+            reminders = reminders.Where(x => x.UserId == userId && x.WasDelivered == false
+                                             && x.ReminderDate.ToShortDateString() == DateTime.Now.ToShortDateString()).
+                ToList();
+
+            return reminders;
         }
 
         public bool IsUserHaveReminders(int userId)
@@ -43,8 +47,33 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public IList<Reminder> GetRemindersOnDate(DateTime dateTime)
         {
-            return reminderRepository.GetAll().Where(x => x.WasDelivered == false && x.IsSend==false
+            IList<Reminder> reminders = reminderRepository.GetAll().ToList();
+            return reminders.Where(x => x.WasDelivered == false && x.IsSend==false
                 && x.ReminderDate.ToShortDateString() == dateTime.ToShortDateString()).ToList();
+        }
+
+        public IList<Reminder> GetRemindersOnDateForSender(DateTime dateTime)
+        {
+            IList<Reminder> reminders = reminderRepository.GetAllForSender().ToList();
+            return reminders.Where(x => x.WasDelivered == false && x.IsSend == false
+                && x.ReminderDate.ToShortDateString() == dateTime.ToShortDateString()).ToList();
+        }
+
+        public void DeleteRemindersForTask(int taskId)
+        {
+            var reminders = this.reminderRepository.GetAll().Where(x => x.TaskId.HasValue && x.TaskId.Value == taskId);
+            if (reminders != null)
+            {
+                foreach (var reminder in reminders)
+                {
+                    this.reminderRepository.Delete(reminder);
+                }
+            }
+        }
+
+        public IEnumerable<Reminder> GetAll()
+        {
+            return this.reminderRepository.GetAll();
         }
     }
 }

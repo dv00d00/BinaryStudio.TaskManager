@@ -685,6 +685,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
 
             taskProcessor.AddHistory(humanTaskHistory);
             this.newsProcessor.CreateNewsForUsersInProject(humanTaskHistory, humanTask.ProjectId);
+           
         }
 
         /// <summary>
