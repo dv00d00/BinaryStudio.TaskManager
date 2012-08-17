@@ -98,10 +98,11 @@
         /// <param name="project">
         /// The project.
         /// </param>
-        public void Add(Project project)
+        public int Add(Project project)
         {
             this.dataBaseContext.Entry(project).State = EntityState.Added;
             this.dataBaseContext.SaveChanges();
+            return project.Id;
         }
 
         /// <summary>

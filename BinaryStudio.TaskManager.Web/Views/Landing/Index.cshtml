@@ -1,25 +1,44 @@
 ﻿@using BinaryStudio.TaskManager.Web.Helpers
 @using BinaryStudio.TaskManager.Logic.Domain
-@model BinaryStudio.TaskManager.Web.Models.LandingIndexModel
-
-
-<script type="text/javascript">
-    var user;
-    $(document).ready(function () {
-        user = @User.Identity.Name;
-    });
-</script>
+@model BinaryStudio.TaskManager.Web.Models.LandingProjectListModel
 
 @{
     ViewBag.Title = "Task Manager";
-    var taskList = new List<HumanTask>();
-    taskList = Model.CreatorProjects.Select(x => x.Tasks).SelectMany(tasks => tasks).Distinct().ToList();
-    taskList.AddRange(Model.UserProjects.Select(x => x.Tasks).SelectMany(tasks => tasks).Distinct().ToList());
 }
 <link href="@Url.Content("~/Content/Landing.css")" rel="stylesheet" type="text/css" /> 
 
 <script src="@Url.Content("~/Scripts/knockout-2.1.0.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/TaskModel.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    var user;
+    $(document).ready(function () {
+        user = "+ @User.Identity.Name +";
+    });
+    var modelData = new TaskModel();
+    var model = @Html.Raw(Json.Encode(Model.CreatorProjects));
+    for (var i=0; i<model.length; i++)
+    {
+        var project = Object({
+            Id : model[i].Id,
+            Name : model[i].Name,
+            CreatedByYou : true
+        });
+        modelData.projects().push(project);
+    }
+    model = @Html.Raw(Json.Encode(Model.UserProjects));
+    for (i=0; i<model.length; i++)
+    {
+        project = Object({
+            Id : model[i].Id,
+            Name : model[i].Name,
+            Creator : model.Creator[i],
+            CreatedByYou : false
+        });
+        modelData.push(project);
+    }
+</script>
+
 <script src="@Url.Content("~/Scripts/landing.js")" type="text/javascript"></script>
 <div class="row main-row">
     <div id="left_panel">
@@ -28,9 +47,9 @@
         <div id="task_groups">
             <h3>Task Groups</h3>
             <div class="task_group_list">
-                <div class="project_name" id="all_tasks">All</div>
-                <div class="project_name" id="my_tasks">My Tasks</div>
-                <div class="project_name" id="unassigned_tasks">Unassigned</div>
+                <div class="project_name" id="all_tasks" data-bind="css:{'active_proj': Active() =='all'}">All</div>
+                <div class="project_name" id="my_tasks" data-bind="css:{'active_proj': Active()=='my'}">My Tasks</div>
+                <div class="project_name" id="unassigned_tasks" data-bind="css:{'active_proj': Active()=='un'}">Unassigned</div>
             </div>
         </div>
         <div id="projects">
@@ -38,31 +57,20 @@
                 <div class="new_project_btn">Add Project</div>
                 <h3>Projects</h3>
             </div>
-            <div class="project_list">   
-                @foreach (var project in Model.CreatorProjects)
-                {
-                    <div class="proj_row" data-id="@project.Id">
-                        <div class="delete_btn"></div>
-                        <div class="created_projs project_name">@project.Name</div>
-                    </div>
-                }
-
-                @foreach (var project in Model.UserProjects)
-                {
-                    <div class="proj_row" data-id="@project.Id">
-                        <div class="user_projs project_name"><b>@project.Creator.UserName</b>/@project.Name</div>
-                    </div>
-                }
-            </div>
-            <div id="loader">
-                
+            <div class="no_projects" data-bind="visible: projects().length==0">No projects yet</div>
+            <div class="project_list" data-bind="foreach: projects">
+                <div class="proj_row" data-bind="attr: {'data-id':Id}">
+                    <div class="delete_btn" data-bind="visible: CreatedByYou == true"></div>
+                    <div class="project_name" data-bind="text: Name, 'css': { 'user_projs':  CreatedByYou == false,  
+                    'created_projs': CreatedByYou == true, 'active_proj': Id == $parent.Active()}"></div>
+                </div>
             </div>
         </div>
     </div>
     <div class="span1">&nbsp;</div>
     <div id="content" class="span8">
-        <h2 data-bind="{'text': project,'attr':{'data-id':projectId}}"></h2>
-        <div class="btn-group sort_btn">
+        <h2 data-bind="{visible: Active() != -1, 'text': project,'attr':{'data-id':projectId}}"></h2>
+        <div class="btn-group sort_btn" data-bind="visible: tasks().length!=0">
             <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
                 Sort
                 <span class="caret"></span>
@@ -74,13 +82,12 @@
                 <li><a href='#' data-bind='click: $root.sortByDate'>Creation Date</a></li>
             </ul>
         </div>
-        <a class="btn btn-primary assignee_btn" href="#">
+        <a class="btn btn-primary assignee_btn" href="#" data-bind="visible: tasks().length!=0">
             Assignee
             <span class="caret"></span>
         </a>
         <a href="#" class="all_tasks" data-bind="click: allTasks">&larr; All Tasks</a>
         <h3><span></span>'s Tasks</h3>
-        <div class="no_filtered">No tasks matching filtered value</div>
         <div data-bind="visible: tasks().length==0">No tasks yet</div>
         <div class="task_list" data-bind="foreach: tasksToShow">
             <div class="task_in_list" data-bind="attr: {'data-id':Id}">
@@ -119,7 +126,7 @@
             </div>
             <span class="prior_name">Low</span>
         </div>
-        <div class="new_task_btn">Add Task</div>
+        <div class="new_task_btn" data-bind="visible: projects().length != 0">Add Task</div>
     </div>
     <div id="right_panel" class="span3">
     </div>

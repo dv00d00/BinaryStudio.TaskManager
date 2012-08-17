@@ -64,7 +64,7 @@
         /// <param name="project">
         /// The project.
         /// </param>
-        void Add(Project project);
+        int Add(Project project);
 
         /// <summary>
         /// The delete.

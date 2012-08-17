@@ -152,7 +152,7 @@
     <Compile Include="Models\InMemoryTokenManager.cs" />
     <Compile Include="Models\InvintationsInEventsViewModel.cs" />
     <Compile Include="Models\LandingCreateTaskModel.cs" />
-    <Compile Include="Models\LandingModels.cs" />
+    <Compile Include="Models\LandingProjectListModel.cs" />
     <Compile Include="Models\LandingUserModel.cs" />
     <Compile Include="Models\ListEventViewModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />

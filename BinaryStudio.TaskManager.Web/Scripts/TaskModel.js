@@ -4,13 +4,16 @@
     self.projectId = ko.observable();
     self.tasks = ko.observableArray([]);
     self.users = ko.observableArray([]);
+    self.projects = ko.observableArray([]);
     self.filter = ko.observable("all");
     self.userFilter = ko.observable("all");
+    self.Active = ko.observable();
     self.data = new Object(
     {
         userId: ko.observable(),
         name: ko.observable(),
-        user: ko.observable()
+        user: ko.observable(),
+        start: ko.observable(true)
     });
 
     self.isProject = function () {
@@ -85,16 +88,9 @@
         }
         $(".all_tasks").hide();
         $('#content h3').hide();
-        var filterByName = $("#filterByName");
-        filterByName.val("");
+        $("#filterByName").val("");
         self.data.name("");
         self.filter("all");
-        if (self.tasks().length == 0) {
-            filterByName.prop("disabled", "true");
-        }
-        else {
-            filterByName.removeAttr("disabled");
-        }
     };
 
     self.allUsers = function () {
@@ -103,7 +99,7 @@
         self.data.user("");
         self.userFilter("all");
     };
-    
+
     self.tasksToShow = ko.computed(function () {
         if (self.filter() == 'all')
             return self.tasks();
@@ -131,7 +127,16 @@
             return ko.utils.arrayFilter(self.users(), function (user) {
                 return (user.Name.toLowerCase().indexOf(name) != -1);
             });
-            
+
         }
+    });
+    self.tasksToShow.subscribe(function (tsks) {
+            var filterByName = $("#filterByName");
+        if(tsks.length == 0) {
+                filterByName.prop("disabled", "true");
+            }
+            else {
+                filterByName.removeAttr("disabled");
+            }
     });
 };
