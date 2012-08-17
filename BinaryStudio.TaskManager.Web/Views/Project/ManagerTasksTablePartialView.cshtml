@@ -24,15 +24,15 @@
             {
                 if (Model.Task.Closed == (DateTime?)null)
                 {
-                <a  class="done" id="@Model.Task.Id" style="position: absolute; bottom: 0px; left: 110px; font-size: 9pt; cursor: pointer;" >
-                    <img height="25" width="25" style="padding-bottom: 4px;" src=@Url.Content("~/Content/images/done.png")/>
-                    done </a>
+                    <a  class="done" id="@Model.Task.Id" style="position: absolute; bottom: 0px; left: 110px; font-size: 9pt; cursor: pointer;" >
+                        <img height="25" width="25" style="padding-bottom: 4px;" src=@Url.Content("~/Content/images/done.png")/>
+                        done </a>
                 }
                 else
                 {
-                <p style="position: absolute; bottom: 0px; left: 90px; font-size: 9pt; margin: 0 0 7px;">
-                    closed:@Model.Task.Closed.Value.ToShortDateString()
-                </p>
+                    <p style="position: absolute; bottom: 0px; left: 90px; font-size: 9pt; margin: 0 0 7px;">
+                        closed:@Model.Task.Closed.Value.ToShortDateString()
+                    </p>
                 }
             }
         </div>

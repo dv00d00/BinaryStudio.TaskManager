@@ -583,7 +583,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.taskProcessor.DeleteTask(idTask);
             if (true == viewStyle)
             {
-                return this.RedirectToAction("MultiuserView", new { projectId, userId});
+                return this.RedirectToAction("MultiuserView", new { projectId, userId });
             }
 
             return this.RedirectToAction("Project", new { id = projectId });
