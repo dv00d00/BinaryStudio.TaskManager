@@ -119,12 +119,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult Project(int id, int? userId, bool isOpenedProjects = true)
         {
             IList<HumanTask> unassignedHumanTasks = this.taskProcessor.GetUnAssignedTasksForProject(id).ToList();
-            List<TaskViewModel> unassignedTaskModel =
+            List<SingleTaskViewModel> unassignedTaskModel =
                 unassignedHumanTasks.Select(
                     task =>
-                    new TaskViewModel
+                    new SingleTaskViewModel
                     {
-                        Task = task,
+                        HumanTask = task,
                         TaskName = this.stringExtensions.Truncate(task.Name, 15),
                         CreatorName = string.Empty
                     }).ToList();
@@ -147,12 +147,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 IList<HumanTask> humanTasks = isOpenedProjects
                         ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, user.Id).ToList()
                         : this.taskProcessor.GetAllClosedTasksForUserInProject(id, user.Id).ToList();
-                List<TaskViewModel> taskModel =
+                List<SingleTaskViewModel> taskModel =
                     humanTasks.Select(
                         task =>
-                        new TaskViewModel
+                        new SingleTaskViewModel
                         {
-                            Task = task,
+                            HumanTask = task,
                             TaskName = this.stringExtensions.Truncate(task.Name, 15),
                             CreatorName = string.Empty
                         }).ToList();
@@ -170,12 +170,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 IList<HumanTask> chosenTasks = isOpenedProjects
                          ? this.taskProcessor.GetAllOpenTasksForUserInProject(id, (int)userId).ToList()
                          : this.taskProcessor.GetAllClosedTasksForUserInProject(id, (int)userId).ToList();
-                List<TaskViewModel> chosenTaskModel =
+                List<SingleTaskViewModel> chosenTaskModel =
                     chosenTasks.Select(
                         task =>
-                        new TaskViewModel
+                        new SingleTaskViewModel
                         {
-                            Task = task,
+                            HumanTask = task,
                             TaskName = this.stringExtensions.Truncate(task.Name, 15),
                             CreatorName = string.Empty,
                             ViewStyle = false
@@ -653,7 +653,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             var task = taskProcessor.GetTaskById(taskId);
             task.Name = stringExtensions.Truncate(task.Name, 15);
             task.Description = stringExtensions.Truncate(task.Description, 50);
-            var model = new TaskViewModel { Task = task, TaskName = this.stringExtensions.Truncate(task.Name, 15), CreatorName = string.Empty };
+            var model = new SingleTaskViewModel { HumanTask = task, TaskName = this.stringExtensions.Truncate(task.Name, 15), CreatorName = string.Empty };
             return this.PartialView("ManagerTasksTablePartialView", model);
         }
 
@@ -706,12 +706,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult MultiuserView(int projectId, int? userId, bool isOpenedProjects = true)
         {
             IList<HumanTask> unassignedHumanTasks = this.taskProcessor.GetUnAssignedTasksForProject(projectId).ToList();
-            List<TaskViewModel> unassignedTaskModel =
+            List<SingleTaskViewModel> unassignedTaskModel =
                 unassignedHumanTasks.Select(
                     task =>
-                    new TaskViewModel
+                    new SingleTaskViewModel
                     {
-                        Task = task,
+                        HumanTask = task,
                         TaskName = this.stringExtensions.Truncate(task.Name, 15),
                         CreatorName = string.Empty,
                         ViewStyle = true
@@ -735,12 +735,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 IList<HumanTask> humanTasks = isOpenedProjects
                         ? this.taskProcessor.GetAllOpenTasksForUserInProject(projectId, user.Id).ToList()
                         : this.taskProcessor.GetAllClosedTasksForUserInProject(projectId, user.Id).ToList();
-                List<TaskViewModel> taskModel =
+                List<SingleTaskViewModel> taskModel =
                     humanTasks.Select(
                         task =>
-                        new TaskViewModel
+                        new SingleTaskViewModel
                         {
-                            Task = task,
+                            HumanTask = task,
                             TaskName = this.stringExtensions.Truncate(task.Name, 15),
                             CreatorName = string.Empty
                         }).ToList();
@@ -758,12 +758,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 IList<HumanTask> chosenTasks = isOpenedProjects
                          ? this.taskProcessor.GetAllOpenTasksForUserInProject(projectId, (int)userId).ToList()
                          : this.taskProcessor.GetAllClosedTasksForUserInProject(projectId, (int)userId).ToList();
-                List<TaskViewModel> chosenTaskModel =
+                List<SingleTaskViewModel> chosenTaskModel =
                     chosenTasks.Select(
                         task =>
-                        new TaskViewModel
+                        new SingleTaskViewModel
                         {
-                            Task = task,
+                            HumanTask = task,
                             TaskName = this.stringExtensions.Truncate(task.Name, 15),
                             CreatorName = string.Empty,
                             ViewStyle = true

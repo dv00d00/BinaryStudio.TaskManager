@@ -41,7 +41,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         /// <value>
         /// The tasks.
         /// </value>
-        public List<TaskViewModel> Tasks { get; set; }
+        public List<SingleTaskViewModel> Tasks { get; set; }
 
         public int ProjectId { get; set; }
     }

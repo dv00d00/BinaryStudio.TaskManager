@@ -334,12 +334,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         public ActionResult AllManagersWithTasks()
         {
             IList<HumanTask> unassignedHumanTasks = this.taskProcessor.GetUnassignedTasks().ToList();
-            List<TaskViewModel> unassignedTaskModel =
+            List<SingleTaskViewModel> unassignedTaskModel =
                 unassignedHumanTasks.Select(
                     task =>
-                    new TaskViewModel
+                    new SingleTaskViewModel
                     {
-                        Task = task,
+                        HumanTask = task,
                         CreatorName = string.Empty
                     }).ToList();
             var model = new ProjectViewModel
@@ -351,12 +351,12 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             foreach (var user in users)
             {
                 IList<HumanTask> humanTasks = this.taskProcessor.GetTasksList(user.Id).ToList();
-                List<TaskViewModel> taskModel =
+                List<SingleTaskViewModel> taskModel =
                     humanTasks.Select(
                         task =>
-                        new TaskViewModel
+                        new SingleTaskViewModel
                         {
-                            Task = task,
+                            HumanTask = task,
                             CreatorName = string.Empty
                         }).ToList();
                 var managerModel = new ManagerTasksViewModel();
