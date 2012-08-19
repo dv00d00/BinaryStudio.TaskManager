@@ -11,7 +11,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
     public class ReminderRepository : IReminderRepository
     {
 
-         private readonly DataBaseContext dataBaseContext;
+        private readonly DataBaseContext dataBaseContext;
 
          public ReminderRepository(DataBaseContext dataBaseContext)
         {
@@ -60,7 +60,19 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public IEnumerable<Reminder> GetAll()
         {
-            return this.dataBaseContext.Reminders.ToList();
+            return this.dataBaseContext.Reminders;
+        }
+
+        public IEnumerable<Reminder> GetAllForSender()
+        {
+            IList<Reminder> reminders;
+            using (var myDataBaseContext = new DataBaseContext())
+            {
+
+                reminders = myDataBaseContext.Reminders.ToList();
+            }
+
+            return reminders;
         }
 
         public IEnumerable<Reminder> GetAllRemindersForUser(int userId)

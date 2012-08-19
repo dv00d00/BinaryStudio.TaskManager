@@ -12,5 +12,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
         IList<Reminder> GetRemindersForUser(int userId);
         bool IsUserHaveReminders(int userId);
         IList<Reminder> GetRemindersOnDate(DateTime dateTime);
+        IList<Reminder> GetRemindersOnDateForSender(DateTime dateTime);
+        void DeleteRemindersForTask(int taskId);
+        IEnumerable<Reminder> GetAll();
     }
 }

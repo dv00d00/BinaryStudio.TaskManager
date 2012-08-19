@@ -10,6 +10,8 @@ namespace BinaryStudio.TaskManager.Web.Models
 
         public HumanTask HumanTask { get; set; }
 
+        public string TaskName { get; set; }
+
         public string CreatorName { get; set; }
         
         public string AssigneeName { get; set; }

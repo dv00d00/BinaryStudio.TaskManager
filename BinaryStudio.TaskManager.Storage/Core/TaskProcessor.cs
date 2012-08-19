@@ -30,7 +30,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <summary>
         /// The reminder repository.
         /// </summary>
-        private readonly IReminderRepository reminderRepository;
+        private readonly IReminderProcessor reminderProcessor;
 
         /// <summary>
         /// The user repository.
@@ -43,16 +43,16 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// <param name="humanTaskRepository">
         /// The human task repository.
         /// </param>
-        /// <param name="reminderRepository">
+        /// <param name="reminderProcessor">
         /// The reminder repository.
         /// </param>
         /// <param name="userRepository">
         /// The user repository.
         /// </param>
-        public TaskProcessor(IHumanTaskRepository humanTaskRepository, IReminderRepository reminderRepository, IUserRepository userRepository)
+        public TaskProcessor(IHumanTaskRepository humanTaskRepository, IReminderProcessor reminderProcessor, IUserRepository userRepository)
         {
             this.humanTaskRepository = humanTaskRepository;
-            this.reminderRepository = reminderRepository;
+            this.reminderProcessor = reminderProcessor;
             this.userRepository = userRepository;
         }
 
@@ -76,7 +76,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
                     IsSend = false,
                     User = userRepository.GetById(task.AssigneeId.Value)
                 };
-                reminderRepository.Add(reminder);
+                reminderProcessor.AddReminder(reminder);
             }
         }
 
@@ -94,7 +94,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
             reminder.TaskId = newTaskId;
 
-            this.reminderRepository.Add(reminder);
+            this.reminderProcessor.AddReminder(reminder);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             this.humanTaskRepository.Update(task);
 
-            this.reminderRepository.Update(reminder);
+            this.reminderProcessor.UpdateReminder(reminder);
         }
 
         /// <summary>
@@ -135,12 +135,9 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// </param>
         public void DeleteTask(int taskId)
         {
-            foreach (var reminder in this.reminderRepository.GetAll())
+            if (this.reminderProcessor.GetAll().Any(x => x.TaskId.HasValue && x.TaskId.Value == taskId))
             {
-                if (reminder.TaskId == taskId)
-                {
-                    this.reminderRepository.Delete(reminder);
-                }
+                this.reminderProcessor.DeleteRemindersForTask(taskId);
             }
 
             this.humanTaskRepository.Delete(taskId);
@@ -171,13 +168,6 @@ namespace BinaryStudio.TaskManager.Logic.Core
             finally
             {
                 this.humanTaskRepository.Update(taskToBeAssigned);
-                foreach (var reminder in this.reminderRepository.GetAll())
-                {
-                    if (reminder.TaskId == taskId)
-                    {
-                        this.reminderRepository.Delete(reminder);
-                    }
-                }
             }
         }
 
@@ -206,6 +196,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             var now = DateTime.Now;
             taskToBeClosed.Closed = now;
             this.humanTaskRepository.Update(taskToBeClosed);
+            this.reminderProcessor.DeleteRemindersForTask(taskToBeClosed.Id);
         }
 
         /// <summary>

@@ -29,7 +29,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
         private Mock<IHumanTaskRepository> humanTaskRepositoryMock;
 
-        private Mock<IReminderRepository> reminderRepositoryMock;
+        private Mock<IReminderProcessor> reminderProcessor;
 
         [SetUp]
         public void Setup()
@@ -37,8 +37,8 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.userRepositoryMock = new Mock<IUserRepository>();
             this.cryptoProvider = new CryptoProvider();
             this.humanTaskRepositoryMock = new Mock<IHumanTaskRepository>();
-            this.reminderRepositoryMock = new Mock<IReminderRepository>();
-            this.taskProcessor = new TaskProcessor(this.humanTaskRepositoryMock.Object, this.reminderRepositoryMock.Object, this.userRepositoryMock.Object);
+            this.reminderProcessor = new Mock<IReminderProcessor>();
+            this.taskProcessor = new TaskProcessor(this.humanTaskRepositoryMock.Object, this.reminderProcessor.Object, this.userRepositoryMock.Object);
             this.userProcessor = new UserProcessor(this.userRepositoryMock.Object, this.cryptoProvider, this.taskProcessor);
         }
 

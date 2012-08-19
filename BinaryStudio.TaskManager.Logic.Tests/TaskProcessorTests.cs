@@ -43,7 +43,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         /// <summary>
         /// The mock reminder repository.
         /// </summary>
-        private Mock<IReminderRepository> mockReminderRepository;
+        private Mock<IReminderProcessor> mockReminderProcessor;
 
         /// <summary>
         /// The processor under test.
@@ -90,9 +90,9 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             //    }
             //});
 
-            this.mockReminderRepository = new Mock<IReminderRepository>();
+            this.mockReminderProcessor = new Mock<IReminderProcessor>();
             this.mockUserRepository = new Mock<IUserRepository>();
-            this.processorUnderTest = new TaskProcessor(this.mockHumanTaskRepository.Object, this.mockReminderRepository.Object, mockUserRepository.Object);
+            this.processorUnderTest = new TaskProcessor(this.mockHumanTaskRepository.Object, this.mockReminderProcessor.Object, mockUserRepository.Object);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.mockHumanTaskRepository.Verify(it => it.Add(
                 It.Is<HumanTask>(x => x.Description == "bla bla")));
 
-            this.mockReminderRepository.Verify(it => it.Add(
+            this.mockReminderProcessor.Verify(it => it.AddReminder(
                 It.Is<Reminder>(x => x.TaskId == ExpectedTaskIdAfterSave)));
         }
 
@@ -196,7 +196,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.processorUnderTest.UpdateTask(testTask, testReminder);
 
             this.mockHumanTaskRepository.Verify(it => it.Update(testTask), Times.Once());
-            this.mockReminderRepository.Verify(it => it.Update(testReminder), Times.Once());
+            this.mockReminderProcessor.Verify(it => it.UpdateReminder(testReminder), Times.Once());
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             // arrange
             const int DeletingTask = 4;
 
-            this.mockReminderRepository.Setup(it => it.GetAll()).Returns(
+            this.mockReminderProcessor.Setup(it => it.GetAll()).Returns(
                 new List<Reminder>
                     {
                         new Reminder() { TaskId = 3 },
@@ -231,7 +231,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.processorUnderTest.DeleteTask(DeletingTask);
 
             // assert
-            this.mockReminderRepository.Verify(it => it.Delete(It.IsAny<Reminder>()), Times.AtLeastOnce());
+            this.mockReminderProcessor.Verify(it => it.DeleteRemindersForTask(DeletingTask), Times.AtLeastOnce());
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             // arrange
             const int DeletingTask = 4;
 
-            this.mockReminderRepository.Setup(it => it.GetAll()).Returns(
+            this.mockReminderProcessor.Setup(it => it.GetAll()).Returns(
                 new List<Reminder>
                     {
                         new Reminder { TaskId = 3 }, 
@@ -255,7 +255,7 @@ namespace BinaryStudio.TaskManager.Logic.Tests
             this.processorUnderTest.DeleteTask(DeletingTask);
 
             // assert
-            this.mockReminderRepository.Verify(it => it.Delete(It.IsAny<Reminder>()), Times.Never());
+            this.mockReminderProcessor.Verify(it => it.DeleteRemindersForTask(DeletingTask), Times.Never());
         }
 
         /// <summary>
@@ -313,11 +313,11 @@ namespace BinaryStudio.TaskManager.Logic.Tests
         /// The should_ update task and delete related reminders_ when move task is called.
         /// </summary>
         [Test]
-        public void Should_UpdateTaskAndDeleteRelatedReminders_WhenMoveTaskIsCalled()
+        public void Should_UpdateTask_WhenMoveTaskIsCalled()
         {
             // arrange
             const int TaskBeingMoved = 1;
-            this.mockReminderRepository.Setup(it => it.GetAll()).Returns(
+            this.mockReminderProcessor.Setup(it => it.GetAll()).Returns(
                 new List<Reminder>
                     {
                         new Reminder() { TaskId = 3 },
@@ -331,8 +331,8 @@ namespace BinaryStudio.TaskManager.Logic.Tests
 
             // assert
             this.mockHumanTaskRepository.Verify(it => it.Update(It.Is<HumanTask>(x => x.AssigneeId == 4)), Times.Once());
-            this.mockReminderRepository.Verify(
-                it => it.Delete(It.Is<Reminder>(x => x.TaskId == TaskBeingMoved)), Times.AtLeastOnce());
+            //this.mockReminderProcessor.Verify(
+              //  it => it.DeleteReminder(It.Is<Reminder>(x => x.TaskId == TaskBeingMoved).Id), Times.AtLeastOnce());
         }
 
         /// <summary>
