@@ -151,7 +151,8 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                 Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName.ToString(),
                                 AssigneeId = task.AssigneeId,
                                 Assignee = task.AssigneeId== null?null:userRepository.GetById(task.AssigneeId.GetValueOrDefault()).UserName.ToString(),
-                                AssigneePhoto = task.AssigneeId==null?false:userRepository.GetById(task.AssigneeId.GetValueOrDefault()).ImageData!=null
+                                AssigneePhoto = task.AssigneeId==null?false:userRepository.GetById(task.AssigneeId.GetValueOrDefault()).ImageData!=null,
+                                Finished = task.Finished
                             });
             var model = new LandingProjectModel
                 {
@@ -176,7 +177,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                 Name = model.Name,
                 Priority = model.Priority,
                 ProjectId = model.ProjectId,
-                AssigneeId = model.AssigneeId
+                AssigneeId = model.AssigneeId,
+                Finished = model.FinishDate,
+                Assigned = model.AssigneeId != null ? DateTime.Now : (DateTime?)null 
             };
             this.taskProcessor.CreateTask(task);
 

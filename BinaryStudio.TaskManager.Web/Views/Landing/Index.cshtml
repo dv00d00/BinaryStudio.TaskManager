@@ -8,6 +8,7 @@
 <link href="@Url.Content("~/Content/Landing.css")" rel="stylesheet" type="text/css" /> 
 
 <script src="@Url.Content("~/Scripts/knockout-2.1.0.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/bootstrap-datepicker.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/TaskModel.js")" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -80,6 +81,7 @@
                 <li><a href='#' data-bind='click: $root.sortByName'>Name</a></li>
                 <li><a href='#' data-bind='click: $root.sortByAssignee'>Assignee</a></li>
                 <li><a href='#' data-bind='click: $root.sortByDate'>Creation Date</a></li>
+                <li><a href='#' data-bind='click: $root.sortByFinishDate'>Finish Date</a></li>
             </ul>
         </div>
         <a class="btn btn-primary assignee_btn" href="#" data-bind="visible: tasks().length!=0">
@@ -106,7 +108,7 @@
                 </div>     
                 <span class="assignee_name" data-bind="{'if':'AssigneeId!=null','text':Assignee, 'click':$parent.filterByAssignee}"></span>
                 <div data-bind="attr: {'class': 'priority prior_'+Priority}"></div>
-                <a data-bind="text:Name, attr: { 'data-content': 'Created: '+CreatedDate+'<br>'+CreatedTime+'<br>By '+Creator,'data-original-title':Name, 'href':'/Project/Details/'+Id}" rel="popover" class="task_popover"></a>
+                <a data-bind="text:Name, attr: { 'data-content': '<b>Created:</b> '+CreatedDate+'<br>'+CreatedTime+'<br><b>By</b> '+Creator+ (FinishDate!=null?'<br><b>Finish Date:</b> '+FinishRealDate:''),'data-original-title':Name, 'href':'/Project/Details/'+Id}" rel="popover" class="task_popover"></a>
                 <div data-bind="text: Description"></div>
             </div>
         </div>
@@ -117,14 +119,20 @@
             <div class="add_task_assignee">
                 <div class="add_task_assignee_photo"></div>
                 <div class="add_task_assignee_name"><span>No one</span> is assigned</div>
-             </div>
-            <div class="btn-group priority_buttons" data-toggle="buttons-radio">
-                <button class="btn prior_0 active" value="0" data-prior="Low">&nbsp;</button>
-                <button class="btn prior_1" value="1" data-prior="Mid">&nbsp;</button>
-                <button class="btn prior_2" value="2" data-prior="High">&nbsp;</button>
-                <button class="btn prior_3" value="3" data-prior="Block">&nbsp;</button>
             </div>
-            <span class="prior_name">Low</span>
+            <div class="priority_block">
+                <div class="btn-group priority_buttons" data-toggle="buttons-radio">
+                    <button class="btn prior_0 active" value="0" data-prior="Low">&nbsp;</button>
+                    <button class="btn prior_1" value="1" data-prior="Mid">&nbsp;</button>
+                    <button class="btn prior_2" value="2" data-prior="High">&nbsp;</button>
+                    <button class="btn prior_3" value="3" data-prior="Block">&nbsp;</button>
+                </div>
+                <span class="prior_name">Low</span>
+            </div>
+            <div class="finish_date">
+                <input type="text" class="new_task_date" placeholder="Finish Date"/>
+                <span class="add-on"><i class="icon-th"></i></span>
+            </div>
         </div>
         <div class="new_task_btn" data-bind="visible: projects().length != 0">Add Task</div>
     </div>
