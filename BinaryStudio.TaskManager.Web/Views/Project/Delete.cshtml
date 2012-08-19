@@ -2,10 +2,7 @@
 @{
     ViewBag.Title = "Delete task";
 }
-<h2 class="well-large">
-    Delete task
-</h2>
-<h3>
+@*<h3>
     Are you sure you want to delete this task?
     <button title="Yes" class="yes btn btn-success">
         Yes
@@ -13,7 +10,7 @@
     <button title="No" class="no btn btn-danger" >
         No
     </button>
-</h3>
+</h3>*@
 <br />
 @Html.Partial("TaskDetailsPartial")
 @using (Html.BeginForm())
@@ -23,18 +20,6 @@
         <input type="submit" value="Delete" class="delete btn btn-primary" /><br />
     </div>
 }
-<p>
-    <p>
-    </p>
-    @if (Model.ViewStyle == true)
-    {
-        @Html.ActionLink("Return to project", "MultiuserView", new { projectId = Model.HumanTask.ProjectId }, new { @class = "btn" }) 
-    }
-    else
-    {
-        @Html.ActionLink("Return to project", "Project", new { id = Model.HumanTask.ProjectId }, new { @class = "btn" })
-    }
-</p>
 
 <script type="text/javascript">
     $(document).ready(function () {
