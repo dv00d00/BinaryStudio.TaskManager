@@ -61,7 +61,7 @@
             }); 
                       
         });
-
+        
     });
 </script>
 
@@ -133,7 +133,7 @@
                     <div class="column" align="center" width="250" id="-1">
                             @foreach (var unAssignedTask in Model.UnAssignedTasks)
                             {
-                                <div class="task-holder" data-taskid= @unAssignedTask.HumanTask.Id.ToString() id = @unAssignedTask.HumanTask.Id.ToString()>
+                                <div class="task-holder" data-taskid= @unAssignedTask.Task.Id.ToString() id = @unAssignedTask.Task.Id.ToString()>
                                     @Html.Partial("ManagerTasksTablePartialView", unAssignedTask)
                                 </div>
                             }
@@ -145,9 +145,9 @@
                 {   
                     <td valign="top" class="well">
                         <div class="column" id=@user.User.Id.ToString() align = "center" valign="top" width="250">
-                            @foreach (var task in user.Tasks.OrderByDescending(x => x.HumanTask.Priority))
+                            @foreach (var task in user.Tasks.OrderByDescending(x => x.Task.Priority))
                             {
-                                <div class="task-holder" data-taskid= @task.HumanTask.Id.ToString() id=@task.HumanTask.Id.ToString()>
+                                <div class="task-holder" data-taskid= @task.Task.Id.ToString() id=@task.Task.Id.ToString()>
                                     @Html.Partial("ManagerTasksTablePartialView", task)
                                 </div>
                             }
