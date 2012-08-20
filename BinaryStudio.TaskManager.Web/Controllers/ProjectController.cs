@@ -542,6 +542,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         /// <returns>
         /// The System.Web.Mvc.ActionResult.
         /// </returns>
+        [HttpPost]
         public ActionResult Details(int id, bool? viewStyle)
         {
             var model = this.CreateSingleTaskViewModelById(id, viewStyle);            
