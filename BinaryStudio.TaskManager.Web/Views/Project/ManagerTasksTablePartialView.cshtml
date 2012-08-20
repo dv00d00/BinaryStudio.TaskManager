@@ -10,7 +10,7 @@
                 <i class= "icon-edit" style="position: absolute; left: 15px;" title="edit task"></i>
             </a>
             @Model.TaskName
-            <a data-toggle="modal" data-id="@Model" class="openDeleteTask" href="#deleteTask">
+            <a data-toggle="modal" data-id="@Model.Task.Id" data-projectid="@Model.Task.ProjectId" data-style="@Model.ViewStyle" class="openDeleteTask" href="#deleteTask">
                 <i class= "icon-remove" style="position: absolute; right: 15px" title="delete task"></i>
             </a>
         </p>
@@ -18,10 +18,11 @@
             @Model.Task.Description
         </div>
         <br />
-        <div>
-            <a href="@Url.Action("Details", "Project", new { id = @Model.Task.Id, viewStyle = @Model.ViewStyle })" style="position: absolute; bottom:0px; left: 15px; font-size: 9pt;" >
+    <div>
+            <a data-toggle="modal" data-id="@Model.Task.Id" data-style="@Model.ViewStyle" class="openDetailsTask" href="#detailsTask" style="position: absolute; bottom:0px; left: 15px; font-size: 9pt;">
                 <img height="20" width="20" style="padding-bottom: 4px;" src=@Url.Content("~/Content/images/details.png")/>
-                details </a>
+                details 
+            </a>
             @if (Model.Task.AssigneeId.HasValue)
             {
                 if (Model.Task.Closed == (DateTime?)null)
@@ -42,48 +43,90 @@
 }
 
 <div class="modal hide" id="deleteTask">
-    @*@Html.Partial("DeleteTaskPartialView", inf)*@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">×</button>
         <h3>Delete task</h3>
     </div>
     <div class="modal-body">
-        Are you sure you want to delete task @Model.TaskName?
-        @*<input type="text" name="TaskName" id="TaskName" value=""/>*@
     </div>
     <div class="modal-footer">
-        @if (Model.ViewStyle == true)
-        {
+        <h3 align="center">
+            Are you sure you want to delete this task?<br/>
+            <button class="yes btn btn-success" data-id="TaskId" data-projectid="ProjectId" data-style="ViewStyle" >
+                Yes
+            </button>
             <span class="divider-vertical"></span>
-            @Html.ActionLink("Return to project", "MultiuserView", new { projectId = Model.Task.ProjectId, viewStyle = true }, new { @class = "btn" })
-        }
-        else
-        {
-            <span class="divider-vertical"></span>
-            @Html.ActionLink("Back to project dashboard", "Project", new { id = Model.Task.ProjectId }, new { @class = "btn" })
-        }
+            <button class="btn btn-danger" data-dismiss="modal">
+                No, thanks
+            </button>
+        </h3>
+    </div>
+</div>
+
+<div class="modal hide" id="detailsTask">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Task details</h3>
+    </div>
+    <div class="modal-body">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal">
+            Back to project
+        </button>
     </div>
 </div>
 
 <script type="text/javascript">
-//    $(document).on("click", ".openDeleteTask",
-//        function() {
-//            var onSuccess = function () {
-//                $('#deleteTask').modal('show');
-//                $(".modal-body #TaskName").val(name);
-//            };
-//            var name = $(this).data('id');
-//            $.ajax({
-//                url: "/Project/Delete/",
-//                data: { idTask: name },
-//                dataType: "json",
-//                traditional: true
-//            }).success(onSuccess);
-//        });
+        $(document).ready(function () {
 
-        $(document).on("click", ".openDeleteTask", function () {
-            var name = $(this).data('id');
-            $(".modal-body #TaskName").val(name);
-            $('#deleteTask').modal('show');
+            $(".openDeleteTask").click(function() {
+                var onSuccess = function() {
+                    $('#deleteTask').modal('show');
+                };
+                var taskId = $(this).data('id');
+                $(".yes").data("TaskId", taskId);
+                var projectId = $(this).data('projectid');
+                $(".yes").data("ProjectId", projectId);
+                var viewStyle = $(this).data('style');
+                $(".yes").data("ViewStyle", viewStyle);
+                $(".modal-body").load(
+                    "/Project/Delete/" + taskId,
+                    { idTask: taskId },
+                    onSuccess
+                );
+            });
+
+            $(".openDetailsTask").click(function () {
+                var onSuccess = function () {
+                    $('#detailsTask').modal('show');
+                };
+                var taskId = $(this).data('id');
+                $(".modal-body").load(
+                    "/Project/Details/" + taskId,
+                    { idTask: taskId },
+                    onSuccess
+                );
+            });
+
+            $(".yes").click(function () {
+                var onError = function () {
+                    alert("Error while AJAX request");
+                };
+                var onSuccess = function () {
+                    $(this).parents(".project/project");
+//                    $('#deleteTask').modal('close');
+                };
+                var id = $(this).data("TaskId");
+                var projId = $(this).data("ProjectId");
+                var style = $(this).data("ViewStyle");
+                $.ajax({
+                    type: "POST",
+                    url: "/Project/DeleteConfirmed/",
+                    data: { idTask: id, projectId: projId, viewStyle: style},
+                    dataType: "json",
+                    traditional: true
+                }).success(onSuccess).error(onError);
+            });
         });
 </script>
