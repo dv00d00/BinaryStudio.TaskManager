@@ -1,6 +1,29 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.SingleTaskViewModel
 @{
     ViewBag.Title = "Delete task";
-    Layout = null;
+    if (Request.IsAjaxRequest())
+    {
+        Layout = null;
+    }
 }
+<h2 class="well-large">
+    Delete task
+</h2>
+
 @Html.Partial("TaskDetailsPartial")
+@using (Html.BeginForm())
+{
+    <br />
+    <div align="center">
+        Are you sure you want to delete task @Model.HumanTask.Name?<br/>
+        <input type="submit" value="Delete" class="delete btn btn-primary" />
+        @if (Model.ViewStyle == true)
+        {
+            @Html.ActionLink("No, thanks", "MultiuserView", new { projectId = Model.HumanTask.ProjectId }, new { @class = "btn btn-success" }) 
+        }
+        else
+        {
+            @Html.ActionLink("No, thanks", "Project", new { id = Model.HumanTask.ProjectId }, new { @class = "btn btn-danger" })
+        }
+    </div>
+}

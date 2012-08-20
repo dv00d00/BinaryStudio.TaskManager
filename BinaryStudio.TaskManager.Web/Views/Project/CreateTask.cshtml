@@ -1,6 +1,10 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.CreateTaskViewModel
 @{
     ViewBag.Title = "Creating new task";
+    if (Request.IsAjaxRequest())
+    {
+        Layout = null;
+    }
 }
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
