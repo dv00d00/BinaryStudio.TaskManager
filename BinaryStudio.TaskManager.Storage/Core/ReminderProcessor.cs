@@ -32,12 +32,12 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public IList<Reminder> GetRemindersForUser(int userId)
         {
-            IList<Reminder> reminders = reminderRepository.GetAll().ToList();
-            reminders = reminders.Where(x => x.UserId == userId && x.WasDelivered == false
-                                             && x.ReminderDate.ToShortDateString() == DateTime.Now.ToShortDateString()).
+            IEnumerable<Reminder> reminders = reminderRepository.GetAll();
+            var resreminders = reminders.Where(x => x.UserId == userId && x.WasDelivered == false
+                                             && x.ReminderDate <= DateTime.Now).
                 ToList();
 
-            return reminders;
+            return resreminders;
         }
 
         public bool IsUserHaveReminders(int userId)
@@ -49,14 +49,14 @@ namespace BinaryStudio.TaskManager.Logic.Core
         {
             IList<Reminder> reminders = reminderRepository.GetAll().ToList();
             return reminders.Where(x => x.WasDelivered == false && x.IsSend==false
-                && x.ReminderDate.ToShortDateString() == dateTime.ToShortDateString()).ToList();
+                && x.ReminderDate <= dateTime).ToList();
         }
 
         public IList<Reminder> GetRemindersOnDateForSender(DateTime dateTime)
         {
             IList<Reminder> reminders = reminderRepository.GetAllForSender().ToList();
             return reminders.Where(x => x.WasDelivered == false && x.IsSend == false
-                && x.ReminderDate.ToShortDateString() == dateTime.ToShortDateString()).ToList();
+                && x.ReminderDate <= dateTime).ToList();
         }
 
         public void DeleteRemindersForTask(int taskId)
@@ -74,6 +74,11 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public IEnumerable<Reminder> GetAll()
         {
             return this.reminderRepository.GetAll();
+        }
+
+        public IEnumerable<Reminder> GetRemindersForTask(int taskId)
+        {
+            return this.reminderRepository.GetAll().Where(x => x.TaskId.HasValue && x.TaskId.Value == taskId);
         }
     }
 }
