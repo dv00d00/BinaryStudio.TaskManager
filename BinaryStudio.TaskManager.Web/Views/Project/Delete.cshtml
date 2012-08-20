@@ -1,38 +1,6 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.SingleTaskViewModel
 @{
     ViewBag.Title = "Delete task";
+    Layout = null;
 }
-@*<h3>
-    Are you sure you want to delete this task?
-    <button title="Yes" class="yes btn btn-success">
-        Yes
-     </button>
-    <button title="No" class="no btn btn-danger" >
-        No
-    </button>
-</h3>*@
-<br />
 @Html.Partial("TaskDetailsPartial")
-@using (Html.BeginForm())
-{
-    <br />
-    <div>
-        <input type="submit" value="Delete" class="delete btn btn-primary" /><br />
-    </div>
-}
-
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $(".delete").prop("disabled", true);
-
-        $(".yes").click(function () {
-            $(".delete").prop("disabled", false);
-        });
-
-        $(".no").click(function () {
-            $(".delete").prop("disabled", true);
-        });
-
-    });
-</script>
