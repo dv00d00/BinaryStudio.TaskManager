@@ -16,10 +16,10 @@
     <br />
     <div align="center">
         Are you sure you want to delete task @Model.HumanTask.Name?<br/>
-        <input type="submit" value="Delete" class="delete btn btn-primary" />
+        <input type="submit" value="Delete" class="delete btn btn-success" />
         @if (Model.ViewStyle == true)
         {
-            @Html.ActionLink("No, thanks", "MultiuserView", new { projectId = Model.HumanTask.ProjectId }, new { @class = "btn btn-success" }) 
+            @Html.ActionLink("No, thanks", "MultiuserView", new { projectId = Model.HumanTask.ProjectId }, new { @class = "btn btn-danger" }) 
         }
         else
         {
