@@ -23,6 +23,7 @@
         var project = Object({
             Id : model[i].Id,
             Name : model[i].Name,
+            Creator : null,
             CreatedByYou : true
         });
         modelData.projects().push(project);
@@ -33,10 +34,10 @@
         project = Object({
             Id : model[i].Id,
             Name : model[i].Name,
-            Creator : model.Creator[i],
+            Creator : model[i].Creator,
             CreatedByYou : false
         });
-        modelData.push(project);
+        modelData.projects().push(project);
     }
 </script>
 
@@ -61,9 +62,15 @@
             <div class="no_projects" data-bind="visible: projects().length==0">No projects yet</div>
             <div class="project_list" data-bind="foreach: projects">
                 <div class="proj_row" data-bind="attr: {'data-id':Id}">
-                    <div class="delete_btn" data-bind="visible: CreatedByYou == true"></div>
+                     <!-- ko if: CreatedByYou -->
+                    <div class="delete_btn"></div>
                     <div class="project_name" data-bind="text: Name, 'css': { 'user_projs':  CreatedByYou == false,  
                     'created_projs': CreatedByYou == true, 'active_proj': Id == $parent.Active()}"></div>
+                    <!-- /ko -->
+                     <!-- ko if: CreatedByYou==false -->
+                    <div class="project_name" data-bind="html: '<b>'+Creator+'</b> | '+Name, 'css': { 'user_projs':  CreatedByYou == false,  
+                    'created_projs': CreatedByYou == true, 'active_proj': Id == $parent.Active()}"></div>
+                    <!-- /ko -->
                 </div>
             </div>
         </div>
