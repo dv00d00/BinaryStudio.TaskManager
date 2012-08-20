@@ -70,14 +70,9 @@
         </div>
         <div data-managerid="0" style="display: none"></div>
         <input type="submit" value="Save" class="btn btn-primary" />
-        @if (Model.ViewStyle == true)
-        {
-            @Html.ActionLink("Return to project", "MultiuserView", new { projectId = Model.ProjectId }, new { @class = "btn" }) 
-        }
-        else
-        {
-            @Html.ActionLink("Return to project", "Project", new { id = Model.ProjectId }, new { @class = "btn" })
-        }
+        @(this.Model.ViewStyle == true ? 
+            this.Html.ActionLink("Return to project", "MultiuserView", new { projectId = this.Model.ProjectId }, new { @class = "btn" }) : 
+            this.Html.ActionLink("Return to project", "Project", new { id = this.Model.ProjectId }, new { @class = "btn" }))
     </fieldset>
 }
 
