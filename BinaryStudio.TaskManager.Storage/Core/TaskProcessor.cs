@@ -155,16 +155,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public void MoveTask(int taskId, int userId)
         {
             var taskToBeAssigned = this.humanTaskRepository.GetById(taskId);
-            //var taskReminders = this.reminderProcessor.GetRemindersForTask(taskId);
-            //if(taskReminders!=null)
-            //{
-            //     foreach (var taskReminder in taskReminders)
-            //    {
-            //        taskReminder.UserId = userId > 0 ? userId : -1;
-            //        this.reminderProcessor.UpdateReminder(taskReminder);
-            //    }
-            //}
-
+            
             try
             {
                 this.userRepository.GetById(userId);
@@ -175,7 +166,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
                 taskToBeAssigned.AssigneeId = null;
                 
             }
-            finally
+            finally 
             {
                 this.humanTaskRepository.Update(taskToBeAssigned);
             }
