@@ -257,13 +257,24 @@
 .new_task_name {
     width: 95% !important;
 }
-
+.finish_date {
+    margin-bottom: 20px;
+    margin-left: 10px;
+    float: left;
+    height: 10px;
+}
+.priority_block {
+    float: left;
+}
 .add_task_cancel {
     margin-left: 10px;
     margin-top: 5px;
     float: left;
 }
-
+.add_on {
+    bottom: 2px;
+    position: relative;
+}
 .add_task_assignee_photo {
     cursor: pointer;
     bottom: 0px !important;
@@ -272,7 +283,7 @@
     line-height: 28px;
     position: relative;
     float: left;
-    margin-left: 50px;
+    margin-left: 27px;
     background: white !important;
 }
 .add_task_assignee_name{

@@ -1,5 +1,8 @@
 using System;
+using System.Linq;
 using System.Timers;
+using BinaryStudio.TaskManager.Logic.Domain;
+
 namespace BinaryStudio.TaskManager.Logic.Core
 {
     public class ReminderSender : IReminderSender
@@ -9,12 +12,14 @@ namespace BinaryStudio.TaskManager.Logic.Core
         private readonly IReminderProcessor reminderProcessor;
 
 
-        public ReminderSender(INotifier notifier,IReminderProcessor reminderProcessor)
+
+        public ReminderSender(INotifier notifier, IReminderProcessor reminderProcessor)
         {
             this.notifier = notifier;
-            this.timer = new Timer(20000); // 20 sec
+            this.timer = new Timer(30000); // 30 sec
             this.timer.Elapsed += new ElapsedEventHandler(OnTick);
             this.reminderProcessor = reminderProcessor;
+            //this.reminderProcessor = reminderProcessor;
             //this.timeManager.OnTick += this.OnTick;
         }
 
@@ -30,7 +35,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public void OnTick(object s, ElapsedEventArgs e)
         {
-            var reminders = this.reminderProcessor.GetRemindersOnDateForSender(DateTime.Now);
+           var reminders = reminderProcessor.GetRemindersOnDateForSender(DateTime.Now);
             
            foreach(var reminder in reminders)
            {

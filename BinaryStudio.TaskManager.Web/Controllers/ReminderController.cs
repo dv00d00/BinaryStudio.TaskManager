@@ -1,12 +1,13 @@
 using System;
-
+using System.Web.Configuration;
+using System.Configuration;
 namespace BinaryStudio.TaskManager.Web.Controllers
 {
     using System.Web.Mvc;
 
-    using BinaryStudio.TaskManager.Logic.Core;
-    using BinaryStudio.TaskManager.Logic.Domain;
-    [Authorize]
+    using Logic.Core;
+    using Logic.Domain;
+    
     public class ReminderController : Controller
     {
         private readonly IReminderRepository reminderRepository;
@@ -37,7 +38,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             this.taskProcessor = taskProcessor;
             this.reminderProcessor = reminderProcessor;
         }
-        
+        [Authorize]
         public ViewResult MyReminders()
         {
             return
@@ -73,16 +74,46 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             return this.View(reminder);
         }
 
+        
         [HttpPost]
-        public JsonResult GetUsers(string UserName)
+        public JsonResult GetUsers (string name, string applicationKey)
         {
-            Object[][] a = new object[3][];
-            foreach (var o in a)
+            Configuration myWebConfig = WebConfigurationManager.OpenWebConfiguration(null);
+            KeyValueConfigurationElement customSetting = myWebConfig.AppSettings.Settings["IntegrationKey"];
+            if(customSetting!=null)
             {
-                    
+                if(customSetting.Value==applicationKey)
+                {
+                    var user = userRepository.GetByName(name);
+                    string userName = user != null ? user.UserName :  "";
+                    int userId = user != null ? user.Id : -1;
+                    return Json(new object[] {userName,userId});
+                }
             }
+            return Json(false);
+        }
 
-            return Json(new object[]{ 1, "Username1",2,"UserName2"});
+        [HttpPost]
+        public JsonResult SendNotification(int userId,string content,DateTime date)
+        {
+            var reminder = new Reminder
+                               {
+                                   UserId = userId,
+                                   Content = content,
+                                   ReminderDate = date,
+                                   IsSend = false,
+                                   WasDelivered = false,
+                                   TaskId = null,
+                               };
+            try
+            {
+                reminderProcessor.AddReminder(reminder);
+            }
+            catch(Exception e)
+            {
+                return Json(false);
+            }
+            return Json(true);
         }
 
         public ActionResult Edit(int id)
@@ -118,9 +149,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
         {
             Reminder reminder = this.reminderRepository.GetById(id);
             this.reminderRepository.Delete(reminder);
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction("MyReminders");
         }
-
+        [Authorize]
         public ActionResult IsUserHasReminders()
         {
             int userId = userRepository.GetByName(User.Identity.Name).Id;

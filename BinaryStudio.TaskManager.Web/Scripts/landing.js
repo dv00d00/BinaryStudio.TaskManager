@@ -23,12 +23,15 @@ $(function () {
             Priority: thisTask.Priority,
             AssigneeId: moveToUser.Id,
             Assignee: moveToUser.Name,
-            AssigneePhoto: moveToUser.Photo
+            AssigneePhoto: moveToUser.Photo,
+            FinishDate: thisTask.FinishDate,
+            FinishRealDate: thisTask.FinishRealDate
         });
     };
 
     taskHub.TaskCreated = function (task) {
-        var date = new Date(parseInt(task.Created.substr(6)));
+        var date = new Date(task.Created);
+        var finishDate = task.Finished != null ? new Date(task.Finished) : null;
         var thisTask = new Object({
             Id: task.Id,
             Name: task.Name,
@@ -40,7 +43,9 @@ $(function () {
             Priority: task.Priority,
             AssigneeId: task.AssigneeId,
             Assignee: task.Assignee,
-            AssigneePhoto: task.AssigneePhoto
+            AssigneePhoto: task.AssigneePhoto,
+            FinishDate: finishDate,
+            FinishRealDate: task.Finished != null ? finishDate.toLocaleDateString() : null
         });
         modelData.tasks.push(thisTask);
     };
@@ -320,15 +325,15 @@ $(function () {
         $(".new_task_btn").hide();
         var url = null;
         switch ($(this).attr("id")) {
-            case "all_tasks": 
+            case "all_tasks":
                 url = "all";
-                modelData.Active("all");  
+                modelData.Active("all");
                 break;
-            case "my_tasks": 
+            case "my_tasks":
                 url = "my";
                 modelData.Active("my");
                 break;
-            case "unassigned_tasks": 
+            case "unassigned_tasks":
                 url = "unassigned";
                 modelData.Active("un");
                 break;
@@ -366,6 +371,40 @@ $(function () {
             newTaskInputEscape();
     });
 
+    /************ Date  **************/
+    $('.new_task_date').val('');
+    var startDate;
+    $(document).on("focus.date", ".new_task_date", function () {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        today = dd + '-' + mm + '-' + yyyy;
+        $('.new_task_date').val(today);
+        startDate = new Date(yyyy, mm - 1, dd);
+        $('.new_task_date').data('date-startdate', startDate);
+        $('.new_task_date').datepicker({ format: 'dd-mm-yyyy', weekStart: 0, startDate: startDate })
+            .on('changeDate', function (ev) {
+                if (ev.date.valueOf() < startDate.valueOf()) {
+                    $('.new_task_date').val(today);
+                    $('.new_task_date').trigger('keyup');
+                    $('.datepicker tr td').css('background', 'red');
+                    setTimeout(function () {
+                        $('.datepicker tr td').css('background', 'white');
+                        $('.datepicker td.active:hover, .datepicker td.active:hover:hover, .datepicker td.active:active, .datepicker td.active:hover:active, .datepicker td.active.active, .datepicker td.active:hover.active, .datepicker td.active.disabled, .datepicker td.active:hover.disabled, .datepicker td.active[disabled],  .datepicker td.active:hover[disabled]')
+                            .css('background-color', '#04C');
+                    }, 200);
+                };
+            });
+        $('.new_task_date').datepicker('show');
+        $(document).off('focus.date', ".new_task_date");
+    });
 });
 /******************** Functions ************************/
 function getTaskList(proj) {
@@ -388,6 +427,7 @@ function getTaskList(proj) {
             for (var i = 0; i < data.Tasks.length; i++) {
                 task = data.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));
+                var finishDate = task.Finished != null ? new Date(parseInt(task.Finished.substr(6))) : null;
                 var thisTask = new Object({
                     Id: task.Id,
                     Name: task.Name,
@@ -399,7 +439,9 @@ function getTaskList(proj) {
                     Priority: task.Priority,
                     AssigneeId: task.AssigneeId,
                     Assignee: task.Assignee,
-                    AssigneePhoto: task.AssigneePhoto
+                    AssigneePhoto: task.AssigneePhoto,
+                    FinishDate: finishDate,
+                    FinishRealDate: task.Finished != null ? finishDate.toLocaleDateString() : null
                 });
                 modelData.tasks.push(thisTask);
             }
@@ -433,6 +475,7 @@ function getTaskGroup(url) {
             for (var i = 0; i < data.Tasks.length; i++) {
                 task = data.Tasks[i];
                 var date = new Date(parseInt(task.Created.substr(6)));
+                var finishDate = task.Finished!=null? new Date(parseInt(task.Finished.substr(6))) : null;
                 var thisTask = new Object({
                     Id: task.Id,
                     Name: task.Name,
@@ -444,7 +487,9 @@ function getTaskGroup(url) {
                     Priority: task.Priority,
                     AssigneeId: task.AssigneeId,
                     Assignee: task.Assignee,
-                    AssigneePhoto: task.AssigneePhoto
+                    AssigneePhoto: task.AssigneePhoto,
+                    FinishDate: finishDate,
+                    FinishRealDate: task.Finished!=null ? finishDate.toLocaleDateString() : null
                 });
                 modelData.tasks.push(thisTask);
             }
@@ -568,21 +613,28 @@ function moveTask(projectId, userId, taskId) {
 function addTask() {
     var task_name = $("#add_task_box input").val();
     var priority = $(".priority_buttons .btn.active").val();
+    var date = $(".new_task_date").val();
     $("#add_task_box input").val("");
+    setTimeout(function () {
+        $(".new_task_date").datepicker("hide");
+        $(".new_task_date").val("");
+    }, 10);
     $("#add_task_box input").focus();
     if (task_name != "") {
         var thisTask = new Object({
             Name: task_name,
             Priority: priority,
             AssigneeId: $(".add_task_assignee").attr("data-id"),
-            ProjectId: modelData.Active()
+            ProjectId: modelData.Active(),
+            FinishDate: date!='' ? date : null
         });
         $.ajax({
             'data': {
                 'AssigneeId': thisTask.AssigneeId,
                 'Name': thisTask.Name,
                 'Priority': thisTask.Priority,
-                'ProjectId': thisTask.ProjectId
+                'ProjectId': thisTask.ProjectId,
+                'FinishDate': thisTask.FinishDate
             },
             'dataType': 'JSON',
             'type': 'POST',

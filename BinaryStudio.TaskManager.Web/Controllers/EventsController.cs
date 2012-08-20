@@ -156,7 +156,9 @@ namespace BinaryStudio.TaskManager.Web.Controllers
        
         public ActionResult GetNews(ListEventViewModel eventsViewModels,  int type,int projectId=-1)
         {
-             eventsViewModels.Events = eventsViewModels.Events.Select(x =>
+            if (eventsViewModels == null)
+                return Json(eventsViewModels);
+            eventsViewModels.Events = eventsViewModels.Events.Select(x =>
                                             {
                                                 x.IsVisible = true;
                                                 return x;

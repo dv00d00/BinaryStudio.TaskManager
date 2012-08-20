@@ -1,5 +1,7 @@
 namespace BinaryStudio.TaskManager.Web.Models
 {
+    using System;
+
     public class LandingCreateTaskModel
     {
         public string Name { get; set; }
@@ -9,5 +11,7 @@ namespace BinaryStudio.TaskManager.Web.Models
         public int? AssigneeId { get; set; }
 
         public int ProjectId { get; set; }
+
+        public DateTime? FinishDate { get; set; }
     }
 }

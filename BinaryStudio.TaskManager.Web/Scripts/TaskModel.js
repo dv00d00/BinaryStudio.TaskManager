@@ -45,6 +45,13 @@
         });
     };
 
+    self.sortByFinishDate = function () {
+        self.tasks.sort(function (left, right) {
+            return left.FinishDate == right.FinishDate ? 0 :
+                ((left.FinishDate < right.FinishDate) ? ((left.FinishDate == null) ? 1 : -1) : ((right.FinishDate == null)? -1 : 1));
+        });
+    };
+
     self.filterByAssignee = function (task) {
         var user_li = $(".user_list li[data-id='" + task.AssigneeId + "']");
         $(".all_tasks").show();
@@ -131,12 +138,12 @@
         }
     });
     self.tasksToShow.subscribe(function (tsks) {
-            var filterByName = $("#filterByName");
-        if(tsks.length == 0) {
-                filterByName.prop("disabled", "true");
-            }
-            else {
-                filterByName.removeAttr("disabled");
-            }
+        var filterByName = $("#filterByName");
+        if (tsks.length == 0) {
+            filterByName.prop("disabled", "true");
+        }
+        else {
+            filterByName.removeAttr("disabled");
+        }
     });
 };

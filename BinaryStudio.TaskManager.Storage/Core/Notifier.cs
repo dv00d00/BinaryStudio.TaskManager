@@ -71,7 +71,8 @@ namespace BinaryStudio.TaskManager.Logic.Core
                 Creator = userRepository.GetById(task.CreatorId.GetValueOrDefault()).UserName,
                 AssigneeId = task.AssigneeId,
                 Assignee = task.AssigneeId == null ? null : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).UserName,
-                AssigneePhoto = task.AssigneeId == null ? false : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).ImageData != null
+                AssigneePhoto = task.AssigneeId == null ? false : userRepository.GetById(task.AssigneeId.GetValueOrDefault()).ImageData != null,
+                Finished = task.Finished
             };
             var clients = this.connectionProvider.GetProjectConnections(projectId);
             var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
