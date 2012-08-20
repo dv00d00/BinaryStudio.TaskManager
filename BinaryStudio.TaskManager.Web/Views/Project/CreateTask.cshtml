@@ -61,7 +61,7 @@
             Finish Date:
         </div>
         <div class="editor-field">
-            <div class="input-append date" data-date="06-09-2011" data-date-format="dd-mm-yyyy"> 
+            <div class="input-append date" data-date-format="dd-mm-yyyy"> 
                 @Html.TextBoxFor(model => model.Finished)
                 @Html.ValidationMessageFor(model => model.Finished)
             </div>
@@ -82,8 +82,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#Finished').val('06-09-2011');
-        $('#Finished').datepicker({
+       $('#Finished').datepicker({
             format: 'dd-mm-yyyy'
         });
 
