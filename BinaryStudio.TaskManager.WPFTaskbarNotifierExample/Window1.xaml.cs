@@ -76,7 +76,7 @@ namespace WPFTaskbarNotifierExample
                 // The title and message are both not empty.
 
                 // Add the new title and message to the TaskbarNotifier's content.
-                this.taskbarNotifier.NotifyContent.Add(new NotifyObject(message, title));
+                this.taskbarNotifier.NotifyContent.Add(new NotifyObject(message,-1));//, title));
 
                 // Clear the textboxes.
                 this.ClearTextBoxes();

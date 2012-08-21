@@ -55,13 +55,13 @@ namespace BinaryStudio.TaskManager.Logic.Core
         public IList<Reminder> GetRemindersOnDateForSender(DateTime dateTime)
         {
             IList<Reminder> reminders = reminderRepository.GetAllForSender().ToList();
-            return reminders.Where(x => x.WasDelivered == false && x.IsSend == false
+            return reminders.Where(x => x.WasDelivered == false && x.IsSend == true
                 && x.ReminderDate <= dateTime).ToList();
         }
 
         public void DeleteRemindersForTask(int taskId)
         {
-            var reminders = this.reminderRepository.GetAll().Where(x => x.TaskId.HasValue && x.TaskId.Value == taskId);
+            var reminders = this.reminderRepository.GetAll().Where(x => x.TaskId.HasValue && x.TaskId.Value == taskId).ToList();
             if (reminders != null)
             {
                 foreach (var reminder in reminders)

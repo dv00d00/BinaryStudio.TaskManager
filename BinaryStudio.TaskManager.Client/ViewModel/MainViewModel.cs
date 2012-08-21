@@ -96,7 +96,7 @@ namespace MessengR.Client.ViewModel
             
             
 
-            taskHub.Message += message =>
+            taskHub.Message += (message,id) =>
                 {
                     this._syncContext.Post(
                         state =>
@@ -122,20 +122,20 @@ namespace MessengR.Client.ViewModel
             });
 
             // Fire events on the ui thread
-            taskHub.Message += message => _syncContext.Post(x => OnMessage(message), null);
+            taskHub.Message += (message,projId) => _syncContext.Post(x => OnMessage(message,projId), null);
         }
 
-        private void OnMessage(TaskMessage message)
+        private void OnMessage(TaskMessage message,int projectId)
         {
             taskbarNotifier = new ExampleTaskbarNotifier();
             taskbarNotifier.Show();
             taskbarNotifier.ShowInTaskbar = true;
             taskbarNotifier.OpeningMilliseconds = 1000;
-            taskbarNotifier.StayOpenMilliseconds = 7000;
+            taskbarNotifier.StayOpenMilliseconds = 7000000;
             taskbarNotifier.HidingMilliseconds = 1000;
             // Starts a new conversation with message.From if not started,
             // otherwise, it will add a message to the conversation window with message.From.
-            this.taskbarNotifier.NotifyContent.Add(new NotifyObject(message.Description, DateTime.Today.ToString(CultureInfo.InvariantCulture)));
+            this.taskbarNotifier.NotifyContent.Add(new NotifyObject(message.Description,projectId));//DateTime.Today.ToString(CultureInfo.InvariantCulture)));
 
             // Tell the TaskbarNotifier to open.
             this.taskbarNotifier.Notify();

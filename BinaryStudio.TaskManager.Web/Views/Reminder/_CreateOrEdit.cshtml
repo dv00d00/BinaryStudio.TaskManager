@@ -3,7 +3,7 @@
 @* This partial view defines form fields that will appear when creating and editing entities *@
 
 <div class="editor-label">
-    Дата напоминания:
+    Remider date:
 </div>
 <div class="editor-field">
     <input class="text-box single-line" id="ReminderDate" name="ReminderDate" type="text" value='@(Model.ReminderDate != null ? Model.ReminderDate.ToShortDateString().Replace('.', '-') : "06-09-2011")' />
@@ -12,7 +12,7 @@
 </div>
 
 <div class="editor-label">
-    Содержание:
+    Content:
 </div>
 <div class="editor-field">
     @Html.EditorFor(model => model.Content)
@@ -20,7 +20,7 @@
 </div>
 
 <div class="editor-label">
-    Задание:
+    Task:
 </div>
 <div class="editor-field">
     @try
@@ -31,7 +31,7 @@
             Text = (option == null ? "None" : option.Name),
             Value = option.Id.ToString(),
             Selected = (Model != null) && (option.Id == Model.TaskId)
-        }), "Выберите...")
+        }), "Choose...")
     }
     
     catch (System.ArgumentNullException)

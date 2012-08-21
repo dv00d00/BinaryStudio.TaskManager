@@ -101,7 +101,7 @@ namespace BinaryStudio.TaskManager.Web.Controllers
                                    UserId = userId,
                                    Content = content,
                                    ReminderDate = date,
-                                   IsSend = false,
+                                   IsSend = true,
                                    WasDelivered = false,
                                    TaskId = null,
                                };

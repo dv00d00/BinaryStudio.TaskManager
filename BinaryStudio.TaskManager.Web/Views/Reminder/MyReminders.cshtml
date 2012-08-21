@@ -1,16 +1,36 @@
-@model IEnumerable<BinaryStudio.TaskManager.Logic.Domain.Reminder>
+@model IList<BinaryStudio.TaskManager.Logic.Domain.Reminder>
+           
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2 class="well-large">
-    Список всех напоминаний
+    My Reminders
 </h2>
 
-<p>
-    @Html.ActionLink("Создать новое напоминание", "Create", null, new {@class="btn"})
+<p >
+    @Html.ActionLink("Create new ", "Create", null, new {@class="btn"})
 </p>
+
+<div style="margin: auto; width: 80%">
+    @for (int i=0;i<Model.Count; i++)
+    {
+        <div class="note">
+            <div class="taskName">@if (Model[i].TaskId.HasValue)
+                                  {
+                                      @: @*<a href="@Url.Action("Details", "Project", new { id = reminder.TaskId, viewStyle =false})" style="color: #666; text-decoration: none;" >@reminder.Task.Name</a>*@ @Model[i].Task.Name
+                                  } </div>
+            <br/>
+            @Model[i].Content
+            <div style="position: relative; margin-top: 20px;" >To remind you? @Html.CheckBoxFor(model => model[i].IsSend)</div>
+        </div>
+    }
+  </div>
+
+
+
+@*
 <table>
     <tr>
         <th>
@@ -48,3 +68,4 @@
 </table>
 
 
+*@

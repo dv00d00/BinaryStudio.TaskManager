@@ -23,6 +23,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
             {
                 this.AddNews(taskHistory, projectUser);
             }
+            if (taskHistory.NewAssigneeId.HasValue)
+            {
+                this.notifier.BroadcastNewsToDesktopClient(taskHistory);
+            }
         }
 
         public void AddNews(HumanTaskHistory taskHistory, User user)

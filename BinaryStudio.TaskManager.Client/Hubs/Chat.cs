@@ -27,7 +27,7 @@ namespace MessengR.Client.Hubs
 
         private readonly IHubProxy hubProxy;
 
-        public event Action<TaskMessage> Message;
+        public event Action<TaskMessage,int> Message;
 
         public event Action<LogonStatusMessage> LogonStatus;
 
@@ -36,11 +36,11 @@ namespace MessengR.Client.Hubs
             this.connection = connection;
             hubProxy = connection.CreateProxy("taskHub");
 
-            hubProxy.On<string>("reciveMessageOnClient", (description) =>
+            hubProxy.On<string,int>("reciveMessageOnClient", (description,projectId) =>
             {
                 if (Message != null)
                 {
-                    Message( new TaskMessage{Description = description});
+                    Message( new TaskMessage{Description = description},projectId);
                 }
             });
 
