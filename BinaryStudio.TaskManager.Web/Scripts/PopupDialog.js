@@ -19,6 +19,7 @@ $(document).ready(function () {
 
                     })
                     .load(this.href);
+        $(".dropdown-menu").css("z-index", "10000");
     });
 
     $(".close").live("click", function (e) {
