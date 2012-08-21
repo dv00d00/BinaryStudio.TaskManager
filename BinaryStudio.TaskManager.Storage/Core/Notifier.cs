@@ -101,18 +101,44 @@ namespace BinaryStudio.TaskManager.Logic.Core
             SetCountOfNews(user.UserName);
         }
 
-        public void BroadcastNewsToDesktopClient(News news)
+        public void BroadcastNewsToDesktopClient(HumanTaskHistory taskHistory)
         {
-            var connects = this.connectionProvider.GetClientConnectionsForUser(news.UserId);
+            var connects = this.connectionProvider.GetClientConnectionsForUser(taskHistory.NewAssigneeId.Value);
             var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
-            string message = news.HumanTaskHistory.Action;
+            string message = taskHistory.Action;
+            string userName = this.userProcessor.GetUser(taskHistory.UserId).UserName;
+            switch (taskHistory.Action)
+            {
+                case ChangeHistoryTypes.Create :
+                    {
+                        message = userName +
+                                  " created task '" + taskHistory.NewName + "' for you";
+                        break;
+                    }
+                case ChangeHistoryTypes.Change :
+                    {
+                        message = userName + " changed your task '" + taskHistory.NewName + "'";
+                        break;
+                    }
+                case ChangeHistoryTypes.Close :
+                    {
+                        message = userName + " closed your task '" + taskHistory.NewName + "'";
+                        break;
+                    }
+                case ChangeHistoryTypes.Move:
+                    {
+                        message = userName + " assigned task '" + taskHistory.NewName + "' to you";
+                        break;
+                    }             
+            }
+           
             foreach (var clientConnection in connects)
             {
-                context.Clients[clientConnection.ConnectionId].ReciveMessageOnClient(message);
+                context.Clients[clientConnection.ConnectionId].ReciveMessageOnClient(message,taskHistory.Task.ProjectId);
             }
         }
 
-        public bool SendReminderToDesktopClient(int userId, string message)
+        public bool SendReminderToDesktopClient(int userId, string message,int projectId)
         {
             var connects = new List<ClientConnection>(this.connectionProvider.GetClientConnectionsForUser(userId));
             var context = GlobalHost.ConnectionManager.GetHubContext<TaskHub>();
@@ -120,7 +146,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             {
                 foreach (var clientConnection in connects)
                 {
-                    context.Clients[clientConnection.ConnectionId].ReciveMessageOnClient(message);
+                    context.Clients[clientConnection.ConnectionId].ReciveMessageOnClient(message,projectId);
                 }
                 return true;
             }
@@ -129,7 +155,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         public void BroadcastNews(News news)
         {
-            BroadcastNewsToDesktopClient(news);
+            //BroadcastNewsToDesktopClient(news);
             this.SetCountOfNews(news.UserId);
         }
     }

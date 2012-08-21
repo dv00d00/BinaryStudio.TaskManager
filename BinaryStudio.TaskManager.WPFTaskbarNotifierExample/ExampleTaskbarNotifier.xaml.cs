@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,32 +16,6 @@ using WPFTaskbarNotifier;
 
 namespace WPFTaskbarNotifierExample
 {
-    /// <summary>
-    /// This is just a mock object to hold something of interest. 
-    /// </summary>
-    public class NotifyObject
-    {
-        public NotifyObject(string message, string title)
-        {
-            this.message = message;
-            this.title = title;
-        }
-
-        private string title;
-        public string Title
-        {
-            get { return this.title; }
-            set { this.title = value; }
-        }
-
-        private string message;
-        public string Message
-        {
-            get { return this.message; }
-            set { this.message = value; }
-        }
-    }
-
     /// <summary>
     /// This is a TaskbarNotifier that contains a list of NotifyObjects to be displayed.
     /// </summary>
@@ -78,19 +53,72 @@ namespace WPFTaskbarNotifierExample
         {
             Hyperlink hyperlink = sender as Hyperlink;
 
-            if(hyperlink == null)
+            if (hyperlink == null)
                 return;
 
             NotifyObject notifyObject = hyperlink.Tag as NotifyObject;
-            if(notifyObject != null)
+            if (notifyObject != null)
             {
-                MessageBox.Show("\"" + notifyObject.Message + "\"" + " clicked!");
+                if (notifyObject.ProjectId > 0)
+                {
+                    Process.Start("http://localhost:8081/Project/Project/" + notifyObject.ProjectId);
+                }
+                else
+                {
+                    Process.Start("http://localhost:8081/Reminder/MyReminders");
+                }
+                //MessageBox.Show("\"" + notifyObject.Message + "\"" + " clicked!");
             }
+        }
+
+        private void R_Down(object sender, EventArgs e)
+        {
+            this.ForceHidden();
         }
 
         private void HideButton_Click(object sender, EventArgs e)
         {
             this.ForceHidden();
         }
+
+        private void ThisControl_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.ForceHidden();
+        }
     }
+    /// <summary>
+    /// This is just a mock object to hold something of interest. 
+    /// </summary>
+    public class NotifyObject
+    {
+        public NotifyObject(string message,int projectId)//, string title)
+        {
+            this.message = message;
+            this.projectId = projectId;
+        }
+
+        private int projectId;
+        public int ProjectId
+        {
+            get { return this.projectId; }
+            set { this.projectId = value; }
+        }
+
+
+        //private string title;
+        //public string Title
+        //{
+        //    get { return this.title; }
+        //    set { this.title = value; }
+        //}
+
+        private string message;
+        public string Message
+        {
+            get { return this.message; }
+            set { this.message = value; }
+        }
+    }
+
+   
 }

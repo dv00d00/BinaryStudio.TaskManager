@@ -1,26 +1,46 @@
-@model IEnumerable<BinaryStudio.TaskManager.Logic.Domain.Reminder>
+@model IList<BinaryStudio.TaskManager.Logic.Domain.Reminder>
+           
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2 class="well-large">
-    All reminders
+    My Reminders
 </h2>
 
-<p>
-    @Html.ActionLink("Create new reminder", "Create", null, new {@class="btn"})
+<p >
+    @Html.ActionLink("Create new ", "Create", null, new {@class="btn"})
 </p>
+
+<div style="margin: auto; width: 80%">
+    @for (int i=0;i<Model.Count; i++)
+    {
+        <div class="note">
+            <div class="taskName">@if (Model[i].TaskId.HasValue)
+                                  {
+                                      @: @*<a href="@Url.Action("Details", "Project", new { id = reminder.TaskId, viewStyle =false})" style="color: #666; text-decoration: none;" >@reminder.Task.Name</a>*@ @Model[i].Task.Name
+                                  } </div>
+            <br/>
+            @Model[i].Content
+            <div style="position: relative; margin-top: 20px;" >To remind you? @Html.CheckBoxFor(model => model[i].IsSend)</div>
+        </div>
+    }
+  </div>
+
+
+
+@*
 <table>
     <tr>
         <th>
-            Task
+            Задача
         </th>
         <th>
-            Reminder date
+            Дата напоминания
         </th>
         <th>
-            Description
+            Содержание
         </th>
         <th>
         </th>
@@ -38,9 +58,9 @@
             @item.Content
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new {@class="btn"}) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn" }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn" })
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }, new {@class="btn"}) |
+            @Html.ActionLink("Подробности", "Details", new { id = item.Id }, new { @class = "btn" }) |
+            @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, new { @class = "btn" })
         </td>
     </tr>
 }
@@ -48,3 +68,4 @@
 </table>
 
 
+*@
