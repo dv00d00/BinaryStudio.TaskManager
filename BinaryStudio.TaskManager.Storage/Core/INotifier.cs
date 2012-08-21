@@ -13,10 +13,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
 
         void SetCountOfNews(int userId);
 
-        void BroadcastNewsToDesktopClient(News news);
+        void BroadcastNewsToDesktopClient(HumanTaskHistory taskHistory);
 
         void BroadcastNews(News news);
 
-        bool SendReminderToDesktopClient(int userId, string message);
+        bool SendReminderToDesktopClient(int userId, string message,int projectId);
     }
 }

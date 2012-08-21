@@ -184,3 +184,30 @@ button.all_read
 .datepicker.dropdown-menu {
     z-index: 10000;
 }
+
+.note{
+	height:150px;
+	padding:10px;
+	width:150px;
+    float: left;
+	overflow:hidden;
+    margin: 7px;
+	font-family:Trebuchet MS,Tahoma,Myriad Pro,Arial,Verdana,sans-serif;
+	font-size:15px;
+
+	/* Adding a CSS3 shadow below the note, in the browsers which support it: */
+	-moz-box-shadow:2px 2px 0 #DDDDDD;
+	-webkit-box-shadow:2px 2px 0 #DDDDDD;
+	box-shadow:2px 2px 0 #DDDDDD;
+	background-color:#FDFB8C;
+	border:1px solid #DEDC65;
+}
+
+.taskName{
+	/* Имя таска на стикере: */
+    text-align: center;
+	color:#666666;
+	font-family:Trebuchet MS,Tahoma,Myriad Pro,Arial,Verdana,sans-serif;
+	font-size:19px;
+	
+}

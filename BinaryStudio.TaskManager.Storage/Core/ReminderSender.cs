@@ -39,7 +39,7 @@ namespace BinaryStudio.TaskManager.Logic.Core
             
            foreach(var reminder in reminders)
            {
-               if(notifier.SendReminderToDesktopClient(reminder.UserId,reminder.Content))
+               if(notifier.SendReminderToDesktopClient(reminder.UserId,reminder.Content, -1))
                {
                    //reminder.IsSend = true;
                    //reminderProcessor.UpdateReminder(reminder);

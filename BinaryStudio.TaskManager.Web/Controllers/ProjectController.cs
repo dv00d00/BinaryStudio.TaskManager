@@ -331,6 +331,15 @@ namespace BinaryStudio.TaskManager.Web.Controllers
             {
                 this.taskProcessor.MoveTaskToUnassigned(taskId);
             }
+            var taskReminders = this.reminderProcessor.GetRemindersForTask(taskId).ToList();
+            if (taskReminders != null)
+            {
+                foreach (var taskReminder in taskReminders)
+                {
+                    taskReminder.UserId = receiverId > 0 ? receiverId : -1;
+                    this.reminderProcessor.UpdateReminder(taskReminder);
+                }
+            }
             
             this.notifier.MoveTask(humanTask, receiverId);
         }
