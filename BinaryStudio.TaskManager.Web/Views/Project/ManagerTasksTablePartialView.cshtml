@@ -1,6 +1,5 @@
 ﻿@model BinaryStudio.TaskManager.Web.Models.TaskViewModel
 <link href="../../Content/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
-<script src="../../Scripts/PopupDialog.js" type="text/javascript"></script>
 @* This partial view draw a task block in table *@
 @{ string divClass = "pr" + Model.Task.Priority.ToString();
    string[] pClass = { "priorityLow", "priorityMiddle", "priorityHigh", "blocking" };

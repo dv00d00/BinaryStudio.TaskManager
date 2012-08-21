@@ -180,3 +180,7 @@ button.all_read
     width: 300px;
     margin: 0 auto;
 }
+
+.datepicker.dropdown-menu {
+    z-index: 10000;
+}

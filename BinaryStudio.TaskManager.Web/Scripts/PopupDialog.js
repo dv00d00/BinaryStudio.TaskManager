@@ -1,13 +1,12 @@
 ﻿$.ajaxSetup({ cache: false });
 
 $(document).ready(function () {
-    $(".openDialog").live("click", function (e) {
+    $(document).on("click", ".openDialog", function (e) {
         e.preventDefault();
 
         $("<div></div>")
                     .addClass("dialog")
-                    .attr("id", $(this)
-                    .attr("data-dialog-id"))
+                    .attr("id", $(this).attr("data-dialog-id"))
                     .appendTo("body")
                     .dialog({
                         title: $(this).attr("data-dialog-title"),

@@ -90,6 +90,12 @@
             format: 'dd-mm-yyyy'
         });
 
+        $('#Finshed').focus(function () {
+            $(this).datepicker('show');
+        });
+        $('#Finshed').blur(function () {
+            $(this).datepicker('hide');
+        });
         $("#taskslist").click(function () {
             var value = $(this).val();
             $("#blockingTask").val(value);
