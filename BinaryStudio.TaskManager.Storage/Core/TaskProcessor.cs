@@ -135,10 +135,10 @@ namespace BinaryStudio.TaskManager.Logic.Core
         /// </param>
         public void DeleteTask(int taskId)
         {
-            if (this.reminderProcessor.GetAll().Any(x => x.TaskId.HasValue && x.TaskId.Value == taskId))
+           /* if (this.reminderProcessor.GetAll().Any(x => x.TaskId.HasValue && x.TaskId.Value == taskId))
             {
                 this.reminderProcessor.DeleteRemindersForTask(taskId);
-            }
+            }*/
 
             this.humanTaskRepository.Delete(taskId);
         }

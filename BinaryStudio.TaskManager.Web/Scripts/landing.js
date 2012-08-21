@@ -628,6 +628,7 @@ function addTask() {
             ProjectId: modelData.Active(),
             FinishDate: date!='' ? date : null
         });
+        $(".new_task_name").focus();
         $.ajax({
             'data': {
                 'AssigneeId': thisTask.AssigneeId,
