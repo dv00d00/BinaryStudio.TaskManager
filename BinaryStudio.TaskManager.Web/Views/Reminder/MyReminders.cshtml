@@ -5,22 +5,22 @@
 }
 
 <h2 class="well-large">
-    Список всех напоминаний
+    All reminders
 </h2>
 
 <p>
-    @Html.ActionLink("Создать новое напоминание", "Create", null, new {@class="btn"})
+    @Html.ActionLink("Create new reminder", "Create", null, new {@class="btn"})
 </p>
 <table>
     <tr>
         <th>
-            Задача
+            Task
         </th>
         <th>
-            Дата напоминания
+            Reminder date
         </th>
         <th>
-            Содержание
+            Description
         </th>
         <th>
         </th>
@@ -38,9 +38,9 @@
             @item.Content
         </td>
         <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }, new {@class="btn"}) |
-            @Html.ActionLink("Подробности", "Details", new { id = item.Id }, new { @class = "btn" }) |
-            @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, new { @class = "btn" })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new {@class="btn"}) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn" }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn" })
         </td>
     </tr>
 }
