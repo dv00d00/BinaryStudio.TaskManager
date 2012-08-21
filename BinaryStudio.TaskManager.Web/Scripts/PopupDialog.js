@@ -1,18 +1,19 @@
 ﻿$.ajaxSetup({ cache: false });
 
 $(document).ready(function () {
-    $(document).on("click", ".openDialog", function (e) {
+    $(".openDialog").live("click", function (e) {
         e.preventDefault();
 
         $("<div></div>")
                     .addClass("dialog")
-                    .attr("id", $(this).attr("data-dialog-id"))
+                    .attr("id", $(this)
+                    .attr("data-dialog-id"))
                     .appendTo("body")
                     .dialog({
                         title: $(this).attr("data-dialog-title"),
                         close: function () { $(this).remove(); },
                         modal: true,
-                        height: 900,
+                        height: 600,
                         width: 400,
                         left: 0
 

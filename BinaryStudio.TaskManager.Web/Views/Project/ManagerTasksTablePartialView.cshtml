@@ -5,11 +5,11 @@
    string[] pClass = { "priorityLow", "priorityMiddle", "priorityHigh", "blocking" };
     <div class ="task"  id = @Model.Task.Id.ToString() style="position: relative;">
         <p class= "@pClass[@Model.Task.Priority].ToString()" style="text-overflow: clip; border-radius: 13px 13px 0px 0px; font-size: 10pt; margin-top: 0.5px ;margin-bottom: 4px; height: 20px; padding-top: 5px;">
-        <a href="@Url.Action("Edit", "Project", new { taskId = @Model.Task.Id, projectId = @Model.Task.ProjectId, viewStyle = @Model.ViewStyle })" class = "openDialog" data_dialog_id = "aboutDialog" data_dialog_title = "Edit task">
+        <a href="@Url.Action("Edit", "Project", new { taskId = @Model.Task.Id, projectId = @Model.Task.ProjectId, viewStyle = @Model.ViewStyle })" class = "openDialog" data-dialog-id = "aboutDialog" data-dialog-title = "Edit task">
                 <i class= "icon-edit" style="position: absolute; left: 15px;" title="edit task"></i>
             </a>
             @Model.TaskName
-            <a href="@Url.Action("Delete", "Project", new { idTask = @Model.Task.Id, projectId = @Model.Task.ProjectId, viewStyle = @Model.ViewStyle })" class = "openDialog" data_dialog_id = "aboutDialog" data_dialog_title = "Delete task" >
+            <a href="@Url.Action("Delete", "Project", new { idTask = @Model.Task.Id, projectId = @Model.Task.ProjectId, viewStyle = @Model.ViewStyle })" class = "openDialog" data-dialog-id = "aboutDialog" data-dialog-title = "Delete task" >
                 <i class= "icon-remove" style="position: absolute; right: 15px" title="delete task"></i>
             </a>
         </p>
@@ -18,7 +18,7 @@
         </div>
         <br />
     <div>
-            <a href="@Url.Action("Details", "Project", new { id = @Model.Task.Id, viewStyle = @Model.ViewStyle })" class = "openDialog" data_dialog_id = "aboutDialog" data_dialog_title = "Task details"  style="position: absolute; bottom:0px; left: 15px; font-size: 9pt;" >
+            <a href="@Url.Action("Details", "Project", new { id = @Model.Task.Id, viewStyle = @Model.ViewStyle })" class = "openDialog" data-dialog-id = "aboutDialog" data-dialog-title = "Task details"  style="position: absolute; bottom:0px; left: 15px; font-size: 9pt;" >
                 <img height="20" width="20" style="padding-bottom: 4px;" src=@Url.Content("~/Content/images/details.png")/>
                 details 
             </a>

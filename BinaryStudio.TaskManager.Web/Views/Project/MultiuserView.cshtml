@@ -1,4 +1,4 @@
-﻿@model BinaryStudio.TaskManager.Web.Models.ProjectViewModel
+@model BinaryStudio.TaskManager.Web.Models.ProjectViewModel
 @{
     ViewBag.Title = "Project";
 }
@@ -145,7 +145,7 @@
                         </div>
                     }
                 </td>
-                <td class="container">                
+                <td class="container" valign="top">                 
                     <ul>
                         @foreach (var user in Model.UsersTasks)
                         {   
@@ -171,4 +171,4 @@
 {
     InsertionMode = InsertionMode.Replace,
     UpdateTargetId = "mydiv"
-})
+ })
