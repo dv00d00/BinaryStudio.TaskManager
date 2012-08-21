@@ -4,7 +4,7 @@
     ViewBag.Title = "Creation";
 }
 
-<h2 class="well-large">Create Reminder</h2>
+<h2 class="well-large">Reminder creation</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
@@ -14,13 +14,13 @@
 		@Html.Partial("_CreateOrEdit", Model)
 
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Create reminder" />
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Return to reminders list", "MyReminders")
+    @Html.ActionLink("Back to previous page", "MyReminders")
 </div>
 
 

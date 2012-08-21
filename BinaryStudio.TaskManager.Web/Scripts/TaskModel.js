@@ -48,7 +48,7 @@
     self.sortByFinishDate = function () {
         self.tasks.sort(function (left, right) {
             return left.FinishDate == right.FinishDate ? 0 :
-                ((left.FinishDate < right.FinishDate) ? ((left.FinishDate == null) ? 1 : -1) : ((right.FinishDate == null)? -1 : 1));
+                ((left.FinishDate < right.FinishDate) ? ((left.FinishDate == null) ? 1 : -1) : ((right.FinishDate == null) ? -1 : 1));
         });
     };
 
@@ -139,10 +139,15 @@
     });
     self.tasksToShow.subscribe(function (tsks) {
         var filterByName = $("#filterByName");
-        if (tsks.length == 0) {
+        if ((tsks.length == 0) && (self.filter() != 'name')) {
             filterByName.prop("disabled", "true");
         }
+        else if ((tsks.length == 0) && (self.filter() == 'name')) {
+            if ($('.no_match').length == 0)
+                $('.new_task_btn').after('<span class="no_match">No matching tasks</span>');
+        }
         else {
+            $('.no_match').remove();
             filterByName.removeAttr("disabled");
         }
     });

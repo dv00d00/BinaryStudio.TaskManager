@@ -181,6 +181,10 @@ button.all_read
     margin: 0 auto;
 }
 
+.datepicker.dropdown-menu {
+    z-index: 10000;
+}
+
 .note{
 	height:150px;
 	padding:10px;
